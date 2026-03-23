@@ -566,7 +566,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   </div>
   <div class="h3">Domain Strategy</div>
   <p class="prose">Loti uses two email domains for different purposes:</p>
-  <p class="prose"><strong>@loti.com</strong> (rallyback@loti.com) — Used for marketing emails, newsletters, and automated campaigns. This is the brand domain that recipients associate with Loti's content.<br><strong>@lotiadjusters.com</strong> (mike@, jack@) — Used for 1:1 personal outreach and sales sequences. Text-only formatting makes emails feel like they came from a real person, not a marketing platform. Both mike@ and jack@ addresses are connected to HubSpot with active warm-up (running since January 20).</p>
+  <p class="prose"><strong>@loti.com</strong> (<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99ebf8f5f5e0fbf8faf2d9f5f6edf0b7faf6f4">[email&#160;protected]</a>) — Used for marketing emails, newsletters, and automated campaigns. This is the brand domain that recipients associate with Loti's content.<br><strong>@lotiadjusters.com</strong> (mike@, jack@) — Used for 1:1 personal outreach and sales sequences. Text-only formatting makes emails feel like they came from a real person, not a marketing platform. Both mike@ and jack@ addresses are connected to HubSpot with active warm-up (running since January 20).</p>
   <div class="co warn"><span class="i">📝</span><div><b>Email warm-up is critical.</b> New domains need 15-30 days of warm-up before sending at volume. The lotiadjusters.com addresses have been warming up since January and should be maintained as active even while running campaigns.</div></div>
 </div>
 
@@ -682,7 +682,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     <tr><td><b>Postalytics</b></td><td><span class="p gr">LIVE</span></td><td><b>Direct mail automation.</b> Sends physical mailers to homeowners. LA Stage 1 campaign: 1,700+ mailers sent, 85% delivery rate, 6.5% re-routed, 5.2% returned, 11,382 brand impressions. <b style="color:var(--red)">0% QR scan conversion</b> — the QR code CTA needs redesign. BAU Stage 1 (4 records) and Stage 2 (19 records) are queued. Tracks: <code>latest_postalytics_mail_campaign_name</code> and <code>latest_postalytics_mail_event_type</code> properties on contacts and deals.</td></tr>
     <tr><td><b>Slack</b></td><td><span class="p gr">LIVE</span></td><td><b>Team notifications.</b> Used by the Deal Stalled automation to alert Mike when deals go cold. Also used for: new SQL notifications to Jack, Sean's feedback channel for RingCentral, and LA Fires blocker notifications (when opportunities pile up without follow-up).</td></tr>
     <tr><td><b>LinkedIn Outreach</b></td><td><span class="p gr">LIVE</span></td><td><b>External automation</b> managed by Refindable (not a native HubSpot integration). 550 LA Fires property owners identified and scraped. 2 Loti LinkedIn accounts send 20 connection requests/day each (40 total). Post-connection: automated 3-message sequence (1 message/week). If the contact replies, automation stops and the conversation is handled manually. Refindable involves Loti when it's time to close. Weekly summary with key metrics sent to the team.</td></tr>
-    <tr><td><b>lotiadjusters.com</b></td><td><span class="p gr">LIVE</span></td><td><b>Secondary email domain</b> for personal-feeling outreach. mike@lotiadjusters.com and jack@lotiadjusters.com are connected to HubSpot with active email warm-up since January 20. Used by Zack's 1:1 sequences — text-only format designed to look like a real personal email, not marketing.</td></tr>
+    <tr><td><b>lotiadjusters.com</b></td><td><span class="p gr">LIVE</span></td><td><b>Secondary email domain</b> for personal-feeling outreach. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1b7672707e5b77746f727a7f716e686f7e696835787476">[email&#160;protected]</a> and <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6ccc7c5cde6cac9d2cfc7c2ccd3d5d2c3d4d588c5c9cb">[email&#160;protected]</a> are connected to HubSpot with active email warm-up since January 20. Used by Zack's 1:1 sequences — text-only format designed to look like a real personal email, not marketing.</td></tr>
     <tr><td><b>Meta + Google Ads</b></td><td><span class="p gr">LIVE</span></td><td><b>Advertising platforms</b> connected via native HubSpot integrations for campaign tracking, lead attribution, and pipeline impact reporting.</td></tr>
   </table>
 </div>
@@ -844,7 +844,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 </main>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const links=document.querySelectorAll('.sidebar a[data-sec]');
 const secs=document.querySelectorAll('.sec');
 const crumb=document.getElementById('crumb');
@@ -853,18 +853,4 @@ const mainEl=document.getElementById('main');
 function showSection(id){
   secs.forEach(s=>s.classList.remove('active'));
   links.forEach(l=>l.classList.remove('active'));
-  const sec=document.getElementById(id);
-  if(sec){sec.classList.add('active');mainEl.scrollTop=0;}
-  const link=document.querySelector(`a[data-sec="${id}"]`);
-  if(link){
-    link.classList.add('active');
-    const group=link.closest('.g')?.querySelector('.gt')?.textContent||'';
-    crumb.innerHTML=group+' → <b>'+link.textContent.replace(/^.{1,2}\s*/,'')+'</b>';
-  }
-}
-
-links.forEach(l=>l.addEventListener('click',()=>showSection(l.dataset.sec)));
-</script>
-
-</body>
-</html>
+ 
