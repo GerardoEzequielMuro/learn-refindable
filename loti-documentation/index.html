@@ -844,7 +844,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 </main>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const links=document.querySelectorAll('.sidebar a[data-sec]');
 const secs=document.querySelectorAll('.sec');
 const crumb=document.getElementById('crumb');
@@ -853,4 +853,19 @@ const mainEl=document.getElementById('main');
 function showSection(id){
   secs.forEach(s=>s.classList.remove('active'));
   links.forEach(l=>l.classList.remove('active'));
+  const sec=document.getElementById(id);
+  if(sec){sec.classList.add('active');mainEl.scrollTop=0;}
+  const link=document.querySelector(`a[data-sec="${id}"]`);
+  if(link){
+    link.classList.add('active');
+    const group=link.closest('.g')?.querySelector('.gt')?.textContent||'';
+    crumb.innerHTML=group+' → <b>'+link.textContent.replace(/^.{1,2}\s*/,'')+'</b>';
+  }
+}
+
+links.forEach(l=>l.addEventListener('click',()=>showSection(l.dataset.sec)));
+</script>
+
+</body>
+</html>
  
