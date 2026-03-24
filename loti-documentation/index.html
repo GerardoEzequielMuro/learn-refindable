@@ -176,7 +176,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   </div>
   <div class="g"><div class="gt">Integrations</div>
     <a data-sec="fn"><span class="ic">🔥</span>Fire Notification</a>
-    <a data-sec="ringcentral"><span class="ic">📞</span>RingCentral</a>
+    <a href="ringcentral.html" target="_blank"><span class="ic">📞</span>RingCentral ↗</a>
     <a data-sec="other-int"><span class="ic">🔌</span>Other Integrations</a>
   </div>
   <div class="g"><div class="gt">Operations</div>
@@ -647,31 +647,28 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 </div>
 
 <!-- RINGCENTRAL -->
+<!-- RINGCENTRAL - Full documentation at ringcentral.html -->
 <div class="sec" id="ringcentral">
-  <div class="sh rd"><h2>📞 RingCentral</h2><div class="sub">Telephony integration — partially configured</div></div>
-  <p class="prose"><strong>RingCentral</strong> is the phone system Loti uses for calls and SMS. The plan was to integrate it fully with HubSpot so that every call is automatically logged, call outcomes are tracked (answered, voicemail, no answer), and call data feeds into deal activity reports and the Deal Stalled automation.</p>
-  <div class="co danger"><span class="i">🚨</span><div><b>Status: PARTIALLY CONFIGURED — adoption stalled for 8+ weeks.</b> The app is connected to HubSpot at the account level, but individual team members (particularly Jack, the primary field user) have not completed their personal setup. Onboarding videos and documentation were sent but proved insufficient — a live hands-on session is needed.</div></div>
+  <div class="sh rd"><h2>📞 RingCentral</h2><div class="sub">Telephony integration — full onboarding guide</div></div>
+  <p class="prose">The complete RingCentral documentation — including account setup, HubSpot integration, calling (desktop & mobile), SMS, and troubleshooting — is available as a dedicated guide with step-by-step screenshots.</p>
+  <div style="text-align:center;margin:32px 0"><a href="ringcentral.html" target="_blank" style="display:inline-block;background:var(--accent);color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:800;font-size:14px">📞 Open RingCentral Documentation ↗</a></div>
+  <div class="h3">Current Status Summary</div>
+  <div class="co danger"><span class="i">🚨</span><div><b>PARTIALLY CONFIGURED — adoption stalled for 8+ weeks.</b> The app is connected to HubSpot at the account level, but individual team members (particularly Jack) have not completed their personal setup.</div></div>
   <div class="sp">
     <div class="sc bau"><h4 style="color:var(--green);border-color:var(--green)">✅ What's Done</h4>
       <p>• All licenses and phone numbers purchased</p>
       <p>• Accounts created for Jack, Mike, Sean, John</p>
       <p>• App connected globally to HubSpot</p>
       <p>• SMS documentation completed</p>
-      <p>• Onboarding videos and step-by-step guides sent</p>
-      <p>• SMS form re-submitted (Jan 27) and unblocked</p>
     </div>
     <div class="sc la"><h4 style="color:var(--red);border-color:var(--red)">❌ What's Blocking</h4>
-      <p>• <b>Jack has not connected RingCentral</b> to his personal HubSpot (as of Mar 3)</p>
-      <p>• Onboarding videos alone weren't enough</p>
-      <p>• IVR system pending — needs Jack's phone number</p>
-      <p>• John's area code still needed for number assignment</p>
-      <p>• Call logging sync issues need RC Developer Support</p>
+      <p>• <b>Jack has not connected RingCentral</b> (as of Mar 3)</p>
+      <p>• IVR system pending — needs Jack's number</p>
+      <p>• Call logging sync issues need RC Dev Support</p>
     </div>
   </div>
   <div class="h3">Why This Matters</div>
-  <p class="prose">Without RingCentral properly connected, <strong>calls aren't being logged in HubSpot</strong>. This has several cascading effects: (1) The Deal Stalled Automation fires false positives because it can't see call activity; (2) Management has no visibility into how many calls Jack is making, which deals he's contacting, and which are going cold; (3) Auto-tagging and deal tracking based on call interactions can't function; (4) There's no call duration, outcome, or frequency reporting.</p>
-  <div class="h3">Expected Functionality (Once Complete)</div>
-  <p class="prose">Auto-log all calls in HubSpot with outcomes (answered, voicemail, no answer) · Call volume and duration reporting per rep and per deal · Automatic deal activity tracking (which deals were touched vs. gone cold) · Auto-tagging based on call interactions · SMS capabilities for text-based outreach · IVR (Interactive Voice Response) system for inbound calls to route callers appropriately.</p>
+  <p class="prose">Without RingCentral properly connected, <strong>calls aren't being logged in HubSpot</strong>. This causes the Deal Stalled Automation to fire false positives, removes visibility into call activity, and prevents call duration/outcome reporting.</p>
 </div>
 
 <!-- OTHER INTEGRATIONS -->
