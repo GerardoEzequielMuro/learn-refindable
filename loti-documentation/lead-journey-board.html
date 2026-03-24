@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loti Lead Journey - HubSpot CRM Flowchart</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #1b2444;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Top Bar ─────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(27,36,68,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .topbar h1 { font-size: 18px; font-weight: 700; letter-spacing: .3px; }
+  .topbar h1 span { color: #2ecc71; }
+
+  /* Legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+  }
+  .legend-swatch {
+    width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
+  }
+
+  /* Zoom controls */
+  .zoom-controls {
+    display: flex; gap: 6px;
+  }
+  .zoom-controls button {
+    width: 32px; height: 32px; border: 1px solid rgba(255,255,255,.2);
+    border-radius: 6px; background: rgba(255,255,255,.06); color: #fff;
+    font-size: 18px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; transition: background .2s;
+  }
+  .zoom-controls button:hover { background: rgba(255,255,255,.14); }
+
+  /* ── Canvas ──────────────────────────────────── */
+  .canvas-wrap {
+    overflow: auto;
+    padding: 40px 20px 80px;
+    display: flex; justify-content: center;
+  }
+  .canvas {
+    transform-origin: top center;
+    transition: transform .25s ease;
+    position: relative;
+    width: 1600px;
+    min-height: 2600px;
+  }
+
+  /* ── Shared box styles ───────────────────────── */
+  .box {
+    position: absolute;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+    z-index: 2;
+  }
+  .box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,.35);
+  }
+
+  /* Tooltip */
+  .tooltip {
+    display: none;
+    position: absolute;
+    z-index: 50;
+    background: #1a1f36;
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 300px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.5);
+    pointer-events: none;
+    white-space: normal;
+    text-align: left;
+  }
+  .tooltip .tt-title {
+    font-weight: 700; font-size: 13px; margin-bottom: 4px; color: #fff;
+  }
+  .box:hover .tooltip,
+  .box:focus .tooltip {
+    display: block;
+  }
+
+  /* ── Color classes ───────────────────────────── */
+  .c-salmon   { background: #e87461; color: #fff; }
+  .c-white    { background: #fff; color: #1b2444; box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+  .c-gold     { background: #b8952e; color: #fff; }
+  .c-lavender { background: #e0d8f0; color: #1b2444; }
+  .c-green    { background: #2ecc71; color: #fff; }
+  .c-mint     { background: #c8f7d5; color: #1b2444; font-size: 12px; }
+  .c-orange   { background: #f5a623; color: #fff; }
+  .c-peach    { background: #fde0c4; color: #1b2444; font-size: 12px; }
+  .c-yellow   { background: #fff9c4; color: #1b2444; font-size: 12px; }
+  .c-navy-outline {
+    background: transparent;
+    border: 3px solid #1e3a6e;
+    color: #fff;
+  }
+
+  /* Sticky-note style */
+  .sticky {
+    background: #fff9c4;
+    color: #1b2444;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 3;
+    box-shadow: 2px 3px 8px rgba(0,0,0,.18);
+    max-width: 220px;
+    line-height: 1.4;
+    text-align: left;
+    transform: rotate(-2deg);
+  }
+  .sticky.rot-pos { transform: rotate(2deg); }
+
+  /* Arrow label */
+  .arrow-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,.7);
+    z-index: 3;
+    white-space: nowrap;
+    letter-spacing: .3px;
+  }
+
+  /* Section headings */
+  .section-heading {
+    position: absolute;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.3);
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  /* Link style inside yellow ref boxes */
+  .ref-link { color: #1565c0; text-decoration: underline; cursor: pointer; }
+
+  /* SVG layer */
+  .arrows-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <h1>Loti <span>Lead Journey</span> &mdash; HubSpot CRM</h1>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#e87461"></div>Data Entry</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fff;border:1px solid #ccc"></div>Processing / AI</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#b8952e"></div>Contacts &amp; Engagement</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#e0d8f0;border:1px solid #bbb"></div>Property Reach</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2ecc71"></div>Opportunity Score</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#c8f7d5;border:1px solid #8ed8a4"></div>Pipeline Stages</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#f5a623"></div>Deals Pipeline</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fde0c4;border:1px solid #e0b88a"></div>Deal Stages</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#fff9c4;border:1px solid #e0d88a"></div>Notes / Links</div>
+  </div>
+  <div class="zoom-controls">
+    <button id="zoomOut" title="Zoom out">&minus;</button>
+    <button id="zoomReset" title="Reset zoom">1:1</button>
+    <button id="zoomIn" title="Zoom in">+</button>
+  </div>
+</div>
+
+<!-- ============ CANVAS ============ -->
+<div class="canvas-wrap">
+<div class="canvas" id="canvas">
+
+<!-- SVG arrows layer -->
+<svg class="arrows-svg" id="arrowsSvg" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="rgba(255,255,255,.55)"/>
+    </marker>
+    <marker id="ahBack" markerWidth="10" markerHeight="8" refX="1" refY="4" orient="auto">
+      <path d="M10,0 L0,4 L10,8 Z" fill="rgba(255,255,255,.55)"/>
+    </marker>
+  </defs>
+</svg>
+
+<!-- ─── LEVEL 1: Data Entry Sources ─── -->
+<div class="section-heading" style="top:10px;left:50%;transform:translateX(-50%);">Data Entry Sources</div>
+
+<div class="box c-salmon" style="width:200px;height:52px;top:40px;left:200px;font-size:13px;" data-tip="import">
+  Import (LA Fires)
+  <div class="tooltip"><div class="tt-title">Import</div>Datos importados manualmente, por ejemplo despu&eacute;s de los incendios de LA.</div>
+</div>
+
+<div class="box c-salmon" style="width:220px;height:52px;top:40px;left:690px;font-size:13px;" data-tip="fire">
+  New Fire Notification
+  <div class="tooltip"><div class="tt-title">New Fire Notification</div>Cuando hay un nuevo incendio, se crea autom&aacute;ticamente una propiedad.</div>
+</div>
+
+<div class="box c-salmon" style="width:180px;height:52px;top:40px;left:1220px;font-size:13px;" data-tip="form">
+  form submission
+  <div class="tooltip"><div class="tt-title">form submission</div>Cuando alguien llena un formulario en el sitio web.</div>
+</div>
+
+<!-- ─── LEVEL 2: LotiProperty & Contacts ─── -->
+<div class="box c-white" style="width:340px;height:80px;top:150px;left:530px;font-size:20px;font-weight:800;" data-tip="lotiproperty">
+  LotiProperty
+  <div class="tooltip"><div class="tt-title">LotiProperty</div>La propiedad (casa) es el centro de todo en el CRM. Cada casa tiene una ficha con toda su info.</div>
+</div>
+
+<div class="arrow-label" style="top:140px;left:875px;">Loti - Campaign</div>
+
+<div class="box c-gold" style="width:180px;height:58px;top:150px;left:1220px;font-size:15px;font-weight:700;" data-tip="contacts">
+  CONTACTS
+  <div class="tooltip"><div class="tt-title">CONTACTS</div>Las personas (due&ntilde;os de casa, referidos). Cada contacto se conecta a una propiedad.</div>
+</div>
+
+<!-- ─── LEVEL 3: Property Reach ─── -->
+<div class="box c-lavender" style="width:200px;height:56px;top:290px;left:600px;font-size:14px;" data-tip="propreach">
+  Property Reach
+  <div class="tooltip"><div class="tt-title">Property Reach</div>Herramienta que busca info adicional del due&ntilde;o de la propiedad (tel&eacute;fono, email, etc).</div>
+</div>
+
+<!-- ─── LEVEL 4: Debounce / OpenAI / Engagement ─── -->
+<div class="arrow-label" style="top:355px;left:1270px;">Debounce</div>
+
+<div class="box c-gold" style="width:180px;height:56px;top:400px;left:1220px;font-size:14px;" data-tip="engagement">
+  Engagement
+  <div class="tooltip"><div class="tt-title">Engagement</div>&iquest;Cu&aacute;nto interactu&oacute; esta persona? (abri&oacute; emails, visit&oacute; la web, escane&oacute; QR)</div>
+</div>
+
+<div class="arrow-label" style="top:355px;left:640px;">Goes through</div>
+
+<div class="box c-white" style="width:160px;height:56px;top:400px;left:620px;font-size:14px;" data-tip="openai">
+  Open AI
+  <div class="tooltip"><div class="tt-title">Open AI</div>Inteligencia artificial que analiza la calidad de la oportunidad de la propiedad.</div>
+</div>
+
+<!-- Reference boxes -->
+<div class="box c-yellow" style="width:160px;height:44px;top:410px;left:120px;font-size:12px;" data-tip="miroref">
+  <a href="#" class="ref-link">Miro Board</a>
+  <div class="tooltip"><div class="tt-title">Miro Board</div>Link de referencia al tablero original de Miro con el flujo completo.</div>
+</div>
+
+<div class="box c-yellow" style="width:200px;height:44px;top:410px;left:1460px;font-size:12px;" data-tip="hubdoc">
+  <a href="#" class="ref-link">HubSpot Scoring DOC</a>
+  <div class="tooltip"><div class="tt-title">HubSpot Scoring DOC</div>Documento de referencia con la l&oacute;gica de puntaje en HubSpot.</div>
+</div>
+
+<!-- ─── LEVEL 5: Scores ─── -->
+<div class="box c-gold" style="width:200px;height:56px;top:520px;left:1210px;font-size:14px;" data-tip="escore">
+  Engagement Score
+  <div class="tooltip"><div class="tt-title">Engagement Score</div>Puntaje 0-100 basado en las acciones del contacto. M&aacute;s acciones = m&aacute;s puntos.</div>
+</div>
+
+<div class="box c-white" style="width:200px;height:56px;top:520px;left:600px;font-size:14px;" data-tip="pscore">
+  Property Score
+  <div class="tooltip"><div class="tt-title">Property Score (FIT Score)</div>Puntaje 0-100 de qu&eacute; tan buena es la oportunidad. LA Fires = 100 autom&aacute;tico.</div>
+</div>
+
+<!-- ─── LEVEL 6: Opportunity Score ─── -->
+<div class="box c-green" style="width:240px;height:62px;top:640px;left:680px;font-size:16px;font-weight:700;" data-tip="oscore">
+  Opportunity Score
+  <div class="tooltip"><div class="tt-title">Opportunity Score</div>Engagement + FIT = Opportunity Score (0-200). Este n&uacute;mero decide todo.</div>
+</div>
+
+<!-- ─── LEVEL 7: Opportunity Pipeline ─── -->
+<div class="box c-navy-outline" style="width:380px;height:70px;top:760px;left:610px;font-size:15px;font-weight:700;" data-tip="opipeline">
+  Opportunity Pipeline (lotiproperty)
+  <div class="tooltip"><div class="tt-title">Opportunity Pipeline</div>El embudo visual donde cada propiedad avanza seg&uacute;n su puntaje.</div>
+</div>
+
+<div class="sticky" style="top:770px;left:1020px;">
+  Automatically moves lotiproperty stages 1-6. Depending on score.
+</div>
+
+<!-- ─── LEVEL 8: Pipeline Stages ─── -->
+<div class="section-heading" style="top:870px;left:50%;transform:translateX(-50%);">Opportunity Pipeline Stages</div>
+
+<div class="box c-mint" style="width:150px;height:54px;top:900px;left:20px;padding:4px;" data-tip="passive">
+  Passive Nurture<br>0-29
+  <div class="tooltip"><div class="tt-title">Passive Nurture 0-29</div>Puntaje bajo. Solo recibe emails autom&aacute;ticos. No se contacta manualmente.</div>
+</div>
+<div class="box c-mint" style="width:150px;height:54px;top:900px;left:190px;padding:4px;" data-tip="warm">
+  Warm Nurture<br>30-59
+  <div class="tooltip"><div class="tt-title">Warm Nurture 30-59</div>Algo de inter&eacute;s. Recibe m&aacute;s contenido pero a&uacute;n no se llama.</div>
+</div>
+<div class="box c-mint" style="width:160px;height:54px;top:900px;left:360px;padding:4px;" data-tip="activemql">
+  Active Digital MQL<br>60-74
+  <div class="tooltip"><div class="tt-title">Active Digital MQL 60-74</div>Marketing Qualified Lead. Ya mostr&oacute; inter&eacute;s real.</div>
+</div>
+<div class="box c-mint" style="width:150px;height:54px;top:900px;left:540px;padding:4px;" data-tip="engagedmq">
+  Engaged MQL<br>75-84
+  <div class="tooltip"><div class="tt-title">Engaged MQL 75-84</div>Muy comprometido. Casi listo para contacto directo.</div>
+</div>
+<div class="box c-mint" style="width:140px;height:54px;top:900px;left:710px;padding:4px;" data-tip="highintent">
+  High Intent<br>85-89
+  <div class="tooltip"><div class="tt-title">High Intent 85-89</div>Alt&iacute;simo inter&eacute;s. Prioridad para el equipo de ventas.</div>
+</div>
+<div class="box c-mint" style="width:190px;height:54px;top:900px;left:870px;padding:4px;font-size:11px;" data-tip="sdrcontact">
+  SDR: MUST CONTACT<br>(Net New) 90+
+  <div class="tooltip"><div class="tt-title">SDR: MUST CONTACT 90+</div>&iexcl;LLAMAR YA! Este lead es muy caliente.</div>
+</div>
+<div class="box c-mint" style="width:170px;height:54px;top:900px;left:1080px;padding:4px;" data-tip="sdrchasing">
+  SDR: Actively<br>Chasing
+  <div class="tooltip"><div class="tt-title">SDR: Actively Chasing</div>El equipo ya est&aacute; en contacto activo con este lead.</div>
+</div>
+
+<!-- To create a deal / Lost -->
+<div class="box c-mint" style="width:170px;height:54px;top:1000px;left:1270px;padding:4px;font-size:13px;" data-tip="createdeal">
+  To create a deal
+  <div class="tooltip"><div class="tt-title">To create a deal</div>Cuando el SDR mueve aqu&iacute;, se crea un Deal autom&aacute;ticamente.</div>
+</div>
+
+<div class="box c-mint" style="width:120px;height:54px;top:1000px;left:1460px;padding:4px;font-size:13px;background:#f8d7da;color:#721c24;" data-tip="lost">
+  Lost
+  <div class="tooltip"><div class="tt-title">Lost</div>Lead perdido. No avanz&oacute;.</div>
+</div>
+
+<div class="sticky rot-pos" style="top:1060px;left:1250px;">
+  When SDR moves to this stage, it auto creates a deal.
+</div>
+
+<!-- ─── LEVEL 9: Deals Pipeline ─── -->
+<div class="arrow-label" style="top:1120px;left:1310px;">Auto Creates a deal</div>
+
+<div class="box c-orange" style="width:260px;height:64px;top:1160px;left:670px;font-size:16px;font-weight:700;" data-tip="dpipeline">
+  Deals Pipeline (Deal)
+  <div class="tooltip"><div class="tt-title">Deals Pipeline</div>El embudo de ventas. Aqu&iacute; se trackea desde el primer contacto hasta cerrar.</div>
+</div>
+
+<!-- ─── LEVEL 10: Deal Stages ─── -->
+<div class="section-heading" style="top:1260px;left:50%;transform:translateX(-50%);">Deal Pipeline Stages</div>
+
+<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:140px;padding:4px;font-size:12px;" data-tip="initialcontact">
+  Initial Contact Made
+  <div class="tooltip"><div class="tt-title">Initial Contact Made</div>Se hizo el primer contacto con el due&ntilde;o.</div>
+</div>
+<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:340px;padding:4px;font-size:12px;" data-tip="clienteng">
+  Client Engaging
+  <div class="tooltip"><div class="tt-title">Client Engaging</div>El cliente est&aacute; respondiendo y mostrando inter&eacute;s.</div>
+</div>
+<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:540px;padding:4px;font-size:12px;" data-tip="lotiqualified">
+  Loti Qualified
+  <div class="tooltip"><div class="tt-title">Loti Qualified</div>Loti verific&oacute; que es un caso v&aacute;lido para representar.</div>
+</div>
+<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:740px;padding:4px;font-size:12px;" data-tip="terms">
+  Terms Proposed
+  <div class="tooltip"><div class="tt-title">Terms Proposed</div>Se enviaron los t&eacute;rminos del contrato de representaci&oacute;n.</div>
+</div>
+<div class="box c-peach" style="width:180px;height:54px;top:1290px;left:940px;padding:4px;font-size:11px;" data-tip="won">
+  Contract Signed - Won
+  <div class="tooltip"><div class="tt-title">Contract Signed - Won</div>&iexcl;Firmado! Loti ahora representa al due&ntilde;o.</div>
+</div>
+<div class="box c-peach" style="width:150px;height:54px;top:1290px;left:1160px;padding:4px;font-size:12px;" data-tip="closedlost">
+  Closed Lost
+  <div class="tooltip"><div class="tt-title">Closed Lost</div>No se cerr&oacute; el deal. Se registra el motivo.</div>
+</div>
+
+</div><!-- /canvas -->
+</div><!-- /canvas-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════
+   ARROWS  –  drawn programmatically via SVG
+   ═══════════════════════════════════════════════ */
+const arrows = [
+  // Level 1 → LotiProperty
+  { from: [300, 92], to: [620, 150] },           // Import → LotiProperty
+  { from: [800, 92], to: [700, 150] },           // Fire Notification → LotiProperty
+  // form submission → CONTACTS
+  { from: [1310, 92], to: [1310, 150] },         // form → CONTACTS
+
+  // LotiProperty → Property Reach
+  { from: [700, 230], to: [700, 290] },          // LotiProperty → Property Reach
+
+  // LotiProperty → CONTACTS (via Campaign label)
+  { from: [870, 190], to: [1220, 180] },         // LotiProperty → CONTACTS
+
+  // Property Reach ↔ CONTACTS  (bidirectional)
+  { from: [800, 318], to: [1220, 190], bidir: true },
+
+  // CONTACTS → Engagement (Debounce)
+  { from: [1310, 208], to: [1310, 400] },
+
+  // Property Reach → Open AI (Goes through)
+  { from: [700, 346], to: [700, 400] },
+
+  // Engagement → Engagement Score
+  { from: [1310, 456], to: [1310, 520] },
+
+  // Open AI → Property Score
+  { from: [700, 456], to: [700, 520] },
+
+  // Engagement Score ↔ Property Score (bidirectional)
+  { from: [1210, 548], to: [800, 548], bidir: true },
+
+  // Engagement Score → Opportunity Score
+  { from: [1210, 556], to: [920, 671] },
+
+  // Property Score → Opportunity Score
+  { from: [800, 556], to: [800, 640] },
+
+  // Opportunity Score → Opportunity Pipeline
+  { from: [800, 702], to: [800, 760] },
+
+  // Pipeline → stages (fan out)
+  { from: [700, 830], to: [95, 900] },
+  { from: [720, 830], to: [265, 900] },
+  { from: [750, 830], to: [440, 900] },
+  { from: [790, 830], to: [615, 900] },
+  { from: [830, 830], to: [780, 900] },
+  { from: [870, 830], to: [965, 900] },
+  { from: [920, 830], to: [1165, 900] },
+
+  // Chasing → To create a deal
+  { from: [1165, 954], to: [1270, 1020] },
+  // Chasing → Lost
+  { from: [1250, 954], to: [1480, 1000] },
+
+  // To create a deal → Deals Pipeline
+  { from: [1355, 1054], to: [800, 1160] },
+
+  // Engagement → Miro Board ref
+  { from: [1220, 430], to: [280, 430] },
+
+  // Deals Pipeline → deal stages
+  { from: [710, 1224], to: [220, 1290] },
+  { from: [750, 1224], to: [420, 1290] },
+  { from: [800, 1224], to: [620, 1290] },
+  { from: [850, 1224], to: [820, 1290] },
+  { from: [900, 1224], to: [1030, 1290] },
+  { from: [940, 1224], to: [1235, 1290] },
+];
+
+function drawArrows() {
+  const svg = document.getElementById('arrowsSvg');
+  // Remove old paths
+  svg.querySelectorAll('path.arrow-path, line.arrow-line').forEach(el => el.remove());
+
+  arrows.forEach(a => {
+    const [x1, y1] = a.from;
+    const [x2, y2] = a.to;
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', 'rgba(255,255,255,.45)');
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('marker-end', 'url(#ah)');
+    if (a.bidir) {
+      line.setAttribute('marker-start', 'url(#ahBack)');
+    }
+    line.classList.add('arrow-line');
+    svg.appendChild(line);
+  });
+}
+
+drawArrows();
+
+/* ═══════════════════════════════════════════════
+   ZOOM
+   ═══════════════════════════════════════════════ */
+let scale = 1;
+const canvas = document.getElementById('canvas');
+const STEP = 0.1;
+
+document.getElementById('zoomIn').addEventListener('click', () => {
+  scale = Math.min(scale + STEP, 2);
+  canvas.style.transform = `scale(${scale})`;
+});
+document.getElementById('zoomOut').addEventListener('click', () => {
+  scale = Math.max(scale - STEP, 0.3);
+  canvas.style.transform = `scale(${scale})`;
+});
+document.getElementById('zoomReset').addEventListener('click', () => {
+  scale = 1;
+  canvas.style.transform = `scale(1)`;
+});
+</script>
+</body>
+</html>
