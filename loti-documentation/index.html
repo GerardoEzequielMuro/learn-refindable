@@ -1302,25 +1302,77 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 
 <div class="sec" id="reporting">
-  <div class="sh or"><h2>Reports &amp; Dashboards</h2><div class="sub">How the team monitors performance</div></div>
-  
-  <div class="tldr">
+  <div class="sh or"><h2>Reports &amp; Dashboards</h2><div class="sub">How the team monitors performance across pipeline, marketing, and operations</div></div>
+
+  <div class="stats">
+    <div class="stat"><div class="n" style="color:var(--blue)">3</div><div class="l">HubSpot Dashboards</div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">4</div><div class="l">External Reports</div></div>
+    <div class="stat"><div class="n" style="color:var(--accent)">206</div><div class="l">Total Deals Tracked</div></div>
+    <div class="stat"><div class="n" style="color:var(--purple)">21</div><div class="l">Closed Won Deals</div></div>
+  </div>
+
+  <div class="tldr open">
     <div class="tldr-head" onclick="this.parentElement.classList.toggle('open')">
       <div class="tldr-icon or">TL</div><h4>3 HubSpot Dashboards + External Reports</h4><span class="arr">&#9660;</span>
     </div>
     <ul class="tldr-bullets">
-      <li><b>Ads Dashboard</b>: campaign overview, cost efficiency, spend, reach, pipeline impact</li>
-      <li><b>Newsletter/Website Dashboard</b>: per-edition metrics + web performance reports</li>
-      <li><b>Jack's Operational Dashboard</b>: tasks, pipeline, scores — optimized for mobile</li>
+      <li><b>Ads Dashboard</b>: campaign overview, cost efficiency, spend, reach, pipeline impact — updated Feb 24</li>
+      <li><b>Newsletter/Website Dashboard</b>: per-edition email metrics + 3 web performance reports — updated Mar 19</li>
+      <li><b>Jack's Operational Dashboard</b>: high-priority tasks, pipeline by stage, LotiProperties by score — launched Jan 20</li>
+      <li><b>External reports</b>: Air Cover Weekly (fire incidents), Email Roadmap, Ads Roadmap, Miro Touchpoints Board</li>
     </ul>
     <div class="tldr-body"><div class="tldr-body-inner">
-      <div class="cg" style="margin-top:14px">
-        <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Ads Performance</h5><p>Campaign Overview, Cost Efficiency, Spend Summary, Reach &amp; Engagement, Pipeline Impact, Performance Breakdown. Updated Feb 24.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Newsletter / Website</h5><p>5 reports per RallyBack Brief + 3 web performance reports (Page Views, Top Visitors, Top Interactions). Updated Mar 19.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--cyan)"></span>Jack's Dashboard</h5><p>Mobile + desktop. High-priority tasks, pipeline overview, LotiProperties by Opportunity Score, AirCover intel. Launched Jan 20.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>External Reports</h5><p><b>Air Cover Weekly Report</b> (fire incidents review) &middot; <b>Email Marketing Roadmap</b> &middot; <b>Ads Roadmap</b> &middot; <b>Miro Touchpoints Board</b> (since Mar 5).</p></div>
-      </div>
+      <p class="prose" style="margin-top:14px">Every dashboard serves a specific audience. Jack's dashboard is optimised for a mobile device in the field. The Ads and Newsletter dashboards are built for Refindable and Mike to review campaign performance. External reports live outside HubSpot (Google Docs / Miro) and are linked from the relevant strategy docs.</p>
     </div></div>
+  </div>
+
+  <div class="h3">Dashboard 1 — Ads Performance</div>
+  <p class="prose">Tracks paid advertising across Meta and Google Ads. Connected via native HubSpot integrations. Updated Feb 24, 2026.</p>
+  <table class="t">
+    <tr><th>Report Section</th><th>What It Shows</th><th>Primary User</th></tr>
+    <tr><td><b>Campaign Overview</b></td><td>All active campaigns — status, budget, spend to date, date range</td><td>Mike / Refindable</td></tr>
+    <tr><td><b>Cost Efficiency</b></td><td>Cost per click, cost per lead, cost per impression by campaign</td><td>Refindable</td></tr>
+    <tr><td><b>Spend Summary</b></td><td>Total spend vs. budget allocation across Meta and Google</td><td>Mike</td></tr>
+    <tr><td><b>Reach &amp; Engagement</b></td><td>Impressions, reach, CTR, video views — 7-day and rolling 30-day</td><td>Refindable</td></tr>
+    <tr><td><b>Pipeline Impact</b></td><td>Deals and contacts attributed to paid ads via UTM tracking</td><td>Mike / Refindable</td></tr>
+    <tr><td><b>Performance Breakdown</b></td><td>Per-creative and per-ad-set performance — which angles work</td><td>Refindable</td></tr>
+  </table>
+  <div class="co warn"><span class="i">&#9888;</span><div><b>Key finding (Feb 12 window):</b> 6,300 reach, 9,637 impressions, <b>0 leads generated.</b> 25% of spend was shifted to engagement-focused campaigns. CTA strategy under review.</div></div>
+
+  <div class="h3">Dashboard 2 — Newsletter &amp; Website</div>
+  <p class="prose">Tracks RallyBack Brief performance and overall website traffic. Updated Mar 19, 2026.</p>
+  <table class="t">
+    <tr><th>Report Section</th><th>What It Shows</th></tr>
+    <tr><td><b>Per-Edition Metrics</b></td><td>5 reports per newsletter send: open rate, click rate, unsubscribes, bounces, top-clicked links</td></tr>
+    <tr><td><b>Page Views</b></td><td>Total and unique page views across loti.com and lotiadjusters.com</td></tr>
+    <tr><td><b>Top Visitors</b></td><td>Known contacts with highest site visits — high-intent signals</td></tr>
+    <tr><td><b>Top Interactions</b></td><td>Most-clicked pages, forms submitted, resources downloaded</td></tr>
+  </table>
+
+  <div class="h3">Dashboard 3 — Jack's Operational Dashboard</div>
+  <p class="prose">Built for Jack's daily workflow. Works on mobile. Designed to replace manual Excel-based tracking. Launched Jan 20, 2026.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>High-Priority Tasks</h5><p>Tasks due today and overdue. Sorted by deal stage so Jack tackles the most urgent first. Overdue tasks are visually highlighted.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Pipeline Overview</h5><p>Deals by stage — count and total deal value at each pipeline stage. Jack sees where the 206 total deals sit at a glance.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>LotiProperties by Opportunity Score</h5><p>Ranked list of properties by combined Engagement + FIT score. Top properties surface automatically every morning.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--cyan)"></span>AirCover Intel Panel</h5><p>New Fire Notification incidents from the past 7 days. Sorted by FN Score descending. Links directly to LotiProperty record.</p></div>
+  </div>
+
+  <div class="h3">External Reports &amp; Planning Documents</div>
+  <table class="t">
+    <tr><th>Report</th><th>Cadence</th><th>What It Covers</th></tr>
+    <tr><td><b>Air Cover Weekly Report</b></td><td>Weekly</td><td>Fire incidents review from Fire Notification feed. New leads, scored properties, recommended visits.</td></tr>
+    <tr><td><b>Email Marketing Roadmap</b></td><td>Ongoing</td><td>Stage-by-stage email sequence plan. Nurture cadence, A/B test status, pending improvements.</td></tr>
+    <tr><td><b>Ads Roadmap</b></td><td>Ongoing</td><td>Campaign strategy, creative angles, budget allocation, CTA iteration plan.</td></tr>
+    <tr><td><b>Miro Touchpoints Board</b></td><td>Since Mar 5, 2026</td><td>Visual map of all customer touchpoints across channels. Used for team strategy sessions.</td></tr>
+  </table>
+
+  <div class="h3">Key Metrics Tracked Across All Reporting</div>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Pipeline Metrics</h5><ul><li>Deals by stage (206 total)</li><li>Closed won (21) vs. closed lost (84)</li><li>65 deals in "Jack to Review"</li><li>Average deal value by campaign</li><li>Days in stage per deal</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Marketing Metrics</h5><ul><li>Email open/click rates per sequence</li><li>Newsletter subscriber growth</li><li>Ad impressions, reach, CTR</li><li>Postalytics delivery and QR scan rate</li><li>Form submissions by source</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Lead Quality Metrics</h5><ul><li>Contacts by lifecycle stage</li><li>Score distribution (0-200)</li><li>FN Score vs. Jack Score correlation</li><li>SQL conversion rate</li><li>Source attribution (FN, ads, referral)</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Operations Metrics</h5><ul><li>Tasks overdue per rep</li><li>Deal stalled alert frequency</li><li>Field visit rate vs. leads</li><li>RingCentral call volume (pending)</li><li>Duplicate detection rate</li></ul></div>
   </div>
 </div>
 
