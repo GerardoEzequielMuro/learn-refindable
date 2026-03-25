@@ -337,6 +337,56 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
   <div class="h3">How Loti Uses HubSpot</div>
   <p class="prose">Loti's instance (Account #243877040) is a <strong>property-centric CRM</strong> — the house is the central object, not the contact. A single property might have multiple contacts (owner, spouse, family). The custom object <strong>"LotiProperties"</strong> (internally "Houses") connects everything: contacts, deals, scoring, workflows, and pipeline stages.</p>
+
+  <div class="h3">Sales Day-to-Day — Jack's Typical Day</div>
+  <p class="prose">This is what a typical day looks like for Jack (Field Rep). Every step happens inside HubSpot + RingCentral.</p>
+
+  <div class="flow-h" style="margin:16px 0">
+    <div class="flow-box">Morning Planning</div><span class="flow-arr">&#8594;</span>
+    <div class="flow-box">AirCover Brief</div><span class="flow-arr">&#8594;</span>
+    <div class="flow-box active">Field Visits</div><span class="flow-arr">&#8594;</span>
+    <div class="flow-box">End of Day</div><span class="flow-arr">&#8594;</span>
+    <div class="flow-box done">Qualify / DQ</div>
+  </div>
+
+  <div class="fs">
+    <div class="fp"><h5>1. Morning — Plan the Day</h5>
+    <div class="det">
+      <b>Open Sales Workspace:</b> Check open tasks, overdue items, high-priority flags.<br>
+      <b>Clear overdue tasks first</b> — then review today's tasks.<br>
+      <b>Route planning:</b> Sort LotiProperties by Priority (High first), then Distance. Cluster nearby visits together to save drive time.
+    </div></div>
+
+    <div class="fp bl"><h5>2. Before Each Visit — AirCover Briefing</h5>
+    <div class="det">
+      Open the LotiProperty record and review:<br>
+      Priority &middot; FN Score &middot; Incident Date &middot; Property Ownership &middot; Address &middot; Google Maps Link &middot; House Photo &middot; Owner Photo &middot; All contacts with phone/email.<br><br>
+      <b>This gives Jack everything he needs before knocking on the door.</b>
+    </div></div>
+
+    <div class="fp gr"><h5>3. At the Property — Field Assessment</h5>
+    <div class="det">
+      <b>Assess damage:</b> Home, other structures, belongings. Classify: Total loss / Partial / Smoker.<br>
+      <b>Update HubSpot:</b> Set Confirmed Loss (Yes/No/Unknown), Loti PA Fit, take photos.<br>
+      <b>Talk to homeowner:</b> Explain Loti's role, gather insurance info if they're interested.
+    </div></div>
+
+    <div class="fp"><h5>4. End of Day — Close the Loop</h5>
+    <div class="det">
+      <b>Notes:</b> Write detailed notes per property — condition, outcome, insurance info, red flags.<br>
+      <b>Jack Score:</b> Rate 0-100 + write the reason. This is Jack's ground-truth assessment.<br>
+      <b>Site Visit Date:</b> Set to today.<br>
+      <b>Tasks:</b> Create follow-ups for no-shows. Mark completed tasks as done.
+    </div></div>
+
+    <div class="fp pu"><h5>5. Decision — Qualify or Disqualify</h5>
+    <div class="det">
+      <b>If qualified:</b> Loss confirmed + licensed state + eligible insurance &#8594; Deal gets created in the Sales Pipeline automatically.<br>
+      <b>If disqualified:</b> Select reason from list. If the lead can be re-nurtured, they go back to follow-up emails. Otherwise &#8594; Closed Lost.
+    </div></div>
+  </div>
+
+  <div class="co info"><span class="i">&#128161;</span><div><b>Key tools Jack uses daily:</b> HubSpot Sales Workspace (tasks), HubSpot Mobile App (field updates), RingCentral (calls &amp; SMS), Google Maps (navigation from CRM links).</div></div>
 </div>
 
 <!-- ═══════════ PORTAL OVERVIEW ═══════════ -->
