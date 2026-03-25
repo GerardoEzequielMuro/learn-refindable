@@ -219,40 +219,48 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     <p>Loti Services, Inc. &middot; Account #243877040</p>
   </div>
   <div class="sb-nav">
-  <div class="g"><div class="gt">Getting Started</div>
-    <a data-sec="welcome" class="active"><span class="ic">&#128075;</span>Welcome &amp; Overview</a>
-    <a data-sec="overview"><span class="ic">&#128202;</span>Portal &amp; Products</a>
-  </div>
-  <div class="g"><div class="gt">CRM Objects</div>
-    <a data-sec="crm-objects"><span class="ic">&#127968;</span>CRM Objects</a>
-  </div>
-  <div class="g"><div class="gt">Scoring &amp; Pipeline</div>
-    <a data-sec="scoring-pipeline"><span class="ic">&#129504;</span>Scoring &amp; Pipeline</a>
-  </div>
-  <div class="g"><div class="gt">Automation</div>
-    <a data-sec="workflows"><span class="ic">&#9889;</span>Workflows</a>
-    <a data-sec="data-tasks"><span class="ic">&#128295;</span>Data &amp; Tasks</a>
-  </div>
-  <div class="g"><div class="gt">Email Marketing</div>
-    <a data-sec="email"><span class="ic">&#128231;</span>Email Campaigns</a>
-    <a data-sec="assets-ads"><span class="ic">&#128240;</span>Assets &amp; Ads</a>
-  </div>
-  <div class="g"><div class="gt">Integrations</div>
-    <a data-sec="fn"><span class="ic">&#128293;</span>Fire Notification</a>
-    <a data-sec="ringcentral"><span class="ic">&#128222;</span>RingCentral</a>
-    <a data-sec="other-int"><span class="ic">&#128268;</span>Other Integrations</a>
-  </div>
-  <div class="g"><div class="gt">Operations</div>
-    <a data-sec="reporting"><span class="ic">&#128202;</span>Reports &amp; Dashboards</a>
-    <a data-sec="team"><span class="ic">&#128101;</span>Team &amp; Users</a>
-  </div>
-  <div class="g"><div class="gt">Lead Journey</div>
-    <a data-sec="lj-entry-scoring"><span class="ic">&#128640;</span>Lead Entry &amp; Scoring</a>
-    <a data-sec="lj-field-close"><span class="ic">&#127959;&#65039;</span>Field to Close</a>
-  </div>
-  <div class="g"><div class="gt">Assessment</div>
-    <a data-sec="assessment"><span class="ic">&#128680;</span>Assessment</a>
-  </div>
+<div class="g"><div class="gt">GETTING STARTED</div>
+  <a data-sec="welcome" class="active"><span class="ic">&#128075;</span>Welcome &amp; Overview</a>
+  <a data-sec="overview"><span class="ic">&#128202;</span>Portal &amp; Products</a>
+</div>
+<div class="g"><div class="gt">CRM OBJECTS</div>
+  <a data-sec="lotiproperties"><span class="ic">&#127968;</span>LotiProperties</a>
+  <a data-sec="contacts"><span class="ic">&#128100;</span>Contacts</a>
+  <a data-sec="deals-labels"><span class="ic">&#128176;</span>Deals &amp; Labels</a>
+</div>
+<div class="g"><div class="gt">SCORING &amp; PIPELINE</div>
+  <a data-sec="scoring"><span class="ic">&#129504;</span>Scoring Engine</a>
+  <a data-sec="pipeline"><span class="ic">&#128200;</span>Pipeline Stages</a>
+</div>
+<div class="g"><div class="gt">AUTOMATION</div>
+  <a data-sec="workflows"><span class="ic">&#9889;</span>Workflows</a>
+  <a data-sec="deal-monitoring"><span class="ic">&#128276;</span>Deal Monitoring</a>
+  <a data-sec="data-mgmt"><span class="ic">&#128295;</span>Data &amp; Tasks</a>
+</div>
+<div class="g"><div class="gt">EMAIL MARKETING</div>
+  <a data-sec="email"><span class="ic">&#128231;</span>Email Campaigns</a>
+  <a data-sec="assets-ads"><span class="ic">&#128240;</span>Assets &amp; Ads</a>
+</div>
+<div class="g"><div class="gt">INTEGRATIONS</div>
+  <a data-sec="fn"><span class="ic">&#128293;</span>Fire Notification</a>
+  <a data-sec="rc-overview"><span class="ic">&#128222;</span>RingCentral Overview</a>
+  <a data-sec="rc-desktop"><span class="ic">&#128187;</span>RC Desktop &amp; Mobile</a>
+  <a data-sec="rc-calls"><span class="ic">&#128241;</span>RC Calls &amp; SMS</a>
+  <a data-sec="other-int"><span class="ic">&#128268;</span>Other Integrations</a>
+</div>
+<div class="g"><div class="gt">OPERATIONS</div>
+  <a data-sec="reporting"><span class="ic">&#128202;</span>Reports &amp; Dashboards</a>
+  <a data-sec="team"><span class="ic">&#128101;</span>Team &amp; Users</a>
+</div>
+<div class="g"><div class="gt">LEAD JOURNEY</div>
+  <a data-sec="lj-map"><span class="ic">&#128506;</span>Lead Journey Map</a>
+  <a data-sec="lj-entry"><span class="ic">&#128640;</span>Lead Entry &amp; Enrichment</a>
+  <a data-sec="lj-scoring"><span class="ic">&#127919;</span>Lead Scoring &amp; Branches</a>
+  <a data-sec="lj-field-close"><span class="ic">&#127959;&#65039;</span>Field to Close</a>
+</div>
+<div class="g"><div class="gt">ASSESSMENT</div>
+  <a data-sec="assessment"><span class="ic">&#128680;</span>Assessment</a>
+</div>
   </div>
 </nav>
 <main class="main" id="main">
@@ -390,8 +398,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <!-- ═══════════ LOTIPROPERTIES ═══════════ -->
 
 
-<div class="sec" id="crm-objects">
-  <div class="sh bl"><h2>CRM Objects</h2><div class="sub">LotiProperties, Contacts, Deals, and Association Labels</div></div>
+<div class="sec" id="lotiproperties">
+  <div class="sh bl"><h2>LotiProperties</h2><div class="sub">Custom object representing physical properties affected by disaster</div></div>
 
   <div class="h3">LotiProperties (Custom Object)</div>
 <div class="tldr">
@@ -428,9 +436,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </table>
     </div></div>
   </div>
+
 </div>
 
 <!-- ═══════════ CONTACTS ═══════════ -->
+
+<div class="sec" id="contacts">
+  <div class="sh bl"><h2>Contacts</h2><div class="sub">Lifecycle stages, lead status, and contact properties</div></div>
 
   <div class="h3">Contacts</div>
 <div class="tldr">
@@ -471,7 +483,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+</div>
+
 <!-- ═══════════ DEALS ═══════════ -->
+
+<div class="sec" id="deals-labels">
+  <div class="sh bl"><h2>Deals &amp; Labels</h2><div class="sub">Deal architecture, association labels, and campaign segmentation</div></div>
 
   <div class="h3">Deals</div>
 <div class="tldr">
@@ -544,11 +561,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <p class="prose"><strong>Tickets:</strong> 0 records — not in use. Opportunity for Post-Claim / Life 2.0 service pipeline.</p>
     </div></div>
   </div>
+</div>
+
 <!-- ═══════════ SCORING ═══════════ -->
 
 
-<div class="sec" id="scoring-pipeline">
-  <div class="sh pu"><h2>Scoring &amp; Pipeline</h2><div class="sub">How leads are scored and deals progress through stages</div></div>
+<div class="sec" id="scoring">
+  <div class="sh pu"><h2>Scoring Engine</h2><div class="sub">How leads are scored with engagement and FIT scores</div></div>
 
   <div class="h3">Scoring Engine</div>
 <div class="tldr">
@@ -589,9 +608,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <tr><td><span class="p rd">Low</span></td><td><span class="p rd">Low</span></td><td><b>Passive monitoring</b></td></tr></table>
     </div></div>
   </div>
+
 </div>
 
 <!-- ═══════════ PIPELINE ═══════════ -->
+
+<div class="sec" id="pipeline">
+  <div class="sh pu"><h2>Pipeline Stages</h2><div class="sub">8-stage sales pipeline from lead review to contract signing</div></div>
 
   <div class="h3">Pipeline Stages</div>
 <div class="tldr">
@@ -627,6 +650,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+</div>
+
 <!-- ═══════════ WF OVERVIEW ═══════════ -->
 
 
@@ -655,9 +680,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <div class="co info"><span class="i">&#128161;</span><div><b>Custom Code Workflows:</b> Several use JavaScript actions (Duplicate Phone Detection, Association Label Copy, Score Aggregation) — built by Refindable for logic too complex for standard workflow builder.</div></div>
     </div></div>
   </div>
+
 </div>
 
 <!-- ═══════════ WF MONITORING ═══════════ -->
+
+<div class="sec" id="deal-monitoring">
+  <div class="sh rd"><h2>Deal Monitoring</h2><div class="sub">Automated stalled deal detection and escalation</div></div>
 
   <div class="h3">Deal Monitoring</div>
 <div class="tldr">
@@ -683,10 +712,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+</div>
+
 <!-- ═══════════ WF SCORING ═══════════ -->
 
 
-<div class="sec" id="data-tasks">
+<div class="sec" id="data-mgmt">
   <div class="sh am"><h2>Data &amp; Tasks</h2><div class="sub">Scoring workflows and data management automation</div></div>
 
   <div class="h3">Scoring &amp; Tasks</div>
@@ -728,7 +759,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </div></div>
     </div></div>
   </div>
-</div>
 
 <!-- ═══════════ WF DATA ═══════════ -->
 
@@ -767,6 +797,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <div class="desc">Background sync keeping data flowing between LotiProperties and Contacts. Visible in Activities tab.</div></div>
     </div></div>
   </div>
+</div>
+
 <!-- ═══════════ EMAIL OVERVIEW ═══════════ -->
 
 
@@ -927,8 +959,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <!-- ═══════════ RC STATUS ═══════════ -->
 
 
-<div class="sec" id="ringcentral">
-  <div class="sh cy"><h2>RingCentral</h2><div class="sub">Complete guide to RingCentral phone system integration</div></div>
+<div class="sec" id="rc-overview">
+  <div class="sh cy"><h2>RingCentral Overview</h2><div class="sub">Account setup and HubSpot integration guide</div></div>
 
   <div class="h3">RC Overview</div>
 <div class="tldr">
@@ -965,7 +997,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <p class="prose">Use the sidebar to access step-by-step setup guides with screenshots below.</p>
     </div></div>
   </div>
-</div>
 <!-- ═══ RC SECTIONS (content injected by build script) ═══ -->
 
   <div class="h3">Account Setup</div>
@@ -1039,8 +1070,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <p>You should see a success screen. If not, contact us with a screenshot.</p>
 <div class="img-wrap small"><img src="images/ringcentral/rc-22.png" loading="lazy"></div></div></div>
 
+</div>
+
 <!-- III: DESKTOP CONFIG -->
 
+<div class="sec" id="rc-desktop">
+  <div class="sh cy"><h2>RC Desktop &amp; Mobile</h2><div class="sub">Desktop configuration and mobile app setup</div></div>
 
   <div class="h3">Desktop Configuration</div>
 <div class="sh rd"><h2>Desktop Configuration</h2><div class="sub">Setting up RingCentral on your computer</div></div>
@@ -1107,8 +1142,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 <div class="important"><div class="important-title">⚠️ Important</div><p>The mobile app is an extension of your desktop setup. Core settings must be configured on <strong>desktop</strong>. To receive calls on mobile, ensure your extension is configured in <a href="#config-desktop">Desktop Configuration</a>.</p></div>
 
+</div>
+
 <!-- V: CALLS DESKTOP -->
 
+<div class="sec" id="rc-calls">
+  <div class="sh cy"><h2>RC Calls &amp; SMS</h2><div class="sub">Making calls and sending SMS from desktop and mobile</div></div>
 
   <div class="h3">Calls (Desktop)</div>
 <div class="sh rd"><h2>Calls (Desktop)</h2><div class="sub">Making and receiving calls from your computer</div></div>
@@ -1219,6 +1258,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 
 
+</div>
+
 <!-- OTHER INTEGRATIONS -->
 
 
@@ -1314,13 +1355,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <!-- ═══════════ LEAD JOURNEY: ENTRY ═══════════ -->
 
 
-<div class="sec" id="lj-entry-scoring">
-  <div class="sh or"><h2>Lead Entry &amp; Scoring</h2><div class="sub">How leads enter the system and get scored</div></div>
+<div class="sec" id="lj-map">
+  <div class="sh or"><h2>Lead Journey Map</h2><div class="sub">Interactive visual flowchart of the complete lead journey</div></div>
 
   <div class="co info" style="margin-bottom:20px"><span class="i">&#128506;</span><div><b>Lead Journey Visual Map:</b> This interactive diagram shows the full flow from lead entry to deal close. <b>Hover over each box</b> for details. Use the +/- buttons to zoom.</div></div>
   <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:28px;background:#1b2444;">
     <iframe src="lead-journey-board.html" style="width:100%;height:600px;border:none;display:block;" title="Lead Journey Flowchart"></iframe>
   </div>
+  <p style="text-align:center;margin-top:12px"><a href="lead-journey-board.html" target="_blank" style="color:var(--blue);font-weight:600;text-decoration:none">&#128279; Open Full Screen</a></p>
+</div>
+
+<div class="sec" id="lj-entry">
+  <div class="sh or"><h2>Lead Entry &amp; Enrichment</h2><div class="sub">How leads enter the system and get enriched with data</div></div>
 
   <div class="h3">Entry &amp; Enrichment</div>
 <div class="tldr">
@@ -1349,9 +1395,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </div>
     </div></div>
   </div>
+
 </div>
 
 <!-- ═══════════ LEAD JOURNEY: SCORING ═══════════ -->
+
+<div class="sec" id="lj-scoring">
+  <div class="sh or"><h2>Lead Scoring &amp; Branches</h2><div class="sub">Score-based routing into ineligible, MQL, remote, and SQL branches</div></div>
 
   <div class="h3">Scoring &amp; Branches</div>
 <div class="tldr">
@@ -1376,6 +1426,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </div>
     </div></div>
   </div>
+
+</div>
 
 <!-- ═══════════ LEAD JOURNEY: FIELD ═══════════ -->
 
