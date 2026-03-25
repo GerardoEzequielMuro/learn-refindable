@@ -48,6 +48,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 /* SECTIONS */
 .sec{display:none;max-width:1060px;animation:fadeIn .25s ease}
+#lj-map{max-width:none;margin-left:-48px;margin-right:-48px;padding:0 48px}
+#lj-map>div:last-child{margin-left:-48px;margin-right:-48px;border-radius:0;height:calc(100vh - 100px)}
 .sec.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
