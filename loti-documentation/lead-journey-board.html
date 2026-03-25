@@ -12,73 +12,71 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     background: #1b2444;
     color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   /* ── Top Bar ─────────────────────────────────── */
   .topbar {
-    position: sticky; top: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 24px;
-    background: rgba(27,36,68,.92);
+    padding: 10px 20px;
+    background: rgba(27,36,68,.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255,255,255,.08);
   }
-  .topbar h1 { font-size: 18px; font-weight: 700; letter-spacing: .3px; }
+  .topbar h1 { font-size: 16px; font-weight: 700; letter-spacing: .3px; white-space: nowrap; }
   .topbar h1 span { color: #2ecc71; }
 
-  /* Legend */
   .legend {
-    display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px;
+    display: flex; flex-wrap: wrap; gap: 10px; font-size: 10px;
   }
-  .legend-item {
-    display: flex; align-items: center; gap: 5px;
-  }
-  .legend-swatch {
-    width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
-  }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
-  /* Zoom controls */
-  .zoom-controls {
-    display: flex; gap: 6px;
-  }
+  .zoom-controls { display: flex; gap: 4px; }
   .zoom-controls button {
-    width: 32px; height: 32px; border: 1px solid rgba(255,255,255,.2);
+    width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.2);
     border-radius: 6px; background: rgba(255,255,255,.06); color: #fff;
-    font-size: 18px; cursor: pointer; display: flex; align-items: center;
+    font-size: 14px; cursor: pointer; display: flex; align-items: center;
     justify-content: center; transition: background .2s;
   }
   .zoom-controls button:hover { background: rgba(255,255,255,.14); }
+  .zoom-controls button.fit-btn { font-size: 10px; width: auto; padding: 0 8px; font-weight: 600; }
 
   /* ── Canvas ──────────────────────────────────── */
   .canvas-wrap {
-    overflow: auto;
-    padding: 40px 20px 80px;
-    display: flex; justify-content: center;
+    position: absolute;
+    top: 52px; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    cursor: grab;
   }
+  .canvas-wrap.dragging { cursor: grabbing; }
+
   .canvas {
-    transform-origin: top center;
-    transition: transform .25s ease;
-    position: relative;
-    width: 1600px;
-    min-height: 2600px;
+    position: absolute;
+    transform-origin: 0 0;
+    width: 2400px;
+    height: 1700px;
   }
 
-  /* ── Shared box styles ───────────────────────── */
+  /* ── Box styles ────────────────────────────── */
   .box {
     position: absolute;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     text-align: center;
     font-weight: 600;
-    cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease;
+    cursor: default;
+    transition: box-shadow .18s ease;
     z-index: 2;
+    line-height: 1.3;
   }
   .box:hover {
-    transform: translateY(-3px);
     box-shadow: 0 8px 28px rgba(0,0,0,.35);
+    z-index: 10;
   }
 
   /* Tooltip */
@@ -99,14 +97,12 @@
     pointer-events: none;
     white-space: normal;
     text-align: left;
+    top: 110%; left: 50%; transform: translateX(-50%);
   }
   .tooltip .tt-title {
     font-weight: 700; font-size: 13px; margin-bottom: 4px; color: #fff;
   }
-  .box:hover .tooltip,
-  .box:focus .tooltip {
-    display: block;
-  }
+  .box:hover .tooltip { display: block; }
 
   /* ── Color classes ───────────────────────────── */
   .c-salmon   { background: #e87461; color: #fff; }
@@ -124,7 +120,6 @@
     color: #fff;
   }
 
-  /* Sticky-note style */
   .sticky {
     background: #fff9c4;
     color: #1b2444;
@@ -142,7 +137,6 @@
   }
   .sticky.rot-pos { transform: rotate(2deg); }
 
-  /* Arrow label */
   .arrow-label {
     position: absolute;
     font-size: 11px;
@@ -153,7 +147,6 @@
     letter-spacing: .3px;
   }
 
-  /* Section headings */
   .section-heading {
     position: absolute;
     font-size: 11px;
@@ -164,10 +157,8 @@
     z-index: 1;
   }
 
-  /* Link style inside yellow ref boxes */
   .ref-link { color: #1565c0; text-decoration: underline; cursor: pointer; }
 
-  /* SVG layer */
   .arrows-svg {
     position: absolute;
     top: 0; left: 0;
@@ -197,11 +188,12 @@
     <button id="zoomOut" title="Zoom out">&minus;</button>
     <button id="zoomReset" title="Reset zoom">1:1</button>
     <button id="zoomIn" title="Zoom in">+</button>
+    <button id="zoomFit" class="fit-btn" title="Fit to screen">Fit</button>
   </div>
 </div>
 
 <!-- ============ CANVAS ============ -->
-<div class="canvas-wrap">
+<div class="canvas-wrap" id="canvasWrap">
 <div class="canvas" id="canvas">
 
 <!-- SVG arrows layer -->
@@ -216,175 +208,175 @@
   </defs>
 </svg>
 
-<!-- ─── LEVEL 1: Data Entry Sources ─── -->
-<div class="section-heading" style="top:10px;left:50%;transform:translateX(-50%);">Data Entry Sources</div>
+<!-- ─── LEVEL 1: Data Entry Sources (y=40) ─── -->
+<div class="section-heading" style="top:10px;left:900px;">Data Entry Sources</div>
 
-<div class="box c-salmon" style="width:200px;height:52px;top:40px;left:200px;font-size:13px;" data-tip="import">
+<div class="box c-salmon" style="width:210px;height:54px;top:40px;left:300px;font-size:14px;">
   Import (LA Fires)
   <div class="tooltip"><div class="tt-title">Import</div>Manually imported data, e.g. after LA Fires incident.</div>
 </div>
 
-<div class="box c-salmon" style="width:220px;height:52px;top:40px;left:690px;font-size:13px;" data-tip="fire">
+<div class="box c-salmon" style="width:240px;height:54px;top:40px;left:900px;font-size:14px;">
   New Fire Notification
   <div class="tooltip"><div class="tt-title">New Fire Notification</div>When a new fire is detected, a LotiProperty is automatically created in HubSpot.</div>
 </div>
 
-<div class="box c-salmon" style="width:180px;height:52px;top:40px;left:1220px;font-size:13px;" data-tip="form">
-  form submission
+<div class="box c-salmon" style="width:200px;height:54px;top:40px;left:1550px;font-size:14px;">
+  Form Submission
   <div class="tooltip"><div class="tt-title">Form Submission</div>When someone fills out a form on the website (loti.com or landing pages).</div>
 </div>
 
-<!-- ─── LEVEL 2: LotiProperty & Contacts ─── -->
-<div class="box c-white" style="width:340px;height:80px;top:150px;left:530px;font-size:20px;font-weight:800;" data-tip="lotiproperty">
+<!-- ─── LEVEL 2: LotiProperty & Contacts (y=160) ─── -->
+<div class="box c-white" style="width:360px;height:84px;top:160px;left:720px;font-size:22px;font-weight:800;">
   LotiProperty
   <div class="tooltip"><div class="tt-title">LotiProperty</div>The property (house) is the central object in the CRM. Each house has a record with all its data.</div>
 </div>
 
-<div class="arrow-label" style="top:140px;left:875px;">Loti - Campaign</div>
+<div class="arrow-label" style="top:155px;left:1120px;">Loti - Campaign</div>
 
-<div class="box c-gold" style="width:180px;height:58px;top:150px;left:1220px;font-size:15px;font-weight:700;" data-tip="contacts">
+<div class="box c-gold" style="width:200px;height:62px;top:165px;left:1550px;font-size:16px;font-weight:700;">
   CONTACTS
   <div class="tooltip"><div class="tt-title">CONTACTS</div>People (homeowners, referrals, leads). Each contact is linked to a property.</div>
 </div>
 
-<!-- ─── LEVEL 3: Property Reach ─── -->
-<div class="box c-lavender" style="width:200px;height:56px;top:290px;left:600px;font-size:14px;" data-tip="propreach">
+<!-- ─── LEVEL 3: Property Reach (y=320) ─── -->
+<div class="box c-lavender" style="width:220px;height:58px;top:320px;left:790px;font-size:15px;">
   Property Reach
   <div class="tooltip"><div class="tt-title">Property Reach</div>Tool that looks up additional owner info (phone, email, etc.) to enrich the property record.</div>
 </div>
 
-<!-- ─── LEVEL 4: Debounce / OpenAI / Engagement ─── -->
-<div class="arrow-label" style="top:355px;left:1270px;">Debounce</div>
+<!-- ─── LEVEL 4: OpenAI / Engagement (y=460) ─── -->
+<div class="arrow-label" style="top:380px;left:1600px;">Debounce</div>
 
-<div class="box c-gold" style="width:180px;height:56px;top:400px;left:1220px;font-size:14px;" data-tip="engagement">
+<div class="box c-gold" style="width:200px;height:58px;top:460px;left:1550px;font-size:15px;">
   Engagement
   <div class="tooltip"><div class="tt-title">Engagement</div>How much has this person interacted? (opened emails, visited website, scanned QR code)</div>
 </div>
 
-<div class="arrow-label" style="top:355px;left:640px;">Goes through</div>
+<div class="arrow-label" style="top:395px;left:850px;">Goes through</div>
 
-<div class="box c-white" style="width:160px;height:56px;top:400px;left:620px;font-size:14px;" data-tip="openai">
+<div class="box c-white" style="width:180px;height:58px;top:460px;left:810px;font-size:15px;">
   Open AI
   <div class="tooltip"><div class="tt-title">Open AI</div>AI that analyzes the quality of the property opportunity (FIT scoring).</div>
 </div>
 
 <!-- Reference boxes -->
-<div class="box c-yellow" style="width:160px;height:44px;top:410px;left:120px;font-size:12px;" data-tip="miroref">
+<div class="box c-yellow" style="width:160px;height:46px;top:468px;left:200px;font-size:12px;">
   <a href="#" class="ref-link">Miro Board</a>
   <div class="tooltip"><div class="tt-title">Miro Board</div>Reference link to the original Miro board with the full flow.</div>
 </div>
 
-<div class="box c-yellow" style="width:200px;height:44px;top:410px;left:1460px;font-size:12px;" data-tip="hubdoc">
+<div class="box c-yellow" style="width:210px;height:46px;top:468px;left:1900px;font-size:12px;">
   <a href="#" class="ref-link">HubSpot Scoring DOC</a>
   <div class="tooltip"><div class="tt-title">HubSpot Scoring DOC</div>Reference document with HubSpot scoring logic.</div>
 </div>
 
-<!-- ─── LEVEL 5: Scores ─── -->
-<div class="box c-gold" style="width:200px;height:56px;top:520px;left:1210px;font-size:14px;" data-tip="escore">
-  Engagement Score
-  <div class="tooltip"><div class="tt-title">Engagement Score</div>Score 0-100 based on contact actions. More interactions = higher score.</div>
-</div>
-
-<div class="box c-white" style="width:200px;height:56px;top:520px;left:600px;font-size:14px;" data-tip="pscore">
+<!-- ─── LEVEL 5: Scores (y=600) ─── -->
+<div class="box c-white" style="width:220px;height:58px;top:600px;left:790px;font-size:15px;">
   Property Score
   <div class="tooltip"><div class="tt-title">Property Score (FIT Score)</div>Score 0-100 measuring opportunity quality. LA Fires = automatic 100.</div>
 </div>
 
-<!-- ─── LEVEL 6: Opportunity Score ─── -->
-<div class="box c-green" style="width:240px;height:62px;top:640px;left:680px;font-size:16px;font-weight:700;" data-tip="oscore">
+<div class="box c-gold" style="width:220px;height:58px;top:600px;left:1540px;font-size:15px;">
+  Engagement Score
+  <div class="tooltip"><div class="tt-title">Engagement Score</div>Score 0-100 based on contact actions. More interactions = higher score.</div>
+</div>
+
+<!-- ─── LEVEL 6: Opportunity Score (y=740) ─── -->
+<div class="box c-green" style="width:260px;height:66px;top:740px;left:900px;font-size:17px;font-weight:700;">
   Opportunity Score
   <div class="tooltip"><div class="tt-title">Opportunity Score</div>Engagement + FIT = Opportunity Score (0-200). This number determines pipeline stage.</div>
 </div>
 
-<!-- ─── LEVEL 7: Opportunity Pipeline ─── -->
-<div class="box c-navy-outline" style="width:380px;height:70px;top:760px;left:610px;font-size:15px;font-weight:700;" data-tip="opipeline">
+<!-- ─── LEVEL 7: Opportunity Pipeline (y=880) ─── -->
+<div class="box c-navy-outline" style="width:400px;height:72px;top:880px;left:830px;font-size:16px;font-weight:700;">
   Opportunity Pipeline (lotiproperty)
   <div class="tooltip"><div class="tt-title">Opportunity Pipeline</div>Visual funnel where each property advances based on its score.</div>
 </div>
 
-<div class="sticky" style="top:770px;left:1020px;">
+<div class="sticky" style="top:890px;left:1280px;">
   Automatically moves lotiproperty stages 1-6. Depending on score.
 </div>
 
-<!-- ─── LEVEL 8: Pipeline Stages ─── -->
-<div class="section-heading" style="top:870px;left:50%;transform:translateX(-50%);">Opportunity Pipeline Stages</div>
+<!-- ─── LEVEL 8: Pipeline Stages (y=1030) ─── -->
+<div class="section-heading" style="top:990px;left:900px;">Opportunity Pipeline Stages</div>
 
-<div class="box c-mint" style="width:150px;height:54px;top:900px;left:20px;padding:4px;" data-tip="passive">
+<div class="box c-mint" style="width:170px;height:56px;top:1030px;left:50px;padding:6px;">
   Passive Nurture<br>0-29
   <div class="tooltip"><div class="tt-title">Passive Nurture 0-29</div>Low score. Only receives automated emails. No manual outreach.</div>
 </div>
-<div class="box c-mint" style="width:150px;height:54px;top:900px;left:190px;padding:4px;" data-tip="warm">
+<div class="box c-mint" style="width:170px;height:56px;top:1030px;left:270px;padding:6px;">
   Warm Nurture<br>30-59
   <div class="tooltip"><div class="tt-title">Warm Nurture 30-59</div>Some interest shown. Gets more content but no direct calls yet.</div>
 </div>
-<div class="box c-mint" style="width:160px;height:54px;top:900px;left:360px;padding:4px;" data-tip="activemql">
+<div class="box c-mint" style="width:180px;height:56px;top:1030px;left:490px;padding:6px;">
   Active Digital MQL<br>60-74
   <div class="tooltip"><div class="tt-title">Active Digital MQL 60-74</div>Marketing Qualified Lead. Has shown real interest through digital engagement.</div>
 </div>
-<div class="box c-mint" style="width:150px;height:54px;top:900px;left:540px;padding:4px;" data-tip="engagedmq">
+<div class="box c-mint" style="width:170px;height:56px;top:1030px;left:720px;padding:6px;">
   Engaged MQL<br>75-84
   <div class="tooltip"><div class="tt-title">Engaged MQL 75-84</div>Highly engaged. Almost ready for direct sales contact.</div>
 </div>
-<div class="box c-mint" style="width:140px;height:54px;top:900px;left:710px;padding:4px;" data-tip="highintent">
+<div class="box c-mint" style="width:160px;height:56px;top:1030px;left:940px;padding:6px;">
   High Intent<br>85-89
   <div class="tooltip"><div class="tt-title">High Intent 85-89</div>Very high interest. Priority for the sales team.</div>
 </div>
-<div class="box c-mint" style="width:190px;height:54px;top:900px;left:870px;padding:4px;font-size:11px;" data-tip="sdrcontact">
+<div class="box c-mint" style="width:200px;height:56px;top:1030px;left:1150px;padding:6px;font-size:11px;">
   SDR: MUST CONTACT<br>(Net New) 90+
   <div class="tooltip"><div class="tt-title">SDR: MUST CONTACT 90+</div>CALL NOW! This is a hot lead that needs immediate outreach.</div>
 </div>
-<div class="box c-mint" style="width:170px;height:54px;top:900px;left:1080px;padding:4px;" data-tip="sdrchasing">
+<div class="box c-mint" style="width:180px;height:56px;top:1030px;left:1400px;padding:6px;">
   SDR: Actively<br>Chasing
   <div class="tooltip"><div class="tt-title">SDR: Actively Chasing</div>Team is actively reaching out and following up with this lead.</div>
 </div>
 
 <!-- To create a deal / Lost -->
-<div class="box c-mint" style="width:170px;height:54px;top:1000px;left:1270px;padding:4px;font-size:13px;" data-tip="createdeal">
+<div class="box c-mint" style="width:180px;height:56px;top:1140px;left:1640px;padding:6px;font-size:13px;">
   To create a deal
   <div class="tooltip"><div class="tt-title">To create a deal</div>When SDR moves here, a Deal is automatically created in the pipeline.</div>
 </div>
 
-<div class="box c-mint" style="width:120px;height:54px;top:1000px;left:1460px;padding:4px;font-size:13px;background:#f8d7da;color:#721c24;" data-tip="lost">
+<div class="box c-mint" style="width:130px;height:56px;top:1140px;left:1880px;padding:6px;font-size:13px;background:#f8d7da;color:#721c24;">
   Lost
   <div class="tooltip"><div class="tt-title">Lost</div>Lead did not advance. Marked as lost.</div>
 </div>
 
-<div class="sticky rot-pos" style="top:1060px;left:1250px;">
+<div class="sticky rot-pos" style="top:1210px;left:1620px;">
   When SDR moves to this stage, it auto creates a deal.
 </div>
 
-<!-- ─── LEVEL 9: Deals Pipeline ─── -->
-<div class="arrow-label" style="top:1120px;left:1310px;">Auto Creates a deal</div>
+<!-- ─── LEVEL 9: Deals Pipeline (y=1340) ─── -->
+<div class="arrow-label" style="top:1280px;left:1680px;">Auto Creates a deal</div>
 
-<div class="box c-orange" style="width:260px;height:64px;top:1160px;left:670px;font-size:16px;font-weight:700;" data-tip="dpipeline">
+<div class="box c-orange" style="width:280px;height:68px;top:1340px;left:890px;font-size:17px;font-weight:700;">
   Deals Pipeline (Deal)
   <div class="tooltip"><div class="tt-title">Deals Pipeline</div>Sales funnel. Tracks from first contact to closing the deal.</div>
 </div>
 
-<!-- ─── LEVEL 10: Deal Stages ─── -->
-<div class="section-heading" style="top:1260px;left:50%;transform:translateX(-50%);">Deal Pipeline Stages</div>
+<!-- ─── LEVEL 10: Deal Stages (y=1490) ─── -->
+<div class="section-heading" style="top:1440px;left:900px;">Deal Pipeline Stages</div>
 
-<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:140px;padding:4px;font-size:12px;" data-tip="initialcontact">
+<div class="box c-peach" style="width:180px;height:56px;top:1490px;left:200px;padding:6px;font-size:12px;">
   Initial Contact Made
   <div class="tooltip"><div class="tt-title">Initial Contact Made</div>First contact was made with the homeowner.</div>
 </div>
-<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:340px;padding:4px;font-size:12px;" data-tip="clienteng">
+<div class="box c-peach" style="width:170px;height:56px;top:1490px;left:430px;padding:6px;font-size:12px;">
   Client Engaging
   <div class="tooltip"><div class="tt-title">Client Engaging</div>Client is responding and showing interest in representation.</div>
 </div>
-<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:540px;padding:4px;font-size:12px;" data-tip="lotiqualified">
+<div class="box c-peach" style="width:170px;height:56px;top:1490px;left:650px;padding:6px;font-size:12px;">
   Loti Qualified
   <div class="tooltip"><div class="tt-title">Loti Qualified</div>Loti verified this is a valid case for representation.</div>
 </div>
-<div class="box c-peach" style="width:160px;height:54px;top:1290px;left:740px;padding:4px;font-size:12px;" data-tip="terms">
+<div class="box c-peach" style="width:170px;height:56px;top:1490px;left:870px;padding:6px;font-size:12px;">
   Terms Proposed
   <div class="tooltip"><div class="tt-title">Terms Proposed</div>Representation agreement terms have been sent to the homeowner.</div>
 </div>
-<div class="box c-peach" style="width:180px;height:54px;top:1290px;left:940px;padding:4px;font-size:11px;" data-tip="won">
+<div class="box c-peach" style="width:200px;height:56px;top:1490px;left:1090px;padding:6px;font-size:11px;">
   Contract Signed - Won
   <div class="tooltip"><div class="tt-title">Contract Signed - Won</div>Signed! Loti now represents the homeowner for their insurance claim.</div>
 </div>
-<div class="box c-peach" style="width:150px;height:54px;top:1290px;left:1160px;padding:4px;font-size:12px;" data-tip="closedlost">
+<div class="box c-peach" style="width:170px;height:56px;top:1490px;left:1340px;padding:6px;font-size:12px;">
   Closed Lost
   <div class="tooltip"><div class="tt-title">Closed Lost</div>Deal was not closed. Reason is recorded for analysis.</div>
 </div>
@@ -398,77 +390,76 @@
    ═══════════════════════════════════════════════ */
 const arrows = [
   // Level 1 → LotiProperty
-  { from: [300, 92], to: [620, 150] },           // Import → LotiProperty
-  { from: [800, 92], to: [700, 150] },           // Fire Notification → LotiProperty
+  { from: [405, 94], to: [810, 160] },
+  { from: [1020, 94], to: [940, 160] },
   // form submission → CONTACTS
-  { from: [1310, 92], to: [1310, 150] },         // form → CONTACTS
+  { from: [1650, 94], to: [1650, 165] },
 
   // LotiProperty → Property Reach
-  { from: [700, 230], to: [700, 290] },          // LotiProperty → Property Reach
+  { from: [900, 244], to: [900, 320] },
 
-  // LotiProperty → CONTACTS (via Campaign label)
-  { from: [870, 190], to: [1220, 180] },         // LotiProperty → CONTACTS
+  // LotiProperty → CONTACTS
+  { from: [1080, 200], to: [1550, 196] },
 
-  // Property Reach ↔ CONTACTS  (bidirectional)
-  { from: [800, 318], to: [1220, 190], bidir: true },
+  // Property Reach ↔ CONTACTS (bidirectional)
+  { from: [1010, 349], to: [1550, 200], bidir: true },
 
   // CONTACTS → Engagement (Debounce)
-  { from: [1310, 208], to: [1310, 400] },
+  { from: [1650, 227], to: [1650, 460] },
 
-  // Property Reach → Open AI (Goes through)
-  { from: [700, 346], to: [700, 400] },
+  // Property Reach → Open AI
+  { from: [900, 378], to: [900, 460] },
 
   // Engagement → Engagement Score
-  { from: [1310, 456], to: [1310, 520] },
+  { from: [1650, 518], to: [1650, 600] },
 
   // Open AI → Property Score
-  { from: [700, 456], to: [700, 520] },
+  { from: [900, 518], to: [900, 600] },
 
   // Engagement Score ↔ Property Score (bidirectional)
-  { from: [1210, 548], to: [800, 548], bidir: true },
+  { from: [1540, 629], to: [1010, 629], bidir: true },
 
   // Engagement Score → Opportunity Score
-  { from: [1210, 556], to: [920, 671] },
+  { from: [1540, 636], to: [1160, 773] },
 
   // Property Score → Opportunity Score
-  { from: [800, 556], to: [800, 640] },
+  { from: [1010, 636], to: [1030, 740] },
 
   // Opportunity Score → Opportunity Pipeline
-  { from: [800, 702], to: [800, 760] },
+  { from: [1030, 806], to: [1030, 880] },
 
   // Pipeline → stages (fan out)
-  { from: [700, 830], to: [95, 900] },
-  { from: [720, 830], to: [265, 900] },
-  { from: [750, 830], to: [440, 900] },
-  { from: [790, 830], to: [615, 900] },
-  { from: [830, 830], to: [780, 900] },
-  { from: [870, 830], to: [965, 900] },
-  { from: [920, 830], to: [1165, 900] },
+  { from: [880, 952], to: [135, 1030] },
+  { from: [900, 952], to: [355, 1030] },
+  { from: [930, 952], to: [580, 1030] },
+  { from: [960, 952], to: [805, 1030] },
+  { from: [1000, 952], to: [1020, 1030] },
+  { from: [1060, 952], to: [1250, 1030] },
+  { from: [1120, 952], to: [1490, 1030] },
 
   // Chasing → To create a deal
-  { from: [1165, 954], to: [1270, 1020] },
+  { from: [1580, 1086], to: [1640, 1140] },
   // Chasing → Lost
-  { from: [1250, 954], to: [1480, 1000] },
+  { from: [1580, 1070], to: [1880, 1140] },
 
   // To create a deal → Deals Pipeline
-  { from: [1355, 1054], to: [800, 1160] },
+  { from: [1730, 1196], to: [1030, 1340] },
 
   // Engagement → Miro Board ref
-  { from: [1220, 430], to: [280, 430] },
+  { from: [1550, 491], to: [360, 491] },
 
   // Deals Pipeline → deal stages
-  { from: [710, 1224], to: [220, 1290] },
-  { from: [750, 1224], to: [420, 1290] },
-  { from: [800, 1224], to: [620, 1290] },
-  { from: [850, 1224], to: [820, 1290] },
-  { from: [900, 1224], to: [1030, 1290] },
-  { from: [940, 1224], to: [1235, 1290] },
+  { from: [940, 1408], to: [290, 1490] },
+  { from: [980, 1408], to: [515, 1490] },
+  { from: [1020, 1408], to: [735, 1490] },
+  { from: [1060, 1408], to: [955, 1490] },
+  { from: [1100, 1408], to: [1190, 1490] },
+  { from: [1140, 1408], to: [1425, 1490] },
 ];
 
 function drawArrows() {
   const svg = document.getElementById('arrowsSvg');
-  // Remove old paths
-  svg.querySelectorAll('path.arrow-path, line.arrow-line').forEach(el => el.remove());
+  svg.querySelectorAll('line.arrow-line').forEach(el => el.remove());
 
   arrows.forEach(a => {
     const [x1, y1] = a.from;
@@ -493,24 +484,167 @@ function drawArrows() {
 drawArrows();
 
 /* ═══════════════════════════════════════════════
-   ZOOM
+   PAN & ZOOM
    ═══════════════════════════════════════════════ */
-let scale = 1;
-const canvas = document.getElementById('canvas');
-const STEP = 0.1;
+const canvasEl = document.getElementById('canvas');
+const wrap = document.getElementById('canvasWrap');
+let scale = 0.65;
+let panX = 0;
+let panY = 0;
+let isDragging = false;
+let startX, startY, startPanX, startPanY;
 
+function applyTransform() {
+  canvasEl.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+}
+
+function fitToScreen() {
+  const ww = wrap.clientWidth;
+  const wh = wrap.clientHeight;
+  const cw = 2400;
+  const ch = 1700;
+  scale = Math.min(ww / cw, wh / ch) * 0.92;
+  panX = (ww - cw * scale) / 2;
+  panY = (wh - ch * scale) / 2;
+  applyTransform();
+}
+
+// Initial fit
+fitToScreen();
+
+// Drag to pan
+wrap.addEventListener('mousedown', (e) => {
+  if (e.target.closest('.zoom-controls')) return;
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  startPanX = panX;
+  startPanY = panY;
+  wrap.classList.add('dragging');
+  e.preventDefault();
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  panX = startPanX + (e.clientX - startX);
+  panY = startPanY + (e.clientY - startY);
+  applyTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+  wrap.classList.remove('dragging');
+});
+
+// Mouse wheel zoom
+wrap.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = wrap.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  const oldScale = scale;
+  const delta = e.deltaY > 0 ? -0.08 : 0.08;
+  scale = Math.min(Math.max(scale + delta, 0.2), 2.5);
+
+  // Zoom toward cursor
+  panX = mx - (mx - panX) * (scale / oldScale);
+  panY = my - (my - panY) * (scale / oldScale);
+  applyTransform();
+}, { passive: false });
+
+// Touch support
+let lastTouchDist = 0;
+let lastTouchMid = { x: 0, y: 0 };
+
+wrap.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    startPanX = panX;
+    startPanY = panY;
+  } else if (e.touches.length === 2) {
+    isDragging = false;
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    lastTouchDist = Math.sqrt(dx * dx + dy * dy);
+    lastTouchMid = {
+      x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+      y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+    };
+  }
+  e.preventDefault();
+}, { passive: false });
+
+wrap.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 1 && isDragging) {
+    panX = startPanX + (e.touches[0].clientX - startX);
+    panY = startPanY + (e.touches[0].clientY - startY);
+    applyTransform();
+  } else if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const mid = {
+      x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+      y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+    };
+
+    if (lastTouchDist > 0) {
+      const rect = wrap.getBoundingClientRect();
+      const mx = mid.x - rect.left;
+      const my = mid.y - rect.top;
+      const oldScale = scale;
+      scale = Math.min(Math.max(scale * (dist / lastTouchDist), 0.2), 2.5);
+      panX = mx - (mx - panX) * (scale / oldScale);
+      panY = my - (my - panY) * (scale / oldScale);
+
+      panX += mid.x - lastTouchMid.x;
+      panY += mid.y - lastTouchMid.y;
+      applyTransform();
+    }
+    lastTouchDist = dist;
+    lastTouchMid = mid;
+  }
+  e.preventDefault();
+}, { passive: false });
+
+wrap.addEventListener('touchend', () => {
+  isDragging = false;
+  lastTouchDist = 0;
+});
+
+// Button controls
+const STEP = 0.12;
 document.getElementById('zoomIn').addEventListener('click', () => {
-  scale = Math.min(scale + STEP, 2);
-  canvas.style.transform = `scale(${scale})`;
+  const rect = wrap.getBoundingClientRect();
+  const cx = rect.width / 2, cy = rect.height / 2;
+  const oldScale = scale;
+  scale = Math.min(scale + STEP, 2.5);
+  panX = cx - (cx - panX) * (scale / oldScale);
+  panY = cy - (cy - panY) * (scale / oldScale);
+  applyTransform();
 });
 document.getElementById('zoomOut').addEventListener('click', () => {
-  scale = Math.max(scale - STEP, 0.3);
-  canvas.style.transform = `scale(${scale})`;
+  const rect = wrap.getBoundingClientRect();
+  const cx = rect.width / 2, cy = rect.height / 2;
+  const oldScale = scale;
+  scale = Math.max(scale - STEP, 0.2);
+  panX = cx - (cx - panX) * (scale / oldScale);
+  panY = cy - (cy - panY) * (scale / oldScale);
+  applyTransform();
 });
 document.getElementById('zoomReset').addEventListener('click', () => {
   scale = 1;
-  canvas.style.transform = `scale(1)`;
+  panX = 0;
+  panY = 0;
+  applyTransform();
 });
+document.getElementById('zoomFit').addEventListener('click', fitToScreen);
+
+// Re-fit on resize
+window.addEventListener('resize', fitToScreen);
 </script>
 </body>
 </html>

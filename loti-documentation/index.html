@@ -258,9 +258,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   <a data-sec="lj-scoring"><span class="ic">&#127919;</span>Lead Scoring &amp; Branches</a>
   <a data-sec="lj-field-close"><span class="ic">&#127959;&#65039;</span>Field to Close</a>
 </div>
-<div class="g"><div class="gt">ASSESSMENT</div>
-  <a data-sec="assessment"><span class="ic">&#128680;</span>Assessment</a>
-</div>
   </div>
 </nav>
 <main class="main" id="main">
@@ -1985,11 +1982,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <div class="sec" id="lj-map">
   <div class="sh or"><h2>Lead Journey Map</h2><div class="sub">Interactive visual flowchart of the complete lead journey</div></div>
 
-  <div class="co info" style="margin-bottom:20px"><span class="i">&#128506;</span><div><b>Lead Journey Visual Map:</b> This interactive diagram shows the full flow from lead entry to deal close. <b>Hover over each box</b> for details. Use the +/- buttons to zoom.</div></div>
-  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:28px;background:#1b2444;">
-    <iframe src="lead-journey-board.html" style="width:100%;height:600px;border:none;display:block;" title="Lead Journey Flowchart"></iframe>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#1b2444;position:relative;height:calc(100vh - 120px);min-height:600px;">
+    <iframe src="lead-journey-board.html" style="width:100%;height:100%;border:none;display:block;" title="Lead Journey Flowchart" allow="fullscreen"></iframe>
   </div>
-  <p style="text-align:center;margin-top:12px"><a href="lead-journey-board.html" target="_blank" style="color:var(--blue);font-weight:600;text-decoration:none">&#128279; Open Full Screen</a></p>
 </div>
 
 <div class="sec" id="lj-entry">
@@ -2235,69 +2230,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <!-- ═══════════ RISKS ═══════════ -->
 
 
-<div class="sec" id="assessment">
-  <div class="sh rd"><h2>Assessment</h2><div class="sub">Risks, opportunities, and project timeline</div></div>
-
-  <div class="h3">Risks &amp; Opportunities</div>
-<div class="tldr">
-    <div class="tldr-head" onclick="this.parentElement.classList.toggle('open')">
-      <div class="tldr-icon rd">TL</div><h4>5 Risks, 7 Opportunities</h4><span class="arr">&#9660;</span>
-    </div>
-    <ul class="tldr-bullets">
-      <li><span class="p rd">HIGH</span> RC adoption stalled 8+ weeks — false Deal Stalled alerts</li>
-      <li><span class="p rd">HIGH</span> Jack is single point of failure — 20+ LA Fires opportunities unfollowed</li>
-      <li><span class="p rd">HIGH</span> Top recommendations: Lifecycle Stage automation, hire SDR, mandatory RC setup session</li>
-    </ul>
-    <div class="tldr-body"><div class="tldr-body-inner">
-      <div class="h3" style="margin-top:14px">Risks</div>
-      <table class="t"><tr><th>ID</th><th>Level</th><th>Description</th></tr>
-        <tr><td>R1</td><td><span class="p rd">HIGH</span></td><td><b>RingCentral stalled 8+ weeks.</b> No call logging &#8594; false Deal Stalled alerts, no call visibility.</td></tr>
-        <tr><td>R2</td><td><span class="p rd">HIGH</span></td><td><b>Jack = single point of failure.</b> 20+ LA Fires opportunities identified Mar 3 with no follow-up — bandwidth issue.</td></tr>
-        <tr><td>R3</td><td><span class="p am">MED</span></td><td><b>Postalytics: 0% QR conversion</b> on 1,700+ mailers. CTA needs redesign.</td></tr>
-        <tr><td>R4</td><td><span class="p am">MED</span></td><td><b>No Lifecycle Stage automation.</b> Scoring works but doesn't auto-move contacts through stages.</td></tr>
-        <tr><td>R5</td><td><span class="p bl">LOW</span></td><td><b>Tickets unused.</b> No Post-Claim / Life 2.0 pipeline configured.</td></tr>
-      </table>
-      <div class="h3">Opportunities</div>
-      <table class="t"><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr>
-        <tr><td>O1</td><td><span class="p rd">HIGH</span></td><td><b>Map Lifecycle Stages to scoring.</b> Automate transitions &#8594; unlock funnel reporting.</td></tr>
-        <tr><td>O2</td><td><span class="p rd">HIGH</span></td><td><b>Hire SDR for LA Fires backlog.</b> Free Jack for high-value field visits.</td></tr>
-        <tr><td>O3</td><td><span class="p rd">HIGH</span></td><td><b>Mandatory live RC setup session.</b> 30-min hands-on. Videos didn't work.</td></tr>
-        <tr><td>O4</td><td><span class="p am">MED</span></td><td><b>Segment BAU Stage 3</b> by 4 audience profiles (pending since Jan 15).</td></tr>
-        <tr><td>O5</td><td><span class="p am">MED</span></td><td><b>Redesign Postalytics CTA.</b> Short URL or phone tracking via RC.</td></tr>
-        <tr><td>O6</td><td><span class="p am">MED</span></td><td><b>Build Referral Partner Pipeline.</b> No tracking for contractors/attorneys/RE agents.</td></tr>
-        <tr><td>O7</td><td><span class="p am">MED</span></td><td><b>Licensing Compliance workflow.</b> Validate state against active licenses before deal creation.</td></tr>
-      </table>
-    </div></div>
-  </div>
-
-<!-- ═══════════ TIMELINE ═══════════ -->
-
-  <div class="h3">Project Timeline</div>
-<div class="tldr">
-    <div class="tldr-head" onclick="this.parentElement.classList.toggle('open')">
-      <div class="tldr-icon bl">TL</div><h4>10-Week Implementation Journey</h4><span class="arr">&#9660;</span>
-    </div>
-    <ul class="tldr-bullets">
-      <li><b>Jan 15-27</b>: Email marketing launched, LinkedIn automation, Postalytics, Jack's dashboard</li>
-      <li><b>Feb 3-24</b>: FN integration development, data workflows deployed, Deal Stalled automation built</li>
-      <li><b>Mar 3-17</b>: FN go-live, scoring model defined, Opportunity Pipeline created, first Won deal via AirCover</li>
-    </ul>
-    <div class="tldr-body"><div class="tldr-body-inner">
-      <div class="tl" style="margin-top:14px">
-        <div class="ti"><div class="dt">Jan 15</div><div class="ds"><b>Email marketing launched.</b> BAU Stage 1 &amp; 2 live. First RallyBack Brief. Email warm-up started. Welcome email activated.</div></div>
-        <div class="ti"><div class="dt">Jan 20</div><div class="ds"><b>Multi-channel outreach.</b> LinkedIn launched (550 contacts). Postalytics processed (1,514). RC licenses purchased. Jack's dashboard launched.</div></div>
-        <div class="ti"><div class="dt">Jan 27</div><div class="ds"><b>FN integration in development.</b> Air Cover report operational. Sean/Rami sessions started.</div></div>
-        <div class="ti"><div class="dt">Feb 3</div><div class="ds"><b>FN working in sandbox.</b> Landing page QA. RC setup target: EOW.</div></div>
-        <div class="ti"><div class="dt">Feb 10</div><div class="ds"><b>Data workflows deployed.</b> Duplicate Phone Detection. Contact cleanup. FN re-mapping started.</div></div>
-        <div class="ti"><div class="dt">Feb 17</div><div class="ds"><b>FN properties remapped.</b> Score-based tasks. FN Link Builder. Association Label Copy.</div></div>
-        <div class="ti"><div class="dt">Feb 24</div><div class="ds"><b>Major milestone.</b> LA Fires Pipeline. Engagement tasks with throttle. Deal Stalled built. Dashboards expanded.</div></div>
-        <div class="ti"><div class="dt">Mar 3</div><div class="ds"><b>FN go-live.</b> Deal Stalled activated. Hybrid Scoring defined. 20 LA Fires opportunities identified.</div></div>
-        <div class="ti"><div class="dt">Mar 17</div><div class="ds"><b>Opportunity Pipeline created.</b> Auto-movement. Auto Deal Creation. Score Aggregation. SLO deal closed via AirCover.</div></div>
-      </div>
-    </div></div>
-  </div>
-
-</div>
 
 </main>
 
