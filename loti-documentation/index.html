@@ -483,6 +483,74 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+  <div class="h3">Lifecycle Stages — Full Reference</div>
+  <p class="prose">Lifecycle stage determines which workflows and sequences a contact is enrolled in. Stages only move forward automatically — never backward. Manual downgrades require Gerardo or Rami.</p>
+  <table class="t">
+    <tr><th>Stage</th><th>HubSpot Name</th><th>Who Is This?</th><th>Automated Actions</th></tr>
+    <tr><td><span class="p cy">Subscriber</span></td><td><code>subscriber</code></td><td>Newsletter signup only. No fire incident. Just opted in for content.</td><td>Welcome email sent. Added to RallyBack Brief list.</td></tr>
+    <tr><td><span class="p bl">Lead</span></td><td><code>lead</code></td><td>Associated with a LotiProperty from any source. Hasn't scored yet.</td><td>Score Aggregation workflow begins tracking engagement.</td></tr>
+    <tr><td><span class="p rd">Ineligible</span></td><td><code>other</code> (custom)</td><td>Doesn't meet criteria: wrong state, no loss, bad property type, etc.</td><td>Suitability = "Not Suitable". Removed from active sequences.</td></tr>
+    <tr><td><span class="p am">MQL</span></td><td><code>marketingqualifiedlead</code></td><td>Shows potential. Score meets MQL threshold. Nurture candidate.</td><td>Enrolled in BAU Stage 1 or LA Fires Stage 1 email sequence.</td></tr>
+    <tr><td><span class="p gr">SQL</span></td><td><code>salesqualifiedlead</code></td><td>High combined score. Field visit warranted.</td><td>Slack to Jack + Task: "Review and Attempt Contact" + deal created.</td></tr>
+    <tr><td><span class="p pu">Opportunity</span></td><td><code>opportunity</code></td><td>Active deal in pipeline (Stage 3+). Actively engaging with Jack.</td><td>Deal monitoring begins. Deal Stalled workflow watches this contact's deal.</td></tr>
+    <tr><td><span class="p gr">Customer</span></td><td><code>customer</code></td><td>Contract signed. Loti is representing them.</td><td>Post-claim follow-up. Life 2.0 sequence (pending build).</td></tr>
+    <tr><td><span class="p cy">Evangelist</span></td><td><code>evangelist</code></td><td>Post-claim client. Happy customer, referral source.</td><td>Referral nurture (pending build). Testimonial requests.</td></tr>
+  </table>
+
+  <div class="h3">Lead Status Values</div>
+  <p class="prose">Lead status is more granular than lifecycle stage. Used by Jack and Gerardo to track outreach progress within a stage.</p>
+  <table class="t">
+    <tr><th>Status</th><th>Meaning</th><th>Set By</th></tr>
+    <tr><td><span class="p bl">New</span></td><td>Just entered system, no outreach attempted yet</td><td>Auto on creation</td></tr>
+    <tr><td><span class="p bl">Open</span></td><td>In queue for outreach</td><td>Manual / workflow</td></tr>
+    <tr><td><span class="p am">In Progress</span></td><td>Outreach actively underway</td><td>Jack / Gerardo</td></tr>
+    <tr><td><span class="p am">Attempted to Contact</span></td><td>Tried but no response yet (left VM, sent email)</td><td>Jack</td></tr>
+    <tr><td><span class="p gr">Connected</span></td><td>Spoke with homeowner, conversation started</td><td>Jack</td></tr>
+    <tr><td><span class="p gr">Open Deal</span></td><td>Active deal exists — contact is in pipeline</td><td>Auto when deal created</td></tr>
+    <tr><td><span class="p rd">Unqualified</span></td><td>Doesn't meet Loti criteria at this time</td><td>Jack / Gerardo</td></tr>
+    <tr><td><span class="p rd">Bad Timing</span></td><td>Qualifies but not right now — re-nurture eligible</td><td>Jack</td></tr>
+  </table>
+
+  <div class="h3">All Key Contact Properties</div>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Identity &amp; Campaign</h5><ul>
+      <li><code>loti__campaign</code> — LA Fires or BAU</li>
+      <li><code>lifecyclestage</code> — current journey stage</li>
+      <li><code>hs_lead_status</code> — granular outreach status</li>
+      <li><code>lead_source</code> / <code>lead_source_detail</code> — origin</li>
+      <li><code>nurture_track</code> — which sequence is active</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Scoring</h5><ul>
+      <li><code>score</code> — engagement score (synced from LotiProperties)</li>
+      <li><code>score_reason</code> — why they scored that way</li>
+      <li><code>hubspotscore</code> — HubSpot's built-in scoring</li>
+      <li><code>engagement_score</code> — behavioral engagement total</li>
+      <li><code>email_status</code> — synced from Houses object</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>Qualification</h5><ul>
+      <li><code>loti_qualified</code> — Yes / No</li>
+      <li><code>suitability_status</code> — Suitable / Not Suitable</li>
+      <li><code>disqualified_reasons</code> — why ineligible</li>
+      <li><code>renurture_eligible</code> — can re-enter nurture?</li>
+      <li><code>mailer_program</code> — Postcard / $3 Offer / $10 Offer / Suite</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Social &amp; Outreach</h5><ul>
+      <li><code>facebook_url</code> — for research and targeting</li>
+      <li><code>instagram_url</code> — social presence</li>
+      <li><code>linkedin_url</code> — key for LA Fires outreach</li>
+      <li><code>latest_postalytics_mail_campaign_name</code></li>
+      <li><code>latest_postalytics_mail_event_type</code> — delivery status</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Portal Scale</div>
+  <div class="stats">
+    <div class="stat"><div class="n" style="color:var(--blue)">20,430</div><div class="l">Total Contacts</div></div>
+    <div class="stat"><div class="n" style="color:var(--accent)">550+</div><div class="l">LA Fires Contacts</div></div>
+    <div class="stat"><div class="n" style="color:var(--purple)">1,700+</div><div class="l">Postalytics Mailers Sent</div></div>
+    <div class="stat"><div class="n" style="color:var(--cyan)">38</div><div class="l">HubSpot Owners</div></div>
+  </div>
+
 </div>
 
 <!-- ═══════════ DEALS ═══════════ -->
@@ -609,6 +677,58 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+  <div class="h3">Engagement Score — Complete Breakdown</div>
+  <p class="prose">Engagement Score lives at the <b>contact level</b>. It tracks real behavioral signals — not just opens. Points accumulate as the contact interacts with Loti content across all channels. The score resets to 0 after 30 consecutive days of no activity, ensuring only recently-engaged contacts score high.</p>
+  <table class="t">
+    <tr><th>Signal</th><th>Channel</th><th>Points</th><th>Why It Matters</th></tr>
+    <tr><td><b>Postalytics QR Scan</b></td><td>Direct Mail</td><td><b>+20</b></td><td>Highest intent signal — they received the mailer AND took action with their phone</td></tr>
+    <tr><td><b>High-Value Page View</b></td><td>Website</td><td><b>+15</b></td><td>Visited a key page (claim process, FAQ, pricing) — research intent</td></tr>
+    <tr><td><b>Resource Download</b></td><td>Learning Hub</td><td><b>+15</b></td><td>Downloaded a guide or checklist — high interest in Loti's services</td></tr>
+    <tr><td><b>Email Click</b></td><td>Email</td><td><b>+5</b></td><td>Clicked a link in a nurture email — active not passive</td></tr>
+    <tr><td><b>Website Visit</b></td><td>Website</td><td><b>+5</b></td><td>Any tracked page visit on loti.com or lotiadjusters.com</td></tr>
+    <tr><td><b>Email Open</b></td><td>Email</td><td><b>+2 (capped)</b></td><td>Lowest signal — opens can be misleading. Capped to prevent inflation.</td></tr>
+    <tr><td><b>Form Submission</b></td><td>Website / Ads</td><td><b>high</b></td><td>Explicit intent. Score boost varies by form type.</td></tr>
+  </table>
+
+  <div class="h3">FIT Score — How AI Evaluates BAU Properties</div>
+  <p class="prose">The FIT Score is calculated at the <b>LotiProperty level</b> by an AI model when a new incident arrives via Fire Notification. LA Fires properties skip AI scoring and receive a fixed score of 100 — every LA Fires property is considered maximum opportunity.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>High-Weight AI Inputs</h5><ul>
+      <li>Incident severity (firefighter comments, structure involved)</li>
+      <li>Estimated property value (<code>avm_value</code>)</li>
+      <li>Assessed total value (<code>assessed_total_value</code>)</li>
+      <li>Primary dwelling coverage limit (policy data)</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Medium-Weight AI Inputs</h5><ul>
+      <li>Ownership type (<code>property_ownership</code>) — owner-occupied scores higher</li>
+      <li>Fire zone / CAL FIRE zone classification</li>
+      <li>Last sale price and purchase loan amount</li>
+      <li>Property class code</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Lower-Weight / Contextual</h5><ul>
+      <li>Number of bedrooms / bathrooms</li>
+      <li>Year built (older = higher risk profile)</li>
+      <li>Vacant or abandoned flag</li>
+      <li>Type of home (SFR vs multi-family)</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Score Outputs</h5><ul>
+      <li><b>LA Fires:</b> Always 100</li>
+      <li><b>BAU 80–100:</b> Strong opportunity. SQL routing likely.</li>
+      <li><b>BAU 40–79:</b> Moderate. MQL nurture enrollment.</li>
+      <li><b>BAU 0–39:</b> Low. Passive monitoring only.</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">How Jack Score Fits In</div>
+  <p class="prose"><b>Jack Score</b> (0–100) is set manually by Jack after a field visit. It represents his ground-truth assessment of the opportunity — distinct from the AI-generated FIT Score. Jack's Score is recorded as <code>jack_score</code> on the LotiProperty record and is visible in the Operational Dashboard.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Jack Score: High (70–100)</h5><p>Strong in-person confirmation. Loss is significant, homeowner is receptive, insurance is accessible, no major blockers. Advance pipeline immediately.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>Jack Score: Medium (30–69)</h5><p>Some potential but uncertainty. May need follow-up visit. Insurance unclear, homeowner lukewarm, or damage lighter than FN data suggested.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--red)"></span>Jack Score: Low (0–29)</h5><p>Not viable. Loss too small, wrong property type, homeowner hostile, already represented, or insurance not eligible. Move to Closed Lost.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Not Yet Scored</h5><p>Jack hasn't visited. Property sits in "Jack to Review" stage. Prioritised by FIT Score and drive distance until visited.</p></div>
+  </div>
+
+  <div class="co info"><span class="i">&#128200;</span><div><b>Score hierarchy in practice:</b> FIT Score surfaces the property &#8594; Engagement Score proves the homeowner is interested &#8594; Jack Score confirms the field reality. All three must align for a deal to close.</div></div>
 </div>
 
 <!-- ═══════════ PIPELINE ═══════════ -->
@@ -650,6 +770,97 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+  <div class="h3">Stage-by-Stage Reference</div>
+  <p class="prose">All 8 stages in the Sales Pipeline, with internal HubSpot names, win probabilities, current deal counts, entry criteria, and key actions required at each stage.</p>
+
+  <div class="fs">
+    <div class="fp bl"><h5>Stage 1 — Jack to Review <span class="p am">20% probability</span></h5>
+      <p>Internal name: <code>appointmentscheduled</code></p>
+      <p><b>How deals enter:</b> Auto-created when LotiProperty hits SQL threshold, or manually created by Gerardo / Sol after enrichment. LA Fires deals auto-created on first engagement.</p>
+      <div class="det">
+        <b>Jack's review criteria:</b> Priority flag · FN Score · Property value (AVM) · Firefighter comments · Drive distance · Confirmed loss status<br>
+        <b>Outcome:</b> Schedule visit (advance to Stage 2) OR disqualify (Closed Lost)<br>
+        <b>Current volume:</b> <span style="font-weight:700;color:var(--accent)">65 deals</span> in this stage as of portal snapshot
+      </div>
+    </div>
+    <div class="fp"><h5>Stage 2 — Initial Contact Made <span class="p am">no fixed probability</span></h5>
+      <p>Internal name: <code>qualifiedtobuy</code></p>
+      <p><b>Entry criteria:</b> Jack has made first contact — by phone, in person at property, or homeowner responded to mailer.</p>
+      <div class="det">
+        <b>Key actions:</b> Log call via RingCentral · Set <code>next_action_date</code> · Note homeowner receptiveness · Schedule follow-up<br>
+        <b>Outcome:</b> Homeowner is open to conversation (advance) OR not interested (Closed Lost with reason)
+      </div>
+    </div>
+    <div class="fp"><h5>Stage 3 — Client Engaging <span class="p am">40% probability</span></h5>
+      <p>Internal name: <code>presentationscheduled</code></p>
+      <p><b>Entry criteria:</b> Active back-and-forth conversation. Homeowner is engaged and asking questions.</p>
+      <div class="det">
+        <b>Key actions:</b> Review insurance policy · Map damage categories (dwelling, personal property, LOU, secondary structures) · Assess claim potential · Set <code>estimated_dwelling_claim</code> and related fields · Begin working through objections<br>
+        <b>~30 deals in stages 2–4 combined</b>
+      </div>
+    </div>
+    <div class="fp pu"><h5>Stage 4 — Loti Qualified <span class="p pu">no fixed probability</span></h5>
+      <p>Internal name: <code>decisionmakerboughtin</code></p>
+      <p><b>Entry criteria:</b> All 3 qualify conditions confirmed: (1) verifiable loss, (2) licensed state, (3) eligible insurance carrier and policy.</p>
+      <div class="det">
+        <b>Key fields set:</b> <code>loti_qualified</code> = Yes · <code>insurance_carrier</code> · <code>policy_number</code> · <code>coverage_limits</code> · <code>deductible</code> · <code>primary_dwelling_limit</code><br>
+        <b>Key actions:</b> Confirm insurance is accessible · Get adjuster details · Verify claim hasn't been closed
+      </div>
+    </div>
+    <div class="fp or"><h5>Stage 5 — Terms Proposed <span class="p or">no fixed probability</span></h5>
+      <p>Internal name: <code>contractsent</code></p>
+      <p><b>Entry criteria:</b> Representation agreement has been presented to homeowner with Loti's fee structure.</p>
+      <div class="det">
+        <b>Key fields set:</b> <code>fee_type</code> (contingency/flat/hourly) · <code>fee_percentage</code> · <code>loti_total_fee</code> · <code>terms_agreed</code><br>
+        <b>Key actions:</b> Follow up within 24–48h · Answer questions about fee structure · Set <code>follow_up_move_foward</code> date
+      </div>
+    </div>
+    <div class="fp gr"><h5>Stage 6 — Contract Signed — Won <span class="p gr">100% probability</span></h5>
+      <p>Internal name: <code>closedwon</code></p>
+      <p><b>Entry criteria:</b> Homeowner has signed the representation agreement.</p>
+      <div class="det">
+        <b>Key fields set:</b> <code>contract_sign</code> date · <code>closed_won_reason</code> · <code>amount</code> (deal value)<br>
+        <b>Example closed won deals:</b> 1035 San Adriano St ($60K) · 4922 E. Church Ave Fresno ($25K) · Las Lomas Pacific Specialty ($28.8K) · Kasparian Retaining Wall ($40K) · Cano 2 claims ($35K)<br>
+        <b>Next:</b> Active claim management begins. Contact lifecycle = Customer.
+      </div>
+    </div>
+    <div class="fp rd"><h5>Stage 7 — Closed Lost <span class="p rd">0% probability</span></h5>
+      <p>Internal name: <code>closedlost</code></p>
+      <p><b>Entry criteria:</b> Deal will not close — homeowner declined, disqualified, or unresponsive.</p>
+      <div class="det">
+        <b>Required fields:</b> <code>closed_lost_reason</code> (select from 19 options) · <code>disqualified_reasons</code><br>
+        <b>Re-nurture path:</b> If <code>renurture_eligible</code> = Yes &#8594; contact re-enrolled in BAU or LA Fires nurture sequence<br>
+        <b>Current volume:</b> 84 closed lost deals
+      </div>
+    </div>
+    <div class="fp"><h5>Admin — Deals To Be Deleted <span class="p cy">cleanup only</span></h5>
+      <p>Internal name: <code>3348333282</code></p>
+      <p>Maintenance stage. Test deals, duplicates, and erroneously created records land here for review and deletion by Gerardo. Not monitored by Deal Stalled automation.</p>
+    </div>
+  </div>
+
+  <div class="h3">Pipeline Stats Snapshot</div>
+  <div class="stats">
+    <div class="stat"><div class="n" style="color:var(--blue)">206</div><div class="l">Total Deals</div></div>
+    <div class="stat"><div class="n" style="color:var(--amber)">65</div><div class="l">Jack to Review</div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">21</div><div class="l">Closed Won</div></div>
+    <div class="stat"><div class="n" style="color:var(--red)">84</div><div class="l">Closed Lost</div></div>
+  </div>
+
+  <div class="h3">Key Deal Properties by Stage</div>
+  <table class="t">
+    <tr><th>Property</th><th>API Name</th><th>Set At Stage</th><th>Notes</th></tr>
+    <tr><td>Confirmed Loss</td><td><code>confirmed_loss</code></td><td>1–2 (field visit)</td><td>Yes / No / Unknown</td></tr>
+    <tr><td>Insurance Carrier</td><td><code>insurance_carrier</code></td><td>3–4</td><td>Critical for eligibility</td></tr>
+    <tr><td>Policy Number</td><td><code>policy_number</code></td><td>4</td><td>Required at Loti Qualified</td></tr>
+    <tr><td>Loti Qualified Flag</td><td><code>loti_qualified</code></td><td>4</td><td>Yes sets lifecycle to Opportunity</td></tr>
+    <tr><td>Fee Type / Percentage</td><td><code>fee_type</code> / <code>fee_percentage</code></td><td>5</td><td>Set when terms proposed</td></tr>
+    <tr><td>Loti Total Fee</td><td><code>loti_total_fee</code></td><td>5–6</td><td>Calculated from deal amount</td></tr>
+    <tr><td>Closed Won Reason</td><td><code>closed_won_reason</code></td><td>6</td><td>Required on win</td></tr>
+    <tr><td>Closed Lost Reason</td><td><code>closed_lost_reason</code></td><td>7</td><td>One of 19 options — required</td></tr>
+    <tr><td>Renurture Eligible</td><td><code>renurture_eligible</code></td><td>7</td><td>Yes re-enrolls in nurture</td></tr>
+  </table>
+
 </div>
 
 <!-- ═══════════ WF OVERVIEW ═══════════ -->
@@ -679,6 +890,112 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </div>
       <div class="co info"><span class="i">&#128161;</span><div><b>Custom Code Workflows:</b> Several use JavaScript actions (Duplicate Phone Detection, Association Label Copy, Score Aggregation) — built by Refindable for logic too complex for standard workflow builder.</div></div>
     </div></div>
+  </div>
+
+  <div class="h3">Category 1 — Deal Monitoring Workflows</div>
+
+  <div class="wf">
+    <div class="wh"><h5>Deal Stalled Automation</h5><span class="st live">LIVE</span></div>
+    <div class="desc">The most critical workflow. Fires when a deal has no logged activity for 3+ days. Escalates to Mike, Sean, and Jack automatically.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Deal has <b>no logged activity (calls, emails, notes, tasks) for 3+ days</b></span></div>
+      <div class="r"><span class="k">Action 1</span><span class="v">Email &#8594; Mike Yurochko and Sean Noonan with deal details</span></div>
+      <div class="r"><span class="k">Action 2</span><span class="v">Slack alert &#8594; Mike with direct HubSpot deal link</span></div>
+      <div class="r"><span class="k">Action 3</span><span class="v">Task for Jack: "Follow-Up Required" with 5 diagnostic questions</span></div>
+      <div class="r"><span class="k">Action 4</span><span class="v">QA Review Task created for leadership sign-off</span></div>
+    </div>
+  </div>
+
+  <div class="h3">Category 2 — Scoring &amp; Task Workflows</div>
+
+  <div class="wf">
+    <div class="wh"><h5>Score Aggregation</h5><span class="st live">LIVE</span></div>
+    <div class="desc">Runs on LotiProperty object. Sums all linked contact Engagement Scores and writes total to property's <code>score</code> field. Powers dashboard ranking.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Any associated contact's engagement score changes</span></div>
+      <div class="r"><span class="k">Action</span><span class="v">Custom JS: Sum all linked contact scores &#8594; Write to <code>score</code> on LotiProperty</span></div>
+      <div class="r"><span class="k">Output</span><span class="v">LotiProperty ranked in Jack's dashboard by combined score</span></div>
+    </div>
+  </div>
+
+  <div class="wf">
+    <div class="wh"><h5>SQL Task Assignment</h5><span class="st live">LIVE</span></div>
+    <div class="desc">When Opportunity Score crosses the SQL threshold, automatically notifies Jack and creates a prioritized review task.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Opportunity Score exceeds SQL threshold</span></div>
+      <div class="r"><span class="k">Action 1</span><span class="v">Slack notification to Jack Hall</span></div>
+      <div class="r"><span class="k">Action 2</span><span class="v">Task: "Review and Attempt Contact" — due next business day (throttled: 1/week per property)</span></div>
+      <div class="r"><span class="k">Action 3</span><span class="v">If score &gt;65: additional task with 3-day deadline</span></div>
+      <div class="r"><span class="k">Sets</span><span class="v">Lifecycle stage &#8594; Sales Qualified Lead</span></div>
+    </div>
+  </div>
+
+  <div class="h3">Category 3 — Data Management Workflows</div>
+
+  <div class="wf">
+    <div class="wh"><h5>Duplicate Phone Detection</h5><span class="st live">LIVE</span></div>
+    <div class="desc">Custom JS workflow. Normalizes phone formats and checks for duplicate phone numbers across contacts associated to the same LotiProperty.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">New contact associated to a LotiProperty</span></div>
+      <div class="r"><span class="k">Action</span><span class="v">Custom JS: Normalize phone &#8594; Check all contacts on property &#8594; If match found, apply "Duplicate" label</span></div>
+      <div class="r"><span class="k">Output</span><span class="v">Duplicate contacts labeled — prevents double outreach to same person</span></div>
+    </div>
+  </div>
+
+  <div class="wf">
+    <div class="wh"><h5>FN Link Builder</h5><span class="st live">LIVE</span></div>
+    <div class="desc">Takes the Fire Notification Incident ID on a LotiProperty and constructs a clickable URL to the full incident page in the FN system.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">LotiProperty created or <code>incident_id</code> updated</span></div>
+      <div class="r"><span class="k">Action</span><span class="v">Concatenate base URL + <code>incident_id</code> &#8594; Write to <code>fn_link</code> property</span></div>
+      <div class="r"><span class="k">Output</span><span class="v">One-click link to full FN incident details from within HubSpot record</span></div>
+    </div>
+  </div>
+
+  <div class="wf">
+    <div class="wh"><h5>Association Label Copy (Contact &#8596; Deal)</h5><span class="st live">LIVE</span></div>
+    <div class="desc">When a deal is created from a LotiProperty, this workflow copies the association labels from Contact&#8596;LotiProperty to Contact&#8596;Deal so the deal record knows how each contact was found.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">New deal created and associated to a LotiProperty</span></div>
+      <div class="r"><span class="k">Action</span><span class="v">Custom JS: Read Contact&#8596;LP labels &#8594; Write same labels to Contact&#8596;Deal associations</span></div>
+      <div class="r"><span class="k">Output</span><span class="v">Deal record shows origin: Fire Notification / BeenVerified / Property Reach / Duplicate</span></div>
+    </div>
+  </div>
+
+  <div class="h3">Category 4 — Email Marketing Workflows</div>
+
+  <div class="wf">
+    <div class="wh"><h5>BAU Lead Nurturing (3-Stage)</h5><span class="st live">LIVE</span></div>
+    <div class="desc">Enrolls BAU MQL contacts into a 3-stage email sequence. Each stage has 12+ emails. Contact advances only if score increases.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Lifecycle = MQL + Campaign = BAU + not already enrolled</span></div>
+      <div class="r"><span class="k">Stage 1</span><span class="v">PA Warm — educational, trust-building. 12+ emails over weeks.</span></div>
+      <div class="r"><span class="k">Stage 2</span><span class="v">PA Cold — re-engagement, higher urgency messaging</span></div>
+      <div class="r"><span class="k">Stage 3</span><span class="v">Suite — final attempt, pending audience profile segmentation (4 profiles)</span></div>
+      <div class="r"><span class="k">Exit</span><span class="v">Score threshold hit (SQL) OR enrolled in No Contact Flow OR unsubscribed</span></div>
+    </div>
+  </div>
+
+  <div class="wf">
+    <div class="wh"><h5>No Contact Flow</h5><span class="st live">LIVE since Mar 12</span></div>
+    <div class="desc">Final 4-email sequence for contacts who have never responded to nurture. Last attempt before marking unresponsive.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Contact completed nurture Stage 2 with no engagement OR manually enrolled</span></div>
+      <div class="r"><span class="k">Sequence</span><span class="v">4 emails over ~2 weeks. Escalating urgency and different CTAs.</span></div>
+      <div class="r"><span class="k">Exit (no response)</span><span class="v">Lead Status &#8594; "Unresponsive". Removed from active sequences.</span></div>
+      <div class="r"><span class="k">Exit (responds)</span><span class="v">Routed back through scoring logic — may upgrade to SQL</span></div>
+    </div>
+  </div>
+
+  <div class="wf">
+    <div class="wh"><h5>Welcome Email (Newsletter Signup)</h5><span class="st live">LIVE since Jan 15</span></div>
+    <div class="desc">Auto-triggers when a contact submits the newsletter signup form on loti.com or the Learning Hub. Sends welcome email and adds to RallyBack Brief list.</div>
+    <div class="wb">
+      <div class="r"><span class="k">Trigger</span><span class="v">Form submission: Newsletter Signup (Learning Hub or Home Page)</span></div>
+      <div class="r"><span class="k">Action 1</span><span class="v">Send Welcome Email immediately</span></div>
+      <div class="r"><span class="k">Action 2</span><span class="v">Set Lifecycle = Subscriber, add to RallyBack Brief list</span></div>
+      <div class="r"><span class="k">Action 3</span><span class="v">Enroll in appropriate nurture track based on campaign tag</span></div>
+    </div>
   </div>
 
 </div>
@@ -711,6 +1028,52 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <div class="co danger"><span class="i">&#128680;</span><div><b>Critical dependency:</b> If Jack calls from personal phone without RingCentral, calls aren't logged &#8594; workflow sees "no activity" &#8594; false alerts. Completing RC integration is essential.</div></div>
     </div></div>
   </div>
+
+  <div class="h3">What Counts as "Activity"</div>
+  <p class="prose">The Deal Stalled workflow monitors the following logged activities. If none of these occur within the 3-day window, the escalation chain fires.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Activities That Reset the Clock</h5><ul>
+      <li>Logged call (RingCentral or manual)</li>
+      <li>Email sent or received (tracked)</li>
+      <li>Note added to deal record</li>
+      <li>Task completed on deal</li>
+      <li>Meeting logged</li>
+      <li>Deal stage changed</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--red)"></span>Activities That Do NOT Reset the Clock</h5><ul>
+      <li>Call made from personal mobile (not logged)</li>
+      <li>Text sent outside HubSpot</li>
+      <li>Verbal conversation without a follow-up note</li>
+      <li>WhatsApp or personal email (not integrated)</li>
+      <li>Viewing the deal record without adding content</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Escalation Chain Detail</div>
+  <div class="fs">
+    <div class="fp rd"><h5>Step 1 — Email Alert: Mike &amp; Sean</h5><p>Automatic email to Mike Yurochko and Sean Noonan. Includes: Deal name, deal stage, days since last activity, associated contacts, deal value, direct link to HubSpot record.</p></div>
+    <div class="fp"><h5>Step 2 — Slack Alert: Mike</h5><p>Slack notification to Mike's workspace with a direct URL to the stalled deal in HubSpot. Mike can review on mobile within seconds.</p></div>
+    <div class="fp bl"><h5>Step 3 — Task: Jack (5 Diagnostic Questions)</h5><p>Task created: <b>"[Follow-Up Required] Why is this deal stalled?"</b>
+    <div class="det">
+      1. What is the current status of this deal?<br>
+      2. When was the last time you spoke with the homeowner?<br>
+      3. What is the next step and when will you complete it?<br>
+      4. Is there a blocker preventing progress?<br>
+      5. Should this deal be moved to a different stage or closed lost?
+    </div></p></div>
+    <div class="fp gr"><h5>Step 4 — QA Review Task: Leadership</h5><p>After Jack responds, a QA task is generated for Sean or Mike to verify the follow-up occurred and the deal has been moved appropriately. Closes the loop on the escalation.</p></div>
+  </div>
+
+  <div class="h3">Monitoring Coverage — All Active Deals</div>
+  <div class="stats">
+    <div class="stat"><div class="n" style="color:var(--blue)">206</div><div class="l">Deals Monitored</div></div>
+    <div class="stat"><div class="n" style="color:var(--amber)">65</div><div class="l">Jack to Review Stage</div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">21</div><div class="l">Closed Won</div></div>
+    <div class="stat"><div class="n" style="color:var(--red)">84</div><div class="l">Closed Lost</div></div>
+  </div>
+  <p class="prose">The monitoring workflow runs on all active deals (stages 1–5 of the pipeline). Closed Won and Closed Lost deals are excluded — they have no path to escalation. The "Deals To Be Deleted" stage is also excluded from monitoring.</p>
+
+  <div class="co warn"><span class="i">&#9888;</span><div><b>False Positive Risk:</b> With 65 deals in "Jack to Review" and Jack calling from his personal phone, the workflow may fire false positives daily. Until RingCentral is fully adopted, Gerardo checks alerts each morning to filter genuine stalls from logging gaps. Full RC adoption is the fix.</div></div>
 
 </div>
 
@@ -917,6 +1280,66 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <p class="prose">HubSpot dashboard sections: Campaign Overview &middot; Cost Efficiency &middot; Spend Summary &middot; Reach &amp; Engagement &middot; Pipeline Impact &middot; Performance Breakdown.</p>
     </div></div>
   </div>
+
+  <div class="h3">Ad Creative Strategy</div>
+  <p class="prose">Ads are designed with structured creative sets — multiple headlines and descriptions per messaging angle, tested across different audience segments. The team runs static images and carousels on Meta, and search/display on Google.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Creative Structure (per angle)</h5><ul>
+      <li>5 headlines per angle</li>
+      <li>5 descriptions per angle</li>
+      <li>4–6 visual creatives (static + carousel)</li>
+      <li>Tested across audience segments</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Messaging Angles Tested</h5><ul>
+      <li>Emergency urgency: "Your claim window is closing"</li>
+      <li>Trust authority: "Licensed public adjuster"</li>
+      <li>Loss recovery: "Get what your policy owes you"</li>
+      <li>Proof: testimonial and result-based angles</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Audience Targeting</h5><ul>
+      <li>Geographic: service area ZIP codes and counties</li>
+      <li>Interest: homeowners, property insurance, fire safety</li>
+      <li>Retargeting: loti.com website visitors</li>
+      <li>Lookalike: based on closed won customer list</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>Current Strategy Shift</h5><ul>
+      <li>25% of spend moved to engagement campaigns</li>
+      <li>Lead generation campaigns under review (0 leads)</li>
+      <li>Engagement focus: brand impressions + retargeting pool</li>
+      <li>CTA strategy revision pending Mike's input</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Newsletter — RallyBack Briefs Strategy</div>
+  <p class="prose">The RallyBack Brief is a trust-building content play. Homeowners receive educational content about home safety and disaster recovery — establishing Loti as a knowledgeable authority before any sales contact. This warms leads over weeks and increases engagement scores passively.</p>
+  <table class="t">
+    <tr><th>Element</th><th>Detail</th></tr>
+    <tr><td><b>Frequency</b></td><td>2x per week (sent by Eric &amp; Patricia)</td></tr>
+    <tr><td><b>Content Source</b></td><td>Learning Hub (800+ articles on home safety and recovery)</td></tr>
+    <tr><td><b>Primary Goal</b></td><td>Brand awareness + trust + engagement score accumulation</td></tr>
+    <tr><td><b>Secondary Goal</b></td><td>Drive website visits → score bump (+5 per visit)</td></tr>
+    <tr><td><b>Audience</b></td><td>All subscribers regardless of lifecycle stage</td></tr>
+    <tr><td><b>Subject Line A/B</b></td><td>Pending (awaiting Mike approval since Mar 19)</td></tr>
+  </table>
+
+  <div class="h3">Email Asset Library</div>
+  <table class="t">
+    <tr><th>Asset</th><th>Status</th><th>Description</th></tr>
+    <tr><td><b>Welcome Email</b></td><td><span class="p gr">LIVE since Jan 15</span></td><td>Auto-sends on newsletter signup. Sets tone, confirms subscription, links to Learning Hub.</td></tr>
+    <tr><td><b>BAU Nurture Stage 1 (PA Warm)</b></td><td><span class="p gr">LIVE</span></td><td>12+ emails. Educational, trust-building. Low urgency. Long-play.</td></tr>
+    <tr><td><b>BAU Nurture Stage 2 (PA Cold)</b></td><td><span class="p gr">LIVE</span></td><td>Re-engagement. Higher urgency. Different messaging angle.</td></tr>
+    <tr><td><b>BAU Nurture Stage 3 (Suite)</b></td><td><span class="p am">Pending</span></td><td>Audience-profiled (4 profiles). Awaiting segmentation build.</td></tr>
+    <tr><td><b>LA Fires Stage 1</b></td><td><span class="p gr">LIVE</span></td><td>Aggressive cadence for LA Fires contacts. Urgency-focused.</td></tr>
+    <tr><td><b>LA Fires Stage 2</b></td><td><span class="p gr">LIVE</span></td><td>Re-engagement for unresponsive LA Fires contacts.</td></tr>
+    <tr><td><b>No Contact Flow</b></td><td><span class="p gr">LIVE since Mar 12</span></td><td>4-email final sequence before marking unresponsive.</td></tr>
+    <tr><td><b>Loti Docs Follow-Up</b></td><td><span class="p am">Pending</span></td><td>Auto-send after doc download. Tracks interest, prompts conversation.</td></tr>
+  </table>
+
+  <div class="co warn"><span class="i">&#128221;</span><div><b>Key pending decisions (as of Mar 19):</b><br>
+  1. <b>A/B testing</b> for newsletter subject lines — Mike needs to approve test plan<br>
+  2. <b>Stage 3 segmentation</b> by 4 audience profiles — pending since Jan 15<br>
+  3. <b>Organic newsletter signup campaign</b> — not yet started<br>
+  4. <b>Loti Docs download follow-up automation</b> — spec drafted, not built</div></div>
 </div>
 
 <!-- ═══════════ FIRE NOTIFICATION ═══════════ -->
@@ -954,6 +1377,50 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </div>
     </div></div>
   </div>
+
+  <div class="h3">What FN Sends to HubSpot</div>
+  <p class="prose">Each Fire Notification incident pushes the following data to a new LotiProperty record in HubSpot. Fields arrive pre-populated — no manual entry required for incident-level data.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Incident Fields</h5><ul>
+      <li><code>incident_id</code> — unique FN identifier</li>
+      <li><code>incident_date</code> — date/time of fire</li>
+      <li><code>fire_department_comment</code> — firefighter notes</li>
+      <li><code>extent_of_the_damage</code> — severity classification</li>
+      <li><code>vacant_or_abandoned</code> — occupancy status</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Location Fields</h5><ul>
+      <li><code>loss_address</code> / <code>loss_address_line_1</code> / <code>loss_address_line_2</code></li>
+      <li><code>city</code> / <code>county</code> / <code>state_or_region</code> / <code>zip_code</code></li>
+      <li><code>geocoded_latitude</code> / <code>geocoded_longitude</code></li>
+      <li><code>google_maps_link</code> — auto-generated</li>
+      <li><code>distance_to_rep__km_</code> / <code>drive_time__min_</code></li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Property Data</h5><ul>
+      <li><code>property_type</code> / <code>type_of_home</code></li>
+      <li><code>year_built</code> / <code>lot_size</code></li>
+      <li><code>assessed_total_value</code></li>
+      <li><code>avm_value</code> — estimated market value</li>
+      <li><code>parcel__apn_</code> — assessor parcel number</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Ownership &amp; Contact</h5><ul>
+      <li>Owner name(s) linked as Contacts via <span class="p or">Fire Notification</span> label</li>
+      <li><code>property_ownership</code> — owner / renter / trust</li>
+      <li><code>last_sale_date</code> / <code>last_sale_price</code></li>
+      <li><code>purchase_loan_amount</code></li>
+      <li>Phone/email (if available from FN data)</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Post-Creation Automation Chain</div>
+  <p class="prose">Three workflows fire automatically within seconds of a new LotiProperty being created by FN:</p>
+  <div class="fs">
+    <div class="fp bl"><h5>1. FN Link Builder</h5><p>Generates a clickable URL from the <code>incident_id</code> to the full Fire Notification incident page. Written to <code>fn_link</code> on the LotiProperty. Jack and Gerardo can click straight through to the original FN record.</p></div>
+    <div class="fp"><h5>2. Duplicate Phone Detection</h5><p>Checks if any contact being linked has the same phone number as an existing contact on the property (normalized for formatting differences). Applies <span class="p rd">Duplicate</span> label if match found. Prevents double-outreach.</p></div>
+    <div class="fp gr"><h5>3. Score Aggregation</h5><p>Calculates initial FIT Score and writes to the LotiProperty. If LA Fires campaign, sets score = 100. If BAU, AI model generates score 0–100 based on property and incident data. LotiProperty immediately takes its ranked position in Jack's dashboard.</p></div>
+  </div>
+
+  <div class="co ok"><span class="i">&#9989;</span><div><b>Integration is working correctly.</b> As of March 3, 2026, Fire Notification data flows into HubSpot in real-time. Each new residential fire incident in the service area creates a LotiProperty within seconds. No manual data entry required for incident records. Ongoing monitoring by Gerardo catches any mapping failures.</div></div>
+
 </div>
 
 <!-- ═══════════ RC STATUS ═══════════ -->
@@ -1296,31 +1763,162 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       <p class="prose"><b>Meta + Google Ads</b> <span class="p gr">LIVE</span> — connected via native HubSpot integrations for campaign tracking, lead attribution, and pipeline impact.</p>
     </div></div>
   </div>
+
+  <div class="h3">Postalytics — Direct Mail Detail</div>
+  <p class="prose">Postalytics automates physical mail sends. HubSpot triggers a Postalytics campaign when a contact meets qualifying criteria (confirmed loss OR estimated property value over $800K). Campaign data syncs back to HubSpot contact records.</p>
+  <table class="t">
+    <tr><th>Metric</th><th>LA Fires Stage 1</th><th>Notes</th></tr>
+    <tr><td>Total Mailers Sent</td><td><b>1,700+</b></td><td>To LA Fires contact list</td></tr>
+    <tr><td>Delivery Rate</td><td><b>85%</b></td><td>Delivered to address</td></tr>
+    <tr><td>Re-routed</td><td><b>6.5%</b></td><td>Forwarded to new address</td></tr>
+    <tr><td>Returned</td><td><b>5.2%</b></td><td>USPS returned — address invalid</td></tr>
+    <tr><td>Brand Impressions</td><td><b>11,382</b></td><td>Estimated household views</td></tr>
+    <tr><td>QR Code Scans</td><td><b>0%</b></td><td style="color:var(--red)">CTA redesign needed — no conversions</td></tr>
+  </table>
+  <div class="co danger"><span class="i">&#128680;</span><div><b>0% QR conversion is the core problem.</b> The mailer is being delivered but the call-to-action is not compelling enough. Options under review: simpler URL (no QR), stronger offer, different CTA headline. Mike's decision needed. Meanwhile, brand impressions (11,382) provide value even without direct conversions.</div></div>
+  <p class="prose">HubSpot tracks Postalytics activity via two contact properties: <code>latest_postalytics_mail_campaign_name</code> and <code>latest_postalytics_mail_event_type</code>. These fields update automatically when a mailer is sent, delivered, returned, or scanned — enabling score bumps on QR scan (+20 points).</p>
+
+  <div class="h3">LinkedIn Outreach — Configuration Detail</div>
+  <p class="prose">LinkedIn outreach runs via an external automation tool managed by Refindable (Sol). It targets LA Fires homeowners and runs in parallel to email nurture. Not a native HubSpot integration — LinkedIn activity is imported back into HubSpot manually or via CSV.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Setup</h5><ul>
+      <li>2 LinkedIn accounts running simultaneously</li>
+      <li>20 connection requests per account per day (40 total/day)</li>
+      <li>Total target list: 550 LA Fires contacts</li>
+      <li>Managed by Sol (Sales Assistant)</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Sequence (Post-Connection)</h5><ul>
+      <li><b>Message 1:</b> Warm intro — acknowledge the fire, brief explanation of who Loti is</li>
+      <li><b>Message 2:</b> Value proposition — what Loti does and why it helps</li>
+      <li><b>Message 3:</b> Soft CTA — invite a call or ask a question</li>
+      <li>Automation <b>stops immediately</b> when prospect replies</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>HubSpot Sync</h5><ul>
+      <li><code>linkedin_url</code> stored on contact record for cross-referencing</li>
+      <li>LinkedIn replies handled by Sol — manually logged as notes on HubSpot contact</li>
+      <li>Positive responses escalated to Jack for phone follow-up</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>Risk &amp; Compliance</h5><ul>
+      <li>LinkedIn limits: 100 connection requests/week per account (well within at 140/week)</li>
+      <li>Content reviewed by Rami before launch</li>
+      <li>Accounts monitored for restriction risk</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Slack Integration — Notification Types</div>
+  <table class="t">
+    <tr><th>Notification</th><th>Trigger</th><th>Sent To</th></tr>
+    <tr><td><b>Deal Stalled Alert</b></td><td>No deal activity for 3+ days</td><td>Mike Yurochko</td></tr>
+    <tr><td><b>New SQL</b></td><td>Contact reaches SQL threshold</td><td>Jack Hall</td></tr>
+    <tr><td><b>LA Fires Blocker</b></td><td>LA Fires campaign hits a blocker requiring decision</td><td>Mike / Rami channel</td></tr>
+    <tr><td><b>RC Feedback</b></td><td>RingCentral issues reported by team</td><td>Sean Noonan's channel</td></tr>
+  </table>
+
+  <div class="h3">lotiadjusters.com — Email Domain Setup</div>
+  <p class="prose">A secondary domain used for personal-style outreach — distinct from loti.com bulk emails. The text-only format mimics a personal email from Jack or Mike, increasing open and reply rates for warm prospects.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Configuration</h5><ul>
+      <li><code>mike@lotiadjusters.com</code> — for Mike's personal sequences</li>
+      <li><code>jack@lotiadjusters.com</code> — for Zack Parker's 1:1 sequences</li>
+      <li>Both addresses connected to HubSpot Sequences</li>
+      <li>Active domain warm-up since Jan 20, 2026</li>
+    </ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Usage Guidelines</h5><ul>
+      <li>Text-only format — no images, no HTML templates</li>
+      <li>Used for 1:1 personal outreach via HubSpot Sequences</li>
+      <li>Not for bulk email sends (those use loti.com)</li>
+      <li>Reply tracking enabled — replies logged in HubSpot</li>
+    </ul></div>
+  </div>
+
+  <div class="h3">Meta &amp; Google Ads — HubSpot Integration</div>
+  <p class="prose">Both Meta (Facebook/Instagram) and Google Ads are connected to HubSpot via native integrations. This enables pipeline impact measurement — seeing which ads directly generated contacts or deals.</p>
+  <table class="t">
+    <tr><th>Feature</th><th>Meta Ads</th><th>Google Ads</th></tr>
+    <tr><td>Lead Forms</td><td>Native lead form submissions sync to HubSpot contacts</td><td>Lead form extensions sync to HubSpot</td></tr>
+    <tr><td>Attribution</td><td>UTM parameters tracked at contact level</td><td>UTM parameters + Google Click ID tracked</td></tr>
+    <tr><td>Audience Sync</td><td>HubSpot lists can push to Meta Custom Audiences</td><td>Customer Match via HubSpot list export</td></tr>
+    <tr><td>Pipeline Impact</td><td>Visible in Ads HubSpot Dashboard</td><td>Visible in Ads HubSpot Dashboard</td></tr>
+    <tr><td>Performance (Feb 12)</td><td>6,300 reach · 9,637 impressions · 0 leads</td><td>Data in Ads Dashboard</td></tr>
+  </table>
+
 </div>
 
 <!-- ═══════════ REPORTING ═══════════ -->
 
 
 <div class="sec" id="reporting">
-  <div class="sh or"><h2>Reports &amp; Dashboards</h2><div class="sub">How the team monitors performance</div></div>
-  
-  <div class="tldr">
+  <div class="sh or"><h2>Reports &amp; Dashboards</h2><div class="sub">How the team monitors performance across pipeline, marketing, and operations</div></div>
+
+  <div class="stats">
+    <div class="stat"><div class="n" style="color:var(--blue)">3</div><div class="l">HubSpot Dashboards</div></div>
+    <div class="stat"><div class="n" style="color:var(--green)">4</div><div class="l">External Reports</div></div>
+    <div class="stat"><div class="n" style="color:var(--accent)">206</div><div class="l">Total Deals Tracked</div></div>
+    <div class="stat"><div class="n" style="color:var(--purple)">21</div><div class="l">Closed Won Deals</div></div>
+  </div>
+
+  <div class="tldr open">
     <div class="tldr-head" onclick="this.parentElement.classList.toggle('open')">
       <div class="tldr-icon or">TL</div><h4>3 HubSpot Dashboards + External Reports</h4><span class="arr">&#9660;</span>
     </div>
     <ul class="tldr-bullets">
-      <li><b>Ads Dashboard</b>: campaign overview, cost efficiency, spend, reach, pipeline impact</li>
-      <li><b>Newsletter/Website Dashboard</b>: per-edition metrics + web performance reports</li>
-      <li><b>Jack's Operational Dashboard</b>: tasks, pipeline, scores — optimized for mobile</li>
+      <li><b>Ads Dashboard</b>: campaign overview, cost efficiency, spend, reach, pipeline impact — updated Feb 24</li>
+      <li><b>Newsletter/Website Dashboard</b>: per-edition email metrics + 3 web performance reports — updated Mar 19</li>
+      <li><b>Jack's Operational Dashboard</b>: high-priority tasks, pipeline by stage, LotiProperties by score — launched Jan 20</li>
+      <li><b>External reports</b>: Air Cover Weekly (fire incidents), Email Roadmap, Ads Roadmap, Miro Touchpoints Board</li>
     </ul>
     <div class="tldr-body"><div class="tldr-body-inner">
-      <div class="cg" style="margin-top:14px">
-        <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Ads Performance</h5><p>Campaign Overview, Cost Efficiency, Spend Summary, Reach &amp; Engagement, Pipeline Impact, Performance Breakdown. Updated Feb 24.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Newsletter / Website</h5><p>5 reports per RallyBack Brief + 3 web performance reports (Page Views, Top Visitors, Top Interactions). Updated Mar 19.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--cyan)"></span>Jack's Dashboard</h5><p>Mobile + desktop. High-priority tasks, pipeline overview, LotiProperties by Opportunity Score, AirCover intel. Launched Jan 20.</p></div>
-        <div class="cd"><h5><span class="d" style="background:var(--amber)"></span>External Reports</h5><p><b>Air Cover Weekly Report</b> (fire incidents review) &middot; <b>Email Marketing Roadmap</b> &middot; <b>Ads Roadmap</b> &middot; <b>Miro Touchpoints Board</b> (since Mar 5).</p></div>
-      </div>
+      <p class="prose" style="margin-top:14px">Every dashboard serves a specific audience. Jack's dashboard is optimised for a mobile device in the field. The Ads and Newsletter dashboards are built for Refindable and Mike to review campaign performance. External reports live outside HubSpot (Google Docs / Miro) and are linked from the relevant strategy docs.</p>
     </div></div>
+  </div>
+
+  <div class="h3">Dashboard 1 — Ads Performance</div>
+  <p class="prose">Tracks paid advertising across Meta and Google Ads. Connected via native HubSpot integrations. Updated Feb 24, 2026.</p>
+  <table class="t">
+    <tr><th>Report Section</th><th>What It Shows</th><th>Primary User</th></tr>
+    <tr><td><b>Campaign Overview</b></td><td>All active campaigns — status, budget, spend to date, date range</td><td>Mike / Refindable</td></tr>
+    <tr><td><b>Cost Efficiency</b></td><td>Cost per click, cost per lead, cost per impression by campaign</td><td>Refindable</td></tr>
+    <tr><td><b>Spend Summary</b></td><td>Total spend vs. budget allocation across Meta and Google</td><td>Mike</td></tr>
+    <tr><td><b>Reach &amp; Engagement</b></td><td>Impressions, reach, CTR, video views — 7-day and rolling 30-day</td><td>Refindable</td></tr>
+    <tr><td><b>Pipeline Impact</b></td><td>Deals and contacts attributed to paid ads via UTM tracking</td><td>Mike / Refindable</td></tr>
+    <tr><td><b>Performance Breakdown</b></td><td>Per-creative and per-ad-set performance — which angles work</td><td>Refindable</td></tr>
+  </table>
+  <div class="co warn"><span class="i">&#9888;</span><div><b>Key finding (Feb 12 window):</b> 6,300 reach, 9,637 impressions, <b>0 leads generated.</b> 25% of spend was shifted to engagement-focused campaigns. CTA strategy under review.</div></div>
+
+  <div class="h3">Dashboard 2 — Newsletter &amp; Website</div>
+  <p class="prose">Tracks RallyBack Brief performance and overall website traffic. Updated Mar 19, 2026.</p>
+  <table class="t">
+    <tr><th>Report Section</th><th>What It Shows</th></tr>
+    <tr><td><b>Per-Edition Metrics</b></td><td>5 reports per newsletter send: open rate, click rate, unsubscribes, bounces, top-clicked links</td></tr>
+    <tr><td><b>Page Views</b></td><td>Total and unique page views across loti.com and lotiadjusters.com</td></tr>
+    <tr><td><b>Top Visitors</b></td><td>Known contacts with highest site visits — high-intent signals</td></tr>
+    <tr><td><b>Top Interactions</b></td><td>Most-clicked pages, forms submitted, resources downloaded</td></tr>
+  </table>
+
+  <div class="h3">Dashboard 3 — Jack's Operational Dashboard</div>
+  <p class="prose">Built for Jack's daily workflow. Works on mobile. Designed to replace manual Excel-based tracking. Launched Jan 20, 2026.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>High-Priority Tasks</h5><p>Tasks due today and overdue. Sorted by deal stage so Jack tackles the most urgent first. Overdue tasks are visually highlighted.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Pipeline Overview</h5><p>Deals by stage — count and total deal value at each pipeline stage. Jack sees where the 206 total deals sit at a glance.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>LotiProperties by Opportunity Score</h5><p>Ranked list of properties by combined Engagement + FIT score. Top properties surface automatically every morning.</p></div>
+    <div class="cd"><h5><span class="d" style="background:var(--cyan)"></span>AirCover Intel Panel</h5><p>New Fire Notification incidents from the past 7 days. Sorted by FN Score descending. Links directly to LotiProperty record.</p></div>
+  </div>
+
+  <div class="h3">External Reports &amp; Planning Documents</div>
+  <table class="t">
+    <tr><th>Report</th><th>Cadence</th><th>What It Covers</th></tr>
+    <tr><td><b>Air Cover Weekly Report</b></td><td>Weekly</td><td>Fire incidents review from Fire Notification feed. New leads, scored properties, recommended visits.</td></tr>
+    <tr><td><b>Email Marketing Roadmap</b></td><td>Ongoing</td><td>Stage-by-stage email sequence plan. Nurture cadence, A/B test status, pending improvements.</td></tr>
+    <tr><td><b>Ads Roadmap</b></td><td>Ongoing</td><td>Campaign strategy, creative angles, budget allocation, CTA iteration plan.</td></tr>
+    <tr><td><b>Miro Touchpoints Board</b></td><td>Since Mar 5, 2026</td><td>Visual map of all customer touchpoints across channels. Used for team strategy sessions.</td></tr>
+  </table>
+
+  <div class="h3">Key Metrics Tracked Across All Reporting</div>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Pipeline Metrics</h5><ul><li>Deals by stage (206 total)</li><li>Closed won (21) vs. closed lost (84)</li><li>65 deals in "Jack to Review"</li><li>Average deal value by campaign</li><li>Days in stage per deal</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Marketing Metrics</h5><ul><li>Email open/click rates per sequence</li><li>Newsletter subscriber growth</li><li>Ad impressions, reach, CTR</li><li>Postalytics delivery and QR scan rate</li><li>Form submissions by source</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Lead Quality Metrics</h5><ul><li>Contacts by lifecycle stage</li><li>Score distribution (0-200)</li><li>FN Score vs. Jack Score correlation</li><li>SQL conversion rate</li><li>Source attribution (FN, ads, referral)</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Operations Metrics</h5><ul><li>Tasks overdue per rep</li><li>Deal stalled alert frequency</li><li>Field visit rate vs. leads</li><li>RingCentral call volume (pending)</li><li>Duplicate detection rate</li></ul></div>
   </div>
 </div>
 
@@ -1351,6 +1949,35 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
       </table>
     </div></div>
   </div>
+
+  <div class="h3">Jack Hall — Daily Workflow</div>
+  <p class="prose">Jack is the primary daily CRM user. His workflow is optimised for field work and is structured around three phases.</p>
+  <div class="fs">
+    <div class="fp bl"><h5>Morning Briefing (AirCover)</h5><p>Open HubSpot on mobile. Review Jack's Operational Dashboard — overdue tasks, pipeline by stage, top-scored LotiProperties. Pull AirCover fire incident feed for new incidents from the past 7 days. Plan daily route based on property scores and driving distance.</p>
+    <div class="det"><b>Key dashboard widgets:</b> High-Priority Tasks · Pipeline Overview · LotiProperties by Score · AirCover Intel Panel</div></div>
+    <div class="fp"><h5>Field: Site Visits &amp; Assessment</h5><p>Drive to properties. Log visit via HubSpot mobile app. Update: <code>site_visit_date</code>, <code>confirmed_loss</code>, <code>field_notes</code>, <code>house_photo</code>, <code>owner_photo</code>, <code>extent_of_the_damage</code>. Set <code>Jack Score</code> based on opportunity assessment.</p>
+    <div class="det"><b>Visit decision criteria:</b> FN Score · distance (<code>distance_to_rep__km_</code>) · drive time · property value · firefighter comments</div></div>
+    <div class="fp gr"><h5>End of Day: Notes &amp; Follow-Ups</h5><p>Log all calls via RingCentral (critical — prevents false Deal Stalled alerts). Update <code>next_action_date</code>. Set follow-up tasks. Move deals to correct pipeline stage. Review any Deal Stalled notifications.</p></div>
+  </div>
+
+  <div class="h3">Mike Yurochko — CRM Touchpoints</div>
+  <p class="prose">Mike engages with HubSpot primarily through notifications and strategic decisions rather than daily data entry.</p>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--red)"></span>Receives Automatically</h5><ul><li>Deal Stalled email notifications</li><li>Slack alerts for stalled deals with direct deal links</li><li>New SQL Slack notifications when high-score leads emerge</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Strategic Decisions</h5><ul><li>Approves CTA changes for ads and landing pages</li><li>Reviews A/B test plans (email subject lines)</li><li>RingCentral communications via lotiadjusters.com</li><li>Reviews closed won/lost deal reasons</li></ul></div>
+  </div>
+
+  <div class="h3">Refindable Team — Responsibilities</div>
+  <table class="t">
+    <tr><th>Person</th><th>Primary Focus</th><th>Key Deliverables</th></tr>
+    <tr><td><b>Rami</b></td><td>CRM Lead</td><td>Architecture decisions, workflow builds, 2x/week sessions with Sean &amp; Jack, this documentation</td></tr>
+    <tr><td><b>Gerardo</b></td><td>Daily Operations</td><td>Daily CRM checks, deal QA, task monitoring, data hygiene, pipeline management</td></tr>
+    <tr><td><b>Sol</b></td><td>Sales Assistant</td><td>BeenVerified research, contact enrichment, LinkedIn outreach management, data imports</td></tr>
+    <tr><td><b>Eric &amp; Patricia</b></td><td>Email</td><td>RallyBack Brief sends (2x/week), nurture sequence builds, email QA, A/B test setup</td></tr>
+    <tr><td><b>Other team</b></td><td>Ads &amp; Design</td><td>Meta and Google ad creative, landing page design, newsletter design</td></tr>
+  </table>
+
+  <div class="co info"><span class="i">&#128203;</span><div><b>38 total owners in portal.</b> Most are historical or inactive contacts. The active daily users are Jack (field), Gerardo (ops), and Rami (CRM). Mike and Sean receive alerts. Zack Parker runs 1:1 sequences.</div></div>
 </div>
 <!-- ═══════════ LEAD JOURNEY: ENTRY ═══════════ -->
 
@@ -1396,6 +2023,28 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+  <div class="h3">All Lead Entry Channels</div>
+  <table class="t">
+    <tr><th>Channel</th><th>Volume / Notes</th><th>Auto or Manual?</th></tr>
+    <tr><td><b>Fire Notification API</b></td><td>Primary source. Real-time residential fire incidents. Go-live Mar 3, 2026.</td><td><span class="p gr">Automatic</span></td></tr>
+    <tr><td><b>Postalytics Mailers</b></td><td>1,700+ mailers sent to LA Fires list. QR code scan triggers engagement score +20.</td><td><span class="p gr">Auto (score)</span></td></tr>
+    <tr><td><b>LinkedIn Outreach</b></td><td>550 LA Fires contacts. 2 accounts × 20 requests/day. 3-message sequence post-connection.</td><td><span class="p am">Semi-auto</span></td></tr>
+    <tr><td><b>Website Forms</b></td><td>Learning Hub signup, contact form on loti.com and lotiadjusters.com.</td><td><span class="p gr">Auto</span></td></tr>
+    <tr><td><b>Paid Ads</b></td><td>Meta and Google lead forms. UTM tracking for attribution.</td><td><span class="p gr">Auto</span></td></tr>
+    <tr><td><b>Phone Calls</b></td><td>888-488-LOTI inbound. Logged via RingCentral + HubSpot call integration.</td><td><span class="p am">Manual log</span></td></tr>
+    <tr><td><b>BeenVerified Research</b></td><td>Sol manually researches owners for incidents with missing contact data.</td><td><span class="p rd">Manual</span></td></tr>
+    <tr><td><b>Referrals</b></td><td>Contractor and attorney referrals. Entered manually. Source = "Referral".</td><td><span class="p rd">Manual</span></td></tr>
+  </table>
+
+  <div class="h3">What Gets Populated on a New LotiProperty</div>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>Incident Data (from FN)</h5><ul><li><code>incident_id</code> — unique FN identifier</li><li><code>loss_address</code> / city / state / zip</li><li><code>geocoded_latitude</code> / <code>geocoded_longitude</code></li><li><code>fire_department_comment</code></li><li><code>confirmed_loss</code> — initial FN severity flag</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>Property Data (from FN/Property Reach)</h5><ul><li><code>property_type</code> / <code>type_of_home</code></li><li><code>year_built</code> / <code>lot_size</code></li><li><code>assessed_total_value</code></li><li><code>avm_value</code> — estimated property value</li><li><code>parcel__apn_</code> — assessor parcel number</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--purple)"></span>Ownership Data (from FN/BeenVerified)</h5><ul><li>Contact name(s) linked via association label</li><li><code>property_ownership</code></li><li><code>last_sale_date</code> / <code>last_sale_price</code></li><li><code>purchase_loan_amount</code></li><li>Phone / email (from BeenVerified if missing)</li></ul></div>
+    <div class="cd"><h5><span class="d" style="background:var(--green)"></span>Distance &amp; Routing</h5><ul><li><code>distance_to_rep__km_</code></li><li><code>drive_time__min_</code></li><li><code>google_maps_link</code></li><li><code>county</code> / <code>state_or_region</code></li><li>Used by Jack for route planning</li></ul></div>
+  </div>
+
+  <div class="co info"><span class="i">&#128161;</span><div><b>Enrichment note:</b> Not all fields are populated on creation. FN provides incident and basic property data. BeenVerified fills owner contact gaps. Property Reach adds assessed value and ownership history. The Sales Assistant (Sol) handles manual enrichment for high-priority leads.</div></div>
 </div>
 
 <!-- ═══════════ LEAD JOURNEY: SCORING ═══════════ -->
@@ -1427,6 +2076,63 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     </div></div>
   </div>
 
+  <div class="h3">Score Thresholds &amp; Routing Logic</div>
+  <table class="t">
+    <tr><th>Opportunity Score</th><th>Branch</th><th>Lifecycle Stage Set</th><th>What Happens</th></tr>
+    <tr><td><b>0 – low threshold</b></td><td><span class="p rd">Ineligible</span></td><td>Ineligible</td><td>Suitability = "Not Suitable". No deal created. Periodic re-evaluation if criteria change.</td></tr>
+    <tr><td><b>Low – moderate</b></td><td><span class="p am">MQL</span></td><td>Marketing Qualified Lead</td><td>Enrolled in BAU Stage 1 or LA Fires Stage 1 nurture sequence. Monitor for score increase.</td></tr>
+    <tr><td><b>Moderate (outside range)</b></td><td><span class="p pu">Remote</span></td><td>MQL</td><td>BAU CA, outside Jack's drive radius. No field visit. Email/phone outreach only.</td></tr>
+    <tr><td><b>High (&gt;65 combined)</b></td><td><span class="p gr">SQL</span></td><td>Sales Qualified Lead</td><td>Slack to Jack. Task created. Deal auto-created in "Jack to Review" stage.</td></tr>
+  </table>
+
+  <div class="h3">How Scores Combine</div>
+  <div class="sp">
+    <div class="sc bau">
+      <h4>Engagement Score (0–100)</h4>
+      <p>Contact-level. Resets after 30 days of inactivity. Tracks real interaction signals:</p>
+      <table class="t">
+        <tr><th>Action</th><th>+Points</th></tr>
+        <tr><td>Postalytics QR Scan</td><td><b>+20</b></td></tr>
+        <tr><td>High-Value Page View</td><td><b>+15</b></td></tr>
+        <tr><td>Resource Download</td><td><b>+15</b></td></tr>
+        <tr><td>Email Click</td><td><b>+5</b></td></tr>
+        <tr><td>Website Visit</td><td><b>+5</b></td></tr>
+        <tr><td>Email Open (capped)</td><td><b>+2</b></td></tr>
+      </table>
+    </div>
+    <div class="sc la">
+      <h4>FIT Score (0–100)</h4>
+      <p>Property-level. Set once on LotiProperty creation:</p>
+      <table class="t">
+        <tr><th>Scenario</th><th>Score</th></tr>
+        <tr><td>LA Fires campaign property</td><td><b>100 (fixed)</b></td></tr>
+        <tr><td>BAU fire incident (AI scored)</td><td><b>0–100</b></td></tr>
+      </table>
+      <p style="font-size:11px;margin-top:6px">AI factors: incident severity · property value · claim potential · ownership type · fire zone · firefighter comments</p>
+    </div>
+  </div>
+
+  <div class="h3">Nurture Track Detail — BAU vs LA Fires</div>
+  <div class="cg">
+    <div class="cd"><h5><span class="d" style="background:var(--blue)"></span>BAU Nurture (3 Stages)</h5>
+      <ul>
+        <li><b>Stage 1 (PA Warm):</b> 12+ emails. Educational, trust-building. Low urgency.</li>
+        <li><b>Stage 2 (PA Cold):</b> Re-engagement. Different angle, higher urgency.</li>
+        <li><b>Stage 3 (Suite):</b> Final attempt. Audience profiling by 4 types (pending).</li>
+        <li>Contact moves forward only if score increases. No increase = stays in stage or escalates to No Contact Flow.</li>
+      </ul>
+    </div>
+    <div class="cd"><h5><span class="d" style="background:var(--accent)"></span>LA Fires Nurture (2 Stages)</h5>
+      <ul>
+        <li><b>Stage 1:</b> Immediate. More aggressive cadence — shorter wait times, higher urgency messaging.</li>
+        <li><b>Stage 2:</b> Re-engagement if Stage 1 doesn't convert.</li>
+        <li>LA Fires FIT Score is always 100 — so engagement score is the key differentiator for SQL routing.</li>
+        <li>LinkedIn outreach runs in parallel to nurture sequence.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="co warn"><span class="i">&#9888;</span><div><b>Score Aggregation Workflow:</b> The Score Aggregation workflow runs on the LotiProperty object and sums all linked contact Engagement Scores into a single property (<code>score</code>). This combined view powers Jack's Operational Dashboard ranking. If a property has 3 owners and all 3 have engaged, scores stack — making multi-owner properties surface higher.</div></div>
 </div>
 
 <!-- ═══════════ LEAD JOURNEY: FIELD ═══════════ -->
