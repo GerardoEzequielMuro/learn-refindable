@@ -503,9 +503,9 @@ function fitToScreen() {
   const wh = wrap.clientHeight;
   const cw = 2400;
   const ch = 1700;
-  scale = Math.min(ww / cw, wh / ch) * 0.92;
+  scale = (ww / cw) * 0.98;
   panX = (ww - cw * scale) / 2;
-  panY = (wh - ch * scale) / 2;
+  panY = 10;
   applyTransform();
 }
 
