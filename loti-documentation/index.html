@@ -89,7 +89,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <p class="desc">Loti is a public adjusting firm. When someone's property is damaged (fire, storm, flood), Loti helps them get a fair insurance payout. Loti works on a contingency fee, meaning the homeowner pays nothing upfront.</p>
 
-<div class="co co-i"><div class="tg">THE BIG PICTURE</div><p>A fire happens. The system finds the property and its owners. AI scores how good the opportunity is. The property moves through a pipeline automatically. When the score is high enough, Jack goes to visit. If it qualifies, a Deal is created and the team manages the insurance claim.</p></div>
+<div class="co co-i"><div class="tg">THE BIG PICTURE</div><p>A fire happens. A <strong>LotiProperty</strong> is created in HubSpot. The system finds the property owners (Contacts) through PropertyReach. AI scores the property. The LotiProperty moves through pipeline stages based on its score. When the score is high enough, Jack goes to visit. If it qualifies, a Deal is created and the team manages the insurance claim manually.</p></div>
 
 <div class="flow"><div class="flow-title">The Full Process</div><div class="flow-steps">
 <span class="flow-s active">Fire Notification</span><span class="flow-arr">&rarr;</span>
@@ -107,7 +107,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Contacts Are Found Automatically</span></div>
 <div class="st-b"><p>The system uses <strong>PropertyReach</strong> to find who lives at the property. These contacts are created in HubSpot and linked to the LotiProperty.</p>
-<p>If a contact already exists from a previous incident, the system flags the connection as <strong>Possible Duplicate</strong> using association labels, so the team knows to check.</p></div></div>
+<p>If a contact already exists from a previous incident, the system flags it as a <strong>Possible Duplicate</strong> so the team knows to check.</p></div></div>
 
 <div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">AI Scores the Property</span></div>
 <div class="st-b"><p>Each LotiProperty gets an AI-generated <strong>Property Score</strong> (0-100) based on incident severity, property value, and claim potential. Contacts accumulate an <strong>Engagement Score</strong> based on their activity. These combine into the <strong>Opportunity Score</strong> that determines the pipeline stage.</p></div></div>
@@ -117,7 +117,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">Jack Visits the Property</span></div>
 <div class="st-b"><p>Jack plans his route by priority and distance. Sol (Sales Assistant) prepares an <strong>AirCover Briefing</strong> with all property details before each visit. At the property, Jack assesses the damage and talks to the homeowner.</p>
-<div class="co co-p"><div class="tg">IMPORTANT</div><p>Jack does NOT take photos during visits. Visual data comes from Fire Notification and Sol's briefings.</p></div></div></div>
+</div></div>
 
 <div class="st"><div class="st-h"><span class="st-n">6</span><span class="st-t">Deal Created or Disqualified</span></div>
 <div class="st-b"><p>When a LotiProperty reaches <strong>To Create a Deal</strong>, the system automatically creates a Deal. From here, everything is manual: the team manages the claim, insurance collection, and closing.</p>
@@ -181,6 +181,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="st-b"><p>Back in HubSpot, update the LotiProperty record:</p>
 <ul>
 <li>Add detailed notes about your visit</li>
+<li>Set the <strong>Site Visit Date</strong></li>
 <li>Set your <strong>Jack Score</strong> (0-100) &mdash; your personal rating of the opportunity</li>
 <li>Update the <strong>Confirmed Loss</strong> type</li>
 <li>Create follow-up tasks if needed</li>
@@ -209,12 +210,17 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="st-b">
 <table class="dt"><thead><tr><th>Field</th><th>What It Means</th></tr></thead><tbody>
 <tr><td><strong>Opportunity Score</strong></td><td>Combined score (Engagement + Property Score). Determines pipeline stage. Higher = better lead.</td></tr>
-<tr><td><strong>Engagement Score</strong></td><td>Total engagement from all contacts linked to this property.</td></tr>
-<tr><td><strong>Property Score</strong></td><td>AI score (0-100). How well this property fits Loti's ideal case.</td></tr>
-<tr><td><strong>Incident Date</strong></td><td>When the fire/incident happened.</td></tr>
+<tr><td><strong>Engagement Score</strong></td><td>Total engagement from all contacts linked to this property. Summed from all associated contacts automatically.</td></tr>
+<tr><td><strong>Property Score</strong></td><td>AI score (0-100). Evaluates incident severity, property value, and claim potential.</td></tr>
+<tr><td><strong>Incident Date</strong></td><td>When the fire/incident happened. Comes from Fire Notification.</td></tr>
 <tr><td><strong>Estimated Property Value</strong></td><td>Property value estimate. Over $800K triggers mailer programs.</td></tr>
-<tr><td><strong>Jack Score</strong></td><td>Your personal assessment (0-100) after visiting.</td></tr>
-<tr><td><strong>Loti Campaign</strong></td><td>BAU Local, BAU CA, LA Fires, OR, WA, NV.</td></tr>
+</tbody></table>
+<p>Other fields you'll see on a LotiProperty:</p>
+<table class="dt"><thead><tr><th>Field</th><th>What It Means</th></tr></thead><tbody>
+<tr><td><strong>Jack Score</strong></td><td>Your personal assessment (0-100) after visiting. Independent from AI scores.</td></tr>
+<tr><td><strong>Site Visit Date</strong></td><td>Date you visited the property. You set this manually.</td></tr>
+<tr><td><strong>Confirmed Loss</strong></td><td>Type of damage confirmed during visit (fire, water, storm, etc.).</td></tr>
+<tr><td><strong>Loti Campaign</strong></td><td>Which campaign: BAU Local, BAU CA, LA Fires, OR, WA, NV.</td></tr>
 </tbody></table>
 </div></div>
 
@@ -231,33 +237,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="co co-p"><div class="tg">DUPLICATE DETECTION</div><p>When contacts come from both Fire Notification and PropertyReach, the system labels the connection as <strong>Possible Duplicate</strong>. This is a heads-up to check if both records are the same person.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Lifecycle Stages</span></div>
-<div class="st-b"><p>Every contact has a lifecycle stage showing where they are:</p>
-<div class="flow"><div class="flow-steps">
-<span class="flow-s">Lead</span><span class="flow-arr">&rarr;</span>
-<span class="flow-s">MQL</span><span class="flow-arr">&rarr;</span>
-<span class="flow-s">SQL</span><span class="flow-arr">&rarr;</span>
-<span class="flow-s active">Opportunity</span><span class="flow-arr">&rarr;</span>
-<span class="flow-s active">Customer</span>
-</div></div>
-<table class="dt"><thead><tr><th>Stage</th><th>Meaning</th></tr></thead><tbody>
-<tr><td><strong>Lead</strong></td><td>New contact, not yet evaluated.</td></tr>
-<tr><td><strong>MQL</strong></td><td>Marketing Qualified Lead. Shows engagement, gets email campaigns.</td></tr>
-<tr><td><strong>SQL</strong></td><td>Sales Qualified Lead. High enough score for direct outreach.</td></tr>
-<tr><td><strong>Opportunity</strong></td><td>Active opportunity. A deal exists.</td></tr>
-<tr><td><strong>Customer</strong></td><td>Signed client. Loti is handling their claim.</td></tr>
-<tr><td><strong>Ineligible</strong></td><td>Doesn't qualify for any reason.</td></tr>
-</tbody></table>
-</div></div>
-
 <div class="ss"><h3>What is a Deal?</h3></div>
 
-<div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">Deals = Insurance Claims</span></div>
+<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Deals = Insurance Claims</span></div>
 <div class="st-b"><p>A Deal represents an active insurance claim Loti is working on. Deals are created <strong>automatically</strong> when a LotiProperty reaches the "To Create a Deal" stage.</p>
 <div class="co co-w"><div class="tg">IMPORTANT</div><p>Everything in the Deal Pipeline is <strong>manual</strong>. No automations move deals between stages. You update deal stages, notes, and properties by hand.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">6</span><span class="st-t">Deal Fields You'll See</span></div>
+<div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">Deal Fields You'll See</span></div>
 <div class="st-b">
 <table class="dt"><thead><tr><th>Field</th><th>What It Means</th></tr></thead><tbody>
 <tr><td><strong>Loti Campaign</strong></td><td>BAU Local, BAU CA, LA Fires, OR, WA, NV.</td></tr>
