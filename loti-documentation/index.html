@@ -55,6 +55,57 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .flow-arr{color:var(--o);font-size:1em;font-weight:700}
 footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
 @media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}}
+
+/* VISUAL CARDS */
+.v-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
+.v-card{background:#fff;border-radius:12px;padding:22px;border:1px solid var(--bd);transition:all .3s;position:relative;overflow:hidden}
+.v-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.v-card .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4em;margin-bottom:12px}
+.v-card h4{font-family:'Bebas Neue',sans-serif;font-size:1.05em;letter-spacing:.5px;margin-bottom:6px}
+.v-card p{font-size:.82em;color:var(--tl);line-height:1.5}
+.v-card.orange .ic{background:var(--ol);color:var(--o)}
+.v-card.blue .ic{background:rgba(52,152,219,.1);color:var(--b)}
+.v-card.green .ic{background:rgba(39,174,96,.1);color:var(--g)}
+.v-card.purple .ic{background:rgba(142,68,173,.1);color:#8e44ad}
+.v-card.red .ic{background:rgba(231,76,60,.1);color:var(--r)}
+.v-card.amber .ic{background:rgba(243,156,18,.1);color:var(--y)}
+
+/* PIPELINE VISUAL */
+.pipe{display:flex;gap:4px;margin:20px 0;overflow-x:auto;padding-bottom:8px}
+.pipe-s{flex:1;min-width:100px;padding:14px 10px;border-radius:10px;text-align:center;font-size:.72em;font-weight:700;color:#fff;position:relative;transition:transform .2s}
+.pipe-s:hover{transform:translateY(-3px)}
+.pipe-s .score{font-family:'Bebas Neue',sans-serif;font-size:1.8em;line-height:1;margin-bottom:2px}
+.pipe-s .label{opacity:.9;font-weight:600}
+.pipe-s .sub{opacity:.7;font-weight:400;margin-top:2px;font-size:.9em}
+
+/* SCORE CARDS */
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.score-card{background:#fff;border-radius:14px;padding:24px 20px;border:1px solid var(--bd);text-align:center;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.score-card.sc-eng::before{background:linear-gradient(90deg,var(--b),#6dd5fa)}
+.score-card.sc-prop::before{background:linear-gradient(90deg,var(--o),var(--o2))}
+.score-card.sc-opp::before{background:linear-gradient(90deg,var(--g),#6dd5fa)}
+.score-card .sc-icon{font-size:2em;margin-bottom:8px}
+.score-card .sc-name{font-family:'Bebas Neue',sans-serif;font-size:1.15em;letter-spacing:1px;margin-bottom:4px}
+.score-card .sc-range{font-size:.75em;color:var(--o);font-weight:700;margin-bottom:8px}
+.score-card .sc-desc{font-size:.8em;color:var(--tl);line-height:1.5}
+
+/* TEAM CARDS */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin:20px 0}
+.team-card{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--bd);text-align:center;transition:all .2s}
+.team-card:hover{border-color:var(--ob);transform:translateY(-2px)}
+.team-card .avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.2em;color:#fff;margin:0 auto 10px}
+.team-card .name{font-weight:700;font-size:.9em;margin-bottom:2px}
+.team-card .role{font-size:.75em;color:var(--o);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.team-card .what{font-size:.78em;color:var(--tl);line-height:1.4}
+
+/* ICON BADGES in TOC */
+.toc-icon{font-size:1.1em;line-height:1}
+
+/* SECTION ICON */
+.sh .s-icon{font-size:1.3em;margin-left:6px;opacity:.7}
+
+@media(max-width:768px){.score-grid{grid-template-columns:1fr}.pipe{flex-wrap:wrap}.pipe-s{min-width:calc(50% - 4px)}.v-cards{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -73,21 +124,24 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div>
 
 <div class="toc"><div class="toc-t">Table of Contents</div><div class="toc-g">
-<a href="#overview" class="toc-i"><span class="toc-n">I</span><span class="toc-l">How It All Works</span></a>
-<a href="#day" class="toc-i"><span class="toc-n">II</span><span class="toc-l">Jack's Day-to-Day</span></a>
-<a href="#crm" class="toc-i"><span class="toc-n">III</span><span class="toc-l">CRM Basics</span></a>
-<a href="#scoring" class="toc-i"><span class="toc-n">IV</span><span class="toc-l">Scoring</span></a>
-<a href="#pipeline" class="toc-i"><span class="toc-n">V</span><span class="toc-l">Pipelines</span></a>
-<a href="#email" class="toc-i"><span class="toc-n">VI</span><span class="toc-l">Email Campaigns</span></a>
-<a href="#calls" class="toc-i"><span class="toc-n">VII</span><span class="toc-l">Making Calls</span></a>
-<a href="#team" class="toc-i"><span class="toc-n">VIII</span><span class="toc-l">Team & Roles</span></a>
+<a href="#overview" class="toc-i"><span class="toc-n">I</span><span class="toc-icon">&#x1F680;</span><span class="toc-l">How It All Works</span></a>
+<a href="#day" class="toc-i"><span class="toc-n">II</span><span class="toc-icon">&#x1F4CB;</span><span class="toc-l">Jack's Day-to-Day</span></a>
+<a href="#crm" class="toc-i"><span class="toc-n">III</span><span class="toc-icon">&#x1F4E6;</span><span class="toc-l">CRM Basics</span></a>
+<a href="#scoring" class="toc-i"><span class="toc-n">IV</span><span class="toc-icon">&#x1F3AF;</span><span class="toc-l">Scoring</span></a>
+<a href="#pipeline" class="toc-i"><span class="toc-n">V</span><span class="toc-icon">&#x1F4CA;</span><span class="toc-l">Pipelines</span></a>
+<a href="#email" class="toc-i"><span class="toc-n">VI</span><span class="toc-icon">&#x2709;</span><span class="toc-l">Email Campaigns</span></a>
+<a href="#calls" class="toc-i"><span class="toc-n">VII</span><span class="toc-icon">&#x1F4DE;</span><span class="toc-l">Making Calls</span></a>
+<a href="#team" class="toc-i"><span class="toc-n">VIII</span><span class="toc-icon">&#x1F465;</span><span class="toc-l">Team & Roles</span></a>
 </div></div>
 <div class="ct">
 
 <!-- ═══════════════ I. HOW IT ALL WORKS ═══════════════ -->
 <div class="sh" id="overview"><span class="nm">I</span><h2>How It All Works</h2></div><div class="sl"></div>
 
-<p class="desc">Loti is a public adjusting firm. When someone's property is damaged (fire, storm, flood), Loti helps them get a fair insurance payout. Loti works on a contingency fee, meaning the homeowner pays nothing upfront.</p>
+<div class="v-cards">
+<div class="v-card orange"><div class="ic">&#x1F525;</div><h4>Public Adjusting</h4><p>Loti helps homeowners get fair insurance payouts after property damage (fires, storms, floods). The homeowner pays nothing upfront.</p></div>
+<div class="v-card green"><div class="ic">&#x1F91D;</div><h4>Contingency Fee</h4><p>Loti takes a percentage of the insurance payout only if the claim succeeds. No win = no fee.</p></div>
+</div>
 
 <div class="co co-i"><div class="tg">THE BIG PICTURE</div><p>A fire happens. A <strong>LotiProperty</strong> is created in HubSpot. The system finds the property owners (Contacts) through PropertyReach. AI scores the property. The LotiProperty moves through pipeline stages based on its score. When the score is high enough, Jack goes to visit. If it qualifies, a Deal is created and the team manages the insurance claim manually.</p></div>
 
@@ -198,7 +252,13 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <!-- ═══════════════ III. CRM BASICS ═══════════════ -->
 <div class="sh" id="crm"><span class="nm">III</span><h2>CRM Basics</h2></div><div class="sl"></div>
 
-<p class="desc">HubSpot is the CRM (Customer Relationship Management) system where all of Loti's data lives. Every property, every contact, every deal, every phone call. This section explains the three main objects you'll work with.</p>
+<p class="desc">HubSpot is the CRM (Customer Relationship Management) system where all of Loti's data lives. Every property, every contact, every deal, every phone call. These are the three main objects you'll work with:</p>
+
+<div class="v-cards">
+<div class="v-card orange"><div class="ic">&#x1F3E0;</div><h4>LotiProperty</h4><p>A house or building. The central record. Everything connects to it: contacts, deals, scores, incidents.</p></div>
+<div class="v-card blue"><div class="ic">&#x1F464;</div><h4>Contact</h4><p>A person. Homeowners, co-owners, or others linked to a property.</p></div>
+<div class="v-card green"><div class="ic">&#x1F4B0;</div><h4>Deal</h4><p>An insurance claim. Created when a property qualifies. 100% manual pipeline.</p></div>
+</div>
 
 <div class="ss"><h3>What is a LotiProperty?</h3></div>
 
@@ -259,24 +319,26 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <p class="desc">Loti uses three scores to evaluate and prioritize leads. Two are automatic, one is manual.</p>
 
-<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Engagement Score (Contacts)</span></div>
-<div class="st-b"><p>Measures how active a contact is. Points are added when someone:</p>
-<ul>
-<li>Opens an email</li>
-<li>Clicks a link</li>
-<li>Visits the website</li>
-<li>Submits a form</li>
-<li>Replies to an email</li>
-</ul>
-<p>The system adds up all engagement scores from every contact linked to a LotiProperty and writes the total on the property. So the property score reflects all the people connected to it.</p></div></div>
-
-<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Property Score (LotiProperty)</span></div>
-<div class="st-b"><p>AI-generated score (0-100) that evaluates the property based on incident severity, property value, and claim potential. This is how well the property fits Loti's ideal case.</p>
-<p>For <strong>LA Fires</strong> properties, this is a fixed score of <strong>65</strong>.</p></div></div>
-
-<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Opportunity Score (Combined)</span></div>
-<div class="st-b"><p>Engagement Score + Property Score = <strong>Opportunity Score</strong>. This combined number determines where the LotiProperty sits in the pipeline. Higher score = higher priority = closer to being contacted.</p>
-<p>When the Opportunity Score reaches <strong>90 or above</strong>, the property enters the <strong>SDR Must Contact</strong> stage.</p></div></div>
+<div class="score-grid">
+<div class="score-card sc-eng">
+<div class="sc-icon">&#x1F4E7;</div>
+<div class="sc-name">Engagement Score</div>
+<div class="sc-range">CONTACTS</div>
+<div class="sc-desc">How active a contact is. Points for: opening emails, clicking links, visiting the website, submitting forms, replying. The system sums all contacts linked to a LotiProperty and writes the total on the property.</div>
+</div>
+<div class="score-card sc-prop">
+<div class="sc-icon">&#x1F3E0;</div>
+<div class="sc-name">Property Score</div>
+<div class="sc-range">AI &middot; 0-100</div>
+<div class="sc-desc">AI-generated score based on incident severity, property value, and claim potential. For LA Fires properties, this is a fixed score of 65.</div>
+</div>
+<div class="score-card sc-opp">
+<div class="sc-icon">&#x1F3AF;</div>
+<div class="sc-name">Opportunity Score</div>
+<div class="sc-range">COMBINED</div>
+<div class="sc-desc">Engagement + Property Score. Determines the pipeline stage. When this reaches 90+, the property enters "SDR Must Contact".</div>
+</div>
+</div>
 
 <div class="co co-p"><div class="tg">JACK SCORE IS DIFFERENT</div><p><strong>Jack Score (0-100)</strong> is set manually by Jack after visiting a property. It's his personal rating, independent from the AI scores. It's recorded on the LotiProperty record.</p></div>
 
@@ -288,16 +350,16 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="ss"><h3>LotiProperty Pipeline (Automatic)</h3></div>
 <p class="desc">Properties move between stages automatically based on their Opportunity Score:</p>
 
-<table class="dt"><thead><tr><th>Stage</th><th>Score</th><th>What Happens</th></tr></thead><tbody>
-<tr><td><strong>New / Unscored</strong></td><td>0</td><td>Just entered. Waiting for scores.</td></tr>
-<tr><td><strong>Low Priority</strong></td><td>1-29</td><td>Low potential. Passive monitoring.</td></tr>
-<tr><td><strong>Medium Priority</strong></td><td>30-59</td><td>Some potential. In email campaigns.</td></tr>
-<tr><td><strong>High Priority</strong></td><td>60-89</td><td>Good potential. Active nurturing.</td></tr>
-<tr><td><strong>SDR Must Contact</strong></td><td>90+</td><td>High score. Someone needs to reach out.</td></tr>
-<tr><td><strong>Actively Chasing</strong></td><td>Manual</td><td>Jack is actively working this property.</td></tr>
-<tr><td><strong>To Create a Deal</strong></td><td>Manual</td><td>Ready for a deal. System auto-creates the Deal.</td></tr>
-<tr><td><strong>Property with Deal</strong></td><td>Auto</td><td>Deal has been created.</td></tr>
-</tbody></table>
+<div class="pipe">
+<div class="pipe-s" style="background:linear-gradient(135deg,#95a5a6,#bdc3c7)"><div class="score">0</div><div class="label">New</div><div class="sub">Unscored</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#3498db,#5dade2)"><div class="score">1-29</div><div class="label">Low</div><div class="sub">Monitoring</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#f39c12,#f1c40f)"><div class="score">30-59</div><div class="label">Medium</div><div class="sub">Email campaigns</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#e67e22,#f39c12)"><div class="score">60-89</div><div class="label">High</div><div class="sub">Active nurturing</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#e74c3c,#c0392b)"><div class="score">90+</div><div class="label">SDR Must Contact</div><div class="sub">Take action</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#8e44ad,#9b59b6)"><div class="score">&rarr;</div><div class="label">Actively Chasing</div><div class="sub">Manual</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#27ae60,#2ecc71)"><div class="score">&#x2714;</div><div class="label">To Create Deal</div><div class="sub">Auto-creates deal</div></div>
+<div class="pipe-s" style="background:linear-gradient(135deg,#1a845c,#27ae60)"><div class="score">&#x2605;</div><div class="label">With Deal</div><div class="sub">Deal active</div></div>
+</div>
 
 <div class="co co-d"><div class="tg">HOW IT WORKS</div><p>First 5 stages are <strong>automatic</strong> (score-based). "Actively Chasing" and "To Create a Deal" are <strong>manual</strong> moves. "Property with Deal" is set automatically when a deal is created.</p></div>
 
@@ -367,15 +429,15 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <!-- ═══════════════ VIII. TEAM & ROLES ═══════════════ -->
 <div class="sh" id="team"><span class="nm">VIII</span><h2>Team & Roles</h2></div><div class="sl"></div>
 
-<table class="dt"><thead><tr><th>Person</th><th>Role</th><th>What They Do in HubSpot</th></tr></thead><tbody>
-<tr><td><strong>Jack Hall</strong></td><td>Field Sales</td><td>Visits properties, updates LotiProperties and Deals, sets Jack Score, manages Deal Pipeline.</td></tr>
-<tr><td><strong>Sol</strong></td><td>Sales Assistant / AirCover</td><td>Prepares AirCover Briefings for Jack. Shares incident info and property details before each visit.</td></tr>
-<tr><td><strong>Ramiro Branca</strong></td><td>CRM Lead</td><td>Manages HubSpot configuration, workflows, and scoring.</td></tr>
-<tr><td><strong>Gerardo Muro</strong></td><td>Daily CRM Ops</td><td>Day-to-day CRM operations and monitoring.</td></tr>
-<tr><td><strong>Eric & Patricia Pulgar</strong></td><td>Email Marketing</td><td>Create and manage email campaigns, sequences, and templates.</td></tr>
-<tr><td><strong>Zack Parker</strong></td><td>SDR / Outreach</td><td>Runs outreach sequences and LinkedIn messaging.</td></tr>
-<tr><td><strong>Mike Yurochko</strong></td><td>Strategy</td><td>Oversees CRM strategy and reviews dashboards.</td></tr>
-</tbody></table>
+<div class="team-grid">
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,var(--o),var(--o2))">JH</div><div class="name">Jack Hall</div><div class="role">Field Sales</div><div class="what">Visits properties, updates LotiProperties and Deals, sets Jack Score, manages Deal Pipeline.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,#8e44ad,#9b59b6)">S</div><div class="name">Sol</div><div class="role">Sales Assistant / AirCover</div><div class="what">Prepares AirCover Briefings for Jack. Shares incident info and property details before each visit.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,var(--b),#5dade2)">RB</div><div class="name">Ramiro Branca</div><div class="role">CRM Lead</div><div class="what">Manages HubSpot configuration, workflows, and scoring.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,var(--g),#2ecc71)">GM</div><div class="name">Gerardo Muro</div><div class="role">Daily CRM Ops</div><div class="what">Day-to-day CRM operations and monitoring.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,var(--y),#f1c40f)">EP</div><div class="name">Eric & Patricia Pulgar</div><div class="role">Email Marketing</div><div class="what">Create and manage email campaigns, sequences, and templates.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,#e74c3c,#c0392b)">ZP</div><div class="name">Zack Parker</div><div class="role">SDR / Outreach</div><div class="what">Runs outreach sequences and LinkedIn messaging.</div></div>
+<div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,var(--d),var(--d2))">MY</div><div class="name">Mike Yurochko</div><div class="role">Strategy</div><div class="what">Oversees CRM strategy and reviews dashboards.</div></div>
+</div>
 
 </div><!-- end .ct -->
 
