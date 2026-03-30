@@ -117,6 +117,17 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 .screenshot { margin: 24px 0; text-align: center; }
 .screenshot img { max-width: 100%; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 .screenshot .cap { font-size: 13px; color: #64748b; margin-top: 8px; font-style: italic; }
+
+/* Video placeholder */
+.video-box{margin:24px 0;border-radius:12px;overflow:hidden;background:#1a1a2e;position:relative}
+.video-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;gap:16px;min-height:200px}
+.video-placeholder .play-btn{width:64px;height:64px;border-radius:50%;background:var(--o);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(196,80,28,.4)}
+.video-placeholder .play-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(196,80,28,.6)}
+.video-placeholder .play-btn svg{width:24px;height:24px;fill:#fff;margin-left:3px}
+.video-placeholder .vid-label{color:rgba(255,255,255,.7);font-size:.85em;font-weight:500;letter-spacing:1px;text-transform:uppercase}
+.video-placeholder .vid-title{color:#fff;font-size:1.1em;font-weight:600}
+.video-embed{position:relative;padding-bottom:56.25%;height:0}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:none}
 </style>
 </head>
 <body>
@@ -147,6 +158,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ I. HOW IT ALL WORKS ═══════════════ -->
 <div class="sh" id="overview"><span class="nm">I</span><h2>How It All Works</h2></div><div class="sl"></div>
+<div class="video-box" id="video-overview">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">How the Loti HubSpot System Works</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 <div class="screenshot"><img src="images/screenshots/lead-journey-miro.png" alt="Complete Lead Journey — from Fire Notification to Deal Pipeline"><div class="cap">Complete Lead Journey — from Fire Notification to Deal Pipeline</div></div>
 
 
@@ -190,6 +209,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ II. JACK'S DAY-TO-DAY ═══════════════ -->
 <div class="sh" id="day"><span class="nm">II</span><h2>Jack's Day-to-Day</h2></div><div class="sl"></div>
+<div class="video-box" id="video-day">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">Jack's Daily Workflow in HubSpot</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 
 <div class="co co-i"><div class="tg">YOUR DAY AT A GLANCE</div><p>Open HubSpot. Check your tasks. Review LotiProperties sorted by priority and distance. Tell Sol via Slack which properties you want to visit. Sol shares AirCover briefings in the channel. Drive to properties. Make calls. Assess damage. Talk to homeowners. Update notes in HubSpot. Set your Jack Score. Move properties forward or disqualify them.</p></div>
 
@@ -259,6 +286,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ III. CRM BASICS ═══════════════ -->
 <div class="sh" id="crm"><span class="nm">III</span><h2>CRM Basics</h2></div><div class="sl"></div>
+<div class="video-box" id="video-crm">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">CRM Objects: LotiProperties, Contacts & Deals</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 <div class="screenshot"><img src="images/screenshots/loti-record.png" alt="LotiProperty record — scores, FN details, contacts, and deals"><div class="cap">LotiProperty record — scores, FN details, contacts, and deals</div></div>
 
 <div class="screenshot"><img src="images/screenshots/contacts-index.png" alt="Contacts index in HubSpot"><div class="cap">Contacts index in HubSpot</div></div>
@@ -320,6 +355,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ IV. SCORING ═══════════════ -->
 <div class="sh" id="scoring"><span class="nm">IV</span><h2>Scoring</h2></div><div class="sl"></div>
+<div class="video-box" id="video-scoring">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">Understanding the Scoring System</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 <div class="screenshot"><img src="images/screenshots/loti-scores.png" alt="Scores on a LotiProperty: Opportunity, Engagement, Property Score"><div class="cap">Scores on a LotiProperty: Opportunity, Engagement, Property Score</div></div>
 
 
@@ -350,6 +393,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ V. PIPELINES ═══════════════ -->
 <div class="sh" id="pipeline"><span class="nm">V</span><h2>Pipelines</h2></div><div class="sl"></div>
+<div class="video-box" id="video-pipeline">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">Pipeline Stages & How Properties Move</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 <div class="screenshot"><img src="images/screenshots/loti-pipeline.png" alt="LotiProperty Opportunity Pipeline"><div class="cap">LotiProperty Opportunity Pipeline</div></div>
 
 <div class="screenshot"><img src="images/screenshots/deal-pipeline.png" alt="Deal Pipeline — deals by stage"><div class="cap">Deal Pipeline — deals by stage</div></div>
@@ -388,6 +439,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ VI. EMAIL CAMPAIGNS ═══════════════ -->
 <div class="sh" id="email"><span class="nm">VI</span><h2>Email Campaigns</h2></div><div class="sl"></div>
+<div class="video-box" id="video-email">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">Email Campaigns Overview</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 <div class="screenshot"><img src="images/screenshots/email-stage1.png" alt="BAU Email Marketing Stage #1 — Early Recovery workflow"><div class="cap">BAU Email Marketing Stage #1 — Early Recovery workflow</div></div>
 
 
@@ -420,6 +479,14 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- ═══════════════ VII. MAKING CALLS ═══════════════ -->
 <div class="sh" id="calls"><span class="nm">VII</span><h2>Making Calls</h2></div><div class="sl"></div>
+<div class="video-box" id="video-calls">
+  <div class="video-placeholder">
+    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+    <div class="vid-title">Making Calls with RingCentral</div>
+    <div class="vid-label">Video walkthrough — coming soon</div>
+  </div>
+</div>
+
 
 <p class="desc">RingCentral is the phone system connected to HubSpot. Calls made through RingCentral are automatically logged in HubSpot.</p>
 
