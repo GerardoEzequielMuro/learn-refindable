@@ -128,6 +128,44 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 .video-placeholder .vid-title{color:#fff;font-size:1.1em;font-weight:600}
 .video-embed{position:relative;padding-bottom:56.25%;height:0}
 .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;border:none}
+
+/* ── BACK TO TOP BUTTON ── */
+.btt{position:fixed;bottom:32px;right:32px;width:46px;height:46px;border-radius:50%;background:var(--o);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(255,92,53,.4);opacity:0;visibility:hidden;transition:all .3s ease;z-index:999}
+.btt.visible{opacity:1;visibility:visible}
+.btt:hover{transform:translateY(-3px) scale(1.08);box-shadow:0 6px 24px rgba(255,92,53,.55)}
+.btt:active{transform:translateY(0) scale(.95)}
+.btt svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── SEARCH BAR ── */
+.search-wrap{position:relative;margin:0 0 28px;display:flex;align-items:center}
+.search-wrap input{width:100%;padding:12px 16px 12px 44px;border:1px solid var(--bd);border-radius:10px;font-size:.9em;font-family:inherit;background:#fff;color:var(--t);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-wrap input:focus{border-color:var(--o);box-shadow:0 0 0 3px rgba(255,92,53,.12)}
+.search-wrap input::placeholder{color:var(--tl)}
+.search-wrap .s-icon{position:absolute;left:14px;width:18px;height:18px;stroke:var(--tl);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.search-wrap .s-shortcut{position:absolute;right:12px;padding:3px 8px;border:1px solid var(--bd);border-radius:5px;font-size:.68em;color:var(--tl);background:var(--bg);pointer-events:none;font-family:monospace;letter-spacing:.5px}
+.section-hidden{display:none!important}
+
+/* ── ACTIVE NAV LINK ── */
+.nl a.active{color:var(--o);font-weight:700}
+
+/* ── EXPAND/COLLAPSE BUTTON ── */
+.ec-wrap{display:flex;justify-content:flex-end;margin-bottom:12px}
+.ec-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--bd);border-radius:8px;background:#fff;color:var(--tl);font-size:.78em;font-family:inherit;cursor:pointer;transition:all .2s}
+.ec-btn:hover{border-color:var(--o);color:var(--o);background:var(--ol)}
+.ec-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.st-b.collapsed{display:none}
+
+/* ── PRINT STYLES ── */
+@media print{
+  nav,.btt,.search-wrap,.progress,.ec-wrap,.toc,footer{display:none!important}
+  .hero{min-height:auto;padding:24px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .ct{max-width:100%;padding:0}
+  .st-b.collapsed{display:block!important}
+  .section-hidden{display:block!important}
+  body{background:#fff;color:#000}
+  .sh{margin:30px 0 8px;page-break-after:avoid}
+  .st{break-inside:avoid;border:1px solid #ccc}
+}
 </style>
 </head>
 <body>
@@ -156,14 +194,23 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div></div>
 <div class="ct">
 
+<div class="search-wrap">
+<svg class="s-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<input type="text" id="searchInput" placeholder="Search sections..." title="Search sections (Ctrl+K)">
+<span class="s-shortcut" id="shortcutHint">Ctrl+K</span>
+</div>
+
+<div class="ec-wrap">
+<button class="ec-btn" id="ecBtn" title="Expand or collapse all step details">
+<svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+<span>Collapse All</span>
+</button>
+</div>
+
 <!-- ═══════════════ I. HOW IT ALL WORKS ═══════════════ -->
 <div class="sh" id="overview"><span class="nm">I</span><h2>How It All Works</h2></div><div class="sl"></div>
 <div class="video-box" id="video-overview">
-  <div class="video-placeholder">
-    <div class="play-btn" onclick="alert('Video coming soon!')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-    <div class="vid-title">How the Loti HubSpot System Works</div>
-    <div class="vid-label">Video walkthrough — coming soon</div>
-  </div>
+  <div class="video-embed"><iframe src="https://www.loom.com/embed/be4d76a103ee4807be8a7c4ddaf50181" allowfullscreen></iframe></div>
 </div>
 
 
@@ -498,10 +545,144 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 </div><!-- end .ct -->
 
+<button class="btt" id="bttBtn" title="Back to top">
+<svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
 <footer>Built with care by <span>Refindable</span> for the Loti team.</footer>
 
 <script>
+/* ── Progress bar ── */
 window.addEventListener('scroll',function(){var s=document.documentElement,p=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;document.getElementById('progress').style.width=p+'%'});
+
+/* ── Back to top button ── */
+(function(){
+  var btn=document.getElementById('bttBtn');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>300){btn.classList.add('visible')}else{btn.classList.remove('visible')}
+  });
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+
+/* ── Search / filter sections ── */
+(function(){
+  var input=document.getElementById('searchInput');
+  var hint=document.getElementById('shortcutHint');
+  var isMac=navigator.platform.toUpperCase().indexOf('MAC')>=0;
+  if(isMac){hint.textContent='\u2318K'}
+
+  /* Ctrl+K / Cmd+K shortcut */
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){
+      e.preventDefault();input.focus();input.select();
+    }
+    if(e.key==='Escape'&&document.activeElement===input){
+      input.value='';input.dispatchEvent(new Event('input'));input.blur();
+    }
+  });
+
+  /* Filter logic: hide .sh + its following siblings until the next .sh */
+  input.addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim();
+    var ct=document.querySelector('.ct');
+    var sections=ct.querySelectorAll('.sh');
+    sections.forEach(function(sh){
+      /* Collect all elements belonging to this section */
+      var els=[sh];
+      var next=sh.nextElementSibling;
+      while(next&&!next.classList.contains('sh')){
+        els.push(next);
+        next=next.nextElementSibling;
+      }
+      if(!q){
+        els.forEach(function(el){el.classList.remove('section-hidden')});
+        return;
+      }
+      var text='';
+      els.forEach(function(el){text+=el.textContent.toLowerCase()+' '});
+      var match=text.indexOf(q)>=0;
+      els.forEach(function(el){
+        if(match){el.classList.remove('section-hidden')}else{el.classList.add('section-hidden')}
+      });
+    });
+  });
+})();
+
+/* ── Active section highlighting in nav ── */
+(function(){
+  var ids=['overview','day','crm','scoring','pipeline','email','calls'];
+  var navLinks={};
+  document.querySelectorAll('.nl a').forEach(function(a){
+    var href=a.getAttribute('href');
+    if(href)navLinks[href.replace('#','')]=a;
+  });
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id=entry.target.id;
+      if(entry.isIntersecting&&navLinks[id]){
+        Object.values(navLinks).forEach(function(a){a.classList.remove('active')});
+        navLinks[id].classList.add('active');
+      }
+    });
+  },{rootMargin:'-80px 0px -60% 0px',threshold:0});
+  ids.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)observer.observe(el);
+  });
+})();
+
+/* ── Smooth scroll offset for nav links ── */
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=this.getAttribute('href').replace('#','');
+      var target=document.getElementById(id);
+      if(target){
+        e.preventDefault();
+        var offset=70;
+        var top=target.getBoundingClientRect().top+window.pageYOffset-offset;
+        window.scrollTo({top:top,behavior:'smooth'});
+      }
+    });
+  });
+})();
+
+/* ── Expand / Collapse all ── */
+(function(){
+  var btn=document.getElementById('ecBtn');
+  var collapsed=false;
+  btn.addEventListener('click',function(){
+    collapsed=!collapsed;
+    var bodies=document.querySelectorAll('.st-b');
+    bodies.forEach(function(b){
+      if(collapsed){b.classList.add('collapsed')}else{b.classList.remove('collapsed')}
+    });
+    var label=btn.querySelector('span');
+    var svg=btn.querySelector('svg');
+    if(collapsed){
+      label.textContent='Expand All';
+      svg.innerHTML='<polyline points="6 15 12 9 18 15"/>';
+    }else{
+      label.textContent='Collapse All';
+      svg.innerHTML='<polyline points="6 9 12 15 18 9"/>';
+    }
+  });
+})();
+
+/* ── Keyboard navigation hints / title attributes ── */
+(function(){
+  document.querySelectorAll('.nl a').forEach(function(a){
+    a.setAttribute('title','Jump to: '+a.textContent.trim());
+  });
+  document.querySelectorAll('.toc-i').forEach(function(a){
+    var label=a.querySelector('.toc-l');
+    if(label)a.setAttribute('title','Go to section: '+label.textContent.trim());
+  });
+  document.querySelectorAll('.st').forEach(function(st){
+    var t=st.querySelector('.st-t');
+    if(t)st.setAttribute('title','Step: '+t.textContent.trim());
+  });
+})();
 </script>
 </body>
 </html>
