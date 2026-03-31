@@ -584,8 +584,9 @@ document.querySelector('[data-s="'+cur+'"]').classList.add('active');
 document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
 document.getElementById('pgText').textContent=(cur+1)+' / '+T;
 document.getElementById('sCt').textContent=(cur+1)+' / '+T;
-document.getElementById('scoreBadge').textContent='\u2728 '+pts+' pts';
+document.getElementById('scoreBadge').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> '+pts+' pts';
 document.getElementById('bP').disabled=cur===0;
+document.getElementById('bP').textContent=(currentLang==='en'?'\u2190 Previous':'\u2190 Anterior');
 var b=document.getElementById('bN');
 if(cur===T-1){b.style.display='none';updFinal();return}
 b.style.display='flex';
@@ -596,9 +597,9 @@ var locked=false;
 if(qSlides[cur]){locked=!qSlides[cur].every(function(q){return ad[q]!==undefined})}
 if(scSlides[cur]){locked=ad[scSlides[cur]]===undefined}
 if(cur===11){locked=mDone<mTotal}
-if(locked){b.classList.add('locked');b.textContent='\uD83D\uDD12 Complet\u00e1 para avanzar'}
-else{b.classList.remove('locked');b.textContent='Siguiente \u2192'}
-}else{b.classList.remove('locked');b.textContent=cur===T-2?'Ver resultado \u2192':'Siguiente \u2192'}
+if(locked){b.classList.add('locked');b.textContent=(currentLang==='en'?'\uD83D\uDD12 Complete to continue':'\uD83D\uDD12 Complet\u00e1 para avanzar')}
+else{b.classList.remove('locked');b.textContent=(currentLang==='en'?'Next \u2192':'Siguiente \u2192')}
+}else{b.classList.remove('locked');b.textContent=cur===T-2?(currentLang==='en'?'See result \u2192':'Ver resultado \u2192'):(currentLang==='en'?'Next \u2192':'Siguiente \u2192')}
 document.querySelector('.sa').scrollTop=0;
 }
 
@@ -610,8 +611,8 @@ if(ad[qId]!==undefined)return;
 ad[qId]=c;if(c)pts+=10;
 var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
 opts.forEach(function(o){o.classList.add('dis')});
-if(c){el.classList.add('correct');fb.textContent='\u2705 \u00a1Correcto! +10 pts';fb.className='qfb show fbok';q.classList.add('ok')}
-else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});fb.textContent='\u274c Incorrecta.';fb.className='qfb show fbbad';q.classList.add('bad')}
+if(c){el.classList.add('correct');fb.textContent=(currentLang==='en'?'\u2705 Correct! +10 pts':'\u2705 \u00a1Correcto! +10 pts');fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});fb.textContent=(currentLang==='en'?'\u274c Incorrect.':'\u274c Incorrecta.');fb.className='qfb show fbbad';q.classList.add('bad')}
 upd();
 }
 
@@ -621,12 +622,12 @@ ad[scId]=c;if(c)pts+=15;
 var sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
 opts.forEach(function(o){o.classList.add('dis')});
 if(c){el.classList.add('correct');
-if(scId==='sc1')fb.textContent='\u2705 Exacto. Limpieza primero, siempre. Los contactos sin email se manejan aparte con una estrategia de enriquecimiento.';
-else fb.textContent='\u2705 Exacto. CRM \u2192 Deals. Con los filtros correctos ten\u00e9s eso en 2 minutos.';
+if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u2705 Exactly. Clean first, always. Contacts without email are handled separately with an enrichment strategy.':'\u2705 Exacto. Limpieza primero, siempre. Los contactos sin email se manejan aparte con una estrategia de enriquecimiento.');
+else fb.textContent=(currentLang==='en'?'\u2705 Exactly. CRM \u2192 Deals. With the right filters you have that in 2 minutes.':'\u2705 Exacto. CRM \u2192 Deals. Con los filtros correctos ten\u00e9s eso en 2 minutos.');
 fb.className='scenario-fb show sfbok'}
 else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
-if(scId==='sc1')fb.textContent='\u274c Siempre limpi\u00e1 el CSV antes. Los que no tienen email se manejan por separado.';
-else fb.textContent='\u274c CRM \u2192 Deals con filtros es la forma m\u00e1s directa. Reporting es para algo m\u00e1s elaborado.';
+if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u274c Always clean the CSV first. Those without email are handled separately.':'\u274c Siempre limpi\u00e1 el CSV antes. Los que no tienen email se manejan por separado.');
+else fb.textContent=(currentLang==='en'?'\u274c CRM \u2192 Deals with filters is the most direct way. Reporting is for something more elaborate.':'\u274c CRM \u2192 Deals con filtros es la forma m\u00e1s directa. Reporting es para algo m\u00e1s elaborado.');
 fb.className='scenario-fb show sfbbad'}
 upd();
 }
@@ -645,7 +646,7 @@ if(mSel.l.dataset.m===mSel.r.dataset.m){
 mSel.l.classList.remove('selected');mSel.r.classList.remove('selected');
 mSel.l.classList.add('matched');mSel.r.classList.add('matched');
 mDone++;pts+=5;
-if(mDone===mTotal){document.getElementById('matchScore').style.display='block';document.getElementById('matchScore').textContent='\u2705 \u00a1Todo correcto! +'+mTotal*5+' pts'}
+if(mDone===mTotal){document.getElementById('matchScore').style.display='block';document.getElementById('matchScore').textContent=(currentLang==='en'?'\u2705 All correct! +':'\u2705 \u00a1Todo correcto! +')+mTotal*5+' pts'}
 }else{
 mSel.l.classList.add('wrong-flash');mSel.r.classList.add('wrong-flash');
 var a=mSel.l,b2=mSel.r;
@@ -668,9 +669,9 @@ var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
 var maxPts=135;// 8 quiz*10 + 5 match*5 + 2 scenarios*15
 var pct=Math.round((pts/maxPts)*100);
 el.textContent=pts+' pts ('+pct+'%)';
-if(pct>=80){el.className='final-s great';msg.textContent='\uD83D\uDD25 Excelente. Domin\u00e1s los fundamentos de Contactos, Companies y Deals.'}
-else if(pct>=50){el.className='final-s ok';msg.textContent='\uD83D\uDC4D Bien, pero repas\u00e1 donde fallaste antes de la pr\u00f3xima sesi\u00f3n.'}
-else{el.className='final-s low';msg.textContent='\uD83D\uDCD6 Necesit\u00e1s repasar. Volv\u00e9 a las slides y revis\u00e1 los conceptos.'}
+if(pct>=80){el.className='final-s great';msg.textContent=(currentLang==='en'?'\uD83D\uDD25 Excellent. You\'ve mastered the fundamentals of Contacts, Companies, and Deals.':'\uD83D\uDD25 Excelente. Domin\u00e1s los fundamentos de Contactos, Companies y Deals.')}
+else if(pct>=50){el.className='final-s ok';msg.textContent=(currentLang==='en'?'\uD83D\uDC4D Good, but review where you went wrong before the next session.':'\uD83D\uDC4D Bien, pero repas\u00e1 donde fallaste antes de la pr\u00f3xima sesi\u00f3n.')}
+else{el.className='final-s low';msg.textContent=(currentLang==='en'?'\uD83D\uDCD6 You need to review. Go back to the slides and check the concepts.':'\uD83D\uDCD6 Necesit\u00e1s repasar. Volv\u00e9 a las slides y revis\u00e1 los conceptos.')}
 }
 
 document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
@@ -684,10 +685,491 @@ localStorage.setItem('theme',document.body.classList.contains('light')?'light':'
 if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'}
 
 var currentLang='es';
+var langSvg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>';
+
+/* ---------- helpers ---------- */
+function tx(el,es,en){
+if(!el)return;
+var lang=currentLang;
+// store originals on first call
+if(!el._trEs){el._trEs=es;el._trEn=en;}
+if(el._trOverride){/* already has data, use stored */}
+el.innerHTML=(lang==='en'?en:es);
+}
+function txText(el,es,en){
+if(!el)return;
+el.textContent=(currentLang==='en'?en:es);
+}
+/* swapTextOnly: swap only text nodes, preserving child elements (SVGs etc) */
+function txAfterSvg(el,es,en){
+if(!el)return;
+var nodes=el.childNodes;
+for(var i=nodes.length-1;i>=0;i--){
+if(nodes[i].nodeType===3 && nodes[i].textContent.trim()!==''){
+nodes[i].textContent=(currentLang==='en'?' '+en:' '+es);
+return;
+}
+}
+}
+
+function applyLang(){
+var L=currentLang;
+var s,el,els,i;
+/* --- Top bar --- */
+document.querySelector('.top-info').textContent=(L==='en'?'Session 2 \u00b7 Trainees':'Sesi\u00f3n 2 \u00b7 Trainees');
+
+/* ===== S0: Cover ===== */
+s=document.querySelector('[data-s="0"]');
+el=s.querySelector('.badge');
+if(el){var svgBadge=el.querySelector('svg').outerHTML;el.innerHTML=svgBadge+' '+(L==='en'?'Session 2 | March 30, 2026':'Sesi\u00f3n 2 | 30 Marzo 2026');}
+el=s.querySelector('p');
+txText(el,'Los 3 objetos base que vas a usar todos los d\u00edas en HubSpot.','The 3 core objects you\'ll use every day in HubSpot.');
+els=s.querySelectorAll('span[style*="font-size:12px"]');
+if(els[2]){var svgI=els[2].querySelector('svg').outerHTML;els[2].innerHTML=svgI+' '+(L==='en'?'3 quizzes + 1 matching + 2 scenarios':'3 quizzes + 1 matching + 2 escenarios');}
+
+/* ===== S1: Recap ===== */
+s=document.querySelector('[data-s="1"]');
+txText(s.querySelector('h2'),'\u00bfQu\u00e9 vimos la \u00faltima vez?','What did we cover last time?');
+els=s.querySelectorAll('.sn-tab');
+txText(els[1],'Objetos','Objects');
+els=s.querySelectorAll('.sn-p');
+tx(els[0],'<strong>\u00bfQu\u00e9 es un CRM?</strong> La fuente de verdad de una empresa sobre sus clientes. Donde vive toda la info de qui\u00e9n te compra, qui\u00e9n podr\u00eda comprarte, y c\u00f3mo interact\u00faan con vos.','<strong>What is a CRM?</strong> The single source of truth about your customers. Where all the info lives about who buys from you, who might buy, and how they interact with you.');
+tx(els[1],'<strong>Los 5 objetos:</strong> Contactos, Companies, Deals, Tickets y Actividades. Cada uno tiene propiedades y se asocian entre s\u00ed.','<strong>The 5 objects:</strong> Contacts, Companies, Deals, Tickets, and Activities. Each has properties and they associate with each other.');
+tx(els[2],'<strong>Los Hubs de HubSpot:</strong> Marketing, Sales, Service, Operations, Content y Commerce. Todos comparten la misma base de datos (CRM).','<strong>HubSpot Hubs:</strong> Marketing, Sales, Service, Operations, Content, and Commerce. They all share the same database (CRM).');
+tx(els[3],'<strong>Lifecycle Stage</strong> = etapa del contacto en el funnel (Lead \u2192 MQL \u2192 SQL \u2192 Customer). <strong>Pipeline</strong> = etapa del deal en la negociaci\u00f3n (Nuevo \u2192 Contactado \u2192 Propuesta \u2192 Ganado).','<strong>Lifecycle Stage</strong> = contact\'s stage in the funnel (Lead \u2192 MQL \u2192 SQL \u2192 Customer). <strong>Pipeline</strong> = deal\'s stage in the negotiation (New \u2192 Contacted \u2192 Proposal \u2192 Won).');
+el=s.querySelector('.co.tip p');
+tx(el,'Hoy vamos a profundizar en los <strong>3 objetos que m\u00e1s van a usar en el d\u00eda a d\u00eda</strong>: Contactos, Companies y Deals.','Today we\'ll dive deep into the <strong>3 objects you\'ll use the most day to day</strong>: Contacts, Companies, and Deals.');
+
+/* ===== S2: Los 3 objetos ===== */
+s=document.querySelector('[data-s="2"]');
+el=s.querySelector('.badge');txText(el,L==='es'?'':'',L==='es'?'':'');el.textContent=(L==='en'?'01 \u00b7 Overview':'01 \u00b7 Visi\u00f3n General');
+txText(s.querySelector('h2'),'Los 3 objetos que mueven todo','The 3 objects that drive everything');
+els=s.querySelectorAll('.cd');
+txText(els[0].querySelector('h3'),'Contactos','Contacts');
+txText(els[0].querySelector('p'),'Personas. El coraz\u00f3n del CRM. Cada uno se identifica por su email.','People. The heart of the CRM. Each is identified by their email.');
+txText(els[1].querySelector('p'),'Organizaciones. Agrupa contactos bajo una misma empresa.','Organizations. Groups contacts under the same company.');
+txText(els[2].querySelector('p'),'Oportunidades de venta. Tu dinero en proceso.','Sales opportunities. Your money in progress.');
+/* relationship diagram text nodes */
+var relDiv=s.querySelector('div[style*="text-align:center"] > div[style*="font-size:14px"]');
+if(relDiv){
+var cArr=relDiv.childNodes;
+for(i=0;i<cArr.length;i++){
+if(cArr[i].nodeType===3){
+var t=cArr[i].textContent.trim();
+if(t.indexOf('tiene')!==-1) cArr[i].textContent=(L==='en'?'\n\u2195 has\n':'\n\u2195 tiene\n');
+if(t.indexOf('pertenecen')!==-1) cArr[i].textContent=(L==='en'?'\n\u2195 belong to\n':'\n\u2195 pertenecen a\n');
+}
+}
+}
+el=s.querySelector('.co.warn p');
+tx(el,'Sin entender estos 3 objetos, <strong>no pod\u00e9s operar en HubSpot</strong>.','Without understanding these 3 objects, <strong>you can\'t operate in HubSpot</strong>.');
+
+/* ===== S3: Contactos deep dive ===== */
+s=document.querySelector('[data-s="3"]');
+el=s.querySelector('.badge');txText(el,L==='es'?'':'',L==='es'?'':'');el.textContent=(L==='en'?'02 \u00b7 Contacts':'02 \u00b7 Contactos');
+/* h2 has svg inside */
+el=s.querySelector('h2');
+var h2svg=el.querySelector('svg');if(h2svg){el.innerHTML=h2svg.outerHTML+' '+(L==='en'?'Contacts in depth':'Contactos en profundidad');}
+els=s.querySelectorAll('.ex');
+/* ex 0 */
+var h4=els[0].querySelector('h4');var h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'What is a contact?':'\u00bfQu\u00e9 es un contacto?');
+tx(els[0].querySelector('.ex-c p'),'Persona individual. El <strong>email es su ID \u00fanico</strong>. No puede haber dos contactos con el mismo email.','Individual person. The <strong>email is their unique ID</strong>. There can\'t be two contacts with the same email.');
+/* ex 1 */
+h4=els[1].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Key default properties':'Propiedades clave por defecto');
+/* ex 2 */
+h4=els[2].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'How a contact is created':'C\u00f3mo se crea un contacto');
+var lis=els[2].querySelectorAll('li');
+txText(lis[0],'Formulario en tu web','Form on your website');
+txText(lis[1],'Importaci\u00f3n desde CSV','CSV import');
+txText(lis[2],'API o integraci\u00f3n','API or integration');
+txText(lis[3],'Creaci\u00f3n manual en HubSpot','Manual creation in HubSpot');
+txText(lis[4],'Integraci\u00f3n con Gmail/Outlook','Gmail/Outlook integration');
+/* ex 3 */
+h4=els[3].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'The 3 main views':'Las 3 vistas principales');
+lis=els[3].querySelectorAll('li');
+tx(lis[0],'<strong>Lista:</strong> tabla con filtros y columnas','<strong>List:</strong> table with filters and columns');
+tx(lis[1],'<strong>Board:</strong> como Kanban, por lifecycle stage','<strong>Board:</strong> Kanban-style, by lifecycle stage');
+tx(lis[2],'<strong>Table:</strong> edici\u00f3n masiva tipo Excel','<strong>Table:</strong> bulk editing, Excel-style');
+
+/* ===== S4: Propiedades de contacto ===== */
+s=document.querySelector('[data-s="4"]');
+txText(s.querySelector('h2'),'Propiedades que usar\u00e1s s\u00ed o s\u00ed','Properties you\'ll definitely use');
+els=s.querySelectorAll('.tt th');
+txText(els[0],'Propiedad','Property');txText(els[1],'Qu\u00e9 es','What it is');txText(els[2],'Por qu\u00e9 importa','Why it matters');
+els=s.querySelectorAll('.tt tbody tr');
+txText(els[0].querySelectorAll('td')[1],'Identificador \u00fanico','Unique identifier');
+txText(els[0].querySelectorAll('td')[2],'Sin email, el contacto no sirve','Without email, the contact is useless');
+txText(els[1].querySelectorAll('td')[1],'Etapa del funnel','Funnel stage');
+txText(els[1].querySelectorAll('td')[2],'Define c\u00f3mo tratarlo','Defines how to treat them');
+txText(els[2].querySelectorAll('td')[1],'Estado granular dentro de una etapa','Granular status within a stage');
+txText(els[2].querySelectorAll('td')[2],'Para el equipo de ventas','For the sales team');
+txText(els[3].querySelectorAll('td')[1],'Qui\u00e9n es responsable','Who is responsible');
+txText(els[3].querySelectorAll('td')[2],'Accountability del equipo','Team accountability');
+txText(els[4].querySelectorAll('td')[1],'\u00daltima interacci\u00f3n','Last interaction');
+txText(els[4].querySelectorAll('td')[2],'Detectar contactos fr\u00edos','Detect cold contacts');
+el=s.querySelector('.co.warn p');
+tx(el,'Lifecycle Stage se mueve de <strong>Lead \u2192 MQL \u2192 SQL \u2192 Opportunity \u2192 Customer</strong>. NUNCA para atr\u00e1s (en teor\u00eda).','Lifecycle Stage moves from <strong>Lead \u2192 MQL \u2192 SQL \u2192 Opportunity \u2192 Customer</strong>. NEVER backwards (in theory).');
+
+/* ===== S5: Companies ===== */
+s=document.querySelector('[data-s="5"]');
+el=s.querySelector('h2');h2svg=el.querySelector('svg');
+el.innerHTML=h2svg.outerHTML+' '+(L==='en'?'Companies in depth':'Companies en profundidad');
+els=s.querySelectorAll('.ex');
+h4=els[0].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'What is a Company?':'\u00bfQu\u00e9 es una Company?');
+tx(els[0].querySelector('.ex-c p'),'Organizaci\u00f3n/empresa. Se identifica por el <strong>dominio del email</strong>.','Organization/company. Identified by the <strong>email domain</strong>.');
+h4=els[1].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Automatic association':'Asociaci\u00f3n autom\u00e1tica');
+tx(els[1].querySelector('.ex-c p'),'Si cre\u00e1s <strong>juan@techcorp.com</strong>, HubSpot busca si ya existe <strong>techcorp.com</strong> como company y lo asocia solo.','If you create <strong>juan@techcorp.com</strong>, HubSpot checks if <strong>techcorp.com</strong> already exists as a company and associates it automatically.');
+h4=els[2].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Key properties':'Propiedades clave');
+h4=els[3].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Why does it matter?':'\u00bfPor qu\u00e9 importa?');
+tx(els[3].querySelector('.ex-c p'),'Cuando llam\u00e1s a una empresa, quer\u00e9s ver <strong>TODOS los contactos</strong> de esa empresa juntos.','When you call a company, you want to see <strong>ALL contacts</strong> from that company together.');
+el=s.querySelector('.co.tip p');
+tx(el,'Si import\u00e1s 50 contactos de la misma empresa, HubSpot los agrupa autom\u00e1ticamente si tienen el <strong>mismo dominio de email</strong>.','If you import 50 contacts from the same company, HubSpot groups them automatically if they share the <strong>same email domain</strong>.');
+
+/* ===== S6: Relacion ===== */
+s=document.querySelector('[data-s="6"]');
+txText(s.querySelector('h2'),'\u00bfC\u00f3mo se asocian?','How do they associate?');
+els=s.querySelectorAll('.sn-tab');
+txText(els[0],'B2B con varios contactos','B2B with multiple contacts');
+txText(els[1],'Consultora multi-empresa','Multi-company consultant');
+txText(els[2],'Persona sin empresa (B2C)','Person without company (B2C)');
+els=s.querySelectorAll('.sn-p');
+tx(els[0],'<strong>Caso 1:</strong> TechCorp tiene 5 empleados en el CRM. Todos comparten el dominio @techcorp.com. HubSpot los agrupa autom\u00e1ticamente bajo la Company "TechCorp".','<strong>Case 1:</strong> TechCorp has 5 employees in the CRM. They all share the @techcorp.com domain. HubSpot groups them automatically under the Company "TechCorp".');
+tx(els[1],'<strong>Caso 2:</strong> Mar\u00eda es consultora freelance. Trabaja para 3 clientes: TechCorp, DataFlow y SalesInc. Un contacto puede estar en <strong>m\u00faltiples companies</strong>.','<strong>Case 2:</strong> Maria is a freelance consultant. She works for 3 clients: TechCorp, DataFlow, and SalesInc. A contact can be in <strong>multiple companies</strong>.');
+tx(els[2],'<strong>Caso 3:</strong> Pedro usa pedro@gmail.com. No tiene empresa. HubSpot <strong>NO crea</strong> una company "Gmail" porque detecta que es un dominio gen\u00e9rico.','<strong>Case 3:</strong> Pedro uses pedro@gmail.com. He has no company. HubSpot does <strong>NOT create</strong> a company "Gmail" because it detects it\'s a generic domain.');
+el=s.querySelector('.co.warn p');
+tx(el,'<strong>Ojo con los emails gen\u00e9ricos</strong> (gmail, hotmail). HubSpot NO asocia autom\u00e1ticamente por gmail.com porque sino todos los contactos de Gmail quedar\u00edan en la misma company.','<strong>Watch out for generic emails</strong> (gmail, hotmail). HubSpot does NOT auto-associate by gmail.com because otherwise all Gmail contacts would end up in the same company.');
+
+/* ===== S7: Quiz 1 ===== */
+s=document.querySelector('[data-s="7"]');
+el=s.querySelector('.badge');var bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Quiz 1 | Answer to continue':'Quiz 1 | Respond\u00e9 para avanzar');
+txText(s.querySelector('h2'),'Contactos y Companies','Contacts and Companies');
+/* q1 */
+el=s.querySelector('#q1');
+tx(el.querySelector('p'),'Import\u00e1s 200 contactos. 50 tienen email de @gmail.com y 150 tienen emails corporativos de 30 empresas distintas. \u00bfCu\u00e1ntas Companies se crean autom\u00e1ticamente?','You import 200 contacts. 50 have @gmail.com emails and 150 have corporate emails from 30 different companies. How many Companies are auto-created?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'200, una por cada contacto','200, one per contact');
+txAfterSvg(els[1],'31, una por cada dominio incluyendo Gmail','31, one per domain including Gmail');
+txAfterSvg(els[2],'30, solo las corporativas, Gmail se ignora por ser dominio gen\u00e9rico','30, only corporate ones, Gmail is ignored as a generic domain');
+/* q2 */
+el=s.querySelector('#q2');
+tx(el.querySelector('p'),'Un contacto tiene Lifecycle Stage = "Customer". Su empresa acaba de pedir una cotizaci\u00f3n para un segundo producto. \u00bfQu\u00e9 hac\u00e9s?','A contact has Lifecycle Stage = "Customer". Their company just requested a quote for a second product. What do you do?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Cambio el Lifecycle Stage a "Lead" para arrancar de cero','Change the Lifecycle Stage to "Lead" to start over');
+txAfterSvg(els[1],'Lo dejo como Customer y creo un nuevo Deal asociado','Keep them as Customer and create a new associated Deal');
+txAfterSvg(els[2],'Creo un contacto nuevo para el segundo producto','Create a new contact for the second product');
+/* q3 */
+el=s.querySelector('#q3');
+tx(el.querySelector('p'),'Mar\u00eda trabaja como consultora para 3 empresas. Tiene un solo email: maria@gmail.com. \u00bfC\u00f3mo la asoci\u00e1s a las 3 Companies en HubSpot?','Maria works as a consultant for 3 companies. She has one email: maria@gmail.com. How do you associate her with all 3 Companies in HubSpot?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'No se puede, un contacto solo puede estar en una Company','Not possible, a contact can only be in one Company');
+txAfterSvg(els[1],'Creo 3 contactos duplicados, uno por empresa','Create 3 duplicate contacts, one per company');
+txAfterSvg(els[2],'La asocio manualmente a las 3 Companies desde su registro','Manually associate her with all 3 Companies from her record');
+
+/* ===== S8: Deals deep dive ===== */
+s=document.querySelector('[data-s="8"]');
+el=s.querySelector('h2');h2svg=el.querySelector('svg');
+el.innerHTML=h2svg.outerHTML+' '+(L==='en'?'Deals in depth':'Deals en profundidad');
+els=s.querySelectorAll('.ex');
+h4=els[0].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'What is a Deal?':'\u00bfQu\u00e9 es un Deal?');
+tx(els[0].querySelector('.ex-c p'),'Oportunidad de venta en progreso. Tiene <strong>monto, etapa, fecha de cierre y owner</strong>.','Sales opportunity in progress. Has <strong>amount, stage, close date, and owner</strong>.');
+h4=els[1].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Key properties':'Propiedades clave');
+h4=els[2].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'How it\'s created':'C\u00f3mo se crea');
+lis=els[2].querySelectorAll('li');
+txText(lis[0],'Desde un contacto o company','From a contact or company');
+txText(lis[1],'Desde el pipeline directamente','From the pipeline directly');
+txText(lis[2],'Por workflow autom\u00e1tico','Via automated workflow');
+h4=els[3].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Final states':'Estados finales');
+tx(els[3].querySelector('.ex-c p'),'<strong>Closed Won</strong> = ganado. <strong>Closed Lost</strong> = perdido. Siempre se debe registrar el <strong>motivo del loss</strong>.','<strong>Closed Won</strong> = won. <strong>Closed Lost</strong> = lost. The <strong>loss reason</strong> should always be recorded.');
+
+/* ===== S9: Pipeline ===== */
+s=document.querySelector('[data-s="9"]');
+txText(s.querySelector('h2'),'Tu pipeline de ventas','Your sales pipeline');
+els=s.querySelectorAll('.pipe-t');
+txText(els[0],'Nuevo Lead','New Lead');
+txText(els[1],'Contactado','Contacted');
+txText(els[2],'Reuni\u00f3n','Meeting');
+txText(els[3],'Propuesta','Proposal');
+txText(els[4],'Negociaci\u00f3n','Negotiation');
+txText(els[5],'Cerrado Ganado','Closed Won');
+els=s.querySelectorAll('.tt th');
+txText(els[0],'Etapa','Stage');txText(els[1],'Probabilidad','Probability');txText(els[2],'Acci\u00f3n clave','Key action');
+els=s.querySelectorAll('.tt tbody tr');
+txText(els[0].querySelectorAll('td')[0],'Nuevo Lead','New Lead');
+txText(els[0].querySelectorAll('td')[2],'Calificar: \u00bftiene presupuesto, autoridad, necesidad, tiempo?','Qualify: do they have budget, authority, need, timeline?');
+txText(els[1].querySelectorAll('td')[0],'Contactado','Contacted');
+txText(els[1].querySelectorAll('td')[2],'Agendar reuni\u00f3n de discovery','Schedule discovery meeting');
+txText(els[2].querySelectorAll('td')[0],'Reuni\u00f3n agendada','Meeting scheduled');
+txText(els[2].querySelectorAll('td')[2],'Preparar demo/propuesta','Prepare demo/proposal');
+txText(els[3].querySelectorAll('td')[0],'Propuesta enviada','Proposal sent');
+txText(els[3].querySelectorAll('td')[2],'Follow up, responder objeciones','Follow up, handle objections');
+txText(els[4].querySelectorAll('td')[0],'Negociaci\u00f3n','Negotiation');
+txText(els[4].querySelectorAll('td')[2],'T\u00e9rminos finales, legal si aplica','Final terms, legal if applicable');
+txText(els[5].querySelectorAll('td')[0],'Cerrado Ganado','Closed Won');
+txText(els[5].querySelectorAll('td')[2],'Onboarding del cliente','Client onboarding');
+el=s.querySelector('.co.hs p');
+tx(el,'En <strong>Refindable</strong>, cada cliente tiene su propio pipeline customizado. Las etapas se dise\u00f1an seg\u00fan el proceso de venta real del negocio.','At <strong>Refindable</strong>, each client has their own customized pipeline. Stages are designed based on the business\'s actual sales process.');
+
+/* ===== S10: Deal Name ===== */
+s=document.querySelector('[data-s="10"]');
+txText(s.querySelector('h2'),'\u00bfC\u00f3mo nombrar un Deal?','How to name a Deal?');
+cmpH=s.querySelectorAll('.cmp-h');
+var cmpSvg1=cmpH[0].querySelector('svg');if(cmpSvg1)cmpH[0].innerHTML=cmpSvg1.outerHTML+' '+(L==='en'?'Bad':'Mal');
+var cmpSvg2=cmpH[1].querySelector('svg');if(cmpSvg2)cmpH[1].innerHTML=cmpSvg2.outerHTML+' '+(L==='en'?'Good':'Bien');
+el=s.querySelectorAll(':scope > p');if(el.length){tx(el[0],'Formato recomendado: <strong>[Company] - [Producto/Servicio] - [Per\u00edodo]</strong>','Recommended format: <strong>[Company] - [Product/Service] - [Period]</strong>');}
+el=s.querySelector('.co.tip p');
+tx(el,'Pongan el nombre de la empresa <strong>PRIMERO</strong>. Cuando ten\u00e9s 200 deals abiertos, el nombre es lo \u00fanico que ves en el pipeline.','Put the company name <strong>FIRST</strong>. When you have 200 open deals, the name is the only thing you see in the pipeline.');
+
+/* ===== S11: Matching ===== */
+s=document.querySelector('[data-s="11"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Exercise | Which object does each property belong to?':'Ejercicio | \u00bfDe qu\u00e9 objeto es cada propiedad?');
+txText(s.querySelector('h2'),'Identific\u00e1 el objeto','Identify the object');
+txText(s.querySelector('p'),'Hac\u00e9 clic en un item de la izquierda y despu\u00e9s en su match de la derecha:','Click an item on the left and then its match on the right:');
+
+/* ===== S12: Quiz 2 ===== */
+s=document.querySelector('[data-s="12"]');
+txText(s.querySelector('h2'),'Verificaci\u00f3n r\u00e1pida','Quick check');
+/* q4 */
+el=s.querySelector('#q4');
+tx(el.querySelector('p'),'Ten\u00e9s un deal "TechCorp - CRM - Q2" en etapa Negociaci\u00f3n (80%) por $50,000. El cliente dice que quiere pero necesita 6 meses. \u00bfQu\u00e9 hac\u00e9s con el deal?','You have a deal "TechCorp - CRM - Q2" in the Negotiation stage (80%) for $50,000. The client says they want it but needs 6 months. What do you do with the deal?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Lo paso a Closed Lost porque no va a comprar ahora','Move it to Closed Lost because they won\'t buy now');
+txAfterSvg(els[1],'Lo dejo en Negociaci\u00f3n y espero 6 meses','Leave it in Negotiation and wait 6 months');
+txAfterSvg(els[2],'Cambio el Close Date a 6 meses, lo muevo a una etapa anterior, y creo una tarea de follow-up','Change the Close Date to 6 months out, move it to an earlier stage, and create a follow-up task');
+/* q5 */
+el=s.querySelector('#q5');
+tx(el.querySelector('p'),'Un deal lleva 45 d\u00edas en "Propuesta enviada". El contacto no responde emails ni llamadas. \u00bfCu\u00e1l es la PEOR decisi\u00f3n?','A deal has been in "Proposal sent" for 45 days. The contact isn\'t responding to emails or calls. What\'s the WORST decision?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Registrarlo como Closed Lost con motivo "Sin respuesta"','Log it as Closed Lost with reason "No response"');
+txAfterSvg(els[1],'No hacer nada y dejarlo ah\u00ed indefinidamente','Do nothing and leave it there indefinitely');
+txAfterSvg(els[2],'Intentar contactar por otro canal antes de cerrarlo','Try contacting through another channel before closing it');
+/* q6 */
+el=s.querySelector('#q6');
+tx(el.querySelector('p'),'Cerraste un deal como "Closed Won" por $20,000 pero el cliente reduce el alcance y ahora son $12,000. \u00bfQu\u00e9 hac\u00e9s en HubSpot?','You closed a deal as "Closed Won" for $20,000 but the client reduces scope and now it\'s $12,000. What do you do in HubSpot?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Nada, ya est\u00e1 cerrado','Nothing, it\'s already closed');
+txAfterSvg(els[1],'Actualizo el monto a $12,000 en el deal existente','Update the amount to $12,000 in the existing deal');
+txAfterSvg(els[2],'Creo un deal nuevo por $12,000 y borro el viejo','Create a new deal for $12,000 and delete the old one');
+
+/* ===== S13: Flujo completo ===== */
+s=document.querySelector('[data-s="13"]');
+txText(s.querySelector('.badge'),'05 \u00b7 Flujo Completo','05 \u00b7 Full Flow');
+txText(s.querySelector('h2'),'El flujo real: de lead a cliente','The real flow: from lead to customer');
+var flowDiv=s.querySelector('div[style*="font-size:15px"]');
+if(flowDiv){
+var flowNodes=flowDiv.childNodes;
+var flowTexts=[];
+for(i=0;i<flowNodes.length;i++){
+if(flowNodes[i].nodeType===3 && flowNodes[i].textContent.trim()!==''){
+flowTexts.push(flowNodes[i]);
+}
+}
+var esFlows=[' Llega un formulario \u2192 ',' HubSpot detecta el dominio \u2192 ',' El contacto califica \u2192 ',' El vendedor llama \u2192 ',' Se env\u00eda propuesta \u2192 ',' El cliente acepta \u2192 '];
+var enFlows=[' A form comes in \u2192 ',' HubSpot detects the domain \u2192 ',' The contact qualifies \u2192 ',' The rep calls \u2192 ',' Proposal is sent \u2192 ',' Client accepts \u2192 '];
+var esStrong=['Se crea un Contacto','Crea o asocia una Company','Se crea un Deal en etapa "Nuevo Lead"','Se loguea una Actividad (llamada)','El Deal avanza a "Propuesta enviada"','Deal a "Closed Won" + Lifecycle Stage \u2192 Customer'];
+var enStrong=['A Contact is created','Creates or associates a Company','A Deal is created in "New Lead" stage','An Activity is logged (call)','Deal moves to "Proposal sent"','Deal to "Closed Won" + Lifecycle Stage \u2192 Customer'];
+var strongs=flowDiv.querySelectorAll('strong');
+for(i=0;i<flowTexts.length&&i<6;i++){
+flowTexts[i].textContent=(L==='en'?enFlows[i]:esFlows[i]);
+}
+for(i=0;i<strongs.length&&i<6;i++){
+txText(strongs[i],esStrong[i],enStrong[i]);
+}
+}
+el=s.querySelector('.co.tip p');
+tx(el,'Este flujo puede ser manual o totalmente automatizado con <strong>Workflows</strong>. En Sesi\u00f3n 9 vemos eso.','This flow can be manual or fully automated with <strong>Workflows</strong>. We cover that in Session 9.');
+
+/* ===== S14: Importar ===== */
+s=document.querySelector('[data-s="14"]');
+txText(s.querySelector('.badge'),'06 \u00b7 Operaciones','06 \u00b7 Operations');
+txText(s.querySelector('h2'),'Importar contactos: lo que hay que saber','Importing contacts: what you need to know');
+els=s.querySelectorAll('.ex');
+h4=els[0].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'What is an import?':'\u00bfQu\u00e9 es una importaci\u00f3n?');
+txText(els[0].querySelector('.ex-c p'),'Subir un CSV con contactos masivos. HubSpot mapea columnas a propiedades.','Upload a CSV with bulk contacts. HubSpot maps columns to properties.');
+h4=els[1].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Minimum properties':'Propiedades m\u00ednimas');
+tx(els[1].querySelector('.ex-c p'),'<strong>Email</strong> (obligatorio), First Name, Last Name. El resto es opcional pero recomendado.','<strong>Email</strong> (required), First Name, Last Name. The rest is optional but recommended.');
+h4=els[2].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'How to avoid duplicates?':'\u00bfC\u00f3mo evitar duplicados?');
+tx(els[2].querySelector('.ex-c p'),'HubSpot matchea por email. Si el email ya existe, <strong>actualiza</strong> el registro (no crea uno nuevo).','HubSpot matches by email. If the email already exists, it <strong>updates</strong> the record (doesn\'t create a new one).');
+h4=els[3].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'What if there\'s no email?':'\u00bfQu\u00e9 pasa si no hay email?');
+txText(els[3].querySelector('.ex-c p'),'Pod\u00e9s importar sin email, pero el contacto no se puede deduplicar luego. Evitarlo siempre que sea posible.','You can import without email, but the contact can\'t be deduplicated later. Avoid this whenever possible.');
+/* DO/DONT */
+var cmpItems=s.querySelectorAll('.cmp-i');
+txAfterSvg(cmpItems[0],'Limpiar el CSV antes (sin celdas merged, sin filas vac\u00edas)','Clean the CSV first (no merged cells, no empty rows)');
+txAfterSvg(cmpItems[1],'Usar un tag para identificar el origen del import','Use a tag to identify the import source');
+txAfterSvg(cmpItems[2],'Importar sin un plan para esos contactos','Import without a plan for those contacts');
+txAfterSvg(cmpItems[3],'Importar datos sucios \u2192 entra basura, sale basura','Import dirty data \u2192 garbage in, garbage out');
+
+/* ===== S15: Escenario 1 ===== */
+s=document.querySelector('[data-s="15"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Scenario | What would you do?':'Escenario | \u00bfQu\u00e9 har\u00edas?');
+txText(s.querySelector('h2'),'Llegaron 500 leads de una feria','500 leads came from a trade show');
+txText(s.querySelector('.scenario-title'),'\u2012','');
+var stsvg=s.querySelector('.scenario-title svg');
+if(stsvg){s.querySelector('.scenario-title').innerHTML=stsvg.outerHTML+' '+(L==='en'?'Situation':'Situaci\u00f3n');}
+tx(s.querySelector('.scenario > p'),'Volv\u00e9s de <strong>TechFair 2026</strong> con un Excel de 500 contactos. Tu jefe quiere que est\u00e9n en HubSpot HOY. Pero al revisar el archivo encontr\u00e1s: 80 sin email, 30 con emails duplicados entre s\u00ed, celdas con formato raro (nombres en may\u00fasculas, tel\u00e9fonos con guiones y par\u00e9ntesis), y una columna "Inter\u00e9s" que no existe como propiedad en HubSpot. \u00bfQu\u00e9 hac\u00e9s?','You\'re back from <strong>TechFair 2026</strong> with an Excel of 500 contacts. Your boss wants them in HubSpot TODAY. But reviewing the file you find: 80 without email, 30 with duplicate emails, cells with weird formatting (names in all caps, phones with dashes and parentheses), and a column "Interest" that doesn\'t exist as a property in HubSpot. What do you do?');
+els=s.querySelectorAll('.scenario-opt');
+txText(els[0],L==='es'?'':'',L==='es'?'':'');els[0].textContent=(L==='en'?'A) Import everything quickly to comply with the boss, clean up later':'A) Importo todo r\u00e1pido para cumplir con el jefe, despu\u00e9s limpio');
+txText(els[1],L==='es'?'':'',L==='es'?'':'');els[1].textContent=(L==='en'?'B) Clean the CSV (remove those without email, normalize format, create custom property "Interest"), import the valid ones, and handle the 80 without email separately':'B) Limpio el CSV (quito los sin email, normalizo formato, creo la propiedad custom "Inter\u00e9s"), importo los v\u00e1lidos, y manejo los 80 sin email por separado');
+txText(els[2],L==='es'?'':'',L==='es'?'':'');els[2].textContent=(L==='en'?'C) Tell the boss it can\'t be imported until everyone has an email':'C) Le digo al jefe que no se puede importar hasta que todos tengan email');
+txText(els[3],L==='es'?'':'',L==='es'?'':'');els[3].textContent=(L==='en'?'D) Import only those with email without cleaning anything else':'D) Importo solo los que tienen email sin limpiar nada m\u00e1s');
+
+/* ===== S16: Custom props ===== */
+s=document.querySelector('[data-s="16"]');
+txText(s.querySelector('h2'),'\u00bfCu\u00e1ndo crear una propiedad custom?','When to create a custom property?');
+var cmpH=s.querySelectorAll('.cmp-h');
+/* good side has svg */
+var cmpSvg0=cmpH[0].querySelector('svg');
+if(cmpSvg0) cmpH[0].innerHTML=cmpSvg0.outerHTML+' '+(L==='en'?'Use default when...':'Us\u00e1 default cuando...');
+cmpH[1].textContent=(L==='en'?'\uD83C\uDD95 Create custom when...':'\uD83C\uDD95 Cre\u00e1 custom cuando...');
+cmpItems=s.querySelectorAll('.cmp-i');
+txAfterSvg(cmpItems[0],'HubSpot ya la tiene (email, nombre, monto, etapa...)','HubSpot already has it (email, name, amount, stage...)');
+txAfterSvg(cmpItems[1],'Necesit\u00e1s info espec\u00edfica de tu negocio','You need business-specific info');
+txAfterSvg(cmpItems[2],'Ej: "Tipo de licencia", "Score interno", "Fecha de renovaci\u00f3n"','E.g.: "License type", "Internal score", "Renewal date"');
+els=s.querySelectorAll('.ex');
+h4=els[0].querySelector('h4');h4svg=h4.querySelector('svg');
+h4.innerHTML=h4svg.outerHTML+' '+(L==='en'?'Property types':'Tipos de propiedades');
+el=s.querySelector('.co.warn p');
+tx(el,'Antes de crear una custom property, siempre busc\u00e1 si HubSpot ya tiene algo parecido. <strong>El portal se llena de properties innecesarias</strong> y nadie sabe qu\u00e9 significa qu\u00e9.','Before creating a custom property, always check if HubSpot already has something similar. <strong>The portal fills up with unnecessary properties</strong> and nobody knows what means what.');
+
+/* ===== S17: Vistas ===== */
+s=document.querySelector('[data-s="17"]');
+txText(s.querySelector('.badge'),'07 \u00b7 Herramientas','07 \u00b7 Tools');
+txText(s.querySelector('h2'),'Vistas: tu arma diaria','Views: your daily weapon');
+els=s.querySelectorAll('.sn-tab');
+txText(els[0],'Mis contactos','My contacts');
+txText(els[1],'Leads fr\u00edos','Cold leads');
+txText(els[2],'Deals esta semana','Deals this week');
+txText(els[3],'Companies sin deal','Companies without deals');
+txText(els[4],'Feria','Trade show');
+els=s.querySelectorAll('.sn-p');
+tx(els[0],'<strong>"Mis contactos"</strong> \u2192 Filter: Contact Owner = yo + Active','<strong>"My contacts"</strong> \u2192 Filter: Contact Owner = me + Active');
+tx(els[1],'<strong>"Leads sin actividad"</strong> \u2192 Filter: Lifecycle = Lead + Last Activity > 14 d\u00edas','<strong>"Leads without activity"</strong> \u2192 Filter: Lifecycle = Lead + Last Activity > 14 days');
+tx(els[2],'<strong>"Deals esta semana"</strong> \u2192 Filter: Close Date = esta semana + Stage \u2260 Closed','<strong>"Deals this week"</strong> \u2192 Filter: Close Date = this week + Stage \u2260 Closed');
+tx(els[3],'<strong>"Companies grandes sin deal"</strong> \u2192 Filter: Employees > 100 + Associated Deals = 0','<strong>"Large companies without deals"</strong> \u2192 Filter: Employees > 100 + Associated Deals = 0');
+tx(els[4],'<strong>"Contactos de la feria"</strong> \u2192 Filter: Lista de importaci\u00f3n = "TechFair 2026"','<strong>"Trade show contacts"</strong> \u2192 Filter: Import list = "TechFair 2026"');
+el=s.querySelector('.co.tip p');
+tx(el,'Las vistas son <strong>privadas por defecto</strong>. Pod\u00e9s hacerlas p\u00fablicas para que todo el equipo las use.','Views are <strong>private by default</strong>. You can make them public so the whole team can use them.');
+
+/* ===== S18: Escenario 2 ===== */
+s=document.querySelector('[data-s="18"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Final scenario':'Escenario final');
+txText(s.querySelector('h2'),'El manager quiere saber','The manager wants to know');
+stsvg=s.querySelector('.scenario-title svg');
+if(stsvg){s.querySelector('.scenario-title').innerHTML=stsvg.outerHTML+' '+(L==='en'?'Situation':'Situaci\u00f3n');}
+var scenPs=s.querySelectorAll('.scenario > p');
+txText(scenPs[0],L==='es'?'':'',L==='es'?'':'');scenPs[0].textContent=(L==='en'?'You\'re the new salesperson at a company. It\'s your first day using HubSpot. You\'re assigned 3 tasks:':'Sos el nuevo vendedor de una empresa. Es tu primer d\u00eda usando HubSpot. Te asignan 3 tareas:');
+tx(scenPs[1],'1. Un cliente existente (<strong>Pedro de DataFlow</strong>) llam\u00f3 enojado. Dice que le prometieron un descuento que nunca lleg\u00f3. Vos no hablaste con \u00e9l antes, fue tu compa\u00f1ero que renunci\u00f3 la semana pasada.<br>\n2. Ten\u00e9s que crear un deal nuevo para <strong>ABC Corp</strong>, ya son contactos en el CRM pero nunca se les vendi\u00f3 nada.<br>\n3. Tu manager quiere saber cu\u00e1ntos deals tiene cada vendedor abiertos y cu\u00e1les est\u00e1n trabados hace m\u00e1s de 2 semanas.','1. An existing client (<strong>Pedro from DataFlow</strong>) called angry. He says he was promised a discount that never came. You never spoke with him before -- it was your colleague who quit last week.<br>\n2. You need to create a new deal for <strong>ABC Corp</strong>, they\'re already contacts in the CRM but were never sold anything.<br>\n3. Your manager wants to know how many deals each rep has open and which ones have been stuck for more than 2 weeks.');
+tx(scenPs[2],'<strong>\u00bfD\u00f3nde arranc\u00e1s para resolver las 3 cosas?</strong>','<strong>Where do you start to solve all 3?</strong>');
+els=s.querySelectorAll('.scenario-opt');
+els[0].textContent=(L==='en'?'A) Call Pedro first because he\'s angry, then deal with the rest':'A) Llamo a Pedro primero porque est\u00e1 enojado, despu\u00e9s veo el resto');
+els[1].textContent=(L==='en'?'B) Open Pedro\'s contact and review the timeline to see what he was promised. Then go to ABC Corp and create the deal from the Company. For the manager\'s request, filter deals by Owner and Days in Stage.':'B) Abro el contacto de Pedro y reviso el timeline para saber qu\u00e9 le prometieron. Despu\u00e9s voy a ABC Corp y creo el deal desde la Company. Para lo del manager, filtro deals por Owner y Days in Stage.');
+els[2].textContent=(L==='en'?'C) Ask a colleague what they told Pedro':'C) Le pregunto a un compa\u00f1ero qu\u00e9 le dijeron a Pedro');
+els[3].textContent=(L==='en'?'D) Create all 3 deals first and then check on Pedro':'D) Creo los 3 deals primero y despu\u00e9s me fijo lo de Pedro');
+
+/* ===== S19: Quiz Final ===== */
+s=document.querySelector('[data-s="19"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Final Quiz | Let\'s close the session':'Quiz Final | Cerremos la sesi\u00f3n');
+txText(s.querySelector('h2'),'\u00daltimas preguntas','Final questions');
+/* q7 */
+el=s.querySelector('#q7');
+tx(el.querySelector('p'),'Descubr\u00eds que hay 3 registros de la misma persona: maria@gmail.com, maria.lopez@techcorp.com, y m.lopez@techcorp.com. \u00bfQu\u00e9 deber\u00edas hacer?','You discover there are 3 records for the same person: maria@gmail.com, maria.lopez@techcorp.com, and m.lopez@techcorp.com. What should you do?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Dejarlos separados, son emails distintos, son personas distintas','Leave them separate, they\'re different emails, different people');
+txAfterSvg(els[1],'Mergear los 3 registros en uno solo, eligiendo el email corporativo como primario','Merge all 3 records into one, choosing the corporate email as primary');
+txAfterSvg(els[2],'Borrar los duplicados y quedarse solo con el de Gmail','Delete the duplicates and keep only the Gmail one');
+/* q8 */
+el=s.querySelector('#q8');
+tx(el.querySelector('p'),'Tu manager pide un reporte de "deals que llevan m\u00e1s de 30 d\u00edas sin avanzar de etapa". No existe ese reporte. \u00bfC\u00f3mo lo resolv\u00e9s en menos de 5 minutos?','Your manager asks for a report on "deals that have been stuck in the same stage for over 30 days". That report doesn\'t exist. How do you solve it in under 5 minutes?');
+els=el.querySelectorAll('.qopt');
+txAfterSvg(els[0],'Le digo que HubSpot no puede hacer eso','Tell them HubSpot can\'t do that');
+txAfterSvg(els[1],'Exporto todos los deals a Excel y filtro manualmente','Export all deals to Excel and filter manually');
+txAfterSvg(els[2],'Voy a CRM \u2192 Deals, creo una vista con filtro "Days in current stage > 30" y la guardo','Go to CRM \u2192 Deals, create a view with filter "Days in current stage > 30" and save it');
+
+/* ===== S20: Tarea ===== */
+s=document.querySelector('[data-s="20"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'For next time':'Para la pr\u00f3xima');
+txText(s.querySelector('h2'),'Tu tarea antes de la Sesi\u00f3n 3','Your task before Session 3');
+els=s.querySelectorAll('.cd');
+txText(els[0].querySelector('h3'),'Encontr\u00e1 problemas','Find problems');
+txText(els[0].querySelector('p'),'Entr\u00e1 a un portal de HubSpot y encontr\u00e1 3 problemas de datos: contactos sin email, deals sin owner, companies sin industria.','Log into a HubSpot portal and find 3 data problems: contacts without email, deals without owner, companies without industry.');
+txText(els[1].querySelector('h3'),'Cre\u00e1 registros','Create records');
+txText(els[1].querySelector('p'),'Cre\u00e1 un contacto de prueba, asocialo a una company, y creale un deal.','Create a test contact, associate it with a company, and create a deal for it.');
+txText(els[2].querySelector('h3'),'Guard\u00e1 una vista','Save a view');
+txText(els[2].querySelector('p'),'Guardate UNA vista que te parezca \u00fatil para tu trabajo diario.','Save ONE view that you find useful for your daily work.');
+el=s.querySelector('.co.tip p');
+tx(el,'La <strong>Sesi\u00f3n 3</strong> es sobre <strong>Properties</strong>: tipos de campos, naming conventions, custom vs default. Si hiciste la tarea, vas a entender exactamente por qu\u00e9 importan.','<strong>Session 3</strong> is about <strong>Properties</strong>: field types, naming conventions, custom vs default. If you did the homework, you\'ll understand exactly why they matter.');
+
+/* ===== S21: Glosario ===== */
+s=document.querySelector('[data-s="21"]');
+el=s.querySelector('.badge');bsvg=el.querySelector('svg').outerHTML;
+el.innerHTML=bsvg+' '+(L==='en'?'Reference':'Referencia');
+txText(s.querySelector('h2'),'Glosario de esta sesi\u00f3n','Session glossary');
+els=s.querySelectorAll('.gl-d');
+txText(els[0],'Registro de persona individual en el CRM','Individual person record in the CRM');
+txText(els[1],'Registro de organizaci\u00f3n/empresa','Organization/company record');
+txText(els[2],'Oportunidad de venta con monto y etapa','Sales opportunity with amount and stage');
+txText(els[3],'Proceso por etapas por donde pasan los deals','Stage-based process deals go through');
+txText(els[4],'Etapa actual de un deal en el pipeline','Current stage of a deal in the pipeline');
+txText(els[5],'Deal ganado. El cliente compr\u00f3','Deal won. The client bought');
+txText(els[6],'Deal perdido. Con motivo obligatorio','Deal lost. With mandatory reason');
+txText(els[7],'Persona del equipo responsable del registro','Team member responsible for the record');
+txText(els[8],'Relaci\u00f3n entre dos objetos (ej: contacto \u2194 deal)','Relationship between two objects (e.g.: contact \u2194 deal)');
+txText(els[9],'Carga masiva de registros desde CSV','Bulk upload of records from CSV');
+txText(els[10],'Proceso de detectar y unir registros duplicados','Process of detecting and merging duplicate records');
+txText(els[11],'Campo de datos creado por el usuario','Data field created by the user');
+txText(els[12],'Filtro guardado para ver un subconjunto de registros','Saved filter to view a subset of records');
+txText(els[13],'URL del sitio web de una empresa, usado para auto-asociar contactos','Company website URL, used to auto-associate contacts');
+
+/* ===== S22: Final ===== */
+s=document.querySelector('[data-s="22"]');
+txText(s.querySelector('h2'),'Tu resultado','Your result');
+txText(document.getElementById('finalM'),L==='es'?'':'',L==='es'?'':'');
+if(!ad['q1']){/* only update placeholder text if quiz not done */
+document.getElementById('finalM').textContent=(L==='en'?'Complete the quizzes and exercises to see your score.':'Complet\u00e1 los quizzes y ejercicios para ver tu score.');
+}
+el=s.querySelector('h3');if(el){var h3svg=el.querySelector('svg');if(h3svg){el.innerHTML=h3svg.outerHTML+' '+(L==='en'?'Session 3 Preview':'Preview Sesi\u00f3n 3');}}
+tx(s.querySelector('div[style*="border-radius"] p'),'<strong>Properties:</strong> tipos de campos, naming conventions, custom vs default. Vas a entender c\u00f3mo estructurar la data para que el CRM funcione bien.','<strong>Properties:</strong> field types, naming conventions, custom vs default. You\'ll understand how to structure data so the CRM works well.');
+var footerP=s.querySelector('p[style*="text-align:center"][style*="font-size:13px"]');
+if(footerP){
+var footerImg=footerP.querySelector('img');
+footerP.innerHTML=(footerImg?footerImg.outerHTML:'')+'\n'+(L==='en'?'Academy 2026 \u00b7 Trainees Track \u00b7 Session 2 of 12':'Academy 2026 \u00b7 Track Trainees \u00b7 Sesi\u00f3n 2 de 12');
+}
+
+/* ===== Pregunta labels ===== */
+document.querySelectorAll('.qq-n').forEach(function(n){
+var num=n.textContent.replace(/\D/g,'');
+n.textContent=(L==='en'?'Question '+num:'Pregunta '+num);
+});
+
+/* ===== Nav buttons ===== */
+upd();
+}
+
 function toggleLang(){
 currentLang=currentLang==='es'?'en':'es';
-document.getElementById('langBtn').innerHTML=currentLang==='es'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> EN':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> ES';
-document.querySelector('.top-info').textContent=currentLang==='es'?'Sesi\u00f3n 2 \u00b7 Trainees':'Session 2 \u00b7 Trainees';
+document.getElementById('langBtn').innerHTML=langSvg+' '+(currentLang==='es'?'EN':'ES');
+applyLang();
 }
 
 upd();
