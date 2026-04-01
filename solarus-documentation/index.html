@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Solarus - Operations Manual | Refindable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1b2d;
+    --navy-mid: #162236;
+    --navy-light: #1e3350;
+    --orange: #f4721e;
+    --orange-light: #f9954a;
+    --orange-dim: rgba(244,114,30,0.12);
+    --teal: #2ec4b6;
+    --teal-dim: rgba(46,196,182,0.1);
+    --white: #f8f9fb;
+    --muted: #8fa3bc;
+    --border: rgba(255,255,255,0.07);
+    --card-bg: #192840;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 720px;
+    width: 100%;
+    padding: 60px 24px;
+    text-align: center;
+  }
+
+  .brand-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+
+  .brand-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .brand-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 24px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .card:hover {
+    border-color: var(--orange);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(244,114,30,0.15);
+  }
+
+  .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+
+  .card-icon.sales {
+    background: var(--orange-dim);
+  }
+
+  .card-icon.quoting {
+    background: var(--teal-dim);
+  }
+
+  .card-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+    color: var(--white);
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .card-arrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--orange);
+    margin-top: auto;
+  }
+
+  .footer {
+    margin-top: 48px;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+    .brand-name { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="brand-tag">Refindable &middot; Client Documentation</div>
+  <h1 class="brand-name">Solarus</h1>
+  <p class="brand-sub">Operations Manual &amp; Process Documentation</p>
+
+  <div class="cards">
+    <a href="sales-process.html" class="card">
+      <div class="card-icon sales">&#9752;</div>
+      <div class="card-title">Sales Process</div>
+      <div class="card-desc">Complete sales pipeline documentation, stages, and team workflows.</div>
+      <div class="card-arrow">Open &rarr;</div>
+    </a>
+
+    <a href="quoting-process.html" class="card">
+      <div class="card-icon quoting">&#9881;</div>
+      <div class="card-title">Quoting Process</div>
+      <div class="card-desc">Quoting procedures, approval flows, and pricing documentation.</div>
+      <div class="card-arrow">Open &rarr;</div>
+    </a>
+  </div>
+
+  <div class="footer">Solarus &middot; Refindable &middot; 2026</div>
+</div>
+
+</body>
+</html>

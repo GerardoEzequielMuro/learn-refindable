@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solarus — Quoting Process Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1b2d;
+    --navy-mid: #162236;
+    --navy-light: #1e3350;
+    --orange: #f4721e;
+    --orange-light: #f9954a;
+    --orange-dim: rgba(244,114,30,0.12);
+    --teal: #2ec4b6;
+    --teal-dim: rgba(46,196,182,0.1);
+    --white: #f8f9fb;
+    --muted: #8fa3bc;
+    --border: rgba(255,255,255,0.07);
+    --step-bg: #1a2d45;
+    --card-bg: #192840;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--navy-mid);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+  }
+
+  .sidebar-brand {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+
+  .brand-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  .doc-switcher {
+    margin: 16px 16px 8px;
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 4px;
+    display: flex;
+    gap: 2px;
+  }
+
+  .doc-btn {
+    flex: 1;
+    padding: 8px 6px;
+    border-radius: 7px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .doc-btn.active {
+    background: var(--orange);
+    color: #fff;
+  }
+
+  .doc-btn:not(.active) {
+    background: transparent;
+    color: var(--muted);
+  }
+
+  .doc-btn:not(.active):hover {
+    background: var(--navy-light);
+    color: var(--white);
+  }
+
+  .nav-section { padding: 20px 16px 8px; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 8px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    position: relative;
+  }
+
+  .nav-item:hover, .nav-item.active {
+    background: var(--orange-dim);
+    color: var(--white);
+  }
+
+  .nav-item.active {
+    color: var(--orange-light);
+    font-weight: 500;
+  }
+
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  .nav-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+  .nav-item.active .nav-icon, .nav-item:hover .nav-icon { opacity: 1; }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .hubspot-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .hs-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff7a59; flex-shrink: 0; }
+
+  /* ── MAIN ── */
+  .main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
+
+  .topbar {
+    background: var(--navy-mid);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .topbar-breadcrumb span { color: var(--orange); font-weight: 500; }
+
+  .btn-outline {
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+  .btn-primary {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 7px;
+    background: var(--orange);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover { background: var(--orange-light); }
+
+  /* ── CONTENT ── */
+  .content { max-width: 900px; margin: 0 auto; padding: 52px 48px 80px; }
+
+  .page-hero {
+    margin-bottom: 52px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+
+  .page-label::before {
+    content: '';
+    width: 20px; height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  .page-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 42px;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 14px;
+  }
+
+  .page-title em { font-style: italic; color: var(--orange-light); }
+
+  .page-desc {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  .meta-chip svg { width: 12px; height: 12px; color: var(--orange); }
+
+  /* Quote flow diagram */
+  .quote-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 28px 0;
+    position: relative;
+  }
+
+  .qf-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 18px 0;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .qf-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 54px;
+    bottom: -18px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--orange), transparent);
+    opacity: 0.3;
+  }
+
+  .qf-node {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: var(--card-bg);
+  }
+
+  .qf-step:hover .qf-node,
+  .qf-step.active .qf-node {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(244,114,30,0.4);
+  }
+
+  .qf-info { flex: 1; }
+
+  .qf-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+
+  .qf-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .qf-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  /* Section */
+  .section { margin-bottom: 48px; animation: fadeUp 0.4s ease both; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--orange);
+    background: var(--orange-dim);
+    border: 1px solid rgba(244,114,30,0.3);
+    padding: 4px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .section-subtitle { font-size: 13px; color: var(--muted); font-weight: 300; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: var(--step-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .step:hover {
+    border-color: rgba(244,114,30,0.3);
+    transform: translateX(3px);
+  }
+
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-action { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
+  .step-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  .step-path {
+    display: inline-block;
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--orange);
+    background: var(--orange-dim);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* Accordion */
+  .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .accordion-item { border-bottom: 1px solid var(--border); }
+  .accordion-item:last-child { border-bottom: none; }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: var(--card-bg);
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .accordion-header:hover { background: var(--navy-light); }
+
+  .accordion-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .acc-icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .accordion-chevron { transition: transform 0.3s; color: var(--muted); font-size: 18px; }
+  .accordion-item.open .accordion-chevron { transform: rotate(180deg); color: var(--orange); }
+
+  .accordion-body {
+    display: none;
+    padding: 20px 20px 20px 60px;
+    background: var(--navy);
+    border-top: 1px solid var(--border);
+  }
+
+  .accordion-item.open .accordion-body { display: block; }
+
+  /* Callout */
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 9px;
+    margin: 16px 0;
+    border-left: 3px solid;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .callout.info { background: var(--teal-dim); border-color: var(--teal); color: #a0d8d4; }
+  .callout.warning { background: rgba(251,191,36,0.08); border-color: var(--warning); color: #fde68a; }
+  .callout.success { background: rgba(74,222,128,0.07); border-color: var(--success); color: #86efac; }
+  .callout.orange { background: var(--orange-dim); border-color: var(--orange); color: #fcd8b7; }
+
+  /* Two col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* Line item builder */
+  .line-item-builder {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .lib-header {
+    background: var(--navy-mid);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .lib-title { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .lib-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--orange-dim);
+    color: var(--orange);
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .lib-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+
+  .lib-row:hover { background: var(--navy-light); }
+  .lib-row:last-child { border-bottom: none; }
+
+  .lib-check {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .lib-check.selected {
+    background: var(--orange);
+    border-color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+  }
+
+  .lib-name { flex: 1; color: var(--white); }
+  .lib-sku { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .lib-price { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--orange-light); white-space: nowrap; }
+
+  /* Option cards */
+  .option-cards { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
+
+  .option-card {
+    flex: 1;
+    min-width: 180px;
+    background: var(--step-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .option-card:hover, .option-card.selected {
+    border-color: var(--orange);
+    background: var(--orange-dim);
+  }
+
+  .option-card-title { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .option-card-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* Billing start selector */
+  .billing-options { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+
+  .billing-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--step-bg);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .billing-option:hover, .billing-option.selected {
+    border-color: var(--teal);
+    background: var(--teal-dim);
+  }
+
+  .billing-radio {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+  }
+
+  .billing-option.selected .billing-radio {
+    border-color: var(--teal);
+    background: var(--teal);
+    box-shadow: 0 0 8px rgba(46,196,182,0.4);
+  }
+
+  .billing-option-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .billing-option-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* Summary box */
+  .quote-summary {
+    background: linear-gradient(135deg, var(--card-bg), var(--navy-light));
+    border: 1px solid rgba(244,114,30,0.25);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .qs-header {
+    background: var(--orange);
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .qs-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .qs-row:last-child { border-bottom: none; }
+
+  .qs-label { color: var(--muted); }
+  .qs-value { font-family: 'JetBrains Mono', monospace; color: var(--white); font-size: 12px; }
+  .qs-value.total { font-size: 16px; color: var(--orange); font-weight: 500; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin: 2px;
+  }
+
+  .tag.blue { background: rgba(46,196,182,0.12); color: var(--teal); }
+  .tag.orange { background: var(--orange-dim); color: var(--orange); }
+  .tag.gray { background: rgba(143,163,188,0.1); color: var(--muted); }
+  .tag.green { background: rgba(74,222,128,0.1); color: var(--success); }
+
+  /* Field table */
+  .field-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+
+  .field-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--navy);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--white);
+    vertical-align: top;
+  }
+
+  .field-table tr:last-child td { border-bottom: none; }
+  .field-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .field-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--orange-light); }
+
+  /* Interactive demo */
+  .demo-panel {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .demo-bar {
+    background: var(--navy-mid);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .demo-title { font-size: 11px; color: var(--muted); margin-left: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  .demo-body { padding: 20px; }
+
+  /* Checklist */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  .check-box.done { background: var(--success); border-color: var(--success); color: #fff; }
+  .check-box.active { border-color: var(--orange); color: var(--orange); }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--orange); }
+
+  .rule { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-tag">Solarus · HubSpot Docs</div>
+    <div class="brand-name">Sales Hub<br>Enterprise</div>
+    <div class="brand-sub">Implemented by Refindable</div>
+  </div>
+
+  <div class="doc-switcher">
+    <a href="sales-process.html" class="doc-btn">Sales Process</a>
+    <a href="quoting-process.html" class="doc-btn active">Quoting</a>
+  </div>
+
+  <nav class="nav-section">
+    <div class="nav-section-label">Quoting Process</div>
+    <a href="#overview" class="nav-item active">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      Quote Overview
+    </a>
+    <a href="#create" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Creating a Quote
+    </a>
+    <a href="#line-items" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h7"/></svg>
+      Line Items
+    </a>
+    <a href="#editing" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      Editing & Discounts
+    </a>
+    <a href="#billing" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Billing Start Dates
+    </a>
+    <a href="#summary" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      Summary & Totals
+    </a>
+    <a href="#sending" class="nav-item">
+      <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+      Sending & Tracking
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="hubspot-badge">
+      <div class="hs-dot"></div>
+      HubSpot Native Quotes · Sales Hub
+    </div>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      Solarus HubSpot Docs › <span>Quoting Process</span>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <a href="sales-process.html" class="btn-outline">← Sales Process</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="page-hero" id="overview">
+      <div class="page-label">Quoting Process Documentation</div>
+      <h1 class="page-title">HubSpot <em>Native Quotes</em><br>Step-by-Step Guide</h1>
+      <p class="page-desc">How to build, edit, and send quotes within HubSpot's native Quotes system — tied directly to the deal record, using the Solarus product library, and designed for enterprise B2B telecommunications proposals.</p>
+      <div class="meta-row">
+        <div class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          HubSpot Native Quotes
+        </div>
+        <div class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Triggered at Deal Stage 4
+        </div>
+        <div class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          E-Signature Enabled
+        </div>
+      </div>
+
+      <!-- Context banner linking back to sales process -->
+      <div style="margin-top:28px;padding:16px 20px;background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;flex:1;">
+          <strong style="color:var(--white);">Where this fits in the sales process:</strong> Quotes are created at <strong style="color:var(--orange);">Stage 4 (Quote Sent)</strong> of the B2B pipeline, after Technical Evaluation is complete. A quote must exist before a deal can advance past Stage 3.
+        </div>
+        <a href="sales-process.html#quoting-trigger" style="text-decoration:none;">
+          <div style="padding:8px 14px;background:var(--orange-dim);border:1px solid rgba(244,114,30,0.3);border-radius:7px;font-size:12px;color:var(--orange);white-space:nowrap;font-weight:500;">View Stage Context →</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- PROCESS OVERVIEW -->
+    <section class="section">
+      <div class="section-header">
+        <div class="section-num">00</div>
+        <div>
+          <h2 class="section-title">Quoting Process at a Glance</h2>
+          <p class="section-subtitle">The six steps from deal record to accepted quote</p>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">
+        Every HubSpot Quote at Solarus follows this sequence. Each step builds on the last — a quote cannot be sent until it has at least one line item, and a deal should not advance to Negotiation until a quote has been sent and acknowledged.
+      </p>
+
+      <div class="quote-flow">
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node">1</div>
+          <div class="qf-info">
+            <div class="qf-title">Open the deal record in HubSpot CRM</div>
+            <div class="qf-desc">Navigate to CRM → Deals → B2B Enterprise Pipeline. Click the deal name. All quoting happens from within the deal record — quotes created outside a deal record will not link correctly.</div>
+          </div>
+        </div>
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node">2</div>
+          <div class="qf-info">
+            <div class="qf-title">Create the quote from the Quotes card</div>
+            <div class="qf-desc">In the right sidebar, find the Quotes card and click + Add. Choose the Solarus quote template. The quote will inherit the deal's company name and associated contact details.</div>
+          </div>
+        </div>
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node">3</div>
+          <div class="qf-info">
+            <div class="qf-title">Add line items from the product library</div>
+            <div class="qf-desc">Select products from the Solarus product library. Do not use custom line items for standard services — use the library to maintain pricing consistency and product reporting integrity.</div>
+          </div>
+        </div>
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node">4</div>
+          <div class="qf-info">
+            <div class="qf-title">Edit line items, quantities, and discounts</div>
+            <div class="qf-desc">Adjust quantities and apply any pre-approved discounts at the line item level. Set billing start dates for recurring services if the start date differs from the quote acceptance date.</div>
+          </div>
+        </div>
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node">5</div>
+          <div class="qf-info">
+            <div class="qf-title">Review the summary and save</div>
+            <div class="qf-desc">Confirm the Subtotal (due at checkout), Future Payments total, and grand Total. Verify these match the deal Amount field. Save the quote before sending.</div>
+          </div>
+        </div>
+        <div class="qf-step" onclick="this.classList.toggle('active')">
+          <div class="qf-node" style="border-color:rgba(74,222,128,0.5);color:var(--success);">✓</div>
+          <div class="qf-info">
+            <div class="qf-title">Send the quote and update the deal stage</div>
+            <div class="qf-desc">Publish the quote and send via HubSpot. The prospect receives a link to view and e-sign. Update the deal stage to "Quote Sent" and create a follow-up task.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- CREATING A QUOTE -->
+    <section class="section" id="create">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <h2 class="section-title">Creating a Quote from a Deal Record</h2>
+          <p class="section-subtitle">Step-by-step instructions to initiate a quote in HubSpot</p>
+        </div>
+      </div>
+
+      <div class="callout orange">
+        <span class="callout-icon">📌</span>
+        <div><strong>Always start from the deal record.</strong> Quotes created outside a deal record — or created first and then associated — frequently have association errors that break the line item sync with the deal Amount field. Start from the deal. Every time.</div>
+      </div>
+
+      <div class="steps" style="margin-top:20px;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-action">Navigate to CRM → Deals</div>
+            <div class="step-detail">Use the top navigation bar in HubSpot. Confirm you are in the B2B Enterprise pipeline, not the general Deals view. Find your deal by name or by scrolling the pipeline board.</div>
+            <div class="step-path">CRM → Deals → B2B Enterprise Pipeline</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-action">Click the deal name to open the deal record</div>
+            <div class="step-detail">This opens the full deal record. Confirm the deal has a Company associated, at least one Contact, and a populated Amount field before proceeding. If any of these are missing, populate them first.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-action">Locate the Quotes card in the right sidebar — click + Add</div>
+            <div class="step-detail">The Quotes card lives in the right sidebar of the deal record. If you don't see it, click the "Customize" link at the bottom of the sidebar to add it. Click + Add to start a new quote.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-action">Select the Solarus quote template from the dropdown</div>
+            <div class="step-detail">In the right panel, click "Select a quote template" and choose the Solarus B2B template. This ensures correct branding, standard terms language, and the proper signature block. Do not use the default HubSpot template.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-action">The quote editor opens — confirm prefilled information</div>
+            <div class="step-detail">HubSpot will prefill the company name, deal name, and primary contact from the deal record. Verify these are correct before adding line items. The quote name will default to the deal name — adjust if needed (e.g., if sending a revised version).</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- LINE ITEMS -->
+    <section class="section" id="line-items">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <h2 class="section-title">Adding Line Items</h2>
+          <p class="section-subtitle">Using the Solarus product library and custom line items correctly</p>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">
+        Line items are the products or services being quoted. For Solarus, these come from the product library — pre-configured service tiers with standard pricing. Adding line items from the library ensures consistency in pricing, product naming, and reporting.
+      </p>
+
+      <!-- Product library mockup -->
+      <div class="line-item-builder">
+        <div class="lib-header">
+          <span class="lib-title">Solarus Product Library — Sample View</span>
+          <span class="lib-badge">Select from library</span>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check">☐</div>
+          <div class="lib-name">Business Fiber — 500 Mbps Symmetric</div>
+          <div class="lib-sku">SOL-FIBER-500</div>
+          <div class="lib-price">$X,XXX / mo</div>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check selected">✓</div>
+          <div class="lib-name">Business Fiber — 1 Gbps Symmetric</div>
+          <div class="lib-sku">SOL-FIBER-1G</div>
+          <div class="lib-price">$X,XXX / mo</div>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check">☐</div>
+          <div class="lib-name">Dedicated Ethernet — 10 Gbps</div>
+          <div class="lib-sku">SOL-DED-10G</div>
+          <div class="lib-price">$XX,XXX / mo</div>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check">☐</div>
+          <div class="lib-name">Managed WiFi — Per-Location Setup</div>
+          <div class="lib-sku">SOL-WIFI-LOC</div>
+          <div class="lib-price">$XXX / mo</div>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check">☐</div>
+          <div class="lib-name">VoIP — Per Seat</div>
+          <div class="lib-sku">SOL-VOIP-ST</div>
+          <div class="lib-price">$XX / seat / mo</div>
+        </div>
+        <div class="lib-row" onclick="toggleCheck(this)">
+          <div class="lib-check">☐</div>
+          <div class="lib-name">Installation & Provisioning Fee</div>
+          <div class="lib-sku">SOL-INST-STD</div>
+          <div class="lib-price">$X,XXX one-time</div>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-item open">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:var(--orange-dim);">📚</div>
+              How to Add Line Items from the Product Library
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <div class="step-action">If no line items exist — click "Select from product library"</div>
+                  <div class="step-detail">This button appears in the center of the blank line items module when no items have been added yet. Clicking it opens the product panel on the right.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <div class="step-action">To add more items after the first — click "Add line item" in the module header</div>
+                  <div class="step-detail">In the upper right of the line items module, click "Add line item." In the right panel, select additional product checkboxes and click Add. You can select multiple products at once before clicking Add.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <div class="step-action">Search by product name, description, or SKU</div>
+                  <div class="step-detail">Use the search bar in the product panel to find the right service tier quickly. You can also use Advanced Filters to filter by product category. For tiered pricing products, click "View tiers" before adding to understand the pricing structure.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  <div class="step-action">Select checkbox(es) and click Add</div>
+                  <div class="step-detail">The selected products are added to the quote's line items table. They appear with their standard price from the product library. You can then edit quantities and discounts in the expanded view.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:rgba(143,163,188,0.12);">✏️</div>
+              Custom Line Items — When to Use Them
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <div class="callout warning">
+              <span class="callout-icon">⚠️</span>
+              <div><strong>Default to the product library.</strong> Custom line items bypass product-level reporting and can create inconsistent pricing. Only use custom line items for genuinely non-standard, one-off items that don't exist in the library.</div>
+            </div>
+            <div class="two-col" style="margin-top:16px;">
+              <div>
+                <div style="font-size:12px;font-weight:600;color:var(--success);margin-bottom:8px;">✓ Appropriate for custom line items</div>
+                <ul class="checklist">
+                  <li><span class="check-box done">✓</span>One-off custom equipment (non-standard)</li>
+                  <li><span class="check-box done">✓</span>Special construction / outside plant work</li>
+                  <li><span class="check-box done">✓</span>Non-recurring project-specific labor</li>
+                  <li><span class="check-box done">✓</span>Unique contract credits or adjustments</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:12px;font-weight:600;color:#f87171;margin-bottom:8px;">✗ Do NOT use custom line items for</div>
+                <ul class="checklist">
+                  <li><span class="check-box active">✗</span>Standard fiber or internet tiers</li>
+                  <li><span class="check-box active">✗</span>Standard VoIP seat pricing</li>
+                  <li><span class="check-box active">✗</span>Standard installation fees</li>
+                  <li><span class="check-box active">✗</span>Any product already in the library</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top:16px;">
+              <div style="font-size:13px;font-weight:500;color:var(--white);margin-bottom:8px;">Creating a Custom Line Item</div>
+              <div class="steps">
+                <div class="step">
+                  <div class="step-num" style="background:var(--muted);">1</div>
+                  <div class="step-content">
+                    <div class="step-action">Click "Add line item" → Select "Create custom line item"</div>
+                    <div class="step-detail">Requires "Create custom line items" permission. If this option is greyed out, contact your HubSpot admin.</div>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background:var(--muted);">2</div>
+                  <div class="step-content">
+                    <div class="step-action">Fill in the right panel: name, price, quantity, billing frequency</div>
+                    <div class="step-detail">Be specific with the name — it appears on the quote PDF seen by the prospect. Vague line item names (e.g., "Service") undermine the quote's professionalism.</div>
+                  </div>
+                </div>
+                <div class="step">
+                  <div class="step-num" style="background:var(--muted);">3</div>
+                  <div class="step-content">
+                    <div class="step-action">Decide: Save to product library, or quote-only</div>
+                    <div class="step-detail">If this item will be used again, save it to the library. If it's truly one-off, use "Save" without adding to library. Click "Save and add another" if you have multiple custom items to add.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:rgba(46,196,182,0.12);">📊</div>
+              Tiered Pricing Line Items
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Some Solarus products may use tiered pricing — where the unit price changes based on quantity. For example, VoIP seat pricing may decrease at higher volume thresholds.</p>
+            <div class="callout info">
+              <span class="callout-icon">💡</span>
+              <div>For tiered pricing products, click <strong>"View tiers"</strong> before adding the line item to understand which pricing tier applies to the prospect's quantity. After adding, click "View tiers" in the expanded line item editor to see the pricing as you adjust quantities — HubSpot updates the price automatically as you cross tier thresholds.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- EDITING LINE ITEMS -->
+    <section class="section" id="editing">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div>
+          <h2 class="section-title">Editing Line Items & Applying Discounts</h2>
+          <p class="section-subtitle">Modifying quantities, prices, discounts, and column configuration</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-action">Click the line items module → "Edit in expanded view"</div>
+            <div class="step-detail">The expanded view gives you the full line item editing interface with all columns visible. This is where you adjust quantities, add discounts, and configure billing.</div>
+            <div class="step-path">Line Items module → Edit in expanded view (upper right)</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-action">Edit columns displayed — freeze important columns</div>
+            <div class="step-detail">Click "Edit columns" in the upper right of the line items table to choose which columns appear (Name, Unit Price, Quantity, Net Price, Unit Discount, Billing Frequency, Tax Rate). Freeze the Name column so it stays visible when scrolling horizontally through wide tables.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-action">Apply discounts at the line item level</div>
+            <div class="step-detail">In the Unit Discount column, click the dropdown to select percentage (%) or currency ($). Enter the discount amount. Note: HubSpot does not support a single discount applied to the entire quote — discounts must be set per line item.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warning" style="margin-top:8px;">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Discount limit:</strong> Discounts above [your threshold]% require manager approval before the quote is sent. Log the approval as a deal Note before sending. Sending a quote with an unapproved discount that later gets pulled back requires a reissue and harms buyer trust.</div>
+      </div>
+
+      <div class="accordion" style="margin-top:20px;">
+        <div class="accordion-item open">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:var(--orange-dim);">⚙️</div>
+              Line Item Actions: Edit, Clone, Delete
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <div class="option-cards">
+              <div class="option-card">
+                <div class="option-card-title">Edit</div>
+                <div class="option-card-desc">Modifies the line item on this quote only. The product library is not affected — standard pricing is preserved for future quotes.</div>
+              </div>
+              <div class="option-card">
+                <div class="option-card-title">Clone</div>
+                <div class="option-card-desc">Creates a duplicate line item with identical details. Useful for quoting the same service to multiple locations (adjust the item name after cloning).</div>
+              </div>
+              <div class="option-card">
+                <div class="option-card-title">Delete</div>
+                <div class="option-card-desc">Removes the line item from this quote. This does not affect the product library or other quotes.</div>
+              </div>
+            </div>
+            <div class="callout info" style="margin-top:8px;">
+              <span class="callout-icon">💡</span>
+              <div>To access these options: hover over a line item row in the expanded view, click <strong>Actions</strong>, then choose Edit, Clone, or Delete. To reorder line items, use the drag handle on the left side of each row.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- BILLING START DATES -->
+    <section class="section" id="billing">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <h2 class="section-title">Billing Start Dates</h2>
+          <p class="section-subtitle">Configuring when recurring charges begin for each line item</p>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">
+        For Solarus B2B deals, recurring service billing (monthly fiber, VoIP, managed WiFi) often doesn't start on the day the quote is signed — it starts when service is provisioned, which may be 30–90 days out. HubSpot allows you to configure this per line item.
+      </p>
+
+      <div class="billing-options">
+        <div class="billing-option selected" onclick="selectBilling(this)">
+          <div class="billing-radio"></div>
+          <div>
+            <div class="billing-option-title">On effective date (default)</div>
+            <div class="billing-option-desc">Billing starts immediately when the quote is accepted / checkout occurs. Use this for one-time fees like installation that are collected at signing.</div>
+          </div>
+        </div>
+        <div class="billing-option" onclick="selectBilling(this)">
+          <div class="billing-radio"></div>
+          <div>
+            <div class="billing-option-title">Custom Date</div>
+            <div class="billing-option-desc">Billing starts on a specific future date. Use this when you have a firm provisioning date confirmed with the technical team. Select the date in the calendar picker that appears.</div>
+          </div>
+        </div>
+        <div class="billing-option" onclick="selectBilling(this)">
+          <div class="billing-radio"></div>
+          <div>
+            <div class="billing-option-title">Delayed start (days)</div>
+            <div class="billing-option-desc">Billing starts X days after checkout. Use when you know the lead time but not the exact calendar date. Enter the number of days in the field that appears.</div>
+          </div>
+        </div>
+        <div class="billing-option" onclick="selectBilling(this)">
+          <div class="billing-radio"></div>
+          <div>
+            <div class="billing-option-title">Delayed start (months)</div>
+            <div class="billing-option-desc">Billing starts X months after checkout. Use for deals where service commencement is measured in months — e.g., large fiber builds where provisioning takes 2–3 months.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Stripe requirement for delayed recurring billing:</strong> If using HubSpot Payments (Stripe), at least one line item must be due at checkout even if your recurring services are all delayed-start. You cannot have a quote where every line item has a future billing date with zero due today. Typically, the installation or setup fee serves as the at-checkout item.</div>
+      </div>
+
+      <div class="callout info" style="margin-top:8px;">
+        <span class="callout-icon">💡</span>
+        <div><strong>How it appears to the buyer:</strong> Line items with a future billing date will show in the quote summary under "Future payments" — separate from the Subtotal (due at checkout). The grand Total will include all items regardless of billing date. This is visible and clear to the prospect in the quote view.</div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- SUMMARY & TOTALS -->
+    <section class="section" id="summary">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div>
+          <h2 class="section-title">Quote Summary & Totals</h2>
+          <p class="section-subtitle">Understanding the three total fields and their relationship to the deal Amount</p>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">
+        The Summary section of the quote shows three distinct totals. Understanding the difference between them is important — the deal's Amount field in HubSpot should reflect the Total (all items), not just the Subtotal.
+      </p>
+
+      <div class="quote-summary">
+        <div class="qs-header">Quote Summary — How Your Buyer Will Be Charged</div>
+        <div class="qs-row">
+          <div>
+            <div class="qs-label">Subtotal</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">Items due at checkout only (on effective date)</div>
+          </div>
+          <div class="qs-value">Items due today</div>
+        </div>
+        <div class="qs-row">
+          <div>
+            <div class="qs-label">Future Payments</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">Items with delayed billing start dates</div>
+          </div>
+          <div class="qs-value">Recurring + deferred items</div>
+        </div>
+        <div class="qs-row">
+          <div>
+            <div class="qs-label" style="color:var(--white);font-weight:500;">Total</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">All items regardless of payment date</div>
+          </div>
+          <div class="qs-value total">All items combined</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card" style="border-color:rgba(74,222,128,0.2);">
+          <div style="font-size:13px;font-weight:600;color:var(--success);margin-bottom:8px;">✓ Before Saving</div>
+          <ul class="checklist">
+            <li><span class="check-box done">✓</span>Total matches deal Amount field in HubSpot</li>
+            <li><span class="check-box done">✓</span>All recurring items show correct billing frequency</li>
+            <li><span class="check-box done">✓</span>Discounts are entered correctly (% or $)</li>
+            <li><span class="check-box done">✓</span>Billing start dates confirmed with tech team</li>
+            <li><span class="check-box done">✓</span>Quote name is correct (includes company + revision if applicable)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;">📊 Deal Amount Sync</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.6;">HubSpot will prompt you to sync the quote's Total to the deal Amount field when you save. Always accept this sync — it ensures your pipeline value accurately reflects what you're actually proposing.</p>
+          <div class="callout warning" style="margin-top:12px;padding:10px 12px;">
+            <span class="callout-icon">⚠️</span>
+            <div style="font-size:11px;">If the deal Amount is higher or lower than the quote Total after sync, investigate before sending. The discrepancy often means a line item was changed without updating the quote, or the wrong quantity was entered.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion" style="margin-top:8px;">
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:rgba(143,163,188,0.1);">🧾</div>
+              Tax Rates on Line Items
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Tax rates can be applied at the individual line item level in the expanded view. To see the Tax Rate column, click "Edit columns" and add it to your view.</p>
+            <div class="callout warning">
+              <span class="callout-icon">⚠️</span>
+              <div><strong>Important limitation:</strong> Automated sales tax collection is only available in legacy HubSpot Quotes — not in the current Quotes system used by Solarus. Tax rates must be set manually per line item. Confirm applicable Wisconsin tax rates with your finance team before applying them to quotes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <!-- SENDING & TRACKING -->
+    <section class="section" id="sending">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div>
+          <h2 class="section-title">Sending & Tracking Quotes</h2>
+          <p class="section-subtitle">Publishing the quote, delivering it to the prospect, and monitoring response</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-item open">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:var(--orange-dim);">📤</div>
+              Publishing and Sending the Quote
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <div class="step-action">Click Save in the quote editor</div>
+                  <div class="step-detail">Save the quote before publishing. HubSpot will prompt to sync the quote total to the deal Amount — accept the sync. The quote is now in "Draft" status.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <div class="step-action">Review the quote preview — confirm it looks correct</div>
+                  <div class="step-detail">Use the preview mode to see exactly what the prospect will see. Check: company name, contact details, all line items, pricing, and the Solarus template branding. Catch errors here, not after sending.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <div class="step-action">Publish the quote (changes status from Draft to Published)</div>
+                  <div class="step-detail">A published quote generates a unique shareable URL. Only published quotes can be sent or signed. Note: once published, you cannot edit the quote — you must create a new version if changes are needed.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  <div class="step-action">Send the quote via HubSpot email or copy the link</div>
+                  <div class="step-detail">Sending through HubSpot enables tracking (view notifications) and keeps the outreach logged on the deal timeline. You can also copy the quote URL and include it in your own email — but use the HubSpot send option when possible.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  <div class="step-action">Update deal stage to "Quote Sent" and create a follow-up task</div>
+                  <div class="step-detail">Advance the deal in the pipeline and set a follow-up task for 3–5 business days out. Do not wait for the prospect to respond without a scheduled touchpoint.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:rgba(46,196,182,0.12);">👁️</div>
+              Quote Status States & What They Mean
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <table class="field-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>What It Means</th>
+                  <th>Next Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag gray">Draft</span></td>
+                  <td style="color:var(--muted)">Quote is saved but not sent. Can still be edited.</td>
+                  <td style="color:var(--muted)">Review and publish when ready to send.</td>
+                </tr>
+                <tr>
+                  <td><span class="tag blue">Published</span></td>
+                  <td style="color:var(--muted)">Sent to prospect. Quote URL is live. Cannot be edited.</td>
+                  <td style="color:var(--muted)">Monitor for opens. Follow up if no view after 2 days.</td>
+                </tr>
+                <tr>
+                  <td><span class="tag orange">Awaiting Approval</span></td>
+                  <td style="color:var(--muted)">Prospect has viewed quote — pending their decision.</td>
+                  <td style="color:var(--muted)">Schedule a follow-up call to address questions.</td>
+                </tr>
+                <tr>
+                  <td><span class="tag green">Accepted</span></td>
+                  <td style="color:var(--muted)">Prospect has e-signed the quote. Deal is effectively closed.</td>
+                  <td style="color:var(--muted)">Move deal to Closed Won. Begin provisioning handoff.</td>
+                </tr>
+                <tr>
+                  <td><span class="tag" style="background:rgba(239,68,68,0.1);color:#f87171;">Rejected</span></td>
+                  <td style="color:var(--muted)">Prospect declined this version. Log reason in deal notes.</td>
+                  <td style="color:var(--muted)">Move to Negotiation stage. Create revised quote if needed.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title">
+              <div class="acc-icon" style="background:rgba(251,191,36,0.1);">🔄</div>
+              Handling Quote Revisions
+            </div>
+            <span class="accordion-chevron">⌄</span>
+          </div>
+          <div class="accordion-body">
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Once a quote is published, it is locked. If the prospect requests changes to pricing, scope, or terms, you must create a new quote version. This is not a limitation — it's intentional, and it protects deal integrity.</p>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <div class="step-action">Create a new quote from the same deal record</div>
+                  <div class="step-detail">Click + Add on the Quotes card to start a new quote. All the deal information prefills again. Name this quote with a revision indicator: "[Company] — [Solution] — Rev2"</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <div class="step-action">Mark the original quote as "Draft" (or expired)</div>
+                  <div class="step-detail">To prevent confusion, set the previous quote's expiry date to today — this removes it from the active quote view but preserves the record. Do not delete old quotes; the history matters.</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <div class="step-action">Log the revision reason in deal notes</div>
+                  <div class="step-detail">Record what changed, why it changed, and whether a discount approval was required. This note is visible to anyone reviewing the deal record and creates accountability in the revision history.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final checklist -->
+      <div class="card" style="margin-top:16px;border-color:rgba(46,196,182,0.25);">
+        <div style="font-size:14px;font-weight:600;color:var(--white);margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+          <span>✅</span> Complete Quote Checklist — Before Sending
+        </div>
+        <div class="two-col">
+          <ul class="checklist">
+            <li><span class="check-box"></span>Quote created from the deal record</li>
+            <li><span class="check-box"></span>Solarus template selected</li>
+            <li><span class="check-box"></span>Company and contact info correct</li>
+            <li><span class="check-box"></span>All line items from product library (no unauthorized custom items)</li>
+            <li><span class="check-box"></span>Quantities correct per technical evaluation</li>
+          </ul>
+          <ul class="checklist">
+            <li><span class="check-box"></span>Discounts applied correctly (pre-approved if above threshold)</li>
+            <li><span class="check-box"></span>Billing start dates set for all recurring items</li>
+            <li><span class="check-box"></span>Deal Amount = Quote Total (synced)</li>
+            <li><span class="check-box"></span>Quote preview reviewed and approved</li>
+            <li><span class="check-box"></span>Deal stage updated to "Quote Sent" after sending</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div style="margin-top:60px;padding-top:32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-family:'Instrument Serif',serif;font-size:18px;color:var(--white);margin-bottom:4px;">← Back to Sales Process</div>
+        <div style="font-size:12px;color:var(--muted);">Review the full deal pipeline, stages, and account setup</div>
+      </div>
+      <a href="sales-process.html" class="btn-outline" style="font-size:13px;padding:10px 20px;">Sales Process Documentation</a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function toggleAccordion(header) {
+    const item = header.closest('.accordion-item');
+    item.classList.toggle('open');
+  }
+
+  function toggleCheck(row) {
+    const check = row.querySelector('.lib-check');
+    if (check.classList.contains('selected')) {
+      check.classList.remove('selected');
+      check.innerHTML = '☐';
+    } else {
+      check.classList.add('selected');
+      check.innerHTML = '✓';
+    }
+  }
+
+  function selectBilling(option) {
+    document.querySelectorAll('.billing-option').forEach(o => o.classList.remove('selected'));
+    option.classList.add('selected');
+  }
+
+  // Scroll spy
+  const sections = ['overview','create','line-items','editing','billing','summary','sending'];
+  const navItems = document.querySelectorAll('.nav-item');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 200) current = id;
+    });
+    navItems.forEach((item, i) => {
+      item.classList.toggle('active', i > 0 && item.getAttribute('href') === '#' + current);
+      if (i === 0) item.classList.toggle('active', current === 'overview' || current === '');
+    });
+  });
+
+  // Animate sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp 0.4s ease both';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
