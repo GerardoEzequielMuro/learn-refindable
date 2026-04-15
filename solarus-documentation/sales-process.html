@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Solarus — Sales Process</title>
+<title>Solarus — Sales Process | Refindable</title>
+<link rel="icon" type="image/png" href="img/refindable-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -443,16 +444,118 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--orange); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--orange);
+    z-index: 1000;
+    transition: width 0.1s;
+    width: 0;
+  }
+
+  /* ── SEARCH BAR ── */
+  .topnav-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: border-color 0.2s;
+  }
+  .topnav-search:focus-within { border-color: var(--orange); }
+  .topnav-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    width: 180px;
+  }
+  .topnav-search input::placeholder { color: var(--text-light); }
+  .topnav-search svg { color: var(--text-light); flex-shrink: 0; }
+  .search-highlight { background: rgba(244,114,30,0.25); border-radius: 2px; padding: 0 2px; }
+
+  /* ── SOLARUS LOGO IN NAV ── */
+  .topnav-logo { height: 28px; }
+
+  /* ── REFINDABLE BRANDING ── */
+  .hero-tag {
+    display: inline-block;
+    background: rgba(244,114,30,0.12);
+    border: 1px solid rgba(244,114,30,0.35);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero-tag a { color: var(--orange-light); text-decoration: none; }
+  .hero-tag a:hover { text-decoration: underline; }
+
+  .footer a { color: var(--orange); text-decoration: none; font-weight: 600; }
+  .footer a:hover { text-decoration: underline; }
+
+  /* ── SVG ICON HELPERS ── */
+  .icon-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+  .hero-svg-icon { margin-bottom: 16px; }
+  .chip-icon { width: 14px; height: 14px; }
+  .section-icon { width: 20px; height: 20px; }
+  .notes-icon { width: 18px; height: 18px; color: var(--orange); }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(244,114,30,0.35);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 99;
+  }
+  .back-to-top.visible { opacity: 1; transform: translateY(0); }
+  .back-to-top:hover { background: var(--orange-light); }
 </style>
 </head>
 <body>
 
+<!-- ── PROGRESS BAR ── -->
+<div class="progress-bar" id="progressBar"></div>
+
 <!-- ── TOP NAV ── -->
 <nav class="topnav">
   <a href="index.html" class="topnav-brand">
-    <div class="topnav-brand-icon">S</div>
-    <span class="topnav-brand-text">SOLARUS</span>
+    <img src="img/Solarus-Logo.png" alt="Solarus" class="topnav-logo">
   </a>
+  <div class="topnav-search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search this page..." oninput="searchPage(this.value)">
+  </div>
   <div class="topnav-links">
     <a href="sales-process.html" class="topnav-link active">Sales Process</a>
     <a href="quoting-process.html" class="topnav-link">Quoting Process</a>
@@ -462,13 +565,16 @@
 
 <!-- ── HERO ── -->
 <header class="hero">
-  <div class="hero-icon">&#x1F4B0;</div>
+  <div class="hero-tag">Solarus x <a href="https://refindable.com" target="_blank">Refindable</a> &middot; Operations Manual</div>
+  <div class="hero-svg-icon">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+  </div>
   <h1 class="hero-title">SALES PROCESS</h1>
   <p class="hero-subtitle">How to work leads and opportunities in HubSpot</p>
   <div class="hero-meta">
-    <span class="hero-chip">&#x1F4CB; HubSpot CRM</span>
-    <span class="hero-chip">&#x1F464; Sales Team</span>
-    <span class="hero-chip">&#x2600; Solarus</span>
+    <span class="hero-chip"><svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> HubSpot CRM</span>
+    <span class="hero-chip"><svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Sales Team</span>
+    <span class="hero-chip"><svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg> Solarus</span>
   </div>
 </header>
 
@@ -477,7 +583,7 @@
 
   <!-- Video Walkthrough -->
   <section class="video-section">
-    <div class="section-label">&#x1F3AC; VIDEO WALKTHROUGH</div>
+    <div class="section-label"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> VIDEO WALKTHROUGH</div>
     <div class="video-embed">
       <iframe src="https://www.loom.com/embed/23d969ba12ac4031a6aafc02dadf7129" allowfullscreen></iframe>
     </div>
@@ -485,7 +591,7 @@
 
   <!-- Step-by-step Guide -->
   <section class="steps-section">
-    <div class="section-label">STEP-BY-STEP GUIDE</div>
+    <div class="section-label"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg> STEP-BY-STEP GUIDE</div>
 
     <!-- Step 1 -->
     <div class="step">
@@ -666,7 +772,7 @@
 
   <!-- Important Notes -->
   <div class="notes-box">
-    <div class="notes-box-title">&#x26A1; IMPORTANT NOTES</div>
+    <div class="notes-box-title"><svg class="notes-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> IMPORTANT NOTES</div>
     <ul>
       <li><strong>Leads</strong> are for earlier-stage opportunities that still need outreach and qualification.</li>
       <li><strong>Deals</strong> are for warmer opportunities where the conversation is moving forward and quoting may be needed.</li>
@@ -676,10 +782,68 @@
 
   <!-- Footer -->
   <footer class="footer">
-    Solarus &middot; Implemented by Refindable &middot; 2026
+    Solarus x <a href="https://refindable.com" target="_blank">Refindable</a> &middot; HubSpot Operations Manual &middot; Last updated April 2026
   </footer>
 
 </div>
+
+<!-- ── BACK TO TOP ── -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', function() {
+  var p = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progressBar').style.width = p + '%';
+
+  // Back to top visibility
+  var btn = document.getElementById('backToTop');
+  if (window.scrollY > 400) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+// Search
+function searchPage(query) {
+  // Remove previous highlights
+  document.querySelectorAll('.search-highlight').forEach(function(el) {
+    var parent = el.parentNode;
+    parent.replaceChild(document.createTextNode(el.textContent), el);
+    parent.normalize();
+  });
+
+  if (!query || query.length < 2) return;
+
+  var contentWrapper = document.querySelector('.content-wrapper');
+  var walker = document.createTreeWalker(contentWrapper, NodeFilter.SHOW_TEXT, null, false);
+  var matches = [];
+  var regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+
+  while (walker.nextNode()) {
+    var node = walker.currentNode;
+    if (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE') continue;
+    if (regex.test(node.textContent)) {
+      matches.push(node);
+    }
+  }
+
+  var firstMatch = null;
+  matches.forEach(function(node) {
+    var span = document.createElement('span');
+    span.innerHTML = node.textContent.replace(regex, '<mark class="search-highlight">$1</mark>');
+    node.parentNode.replaceChild(span, node);
+    if (!firstMatch) firstMatch = span.querySelector('.search-highlight');
+  });
+
+  if (firstMatch) {
+    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+</script>
 
 </body>
 </html>
