@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Solarus — Local SEO Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ======= DESIGN TOKENS ======= */
+:root, [data-theme="light"] {
+  --color-bg: #f4f6f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f9fafb;
+  --color-surface-offset: #eef1f5;
+  --color-border: #e2e6ec;
+  --color-divider: #dde2e9;
+  --color-text: #0f1923;
+  --color-text-muted: #5a6475;
+  --color-text-faint: #9ba3af;
+  --color-primary: #1a5fbf;
+  --color-primary-hover: #154da3;
+  --color-primary-light: #ddeaff;
+  --color-success: #16a34a;
+  --color-success-light: #dcfce7;
+  --color-warning: #d97706;
+  --color-warning-light: #fef3c7;
+  --color-error: #dc2626;
+  --color-error-light: #fee2e2;
+  --color-orange: #ea580c;
+  --color-orange-light: #ffedd5;
+  --color-purple: #7c3aed;
+  --color-purple-light: #ede9fe;
+  --shadow-sm: 0 1px 3px rgba(15,25,35,0.06);
+  --shadow-md: 0 4px 12px rgba(15,25,35,0.08);
+  --shadow-lg: 0 8px 24px rgba(15,25,35,0.12);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --sidebar-width: 220px;
+}
+[data-theme="dark"] {
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-2: #1c2128;
+  --color-surface-offset: #21262d;
+  --color-border: #30363d;
+  --color-divider: #21262d;
+  --color-text: #e6edf3;
+  --color-text-muted: #8b949e;
+  --color-text-faint: #484f58;
+  --color-primary: #4d8bf5;
+  --color-primary-hover: #6a9ff7;
+  --color-primary-light: #1a2d4a;
+  --color-success: #3fb950;
+  --color-success-light: #0d2818;
+  --color-warning: #d29922;
+  --color-warning-light: #2d2200;
+  --color-error: #f85149;
+  --color-error-light: #2d1014;
+  --color-orange: #f0883e;
+  --color-orange-light: #2d1800;
+  --color-purple: #a371f7;
+  --color-purple-light: #1e1040;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ======= RESET ======= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); background: var(--color-bg); color: var(--color-text); height: 100dvh; overflow: hidden; display: flex; }
+
+/* ======= LAYOUT ======= */
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  min-width: 0;
+}
+.topbar {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px;
+}
+
+/* ======= SIDEBAR ======= */
+.sidebar-logo {
+  padding: 20px 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+.sidebar-logo-icon {
+  width: 32px; height: 32px;
+  background: var(--color-primary);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-logo-text { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; color: var(--color-text); }
+.sidebar-logo-sub { font-size: 11px; color: var(--color-text-muted); margin-top: 1px; }
+
+.nav-section { padding: 12px 8px 4px; }
+.nav-label { font-size: 10px; font-weight: 600; color: var(--color-text-faint); text-transform: uppercase; letter-spacing: 0.08em; padding: 0 8px 6px; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  transition: all 150ms ease;
+  text-decoration: none;
+  font-weight: 500;
+}
+.nav-item:hover { background: var(--color-surface-offset); color: var(--color-text); }
+.nav-item.active { background: var(--color-primary-light); color: var(--color-primary); font-weight: 600; }
+.nav-item svg { flex-shrink: 0; opacity: 0.8; }
+.nav-item.active svg { opacity: 1; }
+
+.sidebar-footer { margin-top: auto; padding: 12px 8px; border-top: 1px solid var(--color-border); }
+.update-badge {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ======= TOPBAR ======= */
+.topbar-title { font-size: 15px; font-weight: 600; color: var(--color-text); }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.period-badge {
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all 150ms ease;
+}
+.theme-toggle:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+/* ======= KPI CARDS ======= */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.kpi-label { font-size: 11px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.kpi-value { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: var(--color-text); line-height: 1; margin-bottom: 8px; }
+.kpi-delta {
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  border-radius: 99px;
+}
+.kpi-delta.up { background: var(--color-success-light); color: var(--color-success); }
+.kpi-delta.down { background: var(--color-error-light); color: var(--color-error); }
+.kpi-delta.neutral { background: var(--color-surface-offset); color: var(--color-text-muted); }
+
+/* ======= SECTION / CARD ======= */
+.section-title { font-size: 14px; font-weight: 700; color: var(--color-text); letter-spacing: -0.01em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.section-title .badge { font-size: 10px; font-weight: 600; background: var(--color-surface-offset); border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 2px 7px; border-radius: 99px; }
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.card-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title { font-size: 13px; font-weight: 700; color: var(--color-text); }
+.card-subtitle { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+.card-body { padding: 16px 20px; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+
+/* ======= CHART ======= */
+.chart-wrap { position: relative; height: 220px; }
+
+/* ======= TABLE ======= */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  position: sticky; top: 0;
+}
+.data-table td {
+  padding: 9px 12px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: middle;
+  font-variant-numeric: tabular-nums;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--color-surface-offset); }
+.query-text { font-weight: 500; color: var(--color-text); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.page-text { font-family: monospace; font-size: 11px; color: var(--color-primary); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.num { color: var(--color-text-muted); text-align: right; }
+.num-bold { font-weight: 600; color: var(--color-text); text-align: right; }
+.ctr-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.ctr-bar { height: 4px; background: var(--color-border); border-radius: 99px; flex: 1; min-width: 60px; }
+.ctr-fill { height: 100%; border-radius: 99px; background: var(--color-primary); }
+.ctr-val { font-size: 11px; color: var(--color-text-muted); width: 36px; text-align: right; }
+.pos-chip { display: inline-flex; align-items: center; justify-content: center; background: var(--color-success-light); color: var(--color-success); border-radius: 99px; padding: 2px 7px; font-size: 11px; font-weight: 600; min-width: 36px; }
+.pos-chip.mid { background: var(--color-warning-light); color: var(--color-warning); }
+.pos-chip.low { background: var(--color-error-light); color: var(--color-error); }
+
+/* ======= OPPORTUNITIES ======= */
+.opps-list { display: flex; flex-direction: column; gap: 10px; padding: 16px 20px; }
+.opp-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  transition: box-shadow 150ms ease;
+}
+.opp-item:hover { box-shadow: var(--shadow-md); }
+.opp-icon {
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.opp-icon.critical { background: var(--color-error-light); }
+.opp-icon.high { background: var(--color-warning-light); }
+.opp-icon.medium { background: var(--color-primary-light); }
+.opp-icon.low { background: var(--color-success-light); }
+.opp-body { flex: 1; min-width: 0; }
+.opp-title { font-size: 12px; font-weight: 600; color: var(--color-text); margin-bottom: 3px; }
+.opp-desc { font-size: 11px; color: var(--color-text-muted); line-height: 1.4; }
+.opp-priority {
+  font-size: 10px; font-weight: 600; padding: 2px 7px;
+  border-radius: 99px; flex-shrink: 0; align-self: flex-start;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.opp-priority.critical { background: var(--color-error-light); color: var(--color-error); }
+.opp-priority.high { background: var(--color-warning-light); color: var(--color-warning); }
+.opp-priority.medium { background: var(--color-primary-light); color: var(--color-primary); }
+.opp-priority.low { background: var(--color-success-light); color: var(--color-success); }
+
+/* ======= GMB SECTION ======= */
+.gmb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px 20px; }
+.gmb-stat { text-align: center; padding: 14px; background: var(--color-surface-2); border-radius: var(--radius-md); border: 1px solid var(--color-border); }
+.gmb-stat-value { font-size: 22px; font-weight: 700; color: var(--color-text); letter-spacing: -0.03em; }
+.gmb-stat-label { font-size: 11px; color: var(--color-text-muted); margin-top: 3px; font-weight: 500; }
+.gmb-stat-note { font-size: 10px; color: var(--color-text-faint); margin-top: 2px; }
+
+.checklist { padding: 0 20px 16px; display: flex; flex-direction: column; gap: 6px; }
+.check-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+.check-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.check-dot.green { background: var(--color-success); }
+.check-dot.yellow { background: var(--color-warning); }
+.check-dot.red { background: var(--color-error); }
+.check-label { font-size: 12px; font-weight: 500; color: var(--color-text); flex: 1; }
+.check-status { font-size: 10px; font-weight: 600; color: var(--color-text-muted); }
+
+/* ======= DEVICE DONUT ======= */
+.device-wrap { display: flex; align-items: center; gap: 20px; }
+.device-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.device-row { display: flex; align-items: center; gap: 8px; }
+.device-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.device-name { font-size: 12px; color: var(--color-text-muted); flex: 1; }
+.device-pct { font-size: 12px; font-weight: 600; color: var(--color-text); }
+.donut-wrap { width: 130px; height: 130px; flex-shrink: 0; position: relative; }
+.donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.donut-center-val { font-size: 18px; font-weight: 700; color: var(--color-text); letter-spacing: -0.02em; }
+.donut-center-lbl { font-size: 10px; color: var(--color-text-muted); margin-top: 1px; }
+
+/* ======= BRAND KEYWORDS SECTION ======= */
+.brand-warn {
+  margin: 0 20px 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-warning-light);
+  border: 1px solid var(--color-warning);
+  font-size: 12px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+.brand-warn strong { color: var(--color-warning); }
+
+/* ======= PAGES ======= */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ======= SCROLLABLE TABLE ======= */
+.table-scroll { overflow-x: auto; }
+.table-scroll::-webkit-scrollbar { height: 4px; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 99px; }
+
+/* ======= FOOTER ATTRIBUTION ======= */
+.dash-footer {
+  padding: 16px 24px;
+  font-size: 11px;
+  color: var(--color-text-faint);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 900px) {
+  .two-col, .three-col { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </div>
+    <div>
+      <div class="sidebar-logo-text">Solarus SEO</div>
+      <div class="sidebar-logo-sub">Local Performance</div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <a class="nav-item active" onclick="showPage('overview', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" onclick="showPage('traffic', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Traffic
+    </a>
+    <a class="nav-item" onclick="showPage('queries', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Keywords
+    </a>
+    <a class="nav-item" onclick="showPage('local', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Local SEO
+    </a>
+    <a class="nav-item" onclick="showPage('opportunities', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Opportunities
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="update-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Live data · Apr 2026
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main-area">
+  <header class="topbar">
+    <span class="topbar-title" id="page-title">Dashboard Overview</span>
+    <div class="topbar-right">
+      <span class="period-badge">Oct 2025 – Apr 2026 · 6 months</span>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="content" id="content-area">
+
+    <!-- ===== PAGE: OVERVIEW ===== -->
+    <div id="page-overview" class="page active">
+      <!-- KPI Row -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Total Clicks
+          </div>
+          <div class="kpi-value">72,805</div>
+          <span class="kpi-delta up">↑ 18% vs prev. period</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Impressions
+          </div>
+          <div class="kpi-value">285K</div>
+          <span class="kpi-delta neutral">→ Stable</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Avg CTR
+          </div>
+          <div class="kpi-value">25.5%</div>
+          <span class="kpi-delta up">↑ High — brand traffic</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Avg Position
+          </div>
+          <div class="kpi-value">#14.0</div>
+          <span class="kpi-delta up">↑ Improving</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            GMB Traffic
+          </div>
+          <div class="kpi-value">7,362</div>
+          <span class="kpi-delta up">↑ GBP driving clicks</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Pages Tracked
+          </div>
+          <div class="kpi-value">30+</div>
+          <span class="kpi-delta neutral">→ Active pages</span>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Weekly Clicks & Impressions</div>
+              <div class="card-subtitle">Oct 2025 – Apr 2026</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap">
+              <canvas id="trafficChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Avg Position Trend</div>
+              <div class="card-subtitle">Lower is better</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap">
+              <canvas id="positionChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Queries & Devices Row -->
+      <div class="three-col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top Queries</div>
+            <span class="badge" style="font-size:10px;padding:2px 8px;border-radius:99px;background:var(--color-surface-offset);color:var(--color-text-muted);border:1px solid var(--color-border);">Top 10</span>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Query</th>
+                  <th style="text-align:right">Clicks</th>
+                  <th>CTR</th>
+                  <th style="text-align:right">Pos</th>
+                </tr>
+              </thead>
+              <tbody id="queries-table-overview"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Traffic by Device</div>
+          </div>
+          <div class="card-body" style="padding-top:20px;">
+            <div class="device-wrap">
+              <div class="donut-wrap">
+                <canvas id="deviceChart"></canvas>
+                <div class="donut-center">
+                  <div class="donut-center-val">73k</div>
+                  <div class="donut-center-lbl">clicks</div>
+                </div>
+              </div>
+              <div class="device-legend" id="device-legend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: TRAFFIC ===== -->
+    <div id="page-traffic" class="page">
+      <div class="kpi-grid" style="margin-bottom:20px;">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Clicks</div>
+          <div class="kpi-value">72,805</div>
+          <span class="kpi-delta up">↑ 18% vs prev. period</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Total Impressions</div>
+          <div class="kpi-value">285,609</div>
+          <span class="kpi-delta neutral">Stable</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Avg CTR</div>
+          <div class="kpi-value">25.5%</div>
+          <span class="kpi-delta up">↑ Strong brand signal</span>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Avg Position</div>
+          <div class="kpi-value">#14.0</div>
+          <span class="kpi-delta up">↑ vs #28 a year ago</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Click & Impression Trend (Weekly)</div>
+            <div class="card-subtitle">6-month window — Oct 13, 2025 to Apr 10, 2026</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrap" style="height:260px;">
+            <canvas id="trafficChartFull"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">CTR Trend (Weekly)</div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap">
+              <canvas id="ctrChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top Landing Pages</div>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Page</th>
+                  <th style="text-align:right">Clicks</th>
+                  <th style="text-align:right">CTR</th>
+                </tr>
+              </thead>
+              <tbody id="pages-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: KEYWORDS ===== -->
+    <div id="page-queries" class="page">
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Keyword Analysis</div>
+            <div class="card-subtitle">Top 50 queries by clicks · Oct 2025 – Apr 2026</div>
+          </div>
+        </div>
+        <div class="brand-warn">
+          <strong>⚠ Brand-Heavy Traffic:</strong> ~93% of clicks come from branded queries (solarus, solarus webmail, solarus login). Non-branded local keywords like "internet providers wisconsin rapids" drive fewer than 150 clicks total. This is a key opportunity to grow organic, non-brand traffic.
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Query</th>
+                <th style="text-align:right">Clicks</th>
+                <th style="text-align:right">Impressions</th>
+                <th>CTR</th>
+                <th style="text-align:right">Position</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody id="queries-table-full"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: LOCAL SEO ===== -->
+    <div id="page-local" class="page">
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-header">
+          <div class="card-title">Google Business Profile (GMB) Overview</div>
+          <div class="card-subtitle">Based on public profile data · solarus.net</div>
+        </div>
+        <div class="gmb-grid">
+          <div class="gmb-stat">
+            <div class="gmb-stat-value" style="color:var(--color-primary)">7,362</div>
+            <div class="gmb-stat-label">Clicks from GBP</div>
+            <div class="gmb-stat-note">last 6 months</div>
+          </div>
+          <div class="gmb-stat">
+            <div class="gmb-stat-value" style="color:var(--color-success)">4.5★</div>
+            <div class="gmb-stat-label">Google Rating</div>
+            <div class="gmb-stat-note">estimated</div>
+          </div>
+          <div class="gmb-stat">
+            <div class="gmb-stat-value" style="color:var(--color-warning)">1</div>
+            <div class="gmb-stat-label">Listed Locations</div>
+            <div class="gmb-stat-note">Wisconsin Rapids</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">GBP Profile Completeness</div>
+            <div class="card-subtitle">Items to verify & improve</div>
+          </div>
+          <div class="checklist" style="margin-top:12px;">
+            <div class="check-row">
+              <div class="check-dot green"></div>
+              <span class="check-label">Business name & category set</span>
+              <span class="check-status">✓ Done</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot green"></div>
+              <span class="check-label">Address & phone verified</span>
+              <span class="check-status">✓ Done</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot green"></div>
+              <span class="check-label">Website link active</span>
+              <span class="check-status">✓ Done</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot yellow"></div>
+              <span class="check-label">Service areas fully listed</span>
+              <span class="check-status">⚠ Check</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot yellow"></div>
+              <span class="check-label">Business hours up to date</span>
+              <span class="check-status">⚠ Verify</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot yellow"></div>
+              <span class="check-label">GBP posts published weekly</span>
+              <span class="check-status">⚠ Low activity</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot red"></div>
+              <span class="check-label">Q&A section actively managed</span>
+              <span class="check-status">✗ Missing</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot red"></div>
+              <span class="check-label">Products/services catalog added</span>
+              <span class="check-status">✗ Missing</span>
+            </div>
+            <div class="check-row">
+              <div class="check-dot red"></div>
+              <span class="check-label">Regular photo uploads (weekly)</span>
+              <span class="check-status">✗ No cadence</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Local Keyword Coverage</div>
+            <div class="card-subtitle">How well Solarus ranks for local intent</div>
+          </div>
+          <div class="table-scroll" style="margin-top:8px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th style="text-align:right">Clicks</th>
+                  <th style="text-align:right">Pos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="query-text">solarus wisconsin rapids</td>
+                  <td class="num-bold">1,042</td>
+                  <td><span class="pos-chip">1.4</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">solarus internet wisconsin rapids</td>
+                  <td class="num-bold">266</td>
+                  <td><span class="pos-chip">1.1</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">internet providers wisconsin rapids</td>
+                  <td class="num-bold">48</td>
+                  <td><span class="pos-chip">2.3</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">solarus outage</td>
+                  <td class="num-bold">186</td>
+                  <td><span class="pos-chip">1.4</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">manawa telephone company</td>
+                  <td class="num-bold">280</td>
+                  <td><span class="pos-chip">1.3</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">wood county telephone company</td>
+                  <td class="num-bold">43</td>
+                  <td><span class="pos-chip">1.5</span></td>
+                </tr>
+                <tr>
+                  <td class="query-text">wctc.net email</td>
+                  <td class="num-bold">367</td>
+                  <td><span class="pos-chip">1.1</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PAGE: OPPORTUNITIES ===== -->
+    <div id="page-opportunities" class="page">
+      <div class="kpi-grid" style="grid-template-columns: repeat(4,1fr); margin-bottom:20px;">
+        <div class="kpi-card">
+          <div class="kpi-label" style="color:var(--color-error)">Critical</div>
+          <div class="kpi-value" style="color:var(--color-error)">3</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" style="color:var(--color-warning)">High Priority</div>
+          <div class="kpi-value" style="color:var(--color-warning)">4</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" style="color:var(--color-primary)">Medium</div>
+          <div class="kpi-value" style="color:var(--color-primary)">4</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" style="color:var(--color-success)">Quick Wins</div>
+          <div class="kpi-value" style="color:var(--color-success)">3</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">SEO Improvement Opportunities</div>
+          <div class="card-subtitle">Prioritized by potential traffic & local impact</div>
+        </div>
+        <div class="opps-list">
+
+          <div class="opp-item">
+            <div class="opp-icon critical">🚨</div>
+            <div class="opp-body">
+              <div class="opp-title">Homepage is barely ranking — only 3.5% CTR with 195K impressions</div>
+              <div class="opp-desc">The homepage gets 195,735 impressions but only 6,879 clicks (3.5% CTR) and ranks avg #20.9. This is a massive lost opportunity. Optimize the homepage title tag and meta description for local intent: target "Internet Service Provider in Wisconsin Rapids, WI".</div>
+            </div>
+            <span class="opp-priority critical">Critical</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon critical">🚨</div>
+            <div class="opp-body">
+              <div class="opp-title">Order/Service page has near-zero conversions from organic</div>
+              <div class="opp-desc">/order-service/ has 20,064 impressions but only 45 clicks (0.2% CTR). This is the most commercially valuable page — optimize title tag, add schema markup, and create local landing pages per city/county (Manawa, Wautoma, Waupaca, Adams, etc.).</div>
+            </div>
+            <span class="opp-priority critical">Critical</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon critical">🚨</div>
+            <div class="opp-body">
+              <div class="opp-title">93% of traffic is branded — nearly zero non-brand organic visibility</div>
+              <div class="opp-desc">Solarus captures only 48 clicks for "internet providers wisconsin rapids" — a non-brand local query with real commercial intent. Building dedicated service-area pages with local keywords could unlock thousands of net-new monthly visitors currently going to Spectrum or Viasat.</div>
+            </div>
+            <span class="opp-priority critical">Critical</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon high">⚠️</div>
+            <div class="opp-body">
+              <div class="opp-title">Contact page gets 95K impressions, 0.9% CTR — title/meta issue</div>
+              <div class="opp-desc">/contact-solarus/ ranks avg #4.5 with 95,681 impressions but generates only 854 clicks. Users find it but don't click. Rewrite the meta description to include location and call-to-action (e.g. "Call or chat with Solarus internet support in Wisconsin Rapids").</div>
+            </div>
+            <span class="opp-priority high">High</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon high">⚠️</div>
+            <div class="opp-body">
+              <div class="opp-title">GBP weekly posts not published consistently</div>
+              <div class="opp-desc">Google rewards active GMB profiles. Publishing 1–2 weekly posts (promotions, service updates, community news) increases visibility in the local 3-pack. GBP already drives 7,362 clicks — this can be doubled with regular activity.</div>
+            </div>
+            <span class="opp-priority high">High</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon high">⚠️</div>
+            <div class="opp-body">
+              <div class="opp-title">No service-area pages for surrounding towns</div>
+              <div class="opp-desc">Solarus serves Adams, Waupaca, Portage, and Juneau counties — but there are no dedicated pages targeting "internet provider in [City], WI". These pages would rank for local queries in each city and dramatically increase addressable organic traffic.</div>
+            </div>
+            <span class="opp-priority high">High</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon high">⚠️</div>
+            <div class="opp-body">
+              <div class="opp-title">Small Business page barely visible (10 clicks, 9,623 impressions)</div>
+              <div class="opp-desc">/small-business/ ranks avg #10.4 with almost no traffic. Small business internet is a high-value keyword category. Rewrite the page with specific service details, local business testimonials, and schema markup.</div>
+            </div>
+            <span class="opp-priority high">High</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon medium">💡</div>
+            <div class="opp-body">
+              <div class="opp-title">Review velocity likely below competitors — actively solicit reviews</div>
+              <div class="opp-desc">Local pack rankings are heavily influenced by review count and recency. Solarus has strong customer satisfaction signals (Facebook shows 5-star praise) — setting up a review request workflow (post-install SMS/email) could significantly improve local pack ranking.</div>
+            </div>
+            <span class="opp-priority medium">Medium</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon medium">💡</div>
+            <div class="opp-body">
+              <div class="opp-title">TV page ranks #11 — opportunity to capture cord-cutting searches</div>
+              <div class="opp-desc">/tv/ ranks avg #11.4 with 29,410 impressions but only 637 clicks (2.2% CTR). Queries like "streaming tv wisconsin rapids" or "cable tv alternative central wisconsin" are growing. Optimize with content targeting cord-cutting intent.</div>
+            </div>
+            <span class="opp-priority medium">Medium</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon medium">💡</div>
+            <div class="opp-body">
+              <div class="opp-title">Wikipedia/directory citations need audit</div>
+              <div class="opp-desc">Local SEO trust signals include consistent NAP (Name, Address, Phone) citations across directories: Yelp, BBB, Yellow Pages, local Chamber of Commerce. An audit of existing citations and cleanup of any inconsistencies will boost local pack ranking.</div>
+            </div>
+            <span class="opp-priority medium">Medium</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon medium">💡</div>
+            <div class="opp-body">
+              <div class="opp-title">GBP Q&A section is unmanaged — competitors can post misinformation</div>
+              <div class="opp-desc">Google lets anyone post questions and answers on your GBP. Proactively seeding 8–12 FAQ answers (pricing, availability, setup process) takes ownership of the narrative and improves both trust and local ranking signals.</div>
+            </div>
+            <span class="opp-priority medium">Medium</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon low">✅</div>
+            <div class="opp-body">
+              <div class="opp-title">Outage page is high-intent — add local area status and subscribe CTA</div>
+              <div class="opp-desc">"Solarus outage" and "solarus internet down" together generate 312 clicks. These are frustrated customers. A well-designed outage/status page with an email/SMS alert subscription retains customers and reduces churn.</div>
+            </div>
+            <span class="opp-priority low">Quick Win</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon low">✅</div>
+            <div class="opp-body">
+              <div class="opp-title">Structured data (LocalBusiness schema) likely missing</div>
+              <div class="opp-desc">Adding LocalBusiness + ISP schema markup to the homepage and contact page enables rich snippets in Google search results and strengthens GBP association. This is a low-effort technical change with measurable impact on CTR.</div>
+            </div>
+            <span class="opp-priority low">Quick Win</span>
+          </div>
+
+          <div class="opp-item">
+            <div class="opp-icon low">✅</div>
+            <div class="opp-body">
+              <div class="opp-title">Webmail login page drives 50K+ clicks — add a cross-sell banner</div>
+              <div class="opp-desc">The /webmail-login/ page is by far the most visited page (50,528 clicks). Adding a subtle "Upgrade your internet speed" or "Refer a friend" banner here could generate upgrade or referral traffic at zero marketing cost.</div>
+            </div>
+            <span class="opp-priority low">Quick Win</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+
+  <footer class="dash-footer">
+    <span>Solarus Local SEO Report · Data source: Google Search Console</span>
+    <span>Generated Apr 2026 · <a href="https://www.solarus.net" target="_blank" style="color:var(--color-primary);text-decoration:none">solarus.net</a></span>
+  </footer>
+</div>
+
+<script>
+// ======= DATA =======
+const weeklyData = [
+  {week:"2025-10-13",clicks:2390,impressions:9063,ctr:26.4,position:9.1},
+  {week:"2025-10-20",clicks:2359,impressions:8320,ctr:28.3,position:8.2},
+  {week:"2025-10-27",clicks:1984,impressions:5641,ctr:35.2,position:7.8},
+  {week:"2025-11-03",clicks:2093,impressions:7524,ctr:27.8,position:8.8},
+  {week:"2025-11-10",clicks:1834,impressions:6108,ctr:30.0,position:9.4},
+  {week:"2025-11-17",clicks:2501,impressions:19733,ctr:12.7,position:34.1},
+  {week:"2025-11-24",clicks:1951,impressions:9201,ctr:21.2,position:28.3},
+  {week:"2025-12-01",clicks:2523,impressions:7178,ctr:35.1,position:11.3},
+  {week:"2025-12-08",clicks:5477,impressions:27887,ctr:19.6,position:23.7},
+  {week:"2025-12-15",clicks:2474,impressions:6176,ctr:40.1,position:9.9},
+  {week:"2025-12-22",clicks:1857,impressions:4957,ctr:37.5,position:12.5},
+  {week:"2025-12-29",clicks:1914,impressions:5923,ctr:32.3,position:12.2},
+  {week:"2026-01-05",clicks:2591,impressions:7864,ctr:32.9,position:9.8},
+  {week:"2026-01-12",clicks:2476,impressions:14500,ctr:17.1,position:36.5},
+  {week:"2026-01-19",clicks:2711,impressions:8096,ctr:33.5,position:12.8},
+  {week:"2026-01-26",clicks:2043,impressions:8204,ctr:24.9,position:16.9},
+  {week:"2026-02-02",clicks:2747,impressions:8699,ctr:31.6,position:12.4},
+  {week:"2026-02-09",clicks:2748,impressions:8631,ctr:31.8,position:13.8},
+  {week:"2026-02-16",clicks:2916,impressions:7964,ctr:36.6,position:10.9},
+  {week:"2026-02-23",clicks:2096,impressions:5120,ctr:40.9,position:11.6},
+  {week:"2026-03-02",clicks:2789,impressions:7440,ctr:37.5,position:8.5},
+  {week:"2026-03-09",clicks:2729,impressions:7076,ctr:38.6,position:8.0},
+  {week:"2026-03-16",clicks:2729,impressions:7931,ctr:34.4,position:9.2},
+  {week:"2026-03-23",clicks:2966,impressions:7836,ctr:37.9,position:6.8},
+  {week:"2026-03-30",clicks:1823,impressions:5686,ctr:32.1,position:8.4},
+  {week:"2026-04-06",clicks:2979,impressions:9403,ctr:31.7,position:8.1},
+];
+
+const topQueries = [
+  {query:"solarus webmail",clicks:16632,impressions:18993,ctr:87.6,position:1.2,type:"Brand"},
+  {query:"solarus",clicks:11850,impressions:31897,ctr:37.2,position:2.4,type:"Brand"},
+  {query:"solarus login",clicks:7095,impressions:7700,ctr:92.1,position:1.2,type:"Brand"},
+  {query:"solarus webmail login",clicks:3988,impressions:4279,ctr:93.2,position:1.1,type:"Brand"},
+  {query:"solarus email login",clicks:3452,impressions:3618,ctr:95.4,position:1.1,type:"Brand"},
+  {query:"solarus internet",clicks:2527,impressions:4947,ctr:51.1,position:1.3,type:"Brand"},
+  {query:"solarus email",clicks:2313,impressions:2700,ctr:85.7,position:1.6,type:"Brand"},
+  {query:"solarus webmail sign in",clicks:2157,impressions:2276,ctr:94.8,position:1.0,type:"Brand"},
+  {query:"solarus webmail wisconsin rapids",clicks:1707,impressions:1812,ctr:94.2,position:1.2,type:"Brand"},
+  {query:"solarus wisconsin rapids",clicks:1042,impressions:2342,ctr:44.5,position:1.4,type:"Local"},
+  {query:"solarus bill pay",clicks:793,impressions:1051,ctr:75.5,position:1.7,type:"Brand"},
+  {query:"wctc.net email",clicks:367,impressions:421,ctr:87.2,position:1.1,type:"Brand"},
+  {query:"manawa telephone company",clicks:280,impressions:442,ctr:63.3,position:1.3,type:"Local"},
+  {query:"solarus internet wisconsin rapids",clicks:266,impressions:387,ctr:68.7,position:1.1,type:"Local"},
+  {query:"solarus outage",clicks:186,impressions:568,ctr:32.7,position:1.4,type:"Informational"},
+  {query:"internet providers wisconsin rapids",clicks:48,impressions:206,ctr:23.3,position:2.3,type:"Commercial"},
+  {query:"solarus internet outage",clicks:45,impressions:291,ctr:15.5,position:2.6,type:"Informational"},
+  {query:"solarus tv",clicks:46,impressions:72,ctr:63.9,position:1.1,type:"Brand"},
+  {query:"solarus customer service",clicks:57,impressions:144,ctr:39.6,position:3.6,type:"Brand"},
+  {query:"solarus careers",clicks:42,impressions:77,ctr:54.5,position:1.0,type:"Brand"},
+];
+
+const topPages = [
+  {page:"/webmail-login/",clicks:50528,impressions:146448,ctr:34.5,position:6.3},
+  {page:"/ (GMB traffic)",clicks:7362,impressions:28506,ctr:25.8,position:3.6},
+  {page:"/ (homepage)",clicks:6879,impressions:195735,ctr:3.5,position:20.9},
+  {page:"/access-account/",clicks:3192,impressions:103367,ctr:3.1,position:3.0},
+  {page:"/tech-support/",clicks:2291,impressions:79060,ctr:2.9,position:5.9},
+  {page:"/contact-solarus/",clicks:854,impressions:95681,ctr:0.9,position:4.5},
+  {page:"/home-internet-service/",clicks:652,impressions:54945,ctr:1.2,position:6.1},
+  {page:"/tv/",clicks:637,impressions:29410,ctr:2.2,position:11.4},
+  {page:"/order-service/",clicks:45,impressions:20064,ctr:0.2,position:4.4},
+  {page:"/small-business/",clicks:18,impressions:9623,ctr:0.2,position:10.4},
+];
+
+const devices = [
+  {device:"Mobile",clicks:48205,ctr:33.6,color:"#1a5fbf"},
+  {device:"Desktop",clicks:21863,ctr:15.9,color:"#7c3aed"},
+  {device:"Tablet",clicks:2995,ctr:48.5,color:"#16a34a"},
+];
+const totalClicks = 73063;
+
+// ======= NAVIGATION =======
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  const titles = {overview:'Dashboard Overview',traffic:'Traffic Analysis',queries:'Keyword Research',local:'Local SEO',opportunities:'Opportunities'};
+  document.getElementById('page-title').textContent = titles[name] || name;
+}
+
+// ======= THEME TOGGLE =======
+(function() {
+  const toggle = document.querySelector('[data-theme-toggle]');
+  const html = document.documentElement;
+  let isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+  html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  function updateIcon() {
+    toggle.innerHTML = isDark
+      ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      : '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  }
+  updateIcon();
+  toggle.addEventListener('click', () => {
+    isDark = !isDark;
+    html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    updateIcon();
+    // Re-render charts with new colors
+    setTimeout(buildCharts, 50);
+  });
+})();
+
+// ======= HELPERS =======
+function fmt(n) { return n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }
+function posChip(p) {
+  const cls = p <= 3 ? '' : p <= 10 ? '' : p <= 20 ? 'mid' : 'low';
+  return `<span class="pos-chip ${cls}">${p.toFixed(1)}</span>`;
+}
+function getColor(varName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+}
+
+// ======= POPULATE TABLES =======
+function buildTables() {
+  // Overview queries table
+  const qt = document.getElementById('queries-table-overview');
+  topQueries.slice(0,10).forEach(q => {
+    qt.innerHTML += `<tr>
+      <td class="query-text">${q.query}</td>
+      <td class="num-bold">${fmt(q.clicks)}</td>
+      <td>
+        <div class="ctr-bar-wrap">
+          <div class="ctr-bar"><div class="ctr-fill" style="width:${Math.min(q.ctr,100)}%"></div></div>
+          <span class="ctr-val">${q.ctr}%</span>
+        </div>
+      </td>
+      <td>${posChip(q.position)}</td>
+    </tr>`;
+  });
+
+  // Full queries table
+  const qf = document.getElementById('queries-table-full');
+  const typColors = {Brand:'var(--color-surface-offset)',Local:'var(--color-success-light)',Commercial:'var(--color-warning-light)',Informational:'var(--color-primary-light)'};
+  const typText = {Brand:'var(--color-text-muted)',Local:'var(--color-success)',Commercial:'var(--color-warning)',Informational:'var(--color-primary)'};
+  topQueries.forEach((q, i) => {
+    qf.innerHTML += `<tr>
+      <td class="num" style="width:32px">${i+1}</td>
+      <td class="query-text">${q.query}</td>
+      <td class="num-bold">${q.clicks.toLocaleString()}</td>
+      <td class="num">${q.impressions.toLocaleString()}</td>
+      <td>
+        <div class="ctr-bar-wrap">
+          <div class="ctr-bar"><div class="ctr-fill" style="width:${Math.min(q.ctr,100)}%"></div></div>
+          <span class="ctr-val">${q.ctr}%</span>
+        </div>
+      </td>
+      <td>${posChip(q.position)}</td>
+      <td><span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;background:${typColors[q.type]};color:${typText[q.type]}">${q.type}</span></td>
+    </tr>`;
+  });
+
+  // Pages table
+  const pt = document.getElementById('pages-table');
+  topPages.forEach(p => {
+    pt.innerHTML += `<tr>
+      <td class="page-text">${p.page}</td>
+      <td class="num-bold">${p.clicks.toLocaleString()}</td>
+      <td>${posChip(p.ctr)}</td>
+    </tr>`;
+  });
+
+  // Device legend
+  const dl = document.getElementById('device-legend');
+  const totalD = devices.reduce((s,d) => s+d.clicks, 0);
+  devices.forEach(d => {
+    dl.innerHTML += `<div class="device-row">
+      <div class="device-dot" style="background:${d.color}"></div>
+      <span class="device-name">${d.device}</span>
+      <span class="device-pct">${Math.round(d.clicks/totalD*100)}%</span>
+    </div>`;
+  });
+}
+
+// ======= CHARTS =======
+let chartInstances = {};
+
+function getChartColors() {
+  const s = getComputedStyle(document.documentElement);
+  return {
+    primary: s.getPropertyValue('--color-primary').trim(),
+    border: s.getPropertyValue('--color-border').trim(),
+    text: s.getPropertyValue('--color-text-muted').trim(),
+    surface: s.getPropertyValue('--color-surface-offset').trim(),
+    success: s.getPropertyValue('--color-success').trim(),
+    warning: s.getPropertyValue('--color-warning').trim(),
+    purple: s.getPropertyValue('--color-purple').trim(),
+  };
+}
+
+function buildCharts() {
+  const c = getChartColors();
+  const labels = weeklyData.map(w => {
+    const d = new Date(w.week);
+    return d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  });
+
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = c.text;
+
+  const gridCfg = { color: c.border, drawBorder: false };
+  const tickCfg = { color: c.text };
+
+  function destroyAndCreate(id, config) {
+    if (chartInstances[id]) chartInstances[id].destroy();
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    chartInstances[id] = new Chart(ctx, config);
+  }
+
+  // Traffic chart (overview)
+  destroyAndCreate('trafficChart', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Clicks',
+          data: weeklyData.map(w => w.clicks),
+          backgroundColor: c.primary + 'cc',
+          borderRadius: 3,
+          yAxisID: 'y',
+          order: 2,
+        },
+        {
+          label: 'Impressions',
+          data: weeklyData.map(w => w.impressions),
+          type: 'line',
+          borderColor: c.warning,
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          borderWidth: 1.5,
+          tension: 0.4,
+          yAxisID: 'y1',
+          order: 1,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 12, font: {size:11} } } },
+      scales: {
+        x: { grid: {display:false}, ticks: { ...tickCfg, maxTicksLimit: 8 } },
+        y: { grid: gridCfg, ticks: tickCfg, position: 'left', title: {display:false} },
+        y1: { grid: {display:false}, ticks: tickCfg, position: 'right', title: {display:false} }
+      }
+    }
+  });
+
+  // Position chart
+  destroyAndCreate('positionChart', {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Avg Position',
+        data: weeklyData.map(w => w.position),
+        borderColor: c.success,
+        backgroundColor: c.success + '15',
+        fill: true,
+        pointRadius: 2,
+        borderWidth: 2,
+        tension: 0.4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: {display:false}, ticks: { ...tickCfg, maxTicksLimit: 8 } },
+        y: { 
+          grid: gridCfg, 
+          ticks: tickCfg,
+          reverse: true,
+          min: 1,
+        }
+      }
+    }
+  });
+
+  // Traffic full chart
+  destroyAndCreate('trafficChartFull', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Clicks',
+          data: weeklyData.map(w => w.clicks),
+          backgroundColor: c.primary + 'cc',
+          borderRadius: 3,
+          yAxisID: 'y',
+          order: 2,
+        },
+        {
+          label: 'Impressions',
+          data: weeklyData.map(w => w.impressions),
+          type: 'line',
+          borderColor: c.warning,
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          borderWidth: 1.5,
+          tension: 0.4,
+          yAxisID: 'y1',
+          order: 1,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 12 } } },
+      scales: {
+        x: { grid: {display:false}, ticks: { ...tickCfg, maxTicksLimit: 10 } },
+        y: { grid: gridCfg, ticks: tickCfg, position: 'left' },
+        y1: { grid: {display:false}, ticks: tickCfg, position: 'right' }
+      }
+    }
+  });
+
+  // CTR chart
+  destroyAndCreate('ctrChart', {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'CTR %',
+        data: weeklyData.map(w => w.ctr),
+        borderColor: c.purple,
+        backgroundColor: c.purple + '15',
+        fill: true,
+        pointRadius: 2,
+        borderWidth: 2,
+        tension: 0.4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: {display:false}, ticks: { ...tickCfg, maxTicksLimit: 8 } },
+        y: { grid: gridCfg, ticks: { ...tickCfg, callback: v => v+'%' } }
+      }
+    }
+  });
+
+  // Device donut
+  destroyAndCreate('deviceChart', {
+    type: 'doughnut',
+    data: {
+      labels: devices.map(d => d.device),
+      datasets: [{
+        data: devices.map(d => d.clicks),
+        backgroundColor: devices.map(d => d.color),
+        borderWidth: 0,
+        hoverOffset: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      cutout: '68%',
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+// ======= INIT =======
+document.addEventListener('DOMContentLoaded', () => {
+  buildTables();
+  buildCharts();
+});
+</script>
+</body>
+</html>
