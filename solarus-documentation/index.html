@@ -17,6 +17,12 @@ body{background:var(--bg);color:var(--t);font-family:'DM Sans',sans-serif;line-h
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(26,26,46,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,92,53,.15)}
 nav .lw{display:flex;align-items:center;gap:12px;text-decoration:none}nav .lw img{height:28px}
 nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);letter-spacing:2px;text-transform:uppercase;border-left:1px solid rgba(255,255,255,.2);padding-left:12px}
+nav .nav-search{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 14px;transition:border-color .2s;min-width:240px}
+nav .nav-search:focus-within{border-color:var(--o)}
+nav .nav-search svg{width:16px;height:16px;color:rgba(255,255,255,.4);flex-shrink:0}
+nav .nav-search input{border:none;background:transparent;outline:none;font-family:'DM Sans',sans-serif;font-size:.8em;color:#fff;width:100%}
+nav .nav-search input::placeholder{color:rgba(255,255,255,.35)}
+.search-highlight{background:rgba(255,92,53,.3);border-radius:2px;padding:0 2px}
 .nl{display:flex;gap:18px;list-style:none;flex-wrap:wrap}.nl a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.72em;letter-spacing:1px;text-transform:uppercase;transition:color .2s}.nl a:hover{color:var(--o)}
 .hero{min-height:42vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;padding:110px 24px 50px;background:linear-gradient(135deg,var(--d) 0%,var(--d2) 50%,var(--d3) 100%);color:#fff}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(255,92,53,.18) 0%,transparent 65%);animation:pb 4s ease-in-out infinite}
@@ -69,7 +75,11 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="progress" id="progress"></div>
 
 <nav>
-<a href="#" class="lw"><img src="img/refindable-logo.png" alt="Refindable"><span class="ll">Solarus Docs</span></a>
+<a href="#" class="lw"><img src="img/refindable-logo.png" alt="Refindable"><img src="img/Solarus-Logo.png" alt="Solarus" style="height:24px;margin-left:4px"><span class="ll">Learning Hub</span></a>
+<div class="nav-search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+<input type="text" id="searchInput" placeholder="Search sections..." oninput="searchPage(this.value)">
+</div>
 <ul class="nl">
 <li><a href="#sales">Sales</a></li>
 <li><a href="#quoting">Quoting</a></li>
@@ -82,8 +92,8 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </nav>
 
 <div class="hero"><div class="hero-bg"></div><div class="hero-grid"></div>
-<div class="hero-tag">Solarus x Refindable &middot; Operations Manual</div>
-<h1>HubSpot<br><span>Documentation</span></h1>
+<div class="hero-tag">Solarus x Refindable &middot; HubSpot Learning Hub</div>
+<h1>HubSpot<br><span>Learning Hub</span></h1>
 <p class="hero-sub">Everything the Solarus sales team needs to run leads, deals, quotes and calls inside HubSpot.</p>
 </div>
 
@@ -489,7 +499,7 @@ Always create the <strong>contact first</strong> if the person is not already in
 
 </div>
 
-<footer>Solarus x <span>Refindable</span> &middot; HubSpot Operations Manual &middot; Last updated April 2026</footer>
+<footer>Solarus x <span>Refindable</span> &middot; HubSpot Learning Hub &middot; Last updated April 2026</footer>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
@@ -502,6 +512,15 @@ window.addEventListener('scroll',function(){
   var btn=document.getElementById('backToTop');
   if(window.scrollY>400){btn.classList.add('visible')}else{btn.classList.remove('visible')}
 });
+function searchPage(q){
+  document.querySelectorAll('.search-highlight').forEach(function(el){var p=el.parentNode;p.replaceChild(document.createTextNode(el.textContent),el);p.normalize()});
+  if(!q||q.length<2)return;
+  var ct=document.querySelector('.ct'),w=document.createTreeWalker(ct,NodeFilter.SHOW_TEXT,null,false),matches=[],re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  while(w.nextNode()){var n=w.currentNode;if(n.parentElement.tagName==='SCRIPT'||n.parentElement.tagName==='STYLE')continue;if(re.test(n.textContent))matches.push(n)}
+  var first=null;
+  matches.forEach(function(n){var s=document.createElement('span');s.innerHTML=n.textContent.replace(re,'<mark class="search-highlight">$1</mark>');n.parentNode.replaceChild(s,n);if(!first)first=s.querySelector('.search-highlight')});
+  if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+}
 </script>
 
 </body>
