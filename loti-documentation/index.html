@@ -280,11 +280,11 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <ul>
 <li><strong>Due Today</strong> tasks that need to happen today</li>
 <li><strong>Overdue</strong> anything you missed</li>
-<li><strong>High Priority</strong> &mdash; flagged properties</li>
+<li><strong>High Priority</strong>: flagged properties</li>
 </ul></div></div>
 
 <div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Check LotiProperties</span></div>
-<div class="st-b"><p>Review the LotiProperty pipeline. Focus on properties in the <strong>SDR Must Contact</strong> stage &mdash; these are the highest priority to visit or call.</p></div></div>
+<div class="st-b"><p>Review the LotiProperty pipeline. Focus on properties in the <strong>SDR Must Contact</strong> stage: these are the highest priority to visit or call.</p></div></div>
 
 <div class="ss"><h3>Before Each Visit: AirCover</h3></div>
 
@@ -313,7 +313,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <ul>
 <li>Add detailed notes about your visit</li>
 <li>Set the <strong>Site Visit Date</strong></li>
-<li>Set your <strong>Jack Score</strong> (0-100) &mdash; your personal rating of the opportunity</li>
+<li>Set your <strong>Jack Score</strong> (0-100): your personal rating of the opportunity</li>
 <li>Update the <strong>Confirmed Loss</strong> type</li>
 <li>Create follow-up tasks if needed</li>
 </ul></div></div>
@@ -332,7 +332,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
   <div class="video-embed"><iframe src="https://www.loom.com/embed/5e77bfdba109409d9e826211787672ca" allowfullscreen></iframe></div>
 </div>
 
-<div class="screenshot"><img src="images/screenshots/loti-record.png" alt="LotiProperty record — scores, FN details, contacts, and deals"><div class="cap">LotiProperty record — scores, FN details, contacts, and deals</div></div>
+<div class="screenshot"><img src="images/screenshots/loti-record.png" alt="LotiProperty record: scores, FN details, contacts, and deals"><div class="cap">LotiProperty record: scores, FN details, contacts, and deals</div></div>
 
 <div class="screenshot"><img src="images/screenshots/contacts-index.png" alt="Contacts index in HubSpot"><div class="cap">Contacts index in HubSpot</div></div>
 
@@ -433,7 +433,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <div class="screenshot"><img src="images/screenshots/loti-pipeline.png" alt="LotiProperty Opportunity Pipeline"><div class="cap">LotiProperty Opportunity Pipeline</div></div>
 
-<div class="screenshot"><img src="images/screenshots/deal-pipeline.png" alt="Deal Pipeline — deals by stage"><div class="cap">Deal Pipeline — deals by stage</div></div>
+<div class="screenshot"><img src="images/screenshots/deal-pipeline.png" alt="Deal Pipeline: deals by stage"><div class="cap">Deal Pipeline: deals by stage</div></div>
 
 
 <p class="desc">Loti has two pipelines. The LotiProperty Pipeline is mostly automatic. The Deal Pipeline is manual.</p>
@@ -471,7 +471,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="sh" id="email"><span class="nm">VI</span><h2>Email Campaigns</h2></div><div class="sl"></div>
 
 
-<div class="screenshot"><img src="images/screenshots/email-stage1.png" alt="BAU Email Marketing Stage #1 — Early Recovery workflow"><div class="cap">BAU Email Marketing Stage #1 — Early Recovery workflow</div></div>
+<div class="screenshot"><img src="images/screenshots/email-stage1.png" alt="BAU Email Marketing Stage #1: Early Recovery workflow"><div class="cap">BAU Email Marketing Stage #1: Early Recovery workflow</div></div>
 
 
 <p class="desc">Loti runs email campaigns to nurture leads who aren't ready for a direct call. There are two main campaigns.</p>
@@ -548,68 +548,70 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </tbody>
 </table>
 
-<div class="ss"><h3>Native HubSpot integrations</h3><p class="desc">Installed from the HubSpot Marketplace. No custom code &mdash; managed from HubSpot Settings &rarr; Integrations.</p></div>
+<div class="ss"><h3>Native HubSpot integrations</h3><p class="desc">Installed from the HubSpot Marketplace. No custom code. Managed from HubSpot Settings &rarr; Integrations.</p></div>
 
-<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">RingCentral &mdash; Calls &amp; SMS</span></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">RingCentral: Calls &amp; SMS</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Connected globally</p>
-<p>RingCentral is the phone system. Calls and SMS placed through RingCentral &mdash; either from the HubSpot dialer or the RingCentral mobile app &mdash; are logged automatically on the Contact and LotiProperty timelines.</p>
-<div class="co co-d"><div class="tg">USED FOR</div><p>Outbound calling from a Contact or LotiProperty record, inbound calls surfaced on the timeline, SMS threads, and voicemail transcripts.</p></div>
+<p>RingCentral is the phone system Loti uses to <strong>make and receive calls</strong>. An <strong>IVR</strong> is connected to their RingCentral phone numbers, so incoming calls can be routed either to the rep's cellphone or to the RingCentral dialer inside HubSpot.</p>
+<div class="co co-w"><div class="tg">IMPORTANT</div><p>The dialer embedded in HubSpot is <strong>RingCentral's dialer</strong>, not the native HubSpot one. They look similar but are different tools. Use the RingCentral one.</p></div>
+<p>Call activity and SMS threads are logged on the <strong>Contact</strong> timeline (not on the LotiProperty). <strong>Call recording transcripts</strong> are captured. Voicemail transcripts: to be confirmed.</p>
+<div class="co co-d"><div class="tg">USED FOR</div><p>Outbound calling from a Contact record, inbound calls routed via the IVR, SMS conversations, and call recording transcripts.</p></div>
 <p>For setup, configuration and full walkthrough see the <a href="ringcentral.html" style="color:var(--o);font-weight:600">complete RingCentral documentation &rarr;</a></p>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Intercom &mdash; Lead Intake</span></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Intercom: Lead Intake</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Live. New leads sync automatically.</p>
 <p>Intercom captures leads from the Loti website and chat widget. Every new Intercom lead is created automatically as a Contact in HubSpot, so Jack sees it in his task list without any manual step.</p>
 <div class="co co-d"><div class="tg">USED FOR</div><p>Website chat leads &rarr; HubSpot Contacts. Syncs contact properties (name, email, page visited) on creation.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Gmail &mdash; Email Logging</span></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Gmail: Email Logging</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Live</p>
-<p>Every Loti rep connects their Gmail account to HubSpot. Emails sent to Contacts are logged automatically on the timeline, so the full conversation is visible from the CRM record &mdash; no need to BCC or forward anything manually.</p>
+<p>Every Loti rep connects their Gmail account to HubSpot. Emails sent to Contacts are logged automatically on the timeline, so the full conversation is visible from the CRM record. No need to BCC or forward anything manually.</p>
 <div class="co co-d"><div class="tg">USED FOR</div><p>Logging outbound emails on Contact &amp; Deal timelines, opening/click tracking, sending from inside HubSpot with templates and sequences.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Slack &mdash; Leadership Alerts</span></div>
+<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Slack: Leadership Alerts</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Native &middot; <strong>Status:</strong> <span style="color:var(--r);font-weight:700">Off</span> (not currently firing)</p>
-<p>Slack was set up to send real-time alerts to the leadership channel (deals closing, high-score properties). The integration is currently disabled &mdash; alerts are not firing. Pending re-enabling once channel routing is defined.</p>
+<p>Slack was set up to send real-time alerts to the leadership channel (deals closing, high-score properties). The integration is currently disabled. Alerts are not firing. Pending re-enabling once channel routing is defined.</p>
 <div class="co co-r"><div class="tg">CURRENT STATE</div><p>Installed but disabled. No notifications are being sent to Slack today.</p></div>
 </div></div>
 
 <div class="ss"><h3>Custom API integrations</h3><p class="desc">Wired into HubSpot Workflows via Custom Code actions. These hit external APIs and write results back to the record.</p></div>
 
-<div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">OpenAI &mdash; FN Score calibration</span></div>
+<div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">OpenAI: FN Score calibration</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Custom API &middot; <strong>Status:</strong> Live. Scoring runs on property intake.</p>
 <p>OpenAI calibrates the <strong>FN Score</strong> on each new LotiProperty. When a property is created, a Workflow fires a Custom Code action that sends the property data to OpenAI; the response is parsed and written back to the LotiProperty as the Property Score.</p>
 <div class="co co-i"><div class="tg">WHERE IT RUNS</div><p>HubSpot Workflow triggered on LotiProperty creation &rarr; Custom Code action &rarr; OpenAI API &rarr; writes back to Property Score field.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">6</span><span class="st-t">Google Maps &mdash; Location data</span></div>
+<div class="st"><div class="st-h"><span class="st-n">6</span><span class="st-t">Google Maps: Location data</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> API &middot; <strong>Status:</strong> Live. Populates on property creation.</p>
 <p>On each LotiProperty creation, a Workflow calls the Google Maps API to generate two values: a <strong>Map Link</strong> (direct link to the location) and <strong>Distance to Rep</strong> (driving distance from the assigned rep's home base). Both are written to the LotiProperty record so Jack can plan his route.</p>
 <div class="co co-i"><div class="tg">OUTPUTS</div><p>Populates <code>Map Link</code> and <code>Distance to Rep</code> on the LotiProperty.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">7</span><span class="st-t">Debounce &mdash; Email validation</span></div>
+<div class="st"><div class="st-h"><span class="st-n">7</span><span class="st-t">Debounce: Email validation</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> Custom API &middot; <strong>Status:</strong> Live via Workflow + Custom Code (Refindable account).</p>
-<p>Debounce validates email addresses on new Contacts. When a Contact is created, a Workflow fires a Custom Code action that hits the Debounce API and writes the validation result back to the Contact &mdash; invalid or undeliverable emails are flagged so the team doesn't waste touches on bad data.</p>
+<p>Debounce validates email addresses on new Contacts. When a Contact is created, a Workflow fires a Custom Code action that hits the Debounce API and writes the validation result back to the Contact. Invalid or undeliverable emails are flagged so the team doesn't waste touches on bad data.</p>
 <div class="co co-w"><div class="tg">NOTE</div><p>The Debounce API key lives on the <strong>Refindable account</strong>, not the Loti one. Keep that in mind if the key ever needs rotating.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">8</span><span class="st-t">Property Reach &mdash; Owner lookup</span></div>
+<div class="st"><div class="st-h"><span class="st-n">8</span><span class="st-t">Property Reach: Owner lookup</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> API &middot; <strong>Status:</strong> Live</p>
-<p>Property Reach returns the owner Contacts associated with a physical property. On LotiProperty creation this API is called to populate the related Contacts &mdash; the people Jack will actually call or email about the insurance claim.</p>
+<p>Property Reach returns the owner Contacts associated with a physical property. On LotiProperty creation this API is called to populate the related Contacts: the people Jack will actually call or email about the insurance claim.</p>
 <div class="co co-i"><div class="tg">OUTPUTS</div><p>Creates or links Contact records to the LotiProperty.</p></div>
 </div></div>
 
-<div class="st"><div class="st-h"><span class="st-n">9</span><span class="st-t">Fire Notification &mdash; Incident feed</span></div>
+<div class="st"><div class="st-h"><span class="st-n">9</span><span class="st-t">Fire Notification: Incident feed</span></div>
 <div class="st-b">
 <p><strong>Type:</strong> API &middot; <strong>Status:</strong> Live</p>
 <p>Fire Notification is the data source for fire incidents. It feeds the pipeline that creates LotiProperties when a fire event occurs, so the system can react as soon as a new incident is reported.</p>
