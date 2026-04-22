@@ -96,7 +96,23 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .bd-bar .bd-dots span:nth-child(2){background:#ffbd2e}
 .bd-bar .bd-dots span:nth-child(3){background:#27c93f}
 .bd-scroll{padding:30px 22px 34px;background-color:#f5f6f8;background-image:linear-gradient(#e1e4ea 1px,transparent 1px),linear-gradient(90deg,#e1e4ea 1px,transparent 1px);background-size:26px 26px;background-position:-1px -1px}
-.bd{display:grid;grid-template-columns:1.2fr .4fr 1.3fr .4fr 1.2fr;grid-auto-rows:min-content;gap:18px 14px;align-items:start}
+.bd-sec{margin-bottom:46px}.bd-sec:last-child{margin-bottom:0}
+.bd-entity-wrap{display:flex;justify-content:center;position:relative;padding-bottom:26px}
+.bd-entity-wrap::after{content:"";position:absolute;bottom:0;left:8%;right:8%;height:2px;background:var(--d)}
+.bd-entity{background:#1a1a2e;color:#fff;padding:14px 30px 12px;border-radius:10px;text-align:center;min-width:260px;max-width:560px;box-shadow:0 3px 0 rgba(0,0,0,.15),0 8px 24px rgba(0,0,0,.1);position:relative;z-index:2}
+.bd-entity h4{font-family:'Bebas Neue',sans-serif;font-size:1.35em;letter-spacing:1.5px;margin:0 0 2px;color:#fff}
+.bd-entity .bd-ent-type{color:rgba(255,255,255,.55);font-size:.6em;letter-spacing:1.3px;font-weight:800;text-transform:uppercase;display:block}
+.bd-entity-fields{font-size:.72em;margin-top:7px;color:rgba(255,255,255,.88);line-height:1.5}
+.bd-entity-fields code{background:rgba(255,255,255,.13);color:#fff;padding:1px 6px;border-radius:3px;font-size:.92em;font-weight:600}
+.bd-spokes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px;position:relative}
+.bd-spoke{position:relative;padding-top:32px}
+.bd-spoke::before{content:"";position:absolute;top:-26px;left:50%;transform:translateX(-50%);width:2px;height:52px;background:var(--d);z-index:1}
+.bd-spoke::after{content:"";position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:10px solid var(--d);z-index:1}
+.bd-spoke .bd-n{position:relative;z-index:2;height:100%}
+.bd-sec-title{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;color:var(--tl);font-size:.85em;text-transform:uppercase;margin:0 0 10px;text-align:center}
+.bd-sec-note{font-size:.75em;color:var(--tl);text-align:center;margin-top:14px;font-style:italic}
+.bd-offline{display:flex;justify-content:center;padding-top:10px;border-top:2px dashed #d1d5db;margin-top:30px}
+.bd-offline .bd-n{max-width:320px}
 .bd-n{background:#fff;border-radius:10px;padding:14px 14px 12px;box-shadow:0 3px 0 rgba(0,0,0,.08),0 8px 18px rgba(0,0,0,.07);border:2px solid transparent;position:relative}
 .bd-n h4{font-family:'Bebas Neue',sans-serif;margin:0 0 4px;font-size:1.1em;letter-spacing:.8px;line-height:1.1;color:var(--d)}
 .bd-n .bd-type{font-size:.6em;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--tl);display:block;margin-bottom:6px}
@@ -131,8 +147,8 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .bd-legend-i{display:flex;align-items:center;gap:6px}
 .bd-legend-sw{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
 footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
-@media(max-width:1100px){.bd{grid-template-columns:1fr .25fr 1.2fr .25fr 1fr;gap:14px 8px}.bd-n{padding:10px 10px 8px}.bd-n h4{font-size:.95em}.bd-n .bd-type{font-size:.55em}.bd-s{font-size:.68em;padding:4px 6px}}
-@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}.bd-wrap{width:calc(100vw - 8px);border-radius:8px}.bd-scroll{padding:18px 10px 20px}.bd{display:flex;flex-direction:column;gap:10px}.bd-arrow{display:none}.bd .bd-n{grid-column:auto!important;grid-row:auto!important}}
+@media(max-width:1100px){.bd-n{padding:10px 10px 8px}.bd-n h4{font-size:.95em}.bd-n .bd-type{font-size:.55em}.bd-s{font-size:.68em;padding:4px 6px}.bd-spokes{gap:16px}}
+@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}.bd-wrap{width:calc(100vw - 8px);border-radius:8px}.bd-scroll{padding:18px 10px 20px}.bd-spokes{grid-template-columns:1fr 1fr;gap:14px}.bd-spoke::before,.bd-spoke::after{display:none}.bd-spoke{padding-top:0}.bd-entity-wrap{padding-bottom:14px}.bd-entity-wrap::after{display:none}.bd-entity{min-width:0;padding:12px 18px 10px}.bd-entity h4{font-size:1.1em}}
 
 /* VISUAL CARDS */
 .v-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
@@ -614,130 +630,147 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="bd-bar"><span class="bd-dots"><span></span><span></span><span></span></span><span>Integrations Board &mdash; what writes where</span><span style="font-size:.68em;color:rgba(255,255,255,.5);letter-spacing:1.5px;font-family:inherit">LOTI &middot; HUBSPOT</span></div>
 
 <div class="bd-scroll">
-<div class="bd">
 
-<!-- ===== LOTIPROPERTY ECOSYSTEM ===== -->
-<div class="bd-n bd-n-in" style="grid-column:1;grid-row:1">
+<!-- ===== SECTION: LOTIPROPERTY HUB ===== -->
+<div class="bd-sec">
+<p class="bd-sec-title">LotiProperty &mdash; what writes to it</p>
+
+<div class="bd-entity-wrap">
+<div class="bd-entity">
+<h4>LotiProperty</h4>
+<span class="bd-ent-type">HubSpot Object</span>
+<div class="bd-entity-fields"><code>Property Score</code> &middot; <code>Map Link</code> &middot; <code>Distance to Rep</code> &middot; owners &middot; enrichment data</div>
+</div>
+</div>
+
+<div class="bd-spokes">
+
+<div class="bd-spoke">
+<div class="bd-n bd-n-in">
 <span class="bd-badge live">Live</span>
 <h4>Fire Notification</h4><span class="bd-type">Inbound API</span>
 <div class="bd-sticks">
-<div class="bd-s">They push incidents to our endpoint</div>
-<div class="bd-s">Creates one <strong>LotiProperty</strong> per event</div>
+<div class="bd-s">Pushes incidents to our endpoint</div>
+<div class="bd-s"><strong>Creates</strong> the LotiProperty</div>
 <div class="bd-s pending">incident fields TBD with Rami</div>
 </div>
 </div>
-
-<div class="bd-arrow" style="grid-column:2;grid-row:1"><span class="bd-arrow-lbl">creates</span></div>
-
-<div class="bd-n bd-n-ent" style="grid-column:3;grid-row:1/span 2">
-<h4>LotiProperty</h4><span class="bd-type">HubSpot Object</span>
-<div class="bd-sticks">
-<div class="bd-s" style="background:#fff;color:#1a1a2e;border-color:#fff"><code>Property Score</code> &middot; <code>Map Link</code> &middot; <code>Distance to Rep</code></div>
-</div>
 </div>
 
-<div class="bd-arrow" style="grid-column:4;grid-row:1"><span class="bd-arrow-lbl">writes</span></div>
-
-<div class="bd-n bd-n-api" style="grid-column:5;grid-row:1">
+<div class="bd-spoke">
+<div class="bd-n bd-n-api">
 <span class="bd-badge live">Live</span>
 <h4>Property Reach</h4><span class="bd-type">Custom API</span>
 <div class="bd-sticks">
-<div class="bd-s">Finds <strong>owners</strong> (Contacts)</div>
-<div class="bd-s">Enriches <strong>LotiProperty</strong> with extra house data</div>
-<div class="bd-s pending">exact enrichment fields TBD</div>
+<div class="bd-s">Enriches LotiProperty with extra house data</div>
+<div class="bd-s">Also creates <strong>Contacts</strong> linked to it (owners)</div>
+<div class="bd-s pending">enrichment fields TBD</div>
+</div>
 </div>
 </div>
 
-<!-- Row 2: arrow up from enrichment to LotiProperty -->
-<div style="grid-column:3;grid-row:2;display:flex;justify-content:center;align-items:flex-start;position:relative"><div style="width:2px;height:28px;background:var(--d);position:relative"><div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--d)"></div><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;padding:1px 7px;font-size:.62em;font-weight:700;letter-spacing:.6px;color:var(--tl);border:1px solid var(--bd);border-radius:10px;white-space:nowrap;text-transform:uppercase">writes</span></div></div>
-
-<div class="bd-n bd-n-api" style="grid-column:1/span 2;grid-row:3">
+<div class="bd-spoke">
+<div class="bd-n bd-n-api">
 <span class="bd-badge live">Live</span>
 <h4>OpenAI</h4><span class="bd-type">Custom API</span>
 <div class="bd-sticks">
-<div class="bd-s"><code>Property Score</code> on LotiProperty</div>
-<div class="bd-s">Grounded on last <strong>200</strong> LotiProperties scored by Jack</div>
+<div class="bd-s"><code>Property Score</code></div>
+<div class="bd-s">Grounded on last <strong>200</strong> scored by Jack</div>
+</div>
 </div>
 </div>
 
-<div class="bd-n bd-n-api" style="grid-column:4/span 2;grid-row:3">
+<div class="bd-spoke">
+<div class="bd-n bd-n-api">
 <span class="bd-badge live">Live</span>
 <h4>Google Maps</h4><span class="bd-type">API</span>
 <div class="bd-sticks">
-<div class="bd-s"><code>Map Link</code> on LotiProperty</div>
-<div class="bd-s"><code>Distance to Rep</code> on LotiProperty</div>
+<div class="bd-s"><code>Map Link</code></div>
+<div class="bd-s"><code>Distance to Rep</code></div>
+</div>
 </div>
 </div>
 
-<!-- Divider row -->
-<div style="grid-column:1/-1;grid-row:4;border-top:2px dashed #d1d5db;margin:10px 0 4px;text-align:center"><span style="display:inline-block;background:#f5f6f8;padding:0 12px;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:.8em;color:var(--tl)">Contact ecosystem &darr;</span></div>
+</div><!-- /.bd-spokes -->
+</div><!-- /.bd-sec -->
 
-<!-- ===== CONTACT ECOSYSTEM ===== -->
-<div class="bd-n bd-n-nat" style="grid-column:1;grid-row:5">
+<!-- ===== SECTION: CONTACT HUB ===== -->
+<div class="bd-sec">
+<p class="bd-sec-title">Contact &mdash; what writes to it</p>
+
+<div class="bd-entity-wrap">
+<div class="bd-entity">
+<h4>Contact</h4>
+<span class="bd-ent-type">HubSpot Object</span>
+<div class="bd-entity-fields"><code>Debounce Status</code> &middot; name/email/page &middot; timeline activity (calls, SMS, email)</div>
+</div>
+</div>
+
+<div class="bd-spokes">
+
+<div class="bd-spoke">
+<div class="bd-n bd-n-nat">
 <span class="bd-badge live">Live</span>
 <h4>Intercom</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
-<div class="bd-s">Chat leads from the website</div>
-<div class="bd-s">Creates Contact: <code>Name</code>, <code>Email</code>, <code>Page visited</code></div>
+<div class="bd-s">Website chat leads</div>
+<div class="bd-s"><strong>Creates</strong> Contact: <code>Name</code> <code>Email</code> <code>Page</code></div>
 <div class="bd-s">Low volume in practice</div>
 </div>
 </div>
-
-<div class="bd-arrow" style="grid-column:2;grid-row:5"><span class="bd-arrow-lbl">creates</span></div>
-
-<div class="bd-n bd-n-ent" style="grid-column:3;grid-row:5/span 2">
-<h4>Contact</h4><span class="bd-type">HubSpot Object</span>
-<div class="bd-sticks">
-<div class="bd-s" style="background:#fff;color:#1a1a2e;border-color:#fff"><code>Debounce Status</code> + timeline activity</div>
-</div>
 </div>
 
-<div class="bd-arrow" style="grid-column:4;grid-row:5"><span class="bd-arrow-lbl">writes</span></div>
-
-<div class="bd-n bd-n-api" style="grid-column:5;grid-row:5">
+<div class="bd-spoke">
+<div class="bd-n bd-n-api">
 <span class="bd-badge live">Live</span>
 <h4>Debounce</h4><span class="bd-type">Custom API</span>
 <div class="bd-sticks">
-<div class="bd-s"><code>Debounce Status</code> on Contact
+<div class="bd-s"><code>Debounce Status</code>
 <div class="bd-vals"><span class="bd-v ok">Deliverable</span><span class="bd-v neu">Accept-All</span><span class="bd-v bad">Invalid</span></div>
 </div>
 <div class="bd-s">API key on <strong>Refindable</strong> account</div>
 </div>
 </div>
+</div>
 
-<!-- Row 6: arrow up from rep tools to Contact -->
-<div style="grid-column:3;grid-row:6;display:flex;justify-content:center;align-items:flex-start;position:relative"><div style="width:2px;height:28px;background:var(--d);position:relative"><div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--d)"></div><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;padding:1px 7px;font-size:.62em;font-weight:700;letter-spacing:.6px;color:var(--tl);border:1px solid var(--bd);border-radius:10px;white-space:nowrap;text-transform:uppercase">logs</span></div></div>
-
-<div class="bd-n bd-n-nat" style="grid-column:1/span 2;grid-row:7">
+<div class="bd-spoke">
+<div class="bd-n bd-n-nat">
 <span class="bd-badge live">Live</span>
 <h4>RingCentral</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
-<div class="bd-s">Calls &amp; SMS logged on Contact timeline</div>
+<div class="bd-s"><strong>Logs</strong> calls &amp; SMS on timeline</div>
 <div class="bd-s">Recording transcripts captured</div>
 <div class="bd-s pending">voicemail + call fields TBD</div>
 </div>
 </div>
+</div>
 
-<div class="bd-n bd-n-nat" style="grid-column:4/span 2;grid-row:7">
+<div class="bd-spoke">
+<div class="bd-n bd-n-nat">
 <span class="bd-badge live">Live</span>
 <h4>Gmail</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
-<div class="bd-s">Emails on Contact timeline</div>
-<div class="bd-s">Emails on Deal timeline</div>
+<div class="bd-s"><strong>Logs</strong> emails on Contact + Deal timelines</div>
 <div class="bd-s">Open / click tracking</div>
 </div>
 </div>
+</div>
 
-<!-- Slack OFF, aside -->
-<div class="bd-n bd-n-off" style="grid-column:3;grid-row:8">
+</div><!-- /.bd-spokes -->
+<p class="bd-sec-note">Property Reach (above) also creates Contacts as part of property enrichment.</p>
+</div><!-- /.bd-sec -->
+
+<!-- ===== OFFLINE ===== -->
+<div class="bd-offline">
+<div class="bd-n bd-n-off">
 <span class="bd-badge off">Off</span>
 <h4>Slack</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
 <div class="bd-s" style="background:#e9ecef;border-color:#ced4da;color:var(--tl)">No fields written today. Integration disabled pending new routing rules.</div>
 </div>
 </div>
+</div>
 
-</div><!-- /.bd -->
 </div><!-- /.bd-scroll -->
 
 <div class="bd-legend">
