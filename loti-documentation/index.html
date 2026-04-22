@@ -88,15 +88,15 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .fld-pending{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,#fff 6px,#fff 12px);border-style:dashed;color:var(--tl);text-align:center;font-size:.75em;padding:10px;font-style:italic}
 .fld-pending strong{color:var(--y);font-style:normal}
 /* Whiteboard / Miro-style diagram */
-.bd-wrap{margin:24px 0;border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:#fafbfc}
+.bd-wrap{margin:24px 0;border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:#fafbfc;width:calc(100vw - 24px);max-width:1400px;position:relative;left:50%;right:50%;margin-left:calc(-50vw + 12px);margin-right:calc(-50vw + 12px)}
 .bd-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:var(--d);color:#fff;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;font-size:.95em}
 .bd-bar .bd-dots{display:flex;gap:5px}
 .bd-bar .bd-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}
 .bd-bar .bd-dots span:first-child{background:#ff5f56}
 .bd-bar .bd-dots span:nth-child(2){background:#ffbd2e}
 .bd-bar .bd-dots span:nth-child(3){background:#27c93f}
-.bd-scroll{overflow-x:auto;padding:36px 24px 40px;background-color:#f5f6f8;background-image:linear-gradient(#e1e4ea 1px,transparent 1px),linear-gradient(90deg,#e1e4ea 1px,transparent 1px);background-size:26px 26px;background-position:-1px -1px}
-.bd{display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));grid-auto-rows:min-content;gap:22px 34px;min-width:960px;align-items:start}
+.bd-scroll{padding:30px 22px 34px;background-color:#f5f6f8;background-image:linear-gradient(#e1e4ea 1px,transparent 1px),linear-gradient(90deg,#e1e4ea 1px,transparent 1px);background-size:26px 26px;background-position:-1px -1px}
+.bd{display:grid;grid-template-columns:1.2fr .4fr 1.3fr .4fr 1.2fr;grid-auto-rows:min-content;gap:18px 14px;align-items:start}
 .bd-n{background:#fff;border-radius:10px;padding:14px 14px 12px;box-shadow:0 3px 0 rgba(0,0,0,.08),0 8px 18px rgba(0,0,0,.07);border:2px solid transparent;position:relative}
 .bd-n h4{font-family:'Bebas Neue',sans-serif;margin:0 0 4px;font-size:1.1em;letter-spacing:.8px;line-height:1.1;color:var(--d)}
 .bd-n .bd-type{font-size:.6em;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--tl);display:block;margin-bottom:6px}
@@ -131,7 +131,8 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .bd-legend-i{display:flex;align-items:center;gap:6px}
 .bd-legend-sw{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
 footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
-@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}}
+@media(max-width:1100px){.bd{grid-template-columns:1fr .25fr 1.2fr .25fr 1fr;gap:14px 8px}.bd-n{padding:10px 10px 8px}.bd-n h4{font-size:.95em}.bd-n .bd-type{font-size:.55em}.bd-s{font-size:.68em;padding:4px 6px}}
+@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}.bd-wrap{width:calc(100vw - 8px);margin-left:calc(-50vw + 4px);margin-right:calc(-50vw + 4px);border-radius:8px}.bd-scroll{padding:18px 10px 20px}.bd{display:flex;flex-direction:column;gap:10px}.bd-arrow{display:none}.bd .bd-n{grid-column:auto!important;grid-row:auto!important}}
 
 /* VISUAL CARDS */
 .v-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
@@ -610,7 +611,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- Whiteboard diagram -->
 <div class="bd-wrap">
-<div class="bd-bar"><span class="bd-dots"><span></span><span></span><span></span></span><span>Integrations Board &mdash; what writes where</span><span style="font-size:.7em;color:rgba(255,255,255,.55);letter-spacing:1px">SCROLL &rarr;</span></div>
+<div class="bd-bar"><span class="bd-dots"><span></span><span></span><span></span></span><span>Integrations Board &mdash; what writes where</span><span style="font-size:.68em;color:rgba(255,255,255,.5);letter-spacing:1.5px;font-family:inherit">LOTI &middot; HUBSPOT</span></div>
 
 <div class="bd-scroll">
 <div class="bd">
@@ -647,21 +648,19 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div>
 </div>
 
-<!-- Row 2: OpenAI + Google Maps below LotiProperty, arrows up -->
-<div class="bd-arrow bd-arrow-dn" style="grid-column:2;grid-row:2;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">writes</span></div>
+<!-- Row 2: arrow up from enrichment to LotiProperty -->
+<div style="grid-column:3;grid-row:2;display:flex;justify-content:center;align-items:flex-start;position:relative"><div style="width:2px;height:28px;background:var(--d);position:relative"><div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--d)"></div><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;padding:1px 7px;font-size:.62em;font-weight:700;letter-spacing:.6px;color:var(--tl);border:1px solid var(--bd);border-radius:10px;white-space:nowrap;text-transform:uppercase">writes</span></div></div>
 
-<div class="bd-n bd-n-api" style="grid-column:1;grid-row:3">
+<div class="bd-n bd-n-api" style="grid-column:1/span 2;grid-row:3">
 <span class="bd-badge live">Live</span>
 <h4>OpenAI</h4><span class="bd-type">Custom API</span>
 <div class="bd-sticks">
 <div class="bd-s"><code>Property Score</code> on LotiProperty</div>
-<div class="bd-s">Grounded on last <strong>200</strong> scored by Jack</div>
+<div class="bd-s">Grounded on last <strong>200</strong> LotiProperties scored by Jack</div>
 </div>
 </div>
 
-<div class="bd-arrow bd-arrow-dn" style="grid-column:4;grid-row:2;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">writes</span></div>
-
-<div class="bd-n bd-n-api" style="grid-column:5;grid-row:3">
+<div class="bd-n bd-n-api" style="grid-column:4/span 2;grid-row:3">
 <span class="bd-badge live">Live</span>
 <h4>Google Maps</h4><span class="bd-type">API</span>
 <div class="bd-sticks">
@@ -706,10 +705,10 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div>
 </div>
 
-<!-- Row 6: RingCentral + Gmail below Contact -->
-<div class="bd-arrow bd-arrow-dn" style="grid-column:2;grid-row:6;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">logs</span></div>
+<!-- Row 6: arrow up from rep tools to Contact -->
+<div style="grid-column:3;grid-row:6;display:flex;justify-content:center;align-items:flex-start;position:relative"><div style="width:2px;height:28px;background:var(--d);position:relative"><div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--d)"></div><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;padding:1px 7px;font-size:.62em;font-weight:700;letter-spacing:.6px;color:var(--tl);border:1px solid var(--bd);border-radius:10px;white-space:nowrap;text-transform:uppercase">logs</span></div></div>
 
-<div class="bd-n bd-n-nat" style="grid-column:1;grid-row:7">
+<div class="bd-n bd-n-nat" style="grid-column:1/span 2;grid-row:7">
 <span class="bd-badge live">Live</span>
 <h4>RingCentral</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
@@ -719,9 +718,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div>
 </div>
 
-<div class="bd-arrow bd-arrow-dn" style="grid-column:4;grid-row:6;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">logs</span></div>
-
-<div class="bd-n bd-n-nat" style="grid-column:5;grid-row:7">
+<div class="bd-n bd-n-nat" style="grid-column:4/span 2;grid-row:7">
 <span class="bd-badge live">Live</span>
 <h4>Gmail</h4><span class="bd-type">Native</span>
 <div class="bd-sticks">
