@@ -53,8 +53,42 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .flow-steps{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px}
 .flow-s{background:var(--ol);border:1px solid var(--ob);border-radius:6px;padding:6px 11px;font-size:.75em;font-weight:600;color:var(--t)}.flow-s.active{background:var(--o);color:#fff;border-color:var(--o)}.flow-s.warn{background:rgba(243,156,18,.1);border-color:var(--y);color:var(--y)}
 .flow-arr{color:var(--o);font-size:1em;font-weight:700}
+/* Integration cards */
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px;margin:20px 0}
+.ig{background:#fff;border-radius:12px;border:1px solid var(--bd);border-top:4px solid var(--o);padding:20px 22px 18px;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+.ig:hover{box-shadow:0 6px 18px rgba(0,0,0,.06);transform:translateY(-2px)}
+.ig-native{border-top-color:var(--b)}
+.ig-custom{border-top-color:var(--o)}
+.ig-off{border-top-color:var(--tl);opacity:.85}
+.ig-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.ig-t{font-family:'Bebas Neue',sans-serif;font-size:1.35em;letter-spacing:.5px;color:var(--d);margin:0}
+.ig-badge{font-size:.65em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.ig-badge.live{background:rgba(39,174,96,.12);color:var(--g)}
+.ig-badge.off{background:rgba(231,76,60,.12);color:var(--r)}
+.ig-badge.warn{background:rgba(243,156,18,.14);color:var(--y)}
+.ig-meta{font-size:.72em;font-weight:600;color:var(--tl);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px}
+.ig-meta span{color:var(--o)}
+.ig-desc{font-size:.85em;color:var(--tl);line-height:1.55;margin-bottom:12px}
+.ig-desc strong{color:var(--t)}
+.ig-desc code{background:var(--ol);color:var(--o);padding:1px 5px;border-radius:3px;font-size:.9em}
+.ig-fields{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+.ig-fields-lbl{font-size:.68em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--d);margin-bottom:2px;padding-top:8px;border-top:1px dashed var(--bd)}
+.fld{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:9px 12px}
+.fld-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.fld-n{font-family:'JetBrains Mono','Courier New',monospace;font-size:.8em;font-weight:700;color:var(--d);background:var(--w);padding:2px 7px;border-radius:4px;border:1px solid var(--bd)}
+.fld-obj{font-size:.62em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--b);background:rgba(52,152,219,.08);padding:2px 7px;border-radius:10px}
+.fld-obj.prop{color:var(--o);background:var(--ol)}
+.fld-obj.deal{color:var(--g);background:rgba(39,174,96,.1)}
+.fld-vals{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+.fld-v{font-size:.7em;font-weight:600;padding:2px 7px;border-radius:4px;background:#fff;border:1px solid var(--bd);color:var(--t)}
+.fld-v.ok{background:rgba(39,174,96,.1);border-color:rgba(39,174,96,.3);color:var(--g)}
+.fld-v.bad{background:rgba(231,76,60,.1);border-color:rgba(231,76,60,.3);color:var(--r)}
+.fld-v.neu{background:rgba(243,156,18,.1);border-color:rgba(243,156,18,.35);color:var(--y)}
+.fld-trg{font-size:.7em;color:var(--tl);margin-top:3px;font-style:italic}
+.fld-pending{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,#fff 6px,#fff 12px);border-style:dashed;color:var(--tl);text-align:center;font-size:.75em;padding:10px;font-style:italic}
+.fld-pending strong{color:var(--y);font-style:normal}
 footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
-@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}}
+@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}}
 
 /* VISUAL CARDS */
 .v-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:20px 0}
@@ -548,83 +582,130 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </tbody>
 </table>
 
-<div class="ss"><h3>Native HubSpot integrations</h3><p class="desc">Installed from the HubSpot Marketplace. No custom code. Managed from HubSpot Settings &rarr; Integrations.</p></div>
+<div class="ss"><h3>Native HubSpot integrations</h3><p class="desc">Installed from the HubSpot Marketplace. No custom code. Managed from HubSpot Settings &rarr; Integrations. Each card shows the record fields or timeline activity it writes.</p></div>
 
-<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">RingCentral: Calls &amp; SMS</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Connected globally</p>
-<p>RingCentral is the phone system Loti uses to <strong>make and receive calls</strong>. An <strong>IVR</strong> is connected to their RingCentral phone numbers, so incoming calls can be routed either to the rep's cellphone or to the RingCentral dialer inside HubSpot.</p>
-<div class="co co-w"><div class="tg">IMPORTANT</div><p>The dialer embedded in HubSpot is <strong>RingCentral's dialer</strong>, not the native HubSpot one. They look similar but are different tools. Use the RingCentral one.</p></div>
-<p>Call activity and SMS threads are logged on the <strong>Contact</strong> timeline (not on the LotiProperty). <strong>Call recording transcripts</strong> are captured. Voicemail transcripts: to be confirmed.</p>
-<div class="co co-d"><div class="tg">USED FOR</div><p>Outbound calling from a Contact record, inbound calls routed via the IVR, SMS conversations, and call recording transcripts.</p></div>
-<p>For setup, configuration and full walkthrough see the <a href="ringcentral.html" style="color:var(--o);font-weight:600">complete RingCentral documentation &rarr;</a></p>
-</div></div>
+<div class="ig-grid">
 
-<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Intercom: Lead Intake</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Live. New leads sync automatically.</p>
-<p>Intercom captures leads from the Loti website and chat widget. Every new Intercom lead is created automatically as a Contact in HubSpot, so Jack sees it in his task list without any manual step.</p>
-<div class="co co-w"><div class="tg">VOLUME</div><p>In practice <strong>Intercom brings in very few leads</strong>. The integration works but the chat channel is not a meaningful source of new Contacts today.</p></div>
-<div class="co co-d"><div class="tg">USED FOR</div><p>Website chat leads &rarr; HubSpot Contacts. Syncs contact properties (name, email, page visited) on creation.</p></div>
-</div></div>
+<div class="ig ig-native">
+<div class="ig-h"><h4 class="ig-t">RingCentral</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">Native &middot; <span>Calls &amp; SMS</span></div>
+<p class="ig-desc">Phone system Loti uses to make and receive calls. The RingCentral dialer is embedded inside HubSpot and an IVR routes inbound calls to the rep's cellphone or to the dialer. Full walkthrough in the <a href="ringcentral.html" style="color:var(--o);font-weight:600">dedicated RingCentral doc &rarr;</a></p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Timeline activity written</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Call activity</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Logged automatically on every outbound/inbound call. Includes recording transcript.</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">SMS thread</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Two-way SMS conversations logged on the Contact timeline.</p></div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami whether voicemail transcripts and specific call-property fields (e.g. call outcome, duration) are synced.</div>
+</div>
+</div>
 
-<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Gmail: Email Logging</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Native &middot; <strong>Status:</strong> Live</p>
-<p>Every Loti rep connects their Gmail account to HubSpot. Emails sent to Contacts are logged automatically on the timeline, so the full conversation is visible from the CRM record. No need to BCC or forward anything manually.</p>
-<div class="co co-d"><div class="tg">USED FOR</div><p>Logging outbound emails on Contact &amp; Deal timelines, opening/click tracking, sending from inside HubSpot with templates and sequences.</p></div>
-</div></div>
+<div class="ig ig-native">
+<div class="ig-h"><h4 class="ig-t">Intercom</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">Native &middot; <span>Lead intake</span></div>
+<p class="ig-desc">Captures leads from the Loti website and chat widget. Every new Intercom lead is created automatically as a Contact in HubSpot. In practice brings in very few leads today.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Fields created on Contact</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">First / Last Name</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Synced on Contact creation.</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Email</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Synced on Contact creation.</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Page visited</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Original chat URL captured as source.</p></div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami the full list of Intercom &rarr; HubSpot property mappings.</div>
+</div>
+</div>
 
-<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Slack: Leadership Alerts</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Native &middot; <strong>Status:</strong> <span style="color:var(--r);font-weight:700">Off</span> (not currently firing)</p>
-<p>Slack is connected but the integration is <strong>currently disabled</strong>. When it was active, it sent real-time notifications to the leadership channel about <strong>Contacts with a good score</strong> and Contacts that showed <strong>meaningful activity</strong> (opens, clicks, replies).</p>
-<div class="co co-r"><div class="tg">CURRENT STATE</div><p>Installed but disabled. No notifications are being sent to Slack today. Pending re-enabling once channel routing and alert criteria are defined.</p></div>
-</div></div>
+<div class="ig ig-native">
+<div class="ig-h"><h4 class="ig-t">Gmail</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">Native &middot; <span>Email logging</span></div>
+<p class="ig-desc">Each rep connects their Gmail account to HubSpot. Outbound and inbound emails are logged on the Contact and Deal timelines automatically. Open and click tracking enabled.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Timeline activity written</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Email activity</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Every email sent/received is logged on the timeline.</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Email activity</span><span class="fld-obj deal">Deal</span></div><p class="fld-trg">Associated Deal also shows the email thread.</p></div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami if specific contact properties (last email date, engagement score) are updated too.</div>
+</div>
+</div>
+
+<div class="ig ig-off">
+<div class="ig-h"><h4 class="ig-t">Slack</h4><span class="ig-badge off">Off</span></div>
+<div class="ig-meta">Native &middot; <span>Leadership alerts</span></div>
+<p class="ig-desc">Installed but <strong>currently disabled</strong>. When active, it sent real-time notifications to the leadership channel about Contacts with a good score and Contacts with meaningful activity (opens, clicks, replies). Pending re-enabling once channel routing and alert criteria are defined.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Fields modified</div>
+<div class="fld fld-pending">No fields are written today. Integration is off.</div>
+</div>
+</div>
+
+</div><!-- end .ig-grid native -->
 
 <div class="ss"><h3>Custom API integrations</h3><p class="desc">Wired into HubSpot Workflows via Custom Code actions. These hit external APIs and write results back to the record.</p></div>
 
-<div class="st"><div class="st-h"><span class="st-n">5</span><span class="st-t">OpenAI: FN Score calibration</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Custom API &middot; <strong>Status:</strong> Live. Scoring runs on property intake.</p>
-<p>OpenAI calibrates the <strong>FN Score</strong> on each new LotiProperty. When a property is created, a Workflow fires a Custom Code action that sends the property data to OpenAI; the response is parsed and written back to the LotiProperty as the Property Score.</p>
-<div class="co co-i"><div class="tg">SELF-CALIBRATING</div><p>The scoring model is grounded on the <strong>last 200 LotiProperties that Jack has scored</strong>. Every new scoring request pulls that rolling sample as reference, so the model stays aligned with Jack's most recent judgement and adapts over time without manual re-training.</p></div>
-<div class="co co-i"><div class="tg">WHERE IT RUNS</div><p>HubSpot Workflow triggered on LotiProperty creation &rarr; Custom Code action &rarr; fetch last 200 scored LotiProperties &rarr; OpenAI API &rarr; writes back to Property Score field.</p></div>
-</div></div>
+<div class="ig-grid">
 
-<div class="st"><div class="st-h"><span class="st-n">6</span><span class="st-t">Google Maps: Location data</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> API &middot; <strong>Status:</strong> Live. Populates on property creation.</p>
-<p>On each LotiProperty creation, a Workflow calls the Google Maps API to generate two values: a <strong>Map Link</strong> (direct link to the location) and <strong>Distance to Rep</strong> (driving distance from the assigned rep's home base). Both are written to the LotiProperty record so Jack can plan his route.</p>
-<div class="co co-i"><div class="tg">OUTPUTS</div><p>Populates <code>Map Link</code> and <code>Distance to Rep</code> on the LotiProperty.</p></div>
-</div></div>
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">Debounce</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">Custom API &middot; <span>Email validation</span></div>
+<p class="ig-desc">Validates email addresses on new Contacts. A Workflow fires a Custom Code action that hits the Debounce API and writes the result back, so the team doesn't waste touches on bad data. <strong>Subscription and API key live under the Refindable account</strong>, not Loti.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Fields written on Contact</div>
+<div class="fld">
+<div class="fld-h"><span class="fld-n">Debounce Status</span><span class="fld-obj">Contact</span></div>
+<div class="fld-vals">
+<span class="fld-v ok">Deliverable</span>
+<span class="fld-v neu">Accept-All</span>
+<span class="fld-v bad">Invalid</span>
+</div>
+<p class="fld-trg">Written on Contact creation via Workflow + Custom Code.</p>
+</div>
+</div>
+</div>
 
-<div class="st"><div class="st-h"><span class="st-n">7</span><span class="st-t">Debounce: Email validation</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> Custom API &middot; <strong>Status:</strong> Live via Workflow + Custom Code (Refindable account).</p>
-<p>Debounce validates email addresses on new Contacts. When a Contact is created, a Workflow fires a Custom Code action that hits the Debounce API and writes the validation result back to the Contact. Addresses are flagged as <strong>deliverable</strong>, <strong>invalid</strong> or <strong>undeliverable</strong>, so the team doesn't waste touches on bad data.</p>
-<div class="co co-i"><div class="tg">FIELD EDITED</div><p>Writes <code>Debounce Status</code> on the Contact. Possible values: <strong>Deliverable</strong>, <strong>Accept-All</strong>, <strong>Invalid</strong>.</p></div>
-<div class="co co-r"><div class="tg">ACCOUNT OWNERSHIP (IMPORTANT)</div><p>The Debounce subscription and API key live under the <strong>Refindable user account</strong>, <strong>not</strong> under Loti. Any rotation, billing or quota issue goes through Refindable.</p></div>
-</div></div>
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">OpenAI</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">Custom API &middot; <span>FN Score calibration</span></div>
+<p class="ig-desc">Calibrates the FN Score on each new LotiProperty. Grounded on the <strong>last 200 LotiProperties Jack has scored</strong>, so the model stays aligned with his most recent judgement and adapts without manual re-training.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Fields written on LotiProperty</div>
+<div class="fld">
+<div class="fld-h"><span class="fld-n">Property Score</span><span class="fld-obj prop">LotiProperty</span></div>
+<p class="fld-trg">Written on LotiProperty creation. Workflow &rarr; Custom Code &rarr; fetch last 200 scored &rarr; OpenAI API &rarr; write back.</p>
+</div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami if additional AI-derived fields (reasoning, confidence) are persisted.</div>
+</div>
+</div>
 
-<div class="st"><div class="st-h"><span class="st-n">8</span><span class="st-t">Property Reach: Owner lookup</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> API &middot; <strong>Status:</strong> Live</p>
-<p>Property Reach is used for two things on each LotiProperty:</p>
-<ol style="margin-left:18px;margin-bottom:10px">
-<li><strong>Find the owners.</strong> Returns the Contacts associated with the physical property (the people Jack will actually call or email about the insurance claim).</li>
-<li><strong>Enrich the property itself.</strong> Also tries to update the LotiProperty record with whatever extra house data it can find. It's not a huge amount of information, but it fills in gaps beyond what Fire Notification provides.</li>
-</ol>
-<div class="co co-i"><div class="tg">OUTPUTS</div><p>Creates or links Contact records to the LotiProperty, and updates available LotiProperty fields with extra property data when possible.</p></div>
-</div></div>
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">Google Maps</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">API &middot; <span>Location data</span></div>
+<p class="ig-desc">On each LotiProperty creation, a Workflow calls the Google Maps API to generate location data so Jack can plan his route.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Fields written on LotiProperty</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Map Link</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Direct link to the property location on Google Maps.</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Distance to Rep</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Driving distance from the assigned rep's home base.</p></div>
+</div>
+</div>
 
-<div class="st"><div class="st-h"><span class="st-n">9</span><span class="st-t">Fire Notification: Incident feed</span></div>
-<div class="st-b">
-<p><strong>Type:</strong> API (inbound) &middot; <strong>Status:</strong> Live</p>
-<p>Fire Notification is the external data source for fire incidents. Unlike the other APIs, we don't pull from it on a schedule or through a HubSpot Workflow. We <strong>expose an API endpoint on our side</strong> and the Fire Notification provider pushes the data to us when a fire event happens. Each incoming event feeds the pipeline that creates LotiProperties, so the system can react as soon as a new incident is reported.</p>
-<div class="co co-i"><div class="tg">DIRECTION</div><p><strong>Inbound.</strong> They send, we receive. No HubSpot Workflow is pulling the data; the API we enabled on our side is the trigger.</p></div>
-<div class="co co-i"><div class="tg">OUTPUTS</div><p>Creates LotiProperties on each incident. Contacts for each property are then resolved via Property Reach.</p></div>
-</div></div>
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">Property Reach</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">API &middot; <span>Owner lookup + enrichment</span></div>
+<p class="ig-desc">Does two things on each LotiProperty: finds the owners (Contacts Jack will call or email) and enriches the property record with extra house data beyond what Fire Notification provides.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Objects &amp; fields affected</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Create / link Contacts</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Creates or associates Contact records to the LotiProperty (the owners).</p></div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Property enrichment</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Updates available LotiProperty fields with extra data when possible.</p></div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami the exact list of enrichment fields (beds, baths, year built, lot size, etc.) written back to LotiProperty.</div>
+</div>
+</div>
+
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">Fire Notification</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">API (inbound) &middot; <span>Incident feed</span></div>
+<p class="ig-desc"><strong>Inbound.</strong> They send, we receive. We expose an endpoint on our side and the provider pushes data when a fire event happens. Each event feeds the pipeline that creates LotiProperties.</p>
+<div class="ig-fields">
+<div class="ig-fields-lbl">Objects created</div>
+<div class="fld"><div class="fld-h"><span class="fld-n">Create LotiProperty</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Every incident event creates one LotiProperty record. Contacts are then resolved via Property Reach.</p></div>
+<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami the exact incident fields written (address, incident date, severity, etc.).</div>
+</div>
+</div>
+
+</div><!-- end .ig-grid custom -->
 
 <div class="flow">
 <div class="flow-title">How the integrations chain together on a new incident</div>
