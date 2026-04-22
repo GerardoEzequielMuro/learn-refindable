@@ -87,6 +87,49 @@ nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);lette
 .fld-trg{font-size:.7em;color:var(--tl);margin-top:3px;font-style:italic}
 .fld-pending{background:repeating-linear-gradient(45deg,var(--bg),var(--bg) 6px,#fff 6px,#fff 12px);border-style:dashed;color:var(--tl);text-align:center;font-size:.75em;padding:10px;font-style:italic}
 .fld-pending strong{color:var(--y);font-style:normal}
+/* Whiteboard / Miro-style diagram */
+.bd-wrap{margin:24px 0;border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:#fafbfc}
+.bd-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:var(--d);color:#fff;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;font-size:.95em}
+.bd-bar .bd-dots{display:flex;gap:5px}
+.bd-bar .bd-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}
+.bd-bar .bd-dots span:first-child{background:#ff5f56}
+.bd-bar .bd-dots span:nth-child(2){background:#ffbd2e}
+.bd-bar .bd-dots span:nth-child(3){background:#27c93f}
+.bd-scroll{overflow-x:auto;padding:36px 24px 40px;background-color:#f5f6f8;background-image:linear-gradient(#e1e4ea 1px,transparent 1px),linear-gradient(90deg,#e1e4ea 1px,transparent 1px);background-size:26px 26px;background-position:-1px -1px}
+.bd{display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));grid-auto-rows:min-content;gap:22px 34px;min-width:960px;align-items:start}
+.bd-n{background:#fff;border-radius:10px;padding:14px 14px 12px;box-shadow:0 3px 0 rgba(0,0,0,.08),0 8px 18px rgba(0,0,0,.07);border:2px solid transparent;position:relative}
+.bd-n h4{font-family:'Bebas Neue',sans-serif;margin:0 0 4px;font-size:1.1em;letter-spacing:.8px;line-height:1.1;color:var(--d)}
+.bd-n .bd-type{font-size:.6em;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--tl);display:block;margin-bottom:6px}
+.bd-n .bd-badge{position:absolute;top:-9px;right:10px;font-size:.58em;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:2px 9px;border-radius:20px;background:#fff;border:1.5px solid var(--bd);z-index:2}
+.bd-n .bd-badge.live{border-color:var(--g);color:var(--g)}
+.bd-n .bd-badge.off{border-color:var(--r);color:var(--r)}
+.bd-n-in{background:#ffe4e6;border-color:#fca5a5}.bd-n-in h4{color:#b91c1c}
+.bd-n-api{background:#fff3e0;border-color:#fdba74}.bd-n-api h4{color:#c2410c}
+.bd-n-nat{background:#dbeafe;border-color:#93c5fd}.bd-n-nat h4{color:#1d4ed8}
+.bd-n-ent{background:#1a1a2e;border-color:#1a1a2e;color:#fff;text-align:center}.bd-n-ent h4{color:#fff;font-size:1.3em;letter-spacing:1.5px}.bd-n-ent .bd-type{color:rgba(255,255,255,.6)}
+.bd-n-off{background:#f1f3f5;border-color:#ced4da;opacity:.8}.bd-n-off h4{color:var(--tl)}
+.bd-sticks{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.bd-s{background:#fff9c4;border:1px solid #f9e79f;padding:5px 8px;border-radius:3px;font-size:.72em;line-height:1.35;color:#5d4e00;box-shadow:1px 2px 0 rgba(0,0,0,.05);transform:rotate(-.4deg)}
+.bd-s:nth-child(even){transform:rotate(.5deg);background:#ffd8e4;border-color:#f9a8c4;color:#831843}
+.bd-s code{background:rgba(0,0,0,.08);color:inherit;padding:0 4px;border-radius:2px;font-size:.92em;font-weight:700}
+.bd-s strong{font-weight:700}
+.bd-s.pending{background:repeating-linear-gradient(45deg,#fff9c4,#fff9c4 5px,#fff3a3 5px,#fff3a3 10px);font-style:italic;color:#92400e;transform:rotate(.3deg)}
+.bd-s.pending::before{content:"?";display:inline-block;background:#fbbf24;color:#fff;font-weight:800;font-style:normal;width:14px;height:14px;line-height:14px;text-align:center;border-radius:50%;margin-right:5px;font-size:.85em}
+.bd-vals{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.bd-v{font-size:.68em;font-weight:700;padding:1px 6px;border-radius:3px;background:#fff;border:1px solid #d1d5db}
+.bd-v.ok{background:#d1fae5;border-color:#6ee7b7;color:#065f46}
+.bd-v.neu{background:#fef3c7;border-color:#fcd34d;color:#78350f}
+.bd-v.bad{background:#fee2e2;border-color:#fca5a5;color:#991b1b}
+.bd-arrow{display:flex;align-items:center;justify-content:center;height:100%;min-height:40px;color:var(--d);font-weight:700;position:relative}
+.bd-arrow::before{content:"";flex:1;height:2px;background:var(--d);align-self:center}
+.bd-arrow::after{content:"";width:0;height:0;border-left:9px solid var(--d);border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:-1px;align-self:center}
+.bd-arrow-lbl{position:absolute;top:-2px;left:50%;transform:translate(-50%,-100%);background:#fff;padding:1px 7px;font-size:.64em;font-weight:700;letter-spacing:.6px;color:var(--tl);border:1px solid var(--bd);border-radius:10px;white-space:nowrap;text-transform:uppercase}
+.bd-arrow-dn{flex-direction:column;min-height:70px;height:auto}
+.bd-arrow-dn::before{width:2px;height:100%;flex:1}
+.bd-arrow-dn::after{border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--d);border-bottom:0;margin-top:-1px;margin-left:0}
+.bd-legend{display:flex;flex-wrap:wrap;gap:14px;padding:10px 16px;background:#fafbfc;border-top:1px solid var(--bd);font-size:.72em;color:var(--tl)}
+.bd-legend-i{display:flex;align-items:center;gap:6px}
+.bd-legend-sw{width:14px;height:14px;border-radius:3px;border:2px solid;display:inline-block}
 footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
 @media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.dt{font-size:.75em}.flow-steps{gap:3px}.flow-s{font-size:.68em;padding:5px 8px}.ig-grid{grid-template-columns:1fr;gap:14px}.ig{padding:16px 18px}}
 
@@ -564,6 +607,156 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <p class="desc">HubSpot CRM is connected to several external systems. Some are <strong>native</strong> integrations (installed from the HubSpot Marketplace), others are <strong>custom APIs</strong> wired in through Workflows + Custom Code. This is what's plugged in and what each one does.</p>
 
 <div class="co co-i"><div class="tg">AT A GLANCE</div><p>Lead intake flows in from <strong>Intercom</strong> and <strong>Fire Notification</strong>. Contacts get validated with <strong>Debounce</strong> and enriched with <strong>Property Reach</strong>. Properties get scored by <strong>OpenAI</strong> and geolocated with <strong>Google Maps</strong>. Communication runs through <strong>RingCentral</strong> (calls/SMS) and <strong>Gmail</strong> (email). <strong>Slack</strong> alerts are currently off.</p></div>
+
+<!-- Whiteboard diagram -->
+<div class="bd-wrap">
+<div class="bd-bar"><span class="bd-dots"><span></span><span></span><span></span></span><span>Integrations Board &mdash; what writes where</span><span style="font-size:.7em;color:rgba(255,255,255,.55);letter-spacing:1px">SCROLL &rarr;</span></div>
+
+<div class="bd-scroll">
+<div class="bd">
+
+<!-- ===== LOTIPROPERTY ECOSYSTEM ===== -->
+<div class="bd-n bd-n-in" style="grid-column:1;grid-row:1">
+<span class="bd-badge live">Live</span>
+<h4>Fire Notification</h4><span class="bd-type">Inbound API</span>
+<div class="bd-sticks">
+<div class="bd-s">They push incidents to our endpoint</div>
+<div class="bd-s">Creates one <strong>LotiProperty</strong> per event</div>
+<div class="bd-s pending">incident fields TBD with Rami</div>
+</div>
+</div>
+
+<div class="bd-arrow" style="grid-column:2;grid-row:1"><span class="bd-arrow-lbl">creates</span></div>
+
+<div class="bd-n bd-n-ent" style="grid-column:3;grid-row:1/span 2">
+<h4>LotiProperty</h4><span class="bd-type">HubSpot Object</span>
+<div class="bd-sticks">
+<div class="bd-s" style="background:#fff;color:#1a1a2e;border-color:#fff"><code>Property Score</code> &middot; <code>Map Link</code> &middot; <code>Distance to Rep</code></div>
+</div>
+</div>
+
+<div class="bd-arrow" style="grid-column:4;grid-row:1"><span class="bd-arrow-lbl">writes</span></div>
+
+<div class="bd-n bd-n-api" style="grid-column:5;grid-row:1">
+<span class="bd-badge live">Live</span>
+<h4>Property Reach</h4><span class="bd-type">Custom API</span>
+<div class="bd-sticks">
+<div class="bd-s">Finds <strong>owners</strong> (Contacts)</div>
+<div class="bd-s">Enriches <strong>LotiProperty</strong> with extra house data</div>
+<div class="bd-s pending">exact enrichment fields TBD</div>
+</div>
+</div>
+
+<!-- Row 2: OpenAI + Google Maps below LotiProperty, arrows up -->
+<div class="bd-arrow bd-arrow-dn" style="grid-column:2;grid-row:2;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">writes</span></div>
+
+<div class="bd-n bd-n-api" style="grid-column:1;grid-row:3">
+<span class="bd-badge live">Live</span>
+<h4>OpenAI</h4><span class="bd-type">Custom API</span>
+<div class="bd-sticks">
+<div class="bd-s"><code>Property Score</code> on LotiProperty</div>
+<div class="bd-s">Grounded on last <strong>200</strong> scored by Jack</div>
+</div>
+</div>
+
+<div class="bd-arrow bd-arrow-dn" style="grid-column:4;grid-row:2;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">writes</span></div>
+
+<div class="bd-n bd-n-api" style="grid-column:5;grid-row:3">
+<span class="bd-badge live">Live</span>
+<h4>Google Maps</h4><span class="bd-type">API</span>
+<div class="bd-sticks">
+<div class="bd-s"><code>Map Link</code> on LotiProperty</div>
+<div class="bd-s"><code>Distance to Rep</code> on LotiProperty</div>
+</div>
+</div>
+
+<!-- Divider row -->
+<div style="grid-column:1/-1;grid-row:4;border-top:2px dashed #d1d5db;margin:10px 0 4px;text-align:center"><span style="display:inline-block;background:#f5f6f8;padding:0 12px;transform:translateY(-50%);font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:.8em;color:var(--tl)">Contact ecosystem &darr;</span></div>
+
+<!-- ===== CONTACT ECOSYSTEM ===== -->
+<div class="bd-n bd-n-nat" style="grid-column:1;grid-row:5">
+<span class="bd-badge live">Live</span>
+<h4>Intercom</h4><span class="bd-type">Native</span>
+<div class="bd-sticks">
+<div class="bd-s">Chat leads from the website</div>
+<div class="bd-s">Creates Contact: <code>Name</code>, <code>Email</code>, <code>Page visited</code></div>
+<div class="bd-s">Low volume in practice</div>
+</div>
+</div>
+
+<div class="bd-arrow" style="grid-column:2;grid-row:5"><span class="bd-arrow-lbl">creates</span></div>
+
+<div class="bd-n bd-n-ent" style="grid-column:3;grid-row:5/span 2">
+<h4>Contact</h4><span class="bd-type">HubSpot Object</span>
+<div class="bd-sticks">
+<div class="bd-s" style="background:#fff;color:#1a1a2e;border-color:#fff"><code>Debounce Status</code> + timeline activity</div>
+</div>
+</div>
+
+<div class="bd-arrow" style="grid-column:4;grid-row:5"><span class="bd-arrow-lbl">writes</span></div>
+
+<div class="bd-n bd-n-api" style="grid-column:5;grid-row:5">
+<span class="bd-badge live">Live</span>
+<h4>Debounce</h4><span class="bd-type">Custom API</span>
+<div class="bd-sticks">
+<div class="bd-s"><code>Debounce Status</code> on Contact
+<div class="bd-vals"><span class="bd-v ok">Deliverable</span><span class="bd-v neu">Accept-All</span><span class="bd-v bad">Invalid</span></div>
+</div>
+<div class="bd-s">API key on <strong>Refindable</strong> account</div>
+</div>
+</div>
+
+<!-- Row 6: RingCentral + Gmail below Contact -->
+<div class="bd-arrow bd-arrow-dn" style="grid-column:2;grid-row:6;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">logs</span></div>
+
+<div class="bd-n bd-n-nat" style="grid-column:1;grid-row:7">
+<span class="bd-badge live">Live</span>
+<h4>RingCentral</h4><span class="bd-type">Native</span>
+<div class="bd-sticks">
+<div class="bd-s">Calls &amp; SMS logged on Contact timeline</div>
+<div class="bd-s">Recording transcripts captured</div>
+<div class="bd-s pending">voicemail + call fields TBD</div>
+</div>
+</div>
+
+<div class="bd-arrow bd-arrow-dn" style="grid-column:4;grid-row:6;transform:rotate(180deg)"><span class="bd-arrow-lbl" style="transform:translate(-50%,100%) rotate(180deg);top:auto;bottom:-2px">logs</span></div>
+
+<div class="bd-n bd-n-nat" style="grid-column:5;grid-row:7">
+<span class="bd-badge live">Live</span>
+<h4>Gmail</h4><span class="bd-type">Native</span>
+<div class="bd-sticks">
+<div class="bd-s">Emails on Contact timeline</div>
+<div class="bd-s">Emails on Deal timeline</div>
+<div class="bd-s">Open / click tracking</div>
+</div>
+</div>
+
+<!-- Slack OFF, aside -->
+<div class="bd-n bd-n-off" style="grid-column:3;grid-row:8">
+<span class="bd-badge off">Off</span>
+<h4>Slack</h4><span class="bd-type">Native</span>
+<div class="bd-sticks">
+<div class="bd-s" style="background:#e9ecef;border-color:#ced4da;color:var(--tl)">No fields written today. Integration disabled pending new routing rules.</div>
+</div>
+</div>
+
+</div><!-- /.bd -->
+</div><!-- /.bd-scroll -->
+
+<div class="bd-legend">
+<div class="bd-legend-i"><span class="bd-legend-sw" style="background:#ffe4e6;border-color:#fca5a5"></span>Inbound</div>
+<div class="bd-legend-i"><span class="bd-legend-sw" style="background:#fff3e0;border-color:#fdba74"></span>Custom API</div>
+<div class="bd-legend-i"><span class="bd-legend-sw" style="background:#dbeafe;border-color:#93c5fd"></span>Native</div>
+<div class="bd-legend-i"><span class="bd-legend-sw" style="background:#1a1a2e;border-color:#1a1a2e"></span>HubSpot Object</div>
+<div class="bd-legend-i"><span class="bd-legend-sw" style="background:#f1f3f5;border-color:#ced4da"></span>Off</div>
+<div class="bd-legend-i" style="margin-left:auto"><span style="display:inline-block;background:#fff9c4;border:1px solid #f9e79f;padding:1px 6px;font-size:.95em">yellow sticky = field written</span></div>
+<div class="bd-legend-i"><span style="display:inline-block;background:#ffd8e4;border:1px solid #f9a8c4;padding:1px 6px;font-size:.95em">pink = note</span></div>
+<div class="bd-legend-i"><span style="display:inline-block;background:repeating-linear-gradient(45deg,#fff9c4,#fff9c4 4px,#fff3a3 4px,#fff3a3 8px);border:1px solid #f9e79f;padding:1px 6px;font-size:.95em;color:#92400e">? pending w/ Rami</span></div>
+</div>
+</div>
+<!-- /whiteboard -->
+
+<p class="desc" style="margin-top:10px">Below: full summary table and detailed cards per integration.</p>
 
 <table class="dt">
 <thead>
