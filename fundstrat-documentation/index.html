@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundstrat SEO Audit Dashboard | Refindable</title>
+  <meta name="description" content="SEO audit dashboard for Fundstrat, Fundstrat Direct, and Granny Shots using Google Search Console and public SEO checks." />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root,
+    [data-theme="light"] {
+      --bg: #f4f2ed;
+      --surface: #fffdf8;
+      --surface-2: #f9f6ef;
+      --surface-3: #eee9df;
+      --border: #ded6c8;
+      --text: #191816;
+      --muted: #6f6a60;
+      --faint: #a8a094;
+      --primary: #143d59;
+      --primary-2: #236280;
+      --teal: #20808d;
+      --rust: #a84b2f;
+      --gold: #d19900;
+      --green: #437a22;
+      --red: #a13544;
+      --shadow: 0 10px 30px rgba(25, 24, 22, .08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --sidebar: 248px;
+      --font: "Satoshi", "Inter", sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #11100e;
+      --surface: #191815;
+      --surface-2: #201e1a;
+      --surface-3: #2b2822;
+      --border: #3a352d;
+      --text: #ebe6dc;
+      --muted: #aaa296;
+      --faint: #766f65;
+      --primary: #76b9d4;
+      --primary-2: #97c9dd;
+      --teal: #4f98a3;
+      --rust: #d57a5b;
+      --gold: #e8af34;
+      --green: #6daa45;
+      --red: #d16378;
+      --shadow: 0 12px 32px rgba(0, 0, 0, .32);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { height: 100%; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+    body {
+      height: 100dvh;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    button, input, select { font: inherit; }
+    a { color: inherit; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+    .app {
+      height: 100dvh;
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+    }
+
+    .sidebar {
+      grid-row: 1 / -1;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .brand {
+      padding: 22px 18px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      color: var(--primary);
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      font-size: 14px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+    }
+
+    .brand p {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .nav {
+      padding: 14px 10px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav-label {
+      padding: 14px 10px 6px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      text-align: left;
+      padding: 9px 10px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 36px;
+    }
+
+    .nav button:hover { background: var(--surface-2); color: var(--text); }
+    .nav button.active { background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary); }
+    .nav small { color: var(--faint); font-weight: 900; font-size: 10px; }
+
+    .sidebar-footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 14px 16px 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .topbar {
+      grid-column: 2;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border-bottom: 1px solid var(--border);
+      min-width: 0;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-title {
+      min-width: 0;
+    }
+
+    .topbar-title strong {
+      display: block;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .topbar-title span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .main {
+      grid-column: 2;
+      min-width: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 22px;
+    }
+
+    .view { display: none; max-width: 1420px; margin: 0 auto; }
+    .view.active { display: block; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+      gap: 22px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .hero h2 {
+      font-size: clamp(24px, 2.4vw, 34px);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 12px;
+      color: var(--muted);
+      max-width: 74ch;
+      font-size: 15px;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .source-chip {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+      font-size: 12px;
+    }
+
+    .source-chip b { font-weight: 900; }
+    .source-chip span { color: var(--muted); text-align: right; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.035);
+      min-width: 0;
+    }
+
+    .kpi label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-size: 10px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 28px;
+      letter-spacing: -0.045em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    .delta {
+      margin-top: 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--muted);
+      background: var(--surface-2);
+    }
+
+    .delta.good { color: var(--green); background: color-mix(in srgb, var(--green) 13%, transparent); }
+    .delta.bad { color: var(--red); background: color-mix(in srgb, var(--red) 13%, transparent); }
+    .delta.warn { color: var(--rust); background: color-mix(in srgb, var(--rust) 12%, transparent); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 4px 16px rgba(0,0,0,.035);
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header h3 {
+      font-size: 15px;
+      letter-spacing: -0.015em;
+      font-weight: 900;
+    }
+
+    .card-header p {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+      max-width: 64ch;
+    }
+
+    .card-body { padding: 16px 18px 18px; }
+    .chart-box { height: 310px; }
+    .chart-box.small { height: 228px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    td.num, th.num { text-align: right; }
+
+    .truncate {
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .badge.critical { color: var(--red); background: color-mix(in srgb, var(--red) 11%, transparent); border-color: color-mix(in srgb, var(--red) 35%, var(--border)); }
+    .badge.high { color: var(--rust); background: color-mix(in srgb, var(--rust) 11%, transparent); border-color: color-mix(in srgb, var(--rust) 35%, var(--border)); }
+    .badge.medium { color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, transparent); border-color: color-mix(in srgb, var(--gold) 40%, var(--border)); }
+    .badge.quick { color: var(--green); background: color-mix(in srgb, var(--green) 13%, transparent); border-color: color-mix(in srgb, var(--green) 35%, var(--border)); }
+
+    .finding-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .finding {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: var(--surface-2);
+    }
+
+    .finding-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 7px;
+    }
+
+    .finding h4 {
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      font-weight: 900;
+    }
+
+    .finding p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .recommendations {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rec {
+      display: grid;
+      grid-template-columns: 110px 150px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface-2);
+    }
+
+    .rec b { font-size: 13px; }
+    .rec p { color: var(--muted); font-size: 12px; margin-top: 3px; }
+
+    .site-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .site-selector button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 8px 11px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .site-selector button.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+
+    .empty {
+      color: var(--muted);
+      padding: 22px;
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+    }
+
+    .footnote {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 14px;
+    }
+
+    .mix-summary {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mix-row {
+      display: grid;
+      gap: 7px;
+    }
+
+    .mix-row-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mix-row-head span:last-child {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums lining-nums;
+      white-space: nowrap;
+    }
+
+    .mix-track {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+
+    .mix-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--teal);
+    }
+
+    .mobile-nav {
+      display: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .topbar { grid-column: 1; }
+      .main { grid-column: 1; }
+      .mobile-nav { display: block; }
+      .hero { grid-template-columns: 1fr; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      body { overflow: auto; }
+      .app { min-height: 100dvh; display: block; }
+      .topbar { position: sticky; top: 0; z-index: 20; padding: 10px 12px; height: auto; gap: 10px; align-items: start; }
+      .topbar-actions { flex-wrap: wrap; justify-content: flex-end; }
+      .main { padding: 14px; overflow: visible; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .hero { padding: 18px; }
+      .rec { grid-template-columns: 1fr; }
+      .truncate { max-width: 230px; }
+      .chart-box { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Report navigation">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-label="Refindable SEO audit mark">
+          <path d="M8 34C8 19.6 16.9 10 31 10h9v9c0 14.1-9.6 21-24 21H8v-6Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M16 32c8.7-.7 14.6-6.6 16-16" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="33" cy="15" r="3" fill="currentColor"/>
+        </svg>
+        <div>
+          <h1>Fundstrat SEO Audit</h1>
+          <p>Country-level report</p>
+        </div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="sidebar-footer">
+        <b>Prepared by Refindable</b><br />
+        GSC + public SEO checks<br />
+        <span id="footer-period">Loading…</span>
+      </div>
+    </aside>
+
+    <header class="topbar">
+      <div class="topbar-title">
+        <strong id="view-title">SEO Audit Dashboard</strong>
+        <span id="view-subtitle">Loading report data…</span>
+      </div>
+      <div class="topbar-actions">
+        <select id="mobileNav" class="mobile-nav" aria-label="Select report section"></select>
+        <span class="pill" id="period-pill">Loading</span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch theme">◐</button>
+      </div>
+    </header>
+
+    <main class="main" id="main">
+      <section class="view active" id="overview" aria-labelledby="overview-heading">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Executive view</div>
+            <h2 id="overview-heading">Three properties, one search footprint.</h2>
+            <p id="overview-summary">Loading the combined Fundstrat, Fundstrat Direct, and Granny Shots SEO audit.</p>
+          </div>
+          <div class="hero-side" id="source-summary"></div>
+        </div>
+        <div class="kpi-grid" id="portfolio-kpis"></div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>US organic share by property</h3>
+                <p>Share of country-filtered clicks and impressions for the reporting period.</p>
+              </div>
+            </div>
+            <div class="card-body chart-box"><canvas id="propertyChart"></canvas></div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Priority issues</h3>
+                <p>Proposal-ready themes from GSC and crawl checks.</p>
+              </div>
+            </div>
+            <div class="card-body finding-list" id="overview-findings"></div>
+          </article>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Search demand concentration</h3>
+                <p>Where US clicks and impressions currently come from.</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <table id="property-table"></table>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Top cross-property overlaps</h3>
+                <p>Queries where two or more domains appear in GSC.</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <table id="overlap-table"></table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="properties">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Per-property audit</div>
+            <h2 id="property-heading">Property performance deep dive</h2>
+            <p id="property-summary">Switch between the three domains to review rankings, top pages, technical flags, and priority opportunities.</p>
+          </div>
+          <div class="hero-side" id="property-side"></div>
+        </div>
+        <div class="site-selector" id="site-tabs"></div>
+        <div class="kpi-grid" id="site-kpis"></div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Organic trend</h3>
+                <p>Daily clicks and impressions from GSC domain property data.</p>
+              </div>
+            </div>
+            <div class="card-body chart-box"><canvas id="trendChart"></canvas></div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Query mix</h3>
+                <p>US query classification based on brand, product, and informational terms.</p>
+              </div>
+            </div>
+            <div class="card-body"><div id="mix-summary" class="mix-summary"></div></div>
+          </article>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>US query opportunities</h3>
+                <p>High-impression terms where CTR or average position suggests upside.</p>
+              </div>
+            </div>
+            <div class="card-body"><table id="query-opps-table"></table></div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Technical findings</h3>
+                <p>Issues to include in the SEO proposal.</p>
+              </div>
+            </div>
+            <div class="card-body finding-list" id="site-findings"></div>
+          </article>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Top US pages</h3>
+                <p>Pages driving the most country-filtered organic clicks.</p>
+              </div>
+            </div>
+            <div class="card-body"><table id="pages-table"></table></div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h3>Duplicate and leakage URLs</h3>
+                <p>Indexed variants that should be reviewed for canonical, redirect, or noindex handling.</p>
+              </div>
+            </div>
+            <div class="card-body"><table id="duplicates-table"></table></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="strategy">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Cross-property strategy</div>
+            <h2>Clarify the role of each domain.</h2>
+            <p>Fundstrat should own institutional authority and analyst-led research credibility. Fundstrat Direct should convert individual-investor and FS Insight demand. Granny Shots should dominate ETF-specific intent around GRNY, GRNJ, and GRNI.</p>
+          </div>
+          <div class="hero-side">
+            <div class="source-chip"><b>Positioning</b><span>Separate by audience and intent</span></div>
+            <div class="source-chip"><b>Risk</b><span>Overlap plus host duplication</span></div>
+            <div class="source-chip"><b>Opportunity</b><span>US product and research pages</span></div>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-header"><div><h3>Fundstrat</h3><p>Institutional/RIA research authority.</p></div></div>
+            <div class="card-body finding-list" id="strategy-fundstrat"></div>
+          </article>
+          <article class="card">
+            <div class="card-header"><div><h3>Fundstrat Direct</h3><p>Retail subscription and community conversion.</p></div></div>
+            <div class="card-body finding-list" id="strategy-direct"></div>
+          </article>
+          <article class="card">
+            <div class="card-header"><div><h3>Granny Shots</h3><p>ETF product, holdings, and how-to-buy intent.</p></div></div>
+            <div class="card-body finding-list" id="strategy-granny"></div>
+          </article>
+        </div>
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h3>Cross-property cannibalization watchlist</h3>
+              <p>Use these overlaps to decide which domain should rank for which intent.</p>
+            </div>
+          </div>
+          <div class="card-body"><table id="strategy-overlaps"></table></div>
+        </article>
+      </section>
+
+      <section class="view" id="roadmap">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Proposal roadmap</div>
+            <h2>Prioritized SEO workstreams.</h2>
+            <p>Organized for an audit and proposal covering technical SEO, content expansion, internal linking, and conversion-oriented organic growth. Local SEO and Google Business Profile modules were intentionally omitted.</p>
+          </div>
+          <div class="hero-side">
+            <div class="source-chip"><b>Quick wins</b><span>Metadata, snippets, canonical fixes</span></div>
+            <div class="source-chip"><b>Strategic</b><span>Content architecture and domain roles</span></div>
+            <div class="source-chip"><b>Technical</b><span>Indexation control and sitemap hygiene</span></div>
+          </div>
+        </div>
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h3>Recommended action plan</h3>
+              <p>Use this section directly in the paid + email + SEO proposal narrative.</p>
+            </div>
+          </div>
+          <div class="card-body recommendations" id="roadmap-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const state = { data: null, view: "overview", site: "fundstrat", charts: {} };
+    const siteOrder = ["fundstrat", "direct", "granny"];
+    const chartColors = ["#20808D", "#A84B2F", "#1B474D", "#D19900", "#7A39BB"];
+
+    const navItems = [
+      ["overview", "Overview", "US"],
+      ["properties", "Properties", "3"],
+      ["strategy", "Strategy", "SEO"],
+      ["roadmap", "Roadmap", "Plan"]
+    ];
+
+    const fmt = (n) => Math.round(n || 0).toLocaleString();
+    const pct = (n) => `${((n || 0) * 100).toFixed(1)}%`;
+    const pos = (n) => (n || 0).toFixed(1);
+    const cleanUrl = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    const shortQuery = (q) => q.length > 54 ? `${q.slice(0, 54)}…` : q;
+
+    function setTheme() {
+      const root = document.documentElement;
+      let theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      root.setAttribute("data-theme", theme);
+      document.getElementById("themeToggle").addEventListener("click", () => {
+        theme = theme === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", theme);
+        Object.values(state.charts).forEach(chart => chart && chart.update());
+      });
+    }
+
+    function severityClass(value) {
+      const s = String(value).toLowerCase();
+      if (s.includes("critical")) return "critical";
+      if (s.includes("high")) return "high";
+      if (s.includes("medium")) return "medium";
+      return "quick";
+    }
+
+    function renderNav() {
+      const nav = document.getElementById("nav");
+      const mobile = document.getElementById("mobileNav");
+      nav.innerHTML = `<div class="nav-label">Report</div>` + navItems.map(([id, label, meta]) => (
+        `<button type="button" data-view="${id}" class="${id === state.view ? "active" : ""}">${label}<small>${meta}</small></button>`
+      )).join("");
+      mobile.innerHTML = navItems.map(([id, label]) => `<option value="${id}">${label}</option>`).join("");
+      mobile.value = state.view;
+      nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.view)));
+      mobile.addEventListener("change", () => switchView(mobile.value));
+    }
+
+    function switchView(view) {
+      state.view = view;
+      document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === view));
+      document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active", b.dataset.view === view));
+      document.getElementById("mobileNav").value = view;
+      const titles = {
+        overview: ["SEO Audit Dashboard", "Executive summary for the three-property US search footprint"],
+        properties: ["Property Deep Dive", "Country-filtered GSC queries, pages, and technical opportunities"],
+        strategy: ["Cross-Property Strategy", "Positioning, overlap, and cannibalization review"],
+        roadmap: ["SEO Roadmap", "Proposal-ready prioritized action plan"]
+      };
+      document.getElementById("view-title").textContent = titles[view][0];
+      document.getElementById("view-subtitle").textContent = titles[view][1];
+      requestAnimationFrame(() => Object.values(state.charts).forEach(chart => chart && chart.resize()));
+    }
+
+    function kpi(label, value, deltaText, deltaClass = "") {
+      return `<div class="kpi"><label>${label}</label><strong>${value}</strong>${deltaText ? `<span class="delta ${deltaClass}">${deltaText}</span>` : ""}</div>`;
+    }
+
+    function renderTable(id, headers, rows, emptyText = "No rows available.") {
+      const el = document.getElementById(id);
+      if (!rows || rows.length === 0) {
+        el.outerHTML = `<div class="empty" id="${id}">${emptyText}</div>`;
+        return;
+      }
+      el.innerHTML = `<thead><tr>${headers.map(h => `<th class="${h.num ? "num" : ""}">${h.label}</th>`).join("")}</tr></thead><tbody>${rows.map(row => (
+        `<tr>${headers.map(h => `<td class="${h.num ? "num" : ""}">${h.render ? h.render(row) : row[h.key]}</td>`).join("")}</tr>`
+      )).join("")}</tbody>`;
+    }
+
+    function renderFindings(id, findings) {
+      document.getElementById(id).innerHTML = findings.map(f => `
+        <div class="finding">
+          <div class="finding-head">
+            <h4>${f.issue}</h4>
+            <span class="badge ${severityClass(f.severity)}">${f.severity}</span>
+          </div>
+          <p>${f.detail}</p>
+        </div>
+      `).join("");
+    }
+
+    function destroyChart(id) {
+      if (state.charts[id]) {
+        state.charts[id].destroy();
+        state.charts[id] = null;
+      }
+    }
+
+    function chartOptions(extra = {}) {
+      const text = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+      const border = getComputedStyle(document.documentElement).getPropertyValue("--border").trim();
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: text, usePointStyle: true, boxWidth: 8 } },
+          tooltip: { mode: "index", intersect: false }
+        },
+        scales: {
+          x: { ticks: { color: text, maxRotation: 0, autoSkip: true, maxTicksLimit: 8 }, grid: { display: false } },
+          y: { ticks: { color: text }, grid: { color: border } }
+        },
+        ...extra
+      };
+    }
+
+    function renderOverview() {
+      const { data } = state;
+      document.getElementById("period-pill").textContent = data.period;
+      document.getElementById("footer-period").textContent = data.period;
+      document.getElementById("overview-summary").textContent = `US organic search produced ${fmt(data.portfolio.clicks)} clicks and ${fmt(data.portfolio.impressions)} impressions across the three properties. The footprint is highly split: Granny Shots drives the largest product-intent volume, Fundstrat has broad analyst and research visibility with low CTR, and Fundstrat Direct is still carrying FS Insight branded demand.`;
+      document.getElementById("source-summary").innerHTML = `
+        <div class="source-chip"><b>Market</b><span>${data.market}</span></div>
+        <div class="source-chip"><b>Data window</b><span>${data.period}</span></div>
+        <div class="source-chip"><b>Local SEO</b><span>Excluded by design</span></div>
+      `;
+      const sites = siteOrder.map(k => data.sites[k]);
+      document.getElementById("portfolio-kpis").innerHTML = [
+        kpi("US clicks", fmt(data.portfolio.clicks), "GSC country filter", "good"),
+        kpi("US impressions", fmt(data.portfolio.impressions), "Total footprint", "good"),
+        kpi("Blended CTR", pct(data.portfolio.ctr), data.portfolio.ctr < 0.03 ? "CTR upside" : "Healthy", data.portfolio.ctr < 0.03 ? "warn" : "good"),
+        kpi("Avg position", pos(data.portfolio.position), data.portfolio.position > 6 ? "Middle-page risk" : "Top-half visibility", data.portfolio.position > 6 ? "warn" : "good")
+      ].join("");
+
+      destroyChart("propertyChart");
+      state.charts.propertyChart = new Chart(document.getElementById("propertyChart"), {
+        type: "bar",
+        data: {
+          labels: sites.map(s => s.label),
+          datasets: [
+            { label: "Click share", data: sites.map(s => (s.usTotals.clicks / data.portfolio.clicks) * 100), backgroundColor: chartColors[0], borderRadius: 8 },
+            { label: "Impression share", data: sites.map(s => (s.usTotals.impressions / data.portfolio.impressions) * 100), backgroundColor: chartColors[1], borderRadius: 8 }
+          ]
+        },
+        options: chartOptions({
+          plugins: {
+            legend: { labels: { color: getComputedStyle(document.documentElement).getPropertyValue("--muted").trim(), usePointStyle: true, boxWidth: 8 } },
+            tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` } }
+          },
+          scales: {
+            x: { ticks: { color: getComputedStyle(document.documentElement).getPropertyValue("--muted").trim() }, grid: { display: false } },
+            y: { max: 100, ticks: { color: getComputedStyle(document.documentElement).getPropertyValue("--muted").trim(), callback: value => `${value}%` }, grid: { color: getComputedStyle(document.documentElement).getPropertyValue("--border").trim() } }
+          }
+        })
+      });
+
+      const allFindings = [
+        data.sites.direct.technicalFindings[0],
+        data.sites.fundstrat.technicalFindings[1],
+        data.sites.granny.technicalFindings[0]
+      ];
+      renderFindings("overview-findings", allFindings);
+
+      renderTable("property-table", [
+        { label: "Property", render: r => `<b>${r.label}</b><br><span class="footnote">${r.domain}</span>` },
+        { label: "US clicks", num: true, render: r => fmt(r.usTotals.clicks) },
+        { label: "US imps.", num: true, render: r => fmt(r.usTotals.impressions) },
+        { label: "CTR", num: true, render: r => pct(r.usTotals.ctr) },
+        { label: "Avg pos.", num: true, render: r => pos(r.usTotals.position) },
+        { label: "US share", num: true, render: r => pct(r.usShareClicks) }
+      ], sites);
+
+      renderTable("overlap-table", [
+        { label: "Query", render: r => `<span class="truncate" title="${r.query}">${shortQuery(r.query)}</span>` },
+        { label: "Imps.", num: true, render: r => fmt(r.totalImpressions) },
+        { label: "Winner", render: r => data.sites[r.winner].label }
+      ], data.overlaps.slice(0, 8));
+    }
+
+    function renderSiteTabs() {
+      document.getElementById("site-tabs").innerHTML = siteOrder.map(k => (
+        `<button type="button" data-site="${k}" class="${k === state.site ? "active" : ""}">${state.data.sites[k].label}</button>`
+      )).join("");
+      document.querySelectorAll("#site-tabs button").forEach(btn => btn.addEventListener("click", () => {
+        state.site = btn.dataset.site;
+        renderProperty();
+      }));
+    }
+
+    function renderProperty() {
+      renderSiteTabs();
+      const s = state.data.sites[state.site];
+      document.getElementById("property-heading").textContent = `${s.label}: US SEO performance`;
+      document.getElementById("property-summary").textContent = `${s.domain} generated ${fmt(s.usTotals.clicks)} US clicks from ${fmt(s.usTotals.impressions)} impressions during ${state.data.period}.`;
+      document.getElementById("property-side").innerHTML = `
+        <div class="source-chip"><b>Domain</b><span>${s.domain}</span></div>
+        <div class="source-chip"><b>US share</b><span>${pct(s.usShareClicks)} of clicks</span></div>
+        <div class="source-chip"><b>Top query</b><span>${s.topQueries[0] ? shortQuery(s.topQueries[0].key) : "n/a"}</span></div>
+      `;
+      document.getElementById("site-kpis").innerHTML = [
+        kpi("US clicks", fmt(s.usTotals.clicks), `${s.trendDelta.last_clicks ? fmt(s.trendDelta.last_clicks) : "n/a"} last 28d`, "good"),
+        kpi("US impressions", fmt(s.usTotals.impressions), `${pct(s.usShareClicks)} US click share`, "good"),
+        kpi("US CTR", pct(s.usTotals.ctr), s.usTotals.ctr < 0.02 ? "Snippet work" : "Demand fit", s.usTotals.ctr < 0.02 ? "warn" : "good"),
+        kpi("US avg position", pos(s.usTotals.position), s.usTotals.position > 7 ? "Improve page fit" : "Solid base", s.usTotals.position > 7 ? "warn" : "good")
+      ].join("");
+
+      destroyChart("trendChart");
+      const trendLabels = s.daily.map(d => d.date.slice(5));
+      state.charts.trendChart = new Chart(document.getElementById("trendChart"), {
+        type: "line",
+        data: {
+          labels: trendLabels,
+          datasets: [
+            { label: "Clicks", data: s.daily.map(d => d.clicks), borderColor: chartColors[0], backgroundColor: "rgba(32,128,141,.10)", tension: .32, fill: true, pointRadius: 0 },
+            { label: "Impressions / 100", data: s.daily.map(d => Math.round(d.impressions / 100)), borderColor: chartColors[1], tension: .32, pointRadius: 0 }
+          ]
+        },
+        options: chartOptions()
+      });
+
+      const mixTotal = s.queryMix.reduce((sum, x) => sum + x.clicks, 0) || 1;
+      document.getElementById("mix-summary").innerHTML = s.queryMix.map((row, index) => {
+        const share = row.clicks / mixTotal;
+        return `
+          <div class="mix-row">
+            <div class="mix-row-head">
+              <span>${row.name}</span>
+              <span>${fmt(row.clicks)} clicks · ${pct(share)}</span>
+            </div>
+            <div class="mix-track"><div class="mix-fill" style="width:${Math.max(2, share * 100)}%; background:${chartColors[index % chartColors.length]}"></div></div>
+          </div>
+        `;
+      }).join("");
+
+      renderTable("query-opps-table", [
+        { label: "Query", render: r => `<span class="truncate" title="${r.key}">${shortQuery(r.key)}</span><span class="badge">${r.class}</span>` },
+        { label: "Clicks", num: true, render: r => fmt(r.clicks) },
+        { label: "Imps.", num: true, render: r => fmt(r.impressions) },
+        { label: "CTR", num: true, render: r => r.ctr_pct },
+        { label: "Pos.", num: true, render: r => r.position_fmt }
+      ], s.queryOpportunities);
+
+      renderFindings("site-findings", s.technicalFindings);
+
+      renderTable("pages-table", [
+        { label: "Page", render: r => `<span class="truncate" title="${r.key}">${cleanUrl(r.key)}</span>` },
+        { label: "Clicks", num: true, render: r => fmt(r.clicks) },
+        { label: "Imps.", num: true, render: r => fmt(r.impressions) },
+        { label: "CTR", num: true, render: r => r.ctr_pct },
+        { label: "Pos.", num: true, render: r => r.position_fmt }
+      ], s.topPages.slice(0, 10));
+
+      renderTable("duplicates-table", [
+        { label: "URL variant", render: r => `<span class="truncate" title="${r.url}">${cleanUrl(r.url)}</span>` },
+        { label: "Imps.", num: true, render: r => fmt(r.impressions) },
+        { label: "Clicks", num: true, render: r => fmt(r.clicks) },
+        { label: "Pos.", num: true, render: r => r.position_fmt }
+      ], s.duplicateUrls.slice(0, 10), "No obvious duplicate variants found in the top rows.");
+    }
+
+    function renderStrategy() {
+      const blocks = {
+        "strategy-fundstrat": [
+          { severity: "High", issue: "Own institutional authority", detail: "Use fundstrat.com for analyst bios, research capabilities, macro/technical/digital-asset service pages, and institutional/RIA CTAs." },
+          { severity: "Medium", issue: "Convert analyst demand", detail: "Tom Lee and Mark Newton searches create visibility but low CTR. Strengthen bio pages, schema, and internal paths to research products." },
+          { severity: "High", issue: "Reduce unmanaged PDFs", detail: "Shift valuable PDF demand into crawlable HTML summaries with controlled PDF indexation." }
+        ],
+        "strategy-direct": [
+          { severity: "Critical", issue: "Bridge FS Insight demand", detail: "Keep FS Insight branded demand warm with migration language, redirects, and branded landing pages that explain Fundstrat Direct." },
+          { severity: "High", issue: "Subscription intent", detail: "Build pages around macro research subscription, crypto research subscription, Tom Lee newsletter, and investment research community." },
+          { severity: "High", issue: "Clean indexation", detail: "Fix sitemap mismatch and remove programmatic/legacy content paths from the index." }
+        ],
+        "strategy-granny": [
+          { severity: "High", issue: "Own ETF intent", detail: "Prioritize GRNY, GRNJ, and GRNI pages for holdings, fees, performance, distributions, fact sheets, and how-to-buy searches." },
+          { severity: "Medium", issue: "Separate ETF pages", detail: "Avoid overloading the homepage with three ETF intents. Make each ETF page the canonical landing page for its ticker." },
+          { severity: "Medium", issue: "Compliance-friendly snippets", detail: "Rewrite titles/descriptions so fund-document and disclaimer-heavy pages still match investor search intent." }
+        ]
+      };
+      Object.entries(blocks).forEach(([id, findings]) => renderFindings(id, findings));
+      renderTable("strategy-overlaps", [
+        { label: "Query", render: r => `<b>${shortQuery(r.query)}</b>` },
+        { label: "Total imps.", num: true, render: r => fmt(r.totalImpressions) },
+        { label: "Appearing properties", render: r => r.sites.map(x => `${state.data.sites[x.site].label} (${pos(x.position)})`).join(", ") },
+        { label: "Suggested owner", render: r => state.data.sites[r.winner].label }
+      ], state.data.overlaps.slice(0, 15));
+    }
+
+    function renderRoadmap() {
+      const list = document.getElementById("roadmap-list");
+      list.innerHTML = state.data.roadmap.map(item => `
+        <div class="rec">
+          <span class="badge ${severityClass(item.priority)}">${item.priority}</span>
+          <b>${item.property}</b>
+          <div>
+            <b>${item.action}</b>
+            <p>${item.impact}</p>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function init() {
+      setTheme();
+      renderNav();
+      const response = await fetch("./data/dashboard-data.json");
+      state.data = await response.json();
+      renderOverview();
+      renderProperty();
+      renderStrategy();
+      renderRoadmap();
+      switchView("overview");
+    }
+
+    init().catch(error => {
+      document.getElementById("overview-summary").textContent = "The dashboard data failed to load. Please refresh or check the data file.";
+      console.error(error);
+    });
+  </script>
+</body>
+</html>
