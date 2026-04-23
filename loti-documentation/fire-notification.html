@@ -324,7 +324,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="section-header"><div class="section-num">IV</div><div class="section-title">Event Subscriptions</div></div>
 
   <div class="card">
-    <p>Choose which events trigger a sync to HubSpot. Currently <strong>7 of 11 events enabled</strong>. Each enabled event causes FN to push the latest payload to HubSpot, which updates the matching LotiProperty (or creates one if it does not exist yet).</p>
+    <p>Choose which events trigger a sync to HubSpot. Currently <strong>7 events</strong>. Each enabled event causes FN to push the latest payload to HubSpot, which updates the matching LotiProperty (or creates one if it does not exist yet).</p>
   </div>
 
   <div class="events">
@@ -460,7 +460,6 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Known limitations</h3>
     <ul>
-      <li><strong>4 events disabled</strong> on the FN side (out of 11 total). Not used by Loti today.</li>
       <li><strong>1 minute delay</strong> before canonical fields populate. Avoid building automations that read canonical fields immediately on creation.</li>
       <li><strong>One way sync.</strong> Edits made in HubSpot are not pushed back to Fire Notification.</li>
       <li><strong>"- FN" duplication.</strong> Every mapped field exists twice on LotiProperty (raw FN copy + canonical). Keep this in mind when designing reports or list filters.</li>
