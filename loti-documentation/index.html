@@ -865,56 +865,25 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <div class="ig ig-custom">
 <div class="ig-h"><h4 class="ig-t">Debounce</h4><span class="ig-badge live">Live</span></div>
 <div class="ig-meta">Custom API &middot; <span>Email validation</span></div>
-<p class="ig-desc">Validates email addresses on new Contacts. A Workflow fires a Custom Code action that hits the Debounce API and writes the result back, so the team doesn't waste touches on bad data. <strong>Subscription and API key live under the Refindable account</strong>, not Loti.</p>
-<div class="ig-fields">
-<div class="ig-fields-lbl">Fields written on Contact</div>
-<div class="fld">
-<div class="fld-h"><span class="fld-n">Debounce Status</span><span class="fld-obj">Contact</span></div>
-<div class="fld-vals">
-<span class="fld-v ok">Deliverable</span>
-<span class="fld-v neu">Accept-All</span>
-<span class="fld-v bad">Invalid</span>
-</div>
-<p class="fld-trg">Written on Contact creation via Workflow + Custom Code.</p>
-</div>
-</div>
+<p style="text-align:center;margin:24px 0 4px"><a href="debounce.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--o);color:#fff;text-decoration:none;font-weight:700;font-size:.85em;letter-spacing:.5px;border-radius:10px;transition:all .2s;box-shadow:0 4px 14px rgba(255,92,53,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,92,53,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(255,92,53,.25)'">Go to documentation &rarr;</a></p>
 </div>
 
 <div class="ig ig-custom">
 <div class="ig-h"><h4 class="ig-t">OpenAI</h4><span class="ig-badge live">Live</span></div>
 <div class="ig-meta">Custom API &middot; <span>FN Score calibration</span></div>
-<p class="ig-desc">Calibrates the FN Score on each new LotiProperty. Grounded on the <strong>last 200 LotiProperties Jack has scored</strong>, so the model stays aligned with his most recent judgement and adapts without manual re-training.</p>
-<div class="ig-fields">
-<div class="ig-fields-lbl">Fields written on LotiProperty</div>
-<div class="fld">
-<div class="fld-h"><span class="fld-n">Property Score</span><span class="fld-obj prop">LotiProperty</span></div>
-<p class="fld-trg">Written on LotiProperty creation. Workflow &rarr; Custom Code &rarr; fetch last 200 scored &rarr; OpenAI API &rarr; write back.</p>
-</div>
-<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami if additional AI-derived fields (reasoning, confidence) are persisted.</div>
-</div>
+<p style="text-align:center;margin:24px 0 4px"><a href="openai.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--o);color:#fff;text-decoration:none;font-weight:700;font-size:.85em;letter-spacing:.5px;border-radius:10px;transition:all .2s;box-shadow:0 4px 14px rgba(255,92,53,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,92,53,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(255,92,53,.25)'">Go to documentation &rarr;</a></p>
 </div>
 
 <div class="ig ig-custom">
 <div class="ig-h"><h4 class="ig-t">Google Maps</h4><span class="ig-badge live">Live</span></div>
 <div class="ig-meta">API &middot; <span>Location data</span></div>
-<p class="ig-desc">On each LotiProperty creation, a Workflow calls the Google Maps API to generate location data so Jack can plan his route.</p>
-<div class="ig-fields">
-<div class="ig-fields-lbl">Fields written on LotiProperty</div>
-<div class="fld"><div class="fld-h"><span class="fld-n">Map Link</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Direct link to the property location on Google Maps.</p></div>
-<div class="fld"><div class="fld-h"><span class="fld-n">Distance to Rep</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Driving distance from the assigned rep's home base.</p></div>
-</div>
+<p style="text-align:center;margin:24px 0 4px"><a href="google-maps.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--o);color:#fff;text-decoration:none;font-weight:700;font-size:.85em;letter-spacing:.5px;border-radius:10px;transition:all .2s;box-shadow:0 4px 14px rgba(255,92,53,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,92,53,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(255,92,53,.25)'">Go to documentation &rarr;</a></p>
 </div>
 
 <div class="ig ig-custom">
 <div class="ig-h"><h4 class="ig-t">Property Reach</h4><span class="ig-badge live">Live</span></div>
 <div class="ig-meta">API &middot; <span>Owner lookup + enrichment</span></div>
-<p class="ig-desc">Does two things on each LotiProperty: finds the owners (Contacts Jack will call or email) and enriches the property record with extra house data beyond what Fire Notification provides.</p>
-<div class="ig-fields">
-<div class="ig-fields-lbl">Objects &amp; fields affected</div>
-<div class="fld"><div class="fld-h"><span class="fld-n">Create / link Contacts</span><span class="fld-obj">Contact</span></div><p class="fld-trg">Creates or associates Contact records to the LotiProperty (the owners).</p></div>
-<div class="fld"><div class="fld-h"><span class="fld-n">Property enrichment</span><span class="fld-obj prop">LotiProperty</span></div><p class="fld-trg">Updates available LotiProperty fields with extra data when possible.</p></div>
-<div class="fld fld-pending"><strong>Pending:</strong> confirm with Rami the exact list of enrichment fields (beds, baths, year built, lot size, etc.) written back to LotiProperty.</div>
-</div>
+<p style="text-align:center;margin:24px 0 4px"><a href="property-reach.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--o);color:#fff;text-decoration:none;font-weight:700;font-size:.85em;letter-spacing:.5px;border-radius:10px;transition:all .2s;box-shadow:0 4px 14px rgba(255,92,53,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,92,53,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(255,92,53,.25)'">Go to documentation &rarr;</a></p>
 </div>
 
 <div class="ig ig-custom">
