@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fire Notification Documentation | Loti × Refindable</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF5C35; --orange-light: #FF8C42;
+  --orange-bg: rgba(255,92,53,0.08); --orange-border: rgba(255,92,53,0.2);
+  --red: #DC2626; --red-light: #EF4444;
+  --bg: #FAFAFA; --card: #FFFFFF; --dark: #1a1a2e;
+  --text: #333; --text-light: #666; --text-muted: #999; --border: #e8e8e8;
+  --shadow: 0 2px 20px rgba(0,0,0,0.06); --shadow-hover: 0 8px 40px rgba(255,92,53,0.12);
+  --green: #10B981; --green-bg: rgba(16,185,129,0.08);
+  --gray: #6B7280; --gray-bg: #F3F4F6;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.7; font-size:15px; }
+.progress { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--orange),var(--orange-light)); z-index:1000; transition:width 0.1s; }
+
+/* NAV */
+nav { background:var(--dark); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+nav .logo-wrap { display:flex; align-items:center; gap:12px; text-decoration:none; transition:opacity .2s; }
+nav .logo-wrap:hover { opacity:.85; }
+nav .logo-wrap img { height:28px; }
+nav .logo-wrap .divider { width:1px; height:20px; background:rgba(255,255,255,0.2); }
+nav .logo-wrap .brand { font-weight:700; font-size:0.85em; color:var(--orange-light); letter-spacing:1px; text-transform:uppercase; }
+.nav-links { display:flex; gap:20px; list-style:none; align-items:center; }
+.nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.8em; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.2s; }
+.nav-links a:hover { color:var(--orange); }
+.back-link { padding:6px 14px; border-radius:100px; background:rgba(255,92,53,0.15); color:var(--orange) !important; }
+.back-link:hover { background:rgba(255,92,53,0.22); color:var(--orange-light) !important; }
+
+/* HERO */
+.hero { background:linear-gradient(135deg,var(--dark),#16213e); color:white; padding:80px 24px 100px; text-align:center; position:relative; overflow:hidden; }
+.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:40px 40px; }
+.hero-glow { position:absolute; width:500px; height:500px; background:radial-gradient(circle,rgba(255,92,53,0.18) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); }
+.hero-tag { display:inline-block; padding:6px 14px; background:rgba(255,92,53,0.15); border:1px solid rgba(255,92,53,0.3); color:var(--orange-light); border-radius:100px; font-size:0.75em; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:24px; position:relative; z-index:1; }
+.hero h1 { font-size:clamp(2.2em,5vw,3.5em); font-weight:800; line-height:1.15; position:relative; z-index:1; }
+.hero h1 span { color:var(--orange); }
+.hero-sub { font-size:1.05em; color:rgba(255,255,255,0.6); margin-top:16px; max-width:560px; line-height:1.7; position:relative; z-index:1; margin-left:auto; margin-right:auto; }
+.hero-meta { display:flex; gap:10px; justify-content:center; margin-top:24px; flex-wrap:wrap; position:relative; z-index:1; }
+.hero-pill { padding:6px 14px; border-radius:100px; font-size:0.7em; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+.hero-pill.type { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); }
+.hero-pill.status { background:rgba(16,185,129,0.18); color:#34D399; border:1px solid rgba(16,185,129,0.35); }
+.hero-pill.scope { background:rgba(255,140,66,0.15); color:var(--orange-light); border:1px solid rgba(255,140,66,0.3); }
+
+/* TOC */
+.toc { max-width:900px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
+.toc-card { background:var(--card); border-radius:16px; padding:32px 40px; box-shadow:var(--shadow); border:1px solid var(--border); }
+.toc-title { font-size:0.7em; text-transform:uppercase; letter-spacing:2px; color:var(--orange); font-weight:700; margin-bottom:20px; }
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+.toc-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; text-decoration:none; color:var(--text); transition:all 0.2s; border:1px solid transparent; }
+.toc-item:hover { background:var(--orange-bg); border-color:var(--orange-border); transform:translateX(4px); }
+.toc-num { width:28px; height:28px; background:var(--orange-bg); color:var(--orange); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.75em; flex-shrink:0; }
+.toc-label { font-weight:500; font-size:0.9em; }
+
+/* SECTIONS */
+.section { max-width:900px; margin:60px auto; padding:0 24px; }
+.section-header { display:flex; align-items:center; gap:16px; margin-bottom:32px; padding-bottom:16px; border-bottom:2px solid var(--orange); }
+.section-num { width:44px; height:44px; background:var(--orange); color:white; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1em; flex-shrink:0; }
+.section-title { font-size:1.6em; font-weight:700; }
+
+/* CARDS */
+.card { background:var(--card); border-radius:12px; padding:28px 32px; box-shadow:var(--shadow); border:1px solid var(--border); margin-bottom:24px; }
+.card h3 { font-size:1.1em; font-weight:700; margin-bottom:12px; color:var(--dark); }
+.card p { margin-bottom:12px; color:var(--text-light); }
+.card ul,.card ol { padding-left:20px; margin-bottom:12px; }
+.card li { margin-bottom:8px; color:var(--text-light); }
+.card li strong { color:var(--text); }
+
+/* CALLOUTS */
+.tip { background:var(--orange-bg); border-left:4px solid var(--orange); padding:16px 20px; border-radius:0 10px 10px 0; margin:16px 0; }
+.tip-title { font-weight:700; color:var(--orange); font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.tip p { color:var(--text); font-size:0.9em; margin:0; }
+.important { background:#FFF3E0; border-left:4px solid #FF9800; padding:16px 20px; border-radius:0 10px 10px 0; margin:16px 0; }
+.important-title { font-weight:700; color:#E65100; font-size:0.8em; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.important p { color:var(--text); font-size:0.9em; margin:0; }
+
+/* SPEC TABLE (label / value rows) */
+.spec { display:grid; grid-template-columns:170px 1fr; gap:14px 24px; margin:8px 0; }
+.spec-k { font-size:0.72em; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; color:var(--text-muted); padding-top:3px; }
+.spec-v { color:var(--text); font-size:0.95em; }
+.spec-v code { background:var(--gray-bg); padding:2px 8px; border-radius:6px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.85em; color:var(--dark); }
+
+/* TEMPLATE PREVIEW */
+.template { background:#0F172A; color:#E2E8F0; border-radius:10px; padding:18px 22px; margin:14px 0; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.92em; overflow-x:auto; }
+.template .tk { color:var(--orange-light); }
+.template-preview { background:var(--green-bg); border:1px dashed rgba(16,185,129,0.4); padding:10px 14px; border-radius:8px; margin-top:8px; font-size:0.88em; color:#065F46; }
+.template-preview strong { color:#047857; font-family:'JetBrains Mono',Menlo,monospace; }
+
+/* FIELD MAPPING */
+.fmg { margin-bottom:32px; }
+.fmg-title { font-size:0.72em; text-transform:uppercase; letter-spacing:1.5px; color:var(--orange); font-weight:700; margin-bottom:14px; padding-left:4px; }
+.fm { display:grid; grid-template-columns:1fr 30px 1fr; gap:14px; align-items:center; padding:14px 18px; background:var(--card); border:1px solid var(--border); border-radius:10px; margin-bottom:8px; transition:all .15s; }
+.fm:hover { border-color:var(--orange-border); box-shadow:0 4px 16px rgba(0,0,0,0.04); }
+.fm-src .fm-name { font-weight:600; color:var(--dark); font-size:0.92em; }
+.fm-src .fm-desc { font-size:0.78em; color:var(--text-muted); margin-top:2px; }
+.fm-arr { color:var(--orange); font-weight:700; text-align:center; font-size:1.1em; }
+.fm-dst { font-family:'JetBrains Mono',Menlo,monospace; font-size:0.82em; color:var(--dark); background:var(--orange-bg); padding:6px 10px; border-radius:6px; border:1px solid var(--orange-border); display:inline-block; word-break:break-all; }
+@media (max-width:640px) {
+  .fm { grid-template-columns:1fr; gap:6px; }
+  .fm-arr { text-align:left; }
+}
+
+/* EVENTS GRID */
+.events { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+.event { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; transition:all .15s; }
+.event:hover { border-color:var(--orange-border); transform:translateY(-2px); box-shadow:var(--shadow-hover); }
+.event-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+.event-name { font-weight:700; color:var(--dark); font-size:0.95em; }
+.event-pill { font-size:0.62em; padding:3px 8px; border-radius:100px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; background:var(--green-bg); color:#047857; }
+.event-pill.off { background:var(--gray-bg); color:var(--gray); }
+.event-code { font-family:'JetBrains Mono',Menlo,monospace; font-size:0.78em; color:var(--orange); background:var(--orange-bg); padding:3px 8px; border-radius:5px; display:inline-block; margin-top:4px; }
+.event-desc { font-size:0.85em; color:var(--text-light); margin-top:8px; }
+
+/* WORKFLOW */
+.wf-meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:20px; }
+.wf-meta-item { background:var(--gray-bg); border-radius:10px; padding:12px 16px; }
+.wf-meta-k { font-size:0.65em; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); font-weight:700; }
+.wf-meta-v { font-weight:700; color:var(--dark); margin-top:3px; font-size:0.95em; }
+.wf-meta-v code { font-family:'JetBrains Mono',Menlo,monospace; font-size:0.82em; background:white; padding:2px 7px; border-radius:5px; border:1px solid var(--border); }
+
+.trigger-block { border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:14px; background:var(--card); }
+.trigger-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.trigger-tag { font-weight:800; font-size:0.78em; color:var(--orange); background:var(--orange-bg); padding:4px 12px; border-radius:6px; letter-spacing:0.8px; }
+.trigger-head h4 { font-size:0.95em; font-weight:700; color:var(--dark); }
+.crit-list { list-style:none; padding-left:0; }
+.crit-list li { padding:7px 0; color:var(--text); font-size:0.9em; display:flex; align-items:center; gap:8px; }
+.crit-list li::before { content:"•"; color:var(--orange); font-weight:700; }
+.crit-list li code { background:var(--gray-bg); padding:2px 7px; border-radius:5px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.85em; color:var(--dark); }
+.or-divider { text-align:center; color:var(--text-muted); font-weight:700; font-size:0.78em; letter-spacing:2px; margin:6px 0; }
+
+.action-chain { display:flex; flex-direction:column; gap:0; }
+.action { display:flex; gap:16px; align-items:flex-start; padding:18px 22px; background:var(--card); border:1px solid var(--border); border-radius:12px; transition:all .15s; }
+.action:hover { border-color:var(--orange-border); box-shadow:0 4px 16px rgba(0,0,0,0.04); }
+.action-num { width:32px; height:32px; border-radius:50%; background:var(--orange); color:white; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8em; flex-shrink:0; }
+.action-body { flex:1; }
+.action-head { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+.action-type { font-size:0.65em; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; color:var(--text-muted); padding:2px 8px; background:var(--gray-bg); border-radius:5px; }
+.action-title { font-weight:700; color:var(--dark); font-size:0.95em; }
+.action-detail { font-size:0.88em; color:var(--text-light); margin-top:4px; }
+.action-detail code { background:var(--gray-bg); padding:2px 7px; border-radius:5px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.82em; color:var(--dark); }
+.action-arrow { text-align:center; color:var(--orange); font-size:1.4em; padding:2px 0; line-height:1; font-weight:300; }
+.action.placeholder { background:repeating-linear-gradient(45deg,#FAFAFA,#FAFAFA 10px,#F3F4F6 10px,#F3F4F6 20px); border-style:dashed; }
+
+/* NEXT STEPS */
+.next-steps { max-width:900px; margin:60px auto; padding:0 24px; }
+.next-steps-card { background:linear-gradient(135deg,var(--dark),#16213e); color:white; border-radius:16px; padding:40px; }
+.next-steps-card h2 { font-size:1.8em; margin-bottom:16px; }
+.next-steps-card h2 span { color:var(--orange); }
+.next-steps-card .checklist { list-style:none; padding:0; margin-top:20px; }
+.next-steps-card .checklist li { padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; gap:12px; color:rgba(255,255,255,0.8); }
+.next-steps-card .checklist li::before { content:"→"; color:var(--orange); font-weight:700; }
+
+footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-size:0.85em; border-top:1px solid var(--border); max-width:900px; margin:0 auto; }
+footer a { color:var(--orange); text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav>
+  <a href="index.html" class="logo-wrap">
+    <span class="brand">Loti × Refindable</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#integrations">Integrations</a></li>
+    <li><a href="index.html" class="back-link">← Back to docs</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-tag">Loti × Refindable</div>
+  <h1>Fire Notification<br><span>Documentation</span></h1>
+  <p class="hero-sub">Real-time incident feed that creates and updates LotiProperties from fire department dispatch data.</p>
+  <div class="hero-meta">
+    <span class="hero-pill type">Custom API</span>
+    <span class="hero-pill scope">LotiProperty (houses)</span>
+    <span class="hero-pill status">Live</span>
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-card">
+    <div class="toc-title">Table of Contents</div>
+    <div class="toc-grid">
+      <a href="#about" class="toc-item"><div class="toc-num">I</div><div class="toc-label">About</div></a>
+      <a href="#how" class="toc-item"><div class="toc-num">II</div><div class="toc-label">How It Works</div></a>
+      <a href="#mapping" class="toc-item"><div class="toc-num">III</div><div class="toc-label">Property Mapping</div></a>
+      <a href="#events" class="toc-item"><div class="toc-num">IV</div><div class="toc-label">Event Subscriptions</div></a>
+      <a href="#workflow" class="toc-item"><div class="toc-num">V</div><div class="toc-label">FN Integration Workflow</div></a>
+      <a href="#status" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Status &amp; Limitations</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- I: ABOUT -->
+<div class="section" id="about">
+  <div class="section-header"><div class="section-num">I</div><div class="section-title">About Fire Notification</div></div>
+
+  <div class="card">
+    <h3>What it does</h3>
+    <p>Fire Notification (FN) is a real-time incident feed. When a fire department pages an incident, FN pushes the data into HubSpot and creates a new LotiProperty with all the property, owner, valuation, and incident details already populated. Jack and the team get the lead the moment it happens, without manual entry.</p>
+    <p>This is the primary inbound source for Loti's LA Fires pipeline. Most incidents Loti works originate here.</p>
+  </div>
+
+  <div class="card">
+    <h3>Why it matters</h3>
+    <ul>
+      <li><strong>Speed.</strong> Properties land in HubSpot within seconds of being paged, ahead of competitors who rely on slower public data.</li>
+      <li><strong>Coverage.</strong> Includes title, valuation, sale history, loan, and contact info, not just the address.</li>
+      <li><strong>Reactive updates.</strong> If the incident escalates (alarm level upgraded, type reclassified, closed), HubSpot is updated automatically.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- II: HOW IT WORKS -->
+<div class="section" id="how">
+  <div class="section-header"><div class="section-num">II</div><div class="section-title">How It Works</div></div>
+
+  <div class="card">
+    <h3>Connection</h3>
+    <div class="spec">
+      <div class="spec-k">Type</div><div class="spec-v">Custom API integration. FN pushes to HubSpot via event subscriptions (webhook style), no polling.</div>
+      <div class="spec-k">Direction</div><div class="spec-v">One way. Fire Notification → HubSpot.</div>
+      <div class="spec-k">Target object</div><div class="spec-v"><code>LotiProperty</code> (Custom Object · houses)</div>
+      <div class="spec-k">Coverage</div><div class="spec-v">36 of 40 fields enabled · 230 LotiProperty properties available in HubSpot</div>
+      <div class="spec-k">Marketplace</div><div class="spec-v">Not a marketplace app. Custom integration managed in the FN admin panel.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>LotiProperty Name Template</h3>
+    <p>Every new LotiProperty created by FN gets a name built from this template. Dynamic values are pulled from the incident payload.</p>
+    <div class="template">Incident #<span class="tk">{{city}}</span> - <span class="tk">{{alarm}}</span></div>
+    <div class="template-preview">Preview: <strong>Incident #Los Angeles - 3</strong></div>
+    <p style="margin-top:14px;font-size:0.88em">Available variables: <code>incidentId</code>, <code>incidentType</code>, <code>city</code>, <code>state</code>, <code>alarm</code>.</p>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">Note</div>
+    <p>FN writes to <strong>"- FN" suffixed fields</strong> (e.g. <code>Street Address - FN</code>). A separate cleanup workflow then formats and copies the value into the original LotiProperty fields used by the team. See Section V.</p>
+  </div>
+</div>
+
+<!-- III: PROPERTY MAPPING -->
+<div class="section" id="mapping">
+  <div class="section-header"><div class="section-num">III</div><div class="section-title">Property Mapping</div></div>
+
+  <div class="card">
+    <p>Mapping from the Fire Notification source field to the HubSpot LotiProperty field that receives the value. Grouped by data type for readability.</p>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Incident Core</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Incident ID</div><div class="fm-desc">Unique identifier (e.g. 25-167116)</div></div><div class="fm-arr">→</div><div class="fm-dst">Incident ID Source</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Incident Type</div><div class="fm-desc">Type classification (e.g. COMMERCIAL | ELECTRICAL)</div></div><div class="fm-arr">→</div><div class="fm-dst">Incident Type - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Alarm Level</div><div class="fm-desc">Alarm level (1-5)</div></div><div class="fm-arr">→</div><div class="fm-dst">Alarm Level - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Status</div><div class="fm-desc">Current status (active, closed)</div></div><div class="fm-arr">→</div><div class="fm-dst">Status - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Created At</div><div class="fm-desc">When the incident was created</div></div><div class="fm-arr">→</div><div class="fm-dst">Incident Date - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Address (Loss Location)</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Street Address</div><div class="fm-desc">Street address</div></div><div class="fm-arr">→</div><div class="fm-dst">Street Address - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">City</div><div class="fm-desc">City name</div></div><div class="fm-arr">→</div><div class="fm-dst">City - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">County</div><div class="fm-desc">County name</div></div><div class="fm-arr">→</div><div class="fm-dst">County - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">State</div><div class="fm-desc">State abbreviation</div></div><div class="fm-arr">→</div><div class="fm-dst">State - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Zip Code</div><div class="fm-desc">ZIP / Postal code</div></div><div class="fm-arr">→</div><div class="fm-dst">Zip Code - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Contact &amp; Comments</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Contact Information</div><div class="fm-desc">Property contact details (name, phone, email)</div></div><div class="fm-arr">→</div><div class="fm-dst">Contact Information - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Comments History</div><div class="fm-desc">Chronological history of paged comments with timestamps</div></div><div class="fm-arr">→</div><div class="fm-dst">Fire department comment</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property Summary</div><div class="fm-desc">All property data as formatted text</div></div><div class="fm-arr">→</div><div class="fm-dst">Property Summary - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Ownership</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Owner Name</div><div class="fm-desc">Property owner name</div></div><div class="fm-arr">→</div><div class="fm-dst">Owner Name - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Owner Occupied</div><div class="fm-desc">Whether owner occupies the property</div></div><div class="fm-arr">→</div><div class="fm-dst">Owner Occupied - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Property Details</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property Type</div><div class="fm-desc">Type of property (e.g. AUDITORIUM / STADIUM)</div></div><div class="fm-arr">→</div><div class="fm-dst">Property Type - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Year Built</div><div class="fm-desc">Year the property was built</div></div><div class="fm-arr">→</div><div class="fm-dst">Year Built - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Living Area (sqft)</div><div class="fm-desc">Living area in square feet</div></div><div class="fm-arr">→</div><div class="fm-dst">Living Area (sqft) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Bedrooms</div><div class="fm-desc">Number of bedrooms</div></div><div class="fm-arr">→</div><div class="fm-dst">Bedrooms - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Bathrooms</div><div class="fm-desc">Number of bathrooms</div></div><div class="fm-arr">→</div><div class="fm-dst">Number of bathrooms</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Title Records</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property Address (Title)</div><div class="fm-desc">Address from title records</div></div><div class="fm-arr">→</div><div class="fm-dst">Property Address (Title) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property City (Title)</div><div class="fm-desc">City from title records</div></div><div class="fm-arr">→</div><div class="fm-dst">Property City (Title) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property State (Title)</div><div class="fm-desc">State from title records</div></div><div class="fm-arr">→</div><div class="fm-dst">Property State (Title) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Property Zip (Title)</div><div class="fm-desc">ZIP code from title records</div></div><div class="fm-arr">→</div><div class="fm-dst">Property Zip (Title) - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Valuation</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Assessed Value (Total)</div><div class="fm-desc">Total assessed value</div></div><div class="fm-arr">→</div><div class="fm-dst">Assessed Value (Total) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Assessed Value (Land)</div><div class="fm-desc">Land assessed value</div></div><div class="fm-arr">→</div><div class="fm-dst">Assessed land value</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Assessed Value (Improvements)</div><div class="fm-desc">Improvements assessed value</div></div><div class="fm-arr">→</div><div class="fm-dst">Assessed Value (Improvements) - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Market Value</div><div class="fm-desc">Market value assessment</div></div><div class="fm-arr">→</div><div class="fm-dst">Market Value - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Assessment Year</div><div class="fm-desc">Year of assessment</div></div><div class="fm-arr">→</div><div class="fm-dst">Assessment Year - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Sale History</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Last Sale Date</div><div class="fm-desc">Date of last sale</div></div><div class="fm-arr">→</div><div class="fm-dst">Last sale date</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Last Sale Price</div><div class="fm-desc">Price of last sale</div></div><div class="fm-arr">→</div><div class="fm-dst">Last Sale Price - fN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Last Sale Buyer</div><div class="fm-desc">Buyer in last sale</div></div><div class="fm-arr">→</div><div class="fm-dst">Last Sale Buyer</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Last Sale Seller</div><div class="fm-desc">Seller in last sale</div></div><div class="fm-arr">→</div><div class="fm-dst">Last Sale Seller - FN</div></div>
+  </div>
+
+  <div class="fmg">
+    <div class="fmg-title">Loan</div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Lender</div><div class="fm-desc">Current lender</div></div><div class="fm-arr">→</div><div class="fm-dst">Lender</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Loan Amount</div><div class="fm-desc">Current loan amount</div></div><div class="fm-arr">→</div><div class="fm-dst">Loan Amount - FN</div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Loan Date</div><div class="fm-desc">Date of loan</div></div><div class="fm-arr">→</div><div class="fm-dst">Loan Date - FN</div></div>
+  </div>
+</div>
+
+<!-- IV: EVENT SUBSCRIPTIONS -->
+<div class="section" id="events">
+  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Event Subscriptions</div></div>
+
+  <div class="card">
+    <p>Choose which events trigger a sync to HubSpot. Currently <strong>7 of 11 events enabled</strong>. Each enabled event causes FN to push the latest payload to HubSpot, which updates the matching LotiProperty (or creates one if it does not exist yet).</p>
+  </div>
+
+  <div class="events">
+    <div class="event">
+      <div class="event-head"><div class="event-name">Incident Paged</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.paged</div>
+      <p class="event-desc">When an incident is paged to subscribers. Primary entry point for new LotiProperties.</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Comment Added</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.comment.paged</div>
+      <p class="event-desc">When a comment is added and paged. Updates the Fire department comment field.</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Contact Added</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.contact.paged</div>
+      <p class="event-desc">When contact information is added (name, phone, email).</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Property Data Added</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.title.paged</div>
+      <p class="event-desc">When title and property data is retrieved (owner, valuation, loan, sale).</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Alarm Level Changed</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.alarm.upgraded</div>
+      <p class="event-desc">When the alarm level is upgraded. Re-prioritization signal.</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Incident Type Changed</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.type.changed</div>
+      <p class="event-desc">When the incident type classification changes.</p>
+    </div>
+    <div class="event">
+      <div class="event-head"><div class="event-name">Incident Closed</div><span class="event-pill">On</span></div>
+      <div class="event-code">incident.closed</div>
+      <p class="event-desc">When the incident is marked as closed.</p>
+    </div>
+  </div>
+</div>
+
+<!-- V: WORKFLOW -->
+<div class="section" id="workflow">
+  <div class="section-header"><div class="section-num">V</div><div class="section-title">FN Integration Workflow</div></div>
+
+  <div class="card">
+    <h3>Purpose</h3>
+    <p>The <strong>FN Integration WFK</strong> workflow runs after FN writes to the "- FN" suffixed fields. It does two things:</p>
+    <ol>
+      <li><strong>Format and clean</strong> the raw FN values using HubSpot Custom Code (whitespace, casing, type coercion, formatting).</li>
+      <li><strong>Copy</strong> each cleaned value into the original LotiProperty field used by the team in views, lists, and reports.</li>
+    </ol>
+    <p>Until this workflow runs, the team only sees the raw "- FN" fields. The cleanup ensures the canonical LotiProperty fields stay consistent regardless of source.</p>
+  </div>
+
+  <div class="card">
+    <h3>Metadata</h3>
+    <div class="wf-meta">
+      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">FN - Integration WFK</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Type</div><div class="wf-meta-v">Enrollment + Custom Code</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">Enabled</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Start triggers</h3>
+  <p style="color:var(--text-light);margin-bottom:16px;font-size:0.95em">Only enroll LotiProperties that meet either group of conditions below.</p>
+
+  <div class="trigger-block">
+    <div class="trigger-head"><span class="trigger-tag">Group 1</span><h4>Direct FN source</h4></div>
+    <ul class="crit-list">
+      <li><code>Record source detail 1</code> is equal to any of <code>FireNotification</code></li>
+      <li><code>Incident Type - FN</code> is known</li>
+      <li><code>Street Address - FN</code> is known</li>
+    </ul>
+  </div>
+
+  <div class="or-divider">— OR —</div>
+
+  <div class="trigger-block">
+    <div class="trigger-head"><span class="trigger-tag">Group 2</span><h4>Loti FN source</h4></div>
+    <ul class="crit-list">
+      <li><code>Record source detail 1</code> contains exactly <code>Loti - Fire Notification</code></li>
+      <li><code>Incident Type - FN</code> is known</li>
+      <li><code>Street Address - FN</code> is known</li>
+      <li><code>Fire department comment</code> is known</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Action chain</h3>
+
+  <div class="action-chain">
+    <div class="action">
+      <div class="action-num">1</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Delay</span><span class="action-title">Delay for 1 minute</span></div>
+        <p class="action-detail">Wait 1 minute to ensure FN has finished writing all related fields before the cleanup runs.</p>
+      </div>
+    </div>
+    <div class="action-arrow">↓</div>
+    <div class="action">
+      <div class="action-num">2</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Edit record</span><span class="action-title">Set Loti - Campaign to BAU Local</span></div>
+        <p class="action-detail">Tags the LotiProperty with the <code>BAU Local</code> campaign so it routes into the correct pipeline.</p>
+      </div>
+    </div>
+    <div class="action-arrow">↓</div>
+    <div class="action placeholder">
+      <div class="action-num">3+</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Custom Code</span><span class="action-title">Format, clean and copy FN fields to originals</span></div>
+        <p class="action-detail">Each "- FN" suffixed field is read, formatted (whitespace, casing, type), and written into its canonical LotiProperty field. Detailed action list pending screenshot of the full workflow.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Heads up</div>
+    <p>Because of the 1 minute Delay, expect a brief lag between the FN incident landing and the canonical fields being populated. Views that filter on canonical fields (not "- FN" fields) will show the property after the delay.</p>
+  </div>
+</div>
+
+<!-- VI: STATUS & LIMITATIONS -->
+<div class="section" id="status">
+  <div class="section-header"><div class="section-num">VI</div><div class="section-title">Status &amp; Limitations</div></div>
+
+  <div class="card">
+    <h3>Current status</h3>
+    <p>Live. Incidents land in HubSpot in real time. The FN Integration WFK workflow runs on every new LotiProperty that matches either trigger group.</p>
+  </div>
+
+  <div class="card">
+    <h3>Known limitations</h3>
+    <ul>
+      <li><strong>4 events disabled</strong> on the FN side (out of 11 total). Not used by Loti today.</li>
+      <li><strong>4 fields not mapped</strong> (36 of 40 enabled). Anything FN sends outside the 36 mapped fields is dropped on the HubSpot side.</li>
+      <li><strong>1 minute delay</strong> before canonical fields populate. Avoid building automations that read canonical fields immediately on creation.</li>
+      <li><strong>One way sync.</strong> Edits made in HubSpot are not pushed back to Fire Notification.</li>
+      <li><strong>"- FN" duplication.</strong> Every mapped field exists twice on LotiProperty (raw FN copy + canonical). Keep this in mind when designing reports or list filters.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- NEXT STEPS -->
+<div class="next-steps">
+  <div class="next-steps-card">
+    <h2>Next <span>Steps</span></h2>
+    <ul class="checklist">
+      <li>Document the full FN Integration WFK action chain (steps 3+)</li>
+      <li>Confirm which 4 fields are not mapped and decide whether to enable them</li>
+      <li>Confirm which 4 events are off and whether any should be turned on</li>
+      <li>Review FN admin panel access list (who can change the mapping)</li>
+    </ul>
+  </div>
+</div>
+
+<footer><p>Built by <a href="https://refindable.com" target="_blank">Refindable</a> for <strong>Loti</strong></p></footer>
+
+<script>
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+    document.getElementById('progress').style.width=pct+'%';
+  });
+</script>
+</body>
+</html>
