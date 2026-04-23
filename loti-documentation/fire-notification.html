@@ -220,17 +220,16 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="spec-k">Type</div><div class="spec-v">Custom API integration. FN pushes to HubSpot via event subscriptions (webhook style), no polling.</div>
       <div class="spec-k">Direction</div><div class="spec-v">One way. Fire Notification → HubSpot.</div>
       <div class="spec-k">Target object</div><div class="spec-v"><code>LotiProperty</code> (Custom Object · houses)</div>
-      <div class="spec-k">Coverage</div><div class="spec-v">36 of 40 fields enabled · 230 LotiProperty properties available in HubSpot</div>
+      <div class="spec-k">Coverage</div><div class="spec-v">36 of 40 fields enabled</div>
       <div class="spec-k">Marketplace</div><div class="spec-v">Not a marketplace app. Custom integration managed in the FN admin panel.</div>
     </div>
   </div>
 
   <div class="card">
     <h3>LotiProperty Name Template</h3>
-    <p>Every new LotiProperty created by FN gets a name built from this template. Dynamic values are pulled from the incident payload.</p>
-    <div class="template">Incident #<span class="tk">{{city}}</span> - <span class="tk">{{alarm}}</span></div>
-    <div class="template-preview">Preview: <strong>Incident #Los Angeles - 3</strong></div>
-    <p style="margin-top:14px;font-size:0.88em">Available variables: <code>incidentId</code>, <code>incidentType</code>, <code>city</code>, <code>state</code>, <code>alarm</code>.</p>
+    <p>Every new LotiProperty created by FN gets a name built from the incident ID.</p>
+    <div class="template"><span class="tk">{{incidentId}}</span></div>
+    <div class="template-preview">Preview: <strong>25-167116</strong></div>
   </div>
 
   <div class="tip">
