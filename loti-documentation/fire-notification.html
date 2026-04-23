@@ -195,7 +195,7 @@ footer a { color:var(--orange); text-decoration:none; }
       <a href="#mapping" class="toc-item"><div class="toc-num">III</div><div class="toc-label">Property Mapping</div></a>
       <a href="#events" class="toc-item"><div class="toc-num">IV</div><div class="toc-label">Event Subscriptions</div></a>
       <a href="#workflow" class="toc-item"><div class="toc-num">V</div><div class="toc-label">FN Integration Workflow</div></a>
-      <a href="#status" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Status &amp; Limitations</div></a>
+      <a href="#status" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Status</div></a>
     </div>
   </div>
 </div>
@@ -448,35 +448,12 @@ footer a { color:var(--orange); text-decoration:none; }
   </div>
 </div>
 
-<!-- VI: STATUS & LIMITATIONS -->
+<!-- VI: STATUS -->
 <div class="section" id="status">
-  <div class="section-header"><div class="section-num">VI</div><div class="section-title">Status &amp; Limitations</div></div>
+  <div class="section-header"><div class="section-num">VI</div><div class="section-title">Status</div></div>
 
   <div class="card">
-    <h3>Current status</h3>
     <p>Live. Incidents land in HubSpot in real time. The FN Integration WFK workflow runs on every new LotiProperty that matches either trigger group.</p>
-  </div>
-
-  <div class="card">
-    <h3>Known limitations</h3>
-    <ul>
-      <li><strong>1 minute delay</strong> before canonical fields populate. Avoid building automations that read canonical fields immediately on creation.</li>
-      <li><strong>One way sync.</strong> Edits made in HubSpot are not pushed back to Fire Notification.</li>
-      <li><strong>"- FN" duplication.</strong> Every mapped field exists twice on LotiProperty (raw FN copy + canonical). Keep this in mind when designing reports or list filters.</li>
-    </ul>
-  </div>
-</div>
-
-<!-- NEXT STEPS -->
-<div class="next-steps">
-  <div class="next-steps-card">
-    <h2>Next <span>Steps</span></h2>
-    <ul class="checklist">
-      <li>Document the full FN Integration WFK action chain (steps 3+)</li>
-      <li>Confirm which 4 fields are not mapped and decide whether to enable them</li>
-      <li>Confirm which 4 events are off and whether any should be turned on</li>
-      <li>Review FN admin panel access list (who can change the mapping)</li>
-    </ul>
   </div>
 </div>
 
