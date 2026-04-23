@@ -191,6 +191,21 @@ footer a { color:var(--orange); text-decoration:none; }
   nav,.btt,.search-wrap,.progress { display:none !important; }
   .section-hidden { display:block !important; }
 }
+
+/* CODE BLOCK */
+.code-block { background:#0F172A; color:#E2E8F0; border-radius:10px; padding:20px 24px; margin:14px 0; font-family:'JetBrains Mono',Menlo,Consolas,monospace; font-size:0.82em; line-height:1.6; overflow-x:auto; white-space:pre; }
+.code-tag { display:inline-block; padding:3px 10px; background:rgba(255,140,66,0.15); color:var(--orange-light); border:1px solid rgba(255,140,66,0.3); border-radius:6px; font-size:0.7em; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+
+/* MAPPING TABLE */
+.mtbl { width:100%; border-collapse:separate; border-spacing:0; margin:8px 0; }
+.mtbl th { text-align:left; font-size:0.7em; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); font-weight:700; padding:10px 14px; border-bottom:2px solid var(--border); }
+.mtbl td { padding:14px; border-bottom:1px solid var(--border); font-size:0.92em; vertical-align:top; }
+.mtbl tr:last-child td { border-bottom:0; }
+.mtbl code { background:var(--gray-bg); padding:2px 7px; border-radius:5px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.85em; color:var(--dark); }
+.val-pill { display:inline-block; padding:3px 10px; border-radius:100px; font-size:0.72em; font-weight:700; letter-spacing:0.5px; }
+.val-ok  { background:rgba(16,185,129,0.12); color:#047857; border:1px solid rgba(16,185,129,0.3); }
+.val-warn { background:rgba(245,158,11,0.12); color:#B45309; border:1px solid rgba(245,158,11,0.3); }
+.val-bad { background:rgba(239,68,68,0.12); color:#B91C1C; border:1px solid rgba(239,68,68,0.3); }
 </style>
 </head>
 <body>
@@ -213,7 +228,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="hero-glow"></div>
   <div class="hero-tag">Loti × Refindable</div>
   <h1>Debounce<br><span>Documentation</span></h1>
-  <p class="hero-sub">Reference page for the Debounce integration. Content pending.</p>
+  <p class="hero-sub">Email validation on Contacts via HubSpot Workflow + Custom Code. Subscription lives under the Refindable account.</p>
   <div class="hero-meta">
     <span class="hero-pill type">Custom API</span>
     <span class="hero-pill scope">Contact (email validation)</span>
@@ -245,33 +260,204 @@ footer a { color:var(--orange); text-decoration:none; }
 <!-- I: ABOUT -->
 <div class="section" id="about">
   <div class="section-header"><div class="section-num">I</div><div class="section-title">About Debounce</div></div>
-  <div class="card"><h3>Content pending</h3><p>What Debounce does and why it is plugged into Loti's HubSpot will live here.</p></div>
+
+  <div class="important">
+    <div class="important-title">Account ownership</div>
+    <p>The Debounce subscription, billing and API key all live under the <strong>Refindable</strong> account, not Loti. If Loti ever takes this in-house, the API key has to be migrated to a Loti-owned Debounce account and the env var rotated in HubSpot.</p>
+  </div>
+
+  <div class="card">
+    <h3>What it does</h3>
+    <p>Debounce validates email addresses on Contacts before they enter marketing flows. Each Contact's email is checked against the Debounce API and the result is stored on the Contact as <code>debounce_status</code>. Bad emails get tagged so the team does not waste touches on undeliverable addresses.</p>
+  </div>
 </div>
 
 <!-- II: HOW IT WORKS -->
 <div class="section" id="how">
   <div class="section-header"><div class="section-num">II</div><div class="section-title">How It Works</div></div>
-  <div class="card"><h3>Content pending</h3><p>Connection method, scope, direction of sync and any setup notes will live here.</p></div>
+
+  <div class="card">
+    <h3>Connection</h3>
+    <div class="spec">
+      <div class="spec-k">Type</div><div class="spec-v">Custom API integration. HubSpot Workflow &rarr; Custom Code action &rarr; Debounce API &rarr; writes result back to the Contact.</div>
+      <div class="spec-k">Direction</div><div class="spec-v">HubSpot &rarr; Debounce &rarr; HubSpot. Synchronous per Contact.</div>
+      <div class="spec-k">Object</div><div class="spec-v"><code>Contact</code></div>
+      <div class="spec-k">Endpoint</div><div class="spec-v"><code>GET https://api.debounce.io/v1/?api={key}&amp;email={email}</code></div>
+      <div class="spec-k">Auth</div><div class="spec-v">API key passed as query param. Stored in HubSpot env var <code>DEBOUNCE_API_KEY</code> (Refindable account).</div>
+      <div class="spec-k">HubSpot SDK</div><div class="spec-v"><code>@hubspot/api-client</code> with private app token <code>HUBSPOT_PRIVATE_APP_TOKEN</code>.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Status mapping</h3>
+    <p>The Debounce API returns a <code>result</code> and <code>reason</code>. The Custom Code maps them to one of three values written back to the Contact:</p>
+    <table class="mtbl">
+      <thead><tr><th>Debounce API response</th><th>Contact value</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>reason === 'Deliverable'</code></td>
+          <td><span class="val-pill val-ok">Deliverable</span></td>
+        </tr>
+        <tr>
+          <td><code>reason === 'Accept-all'</code> or<br><code>(result === 'Safe to Send' &amp;&amp; reason !== 'Deliverable')</code></td>
+          <td><span class="val-pill val-warn">Accept-All</span></td>
+        </tr>
+        <tr>
+          <td>Anything else, missing email, or API failure</td>
+          <td><span class="val-pill val-bad">Invalid</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- III: FIELDS & OBJECTS -->
 <div class="section" id="fields">
   <div class="section-header"><div class="section-num">III</div><div class="section-title">Fields &amp; Objects</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot objects touched and the fields written or read by Debounce will live here.</p></div>
+
+  <div class="card">
+    <h3>Contact field written</h3>
+    <div class="spec">
+      <div class="spec-k">Property</div><div class="spec-v"><code>debounce_status</code></div>
+      <div class="spec-k">Object</div><div class="spec-v"><code>Contact</code></div>
+      <div class="spec-k">Type</div><div class="spec-v">Dropdown</div>
+      <div class="spec-k">Possible values</div><div class="spec-v"><span class="val-pill val-ok">Deliverable</span> &nbsp; <span class="val-pill val-warn">Accept-All</span> &nbsp; <span class="val-pill val-bad">Invalid</span></div>
+      <div class="spec-k">Read by</div><div class="spec-v">Contact <code>email</code> and <code>hs_object_id</code>.</div>
+      <div class="spec-k">Written via</div><div class="spec-v"><code>hubspotClient.crm.contacts.basicApi.update(contactId, &#123;...&#125;)</code></div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">Note</div>
+    <p>Workflow lists and marketing campaigns should filter on <code>debounce_status</code> to skip <strong>Invalid</strong> Contacts. <strong>Accept-All</strong> is sendable but lower confidence (catch-all domains).</p>
+  </div>
 </div>
 
-<!-- IV: WORKFLOWS / TRIGGERS / SETUP -->
+<!-- IV: WORKFLOW -->
 <div class="section" id="workflow">
-  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflows &amp; Triggers</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot Workflows that trigger Debounce, the action chain and the fields written back will live here.</p></div>
+  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflow &amp; Triggers</div></div>
+
+  <div class="evidence">
+    <img src="images/debounce-workflow-status.png" alt="DEBOUNCE - Custom Integration workflow in HubSpot, status On">
+    <div class="evidence-cap">HubSpot Workflows &middot; DEBOUNCE - Custom Integration &middot; status On</div>
+  </div>
+
+  <div class="card">
+    <h3>Metadata</h3>
+    <div class="wf-meta">
+      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">DEBOUNCE - Custom Integration</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>Contact</code></div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Status</div><div class="wf-meta-v">On</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">Off</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Start triggers</h3>
+  <p style="color:var(--text-light);margin-bottom:16px;font-size:0.95em">Only enroll contacts that meet these conditions.</p>
+
+  <div class="trigger-block">
+    <div class="trigger-head"><span class="trigger-tag">Group 1</span><h4>Static list membership</h4></div>
+    <ul class="crit-list">
+      <li><code>Segment membership</code> is member of <code>To debounce</code></li>
+    </ul>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Action chain</h3>
+
+  <div class="action-chain">
+    <div class="action">
+      <div class="action-num">1</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Custom Code</span><span class="action-title">Defined by custom code</span></div>
+        <p class="action-detail">Reads the Contact's <code>email</code> and <code>hs_object_id</code>, calls the Debounce API, maps the response to <code>Deliverable</code> / <code>Accept-All</code> / <code>Invalid</code>, and writes the result back to <code>debounce_status</code>.</p>
+      </div>
+    </div>
+    <div class="action-arrow">&darr;</div>
+    <div class="action">
+      <div class="action-num">2</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">End</span><span class="action-title">Workflow ends</span></div>
+        <p class="action-detail">No further branches. The Contact stays out of the workflow until manually re-added to the <code>To debounce</code> list (re-enrollment is off).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:30px">
+    <h3>Custom Code source</h3>
+    <span class="code-tag">Node.js &middot; @hubspot/api-client</span>
+<pre class="code-block">const hubspot = require('@hubspot/api-client');
+
+exports.main = async (event, callback) =&gt; {
+  const hubspotClient = new hubspot.Client({
+    accessToken: process.env.HUBSPOT_PRIVATE_APP_TOKEN,
+  });
+
+  // 1. Get contact data
+  const email = event.inputFields['email'];
+  const contactId = event.inputFields['hs_object_id'];
+
+  if (!email) {
+    console.log('No email found for contact', contactId);
+    return callback({ outputFields: { debounce_status: 'Invalid' } });
+  }
+
+  // 2. Call Debounce API
+  const apiKey = process.env.DEBOUNCE_API_KEY;
+  const url = `https://api.debounce.io/v1/?api=${apiKey}&amp;email=${encodeURIComponent(email)}`;
+
+  let debounceData;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.success !== '1') {
+      throw new Error(data.debounce?.error || 'Unknown error');
+    }
+    debounceData = data.debounce;
+  } catch (err) {
+    console.error('Debounce API error:', err.message);
+    return callback({ outputFields: { debounce_status: 'Invalid' } });
+  }
+
+  // 3. Map result to HubSpot dropdown value
+  const reason = debounceData.reason || '';
+  const result = debounceData.result || '';
+
+  let debounceStatus;
+  if (reason === 'Deliverable') {
+    debounceStatus = 'Deliverable';
+  } else if (reason === 'Accept-all' || (result === 'Safe to Send' &amp;&amp; reason !== 'Deliverable')) {
+    debounceStatus = 'Accept-All';
+  } else {
+    debounceStatus = 'Invalid';
+  }
+
+  // 4. Update contact property in HubSpot
+  try {
+    await hubspotClient.crm.contacts.basicApi.update(contactId, {
+      properties: { debounce_status: debounceStatus },
+    });
+  } catch (err) {
+    console.error('Error updating HubSpot:', err.message);
+  }
+
+  // 5. Return output fields
+  callback({ outputFields: { debounce_status: debounceStatus } });
+};</pre>
+  </div>
 </div>
 
 <!-- V: STATUS -->
 <div class="section" id="status">
   <div class="section-header"><div class="section-num">V</div><div class="section-title">Status</div></div>
+
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
-    <p>Status notes pending.</p>
+    <p>Workflow <strong>DEBOUNCE - Custom Integration</strong> is On. Contacts added to the <code>To debounce</code> list get validated and their <code>debounce_status</code> is written back.</p>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Refindable account dependency</div>
+    <p>API key and Debounce subscription belong to <strong>Refindable</strong>. If that account is paused, downgraded, or hits its quota, the workflow will fail and Contacts will fall through with <code>debounce_status = Invalid</code>.</p>
   </div>
 </div>
 
