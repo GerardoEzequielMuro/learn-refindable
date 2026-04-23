@@ -158,6 +158,38 @@ nav .logo-wrap .brand { font-weight:700; font-size:0.85em; color:var(--orange-li
 
 footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-size:0.85em; border-top:1px solid var(--border); max-width:900px; margin:0 auto; }
 footer a { color:var(--orange); text-decoration:none; }
+
+/* STATUS LIVE CARD */
+.card.status-live { border-left:4px solid var(--green); background:linear-gradient(90deg,var(--green-bg) 0%,var(--card) 60%); }
+.status-badge { display:inline-flex; align-items:center; gap:8px; padding:5px 12px; background:var(--green-bg); color:#047857; border:1px solid rgba(16,185,129,0.3); border-radius:100px; font-size:0.72em; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; margin-bottom:10px; }
+.status-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(16,185,129,0.25); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(16,185,129,0.25)} 50%{box-shadow:0 0 0 6px rgba(16,185,129,0.05)} }
+
+/* WORKFLOW EVIDENCE IMAGE */
+.evidence { margin:18px 0; padding:18px 20px; background:var(--card); border:1px solid var(--border); border-radius:12px; text-align:center; }
+.evidence img { max-width:100%; border-radius:8px; border:1px solid var(--border); box-shadow:0 2px 12px rgba(0,0,0,0.05); }
+.evidence-cap { font-size:0.78em; color:var(--text-muted); margin-top:10px; letter-spacing:0.4px; }
+
+/* BACK TO TOP */
+.btt { position:fixed; bottom:32px; right:32px; width:46px; height:46px; border-radius:50%; background:var(--orange); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(255,92,53,.4); opacity:0; visibility:hidden; transition:all .3s ease; z-index:999; }
+.btt.visible { opacity:1; visibility:visible; }
+.btt:hover { transform:translateY(-3px) scale(1.08); box-shadow:0 6px 24px rgba(255,92,53,.55); }
+.btt:active { transform:translateY(0) scale(.95); }
+.btt svg { width:22px; height:22px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+
+/* SEARCH BAR */
+.search-wrap { position:relative; display:flex; align-items:center; max-width:900px; margin:24px auto 0; padding:0 24px; }
+.search-wrap input { width:100%; padding:12px 16px 12px 44px; border:1px solid var(--border); border-radius:10px; font-size:.9em; font-family:inherit; background:#fff; color:var(--text); outline:none; transition:border-color .2s,box-shadow .2s; }
+.search-wrap input:focus { border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,92,53,.12); }
+.search-wrap input::placeholder { color:var(--text-light); }
+.search-wrap .s-icon { position:absolute; left:38px; width:18px; height:18px; stroke:var(--text-light); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+.search-wrap .s-shortcut { position:absolute; right:36px; padding:3px 8px; border:1px solid var(--border); border-radius:5px; font-size:.68em; color:var(--text-light); background:var(--bg); pointer-events:none; font-family:monospace; letter-spacing:.5px; }
+.section-hidden { display:none !important; }
+
+@media print {
+  nav,.btt,.search-wrap,.progress { display:none !important; }
+  .section-hidden { display:block !important; }
+}
 </style>
 </head>
 <body>
@@ -172,6 +204,12 @@ footer a { color:var(--orange); text-decoration:none; }
     <li><a href="index.html" class="back-link">← Back to docs</a></li>
   </ul>
 </nav>
+
+<div class="search-wrap">
+  <svg class="s-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <input type="text" id="searchInput" placeholder="Search sections..." title="Search sections (Ctrl+K)">
+  <span class="s-shortcut" id="shortcutHint">Ctrl+K</span>
+</div>
 
 <div class="hero">
   <div class="hero-grid"></div>
@@ -370,9 +408,14 @@ footer a { color:var(--orange); text-decoration:none; }
 <div class="section" id="workflow">
   <div class="section-header"><div class="section-num">V</div><div class="section-title">FN Integration Workflow</div></div>
 
+  <div class="evidence">
+    <img src="images/fn-workflow-status.png" alt="FN - Integration workflow listed in HubSpot, status On">
+    <div class="evidence-cap">HubSpot Workflows view · FN - Integration · status On</div>
+  </div>
+
   <div class="card">
     <h3>Purpose</h3>
-    <p>The <strong>FN Integration WFK</strong> workflow runs after FN writes to the "- FN" suffixed fields. It does two things:</p>
+    <p>The <strong>FN - Integration</strong> workflow runs after FN writes to the "- FN" suffixed fields. It does two things:</p>
     <ol>
       <li><strong>Format and clean</strong> the raw FN values using HubSpot Custom Code (whitespace, casing, type coercion, formatting).</li>
       <li><strong>Copy</strong> each cleaned value into the original LotiProperty field used by the team in views, lists, and reports.</li>
@@ -383,7 +426,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Metadata</h3>
     <div class="wf-meta">
-      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">FN - Integration WFK</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">FN - Integration</div></div>
       <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
       <div class="wf-meta-item"><div class="wf-meta-k">Type</div><div class="wf-meta-v">Enrollment + Custom Code</div></div>
       <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">Enabled</div></div>
@@ -452,19 +495,62 @@ footer a { color:var(--orange); text-decoration:none; }
 <div class="section" id="status">
   <div class="section-header"><div class="section-num">VI</div><div class="section-title">Status</div></div>
 
-  <div class="card">
-    <p>Live. Incidents land in HubSpot in real time. The FN Integration WFK workflow runs on every new LotiProperty that matches either trigger group.</p>
+  <div class="card status-live">
+    <div class="status-badge"><span class="status-dot"></span>Live</div>
+    <p>Incidents land in HubSpot in real time. The <strong>FN - Integration</strong> workflow runs on every new LotiProperty that matches either trigger group.</p>
   </div>
 </div>
+
+<button class="btt" id="bttBtn" title="Back to top">
+  <svg viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
 
 <footer><p>Built by <a href="https://refindable.com" target="_blank">Refindable</a> for <strong>Loti</strong></p></footer>
 
 <script>
+/* Progress bar */
+window.addEventListener('scroll',function(){
+  var h=document.documentElement;
+  var pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('progress').style.width=pct+'%';
+});
+
+/* Back to top */
+(function(){
+  var btn=document.getElementById('bttBtn');
   window.addEventListener('scroll',function(){
-    var h=document.documentElement;
-    var pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
-    document.getElementById('progress').style.width=pct+'%';
+    if(window.scrollY>300){btn.classList.add('visible');}else{btn.classList.remove('visible');}
   });
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+
+/* Search / filter sections */
+(function(){
+  var input=document.getElementById('searchInput');
+  var hint=document.getElementById('shortcutHint');
+  var isMac=navigator.platform.toUpperCase().indexOf('MAC')>=0;
+  if(isMac){hint.textContent='⌘K';}
+
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){
+      e.preventDefault();input.focus();input.select();
+    }
+    if(e.key==='Escape'&&document.activeElement===input){
+      input.value='';input.dispatchEvent(new Event('input'));input.blur();
+    }
+  });
+
+  input.addEventListener('input',function(){
+    var q=input.value.trim().toLowerCase();
+    var sections=document.querySelectorAll('.section');
+    sections.forEach(function(s){
+      if(!q){s.classList.remove('section-hidden');return;}
+      var text=s.textContent.toLowerCase();
+      if(text.indexOf(q)>=0){s.classList.remove('section-hidden');}
+      else{s.classList.add('section-hidden');}
+    });
+  });
+})();
 </script>
 </body>
 </html>
