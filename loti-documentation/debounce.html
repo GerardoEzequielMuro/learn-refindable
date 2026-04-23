@@ -381,69 +381,6 @@ footer a { color:var(--orange); text-decoration:none; }
       </div>
     </div>
   </div>
-
-  <div class="card" style="margin-top:30px">
-    <h3>Custom Code source</h3>
-    <span class="code-tag">Node.js &middot; @hubspot/api-client</span>
-<pre class="code-block">const hubspot = require('@hubspot/api-client');
-
-exports.main = async (event, callback) =&gt; {
-  const hubspotClient = new hubspot.Client({
-    accessToken: process.env.HUBSPOT_PRIVATE_APP_TOKEN,
-  });
-
-  // 1. Get contact data
-  const email = event.inputFields['email'];
-  const contactId = event.inputFields['hs_object_id'];
-
-  if (!email) {
-    console.log('No email found for contact', contactId);
-    return callback({ outputFields: { debounce_status: 'Invalid' } });
-  }
-
-  // 2. Call Debounce API
-  const apiKey = process.env.DEBOUNCE_API_KEY;
-  const url = `https://api.debounce.io/v1/?api=${apiKey}&amp;email=${encodeURIComponent(email)}`;
-
-  let debounceData;
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.success !== '1') {
-      throw new Error(data.debounce?.error || 'Unknown error');
-    }
-    debounceData = data.debounce;
-  } catch (err) {
-    console.error('Debounce API error:', err.message);
-    return callback({ outputFields: { debounce_status: 'Invalid' } });
-  }
-
-  // 3. Map result to HubSpot dropdown value
-  const reason = debounceData.reason || '';
-  const result = debounceData.result || '';
-
-  let debounceStatus;
-  if (reason === 'Deliverable') {
-    debounceStatus = 'Deliverable';
-  } else if (reason === 'Accept-all' || (result === 'Safe to Send' &amp;&amp; reason !== 'Deliverable')) {
-    debounceStatus = 'Accept-All';
-  } else {
-    debounceStatus = 'Invalid';
-  }
-
-  // 4. Update contact property in HubSpot
-  try {
-    await hubspotClient.crm.contacts.basicApi.update(contactId, {
-      properties: { debounce_status: debounceStatus },
-    });
-  } catch (err) {
-    console.error('Error updating HubSpot:', err.message);
-  }
-
-  // 5. Return output fields
-  callback({ outputFields: { debounce_status: debounceStatus } });
-};</pre>
-  </div>
 </div>
 
 <!-- V: STATUS -->
