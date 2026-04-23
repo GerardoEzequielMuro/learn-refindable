@@ -220,7 +220,7 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="spec-k">Type</div><div class="spec-v">Custom API integration. FN pushes to HubSpot via event subscriptions (webhook style), no polling.</div>
       <div class="spec-k">Direction</div><div class="spec-v">One way. Fire Notification → HubSpot.</div>
       <div class="spec-k">Target object</div><div class="spec-v"><code>LotiProperty</code> (Custom Object · houses)</div>
-      <div class="spec-k">Coverage</div><div class="spec-v">36 of 40 fields enabled</div>
+      <div class="spec-k">Coverage</div><div class="spec-v">36 fields</div>
       <div class="spec-k">Marketplace</div><div class="spec-v">Not a marketplace app. Custom integration managed in the FN admin panel.</div>
     </div>
   </div>
@@ -461,7 +461,6 @@ footer a { color:var(--orange); text-decoration:none; }
     <h3>Known limitations</h3>
     <ul>
       <li><strong>4 events disabled</strong> on the FN side (out of 11 total). Not used by Loti today.</li>
-      <li><strong>4 fields not mapped</strong> (36 of 40 enabled). Anything FN sends outside the 36 mapped fields is dropped on the HubSpot side.</li>
       <li><strong>1 minute delay</strong> before canonical fields populate. Avoid building automations that read canonical fields immediately on creation.</li>
       <li><strong>One way sync.</strong> Edits made in HubSpot are not pushed back to Fire Notification.</li>
       <li><strong>"- FN" duplication.</strong> Every mapped field exists twice on LotiProperty (raw FN copy + canonical). Keep this in mind when designing reports or list filters.</li>
