@@ -191,6 +191,27 @@ footer a { color:var(--orange); text-decoration:none; }
   nav,.btt,.search-wrap,.progress { display:none !important; }
   .section-hidden { display:block !important; }
 }
+
+/* CODE BLOCK */
+.code-block { background:#0F172A; color:#E2E8F0; border-radius:10px; padding:20px 24px; margin:14px 0; font-family:'JetBrains Mono',Menlo,Consolas,monospace; font-size:0.78em; line-height:1.6; overflow-x:auto; white-space:pre; }
+.code-tag { display:inline-block; padding:3px 10px; background:rgba(255,140,66,0.15); color:var(--orange-light); border:1px solid rgba(255,140,66,0.3); border-radius:6px; font-size:0.7em; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+
+/* MAPPING TABLE */
+.mtbl { width:100%; border-collapse:separate; border-spacing:0; margin:8px 0; }
+.mtbl th { text-align:left; font-size:0.7em; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); font-weight:700; padding:10px 14px; border-bottom:2px solid var(--border); }
+.mtbl td { padding:14px; border-bottom:1px solid var(--border); font-size:0.92em; vertical-align:top; }
+.mtbl tr:last-child td { border-bottom:0; }
+.mtbl code { background:var(--gray-bg); padding:2px 7px; border-radius:5px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.85em; color:var(--dark); }
+.val-pill { display:inline-block; padding:3px 10px; border-radius:100px; font-size:0.72em; font-weight:700; letter-spacing:0.5px; }
+.val-ok  { background:rgba(16,185,129,0.12); color:#047857; border:1px solid rgba(16,185,129,0.3); }
+.val-warn { background:rgba(245,158,11,0.12); color:#B45309; border:1px solid rgba(245,158,11,0.3); }
+.val-bad { background:rgba(239,68,68,0.12); color:#B91C1C; border:1px solid rgba(239,68,68,0.3); }
+
+/* PROPERTY CHIPS GRID */
+.chips { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+.chip { font-family:'JetBrains Mono',Menlo,monospace; font-size:0.75em; padding:4px 10px; background:var(--gray-bg); color:var(--dark); border-radius:6px; border:1px solid var(--border); }
+.chip.read { background:rgba(59,130,246,0.08); color:#1D4ED8; border-color:rgba(59,130,246,0.25); }
+.chip.write { background:rgba(255,92,53,0.08); color:#C2410C; border-color:rgba(255,92,53,0.25); }
 </style>
 </head>
 <body>
@@ -213,7 +234,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="hero-glow"></div>
   <div class="hero-tag">Loti × Refindable</div>
   <h1>OpenAI<br><span>Documentation</span></h1>
-  <p class="hero-sub">Reference page for the OpenAI integration. Content pending.</p>
+  <p class="hero-sub">AI-calibrated Property Score for LotiProperty. Few-shot prompt grounded on Jack's historical scoring, served by GPT-5.1.</p>
   <div class="hero-meta">
     <span class="hero-pill type">Custom API</span>
     <span class="hero-pill scope">LotiProperty (FN Score)</span>
@@ -245,33 +266,312 @@ footer a { color:var(--orange); text-decoration:none; }
 <!-- I: ABOUT -->
 <div class="section" id="about">
   <div class="section-header"><div class="section-num">I</div><div class="section-title">About OpenAI</div></div>
-  <div class="card"><h3>Content pending</h3><p>What OpenAI does and why it is plugged into Loti's HubSpot will live here.</p></div>
+
+  <div class="important">
+    <div class="important-title">Account ownership</div>
+    <p>Both the OpenAI API key (env var <code>OpenAi</code>) and the HubSpot private app token (env var <code>Hubspot_rami</code>) live under <strong>Rami's</strong> credentials. If those secrets rotate, expire or the underlying accounts change, the workflow stops scoring properties.</p>
+  </div>
+
+  <div class="card">
+    <h3>What it does</h3>
+    <p>For every new LotiProperty that comes from a fire incident, OpenAI generates a 0&ndash;100 <strong>Jack-calibrated Property Score</strong>. The score is derived by feeding the Fire Department narrative into a few-shot prompt built from past LotiProperties Jack already scored. The model is asked to mimic Jack's style and return only a number.</p>
+  </div>
+
+  <div class="card">
+    <h3>Why few-shot</h3>
+    <p>Instead of training a custom model, the workflow pulls up to 100 LotiProperties from HubSpot and grabs whichever already have a <code>jack__score</code> value. It splits them into <strong>15 high-severity</strong> examples (Jack score &gt; 60) and <strong>15 low-severity</strong> examples (Jack score &lt; 30) and stuffs them into the prompt. As Jack scores more properties, the prompt naturally improves.</p>
+  </div>
 </div>
 
 <!-- II: HOW IT WORKS -->
 <div class="section" id="how">
   <div class="section-header"><div class="section-num">II</div><div class="section-title">How It Works</div></div>
-  <div class="card"><h3>Content pending</h3><p>Connection method, scope, direction of sync and any setup notes will live here.</p></div>
+
+  <div class="card">
+    <h3>Connection</h3>
+    <div class="spec">
+      <div class="spec-k">Type</div><div class="spec-v">Custom API integration. HubSpot Workflow &rarr; Delay 3 min &rarr; Custom Code &rarr; OpenAI Chat Completions API &rarr; PATCH the LotiProperty.</div>
+      <div class="spec-k">Direction</div><div class="spec-v">HubSpot &rarr; OpenAI &rarr; HubSpot. Synchronous per LotiProperty.</div>
+      <div class="spec-k">Object</div><div class="spec-v"><code>LotiProperty</code> (custom object id <code>2-174389880</code>)</div>
+      <div class="spec-k">Endpoint</div><div class="spec-v"><code>POST https://api.openai.com/v1/chat/completions</code></div>
+      <div class="spec-k">Model</div><div class="spec-v"><code>gpt-5.1</code> &middot; <code>temperature: 0</code></div>
+      <div class="spec-k">Auth</div><div class="spec-v">Bearer token from env var <code>OpenAi</code> (Rami's account).</div>
+      <div class="spec-k">HubSpot auth</div><div class="spec-v">Bearer token from env var <code>Hubspot_rami</code>. Used for the LIST and PATCH calls against HubSpot CRM.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Few-shot building</h3>
+    <ol>
+      <li>LIST up to 100 LotiProperties via <code>GET /crm/v3/objects/2-174389880?limit=100&amp;properties=fire_department_comment,jack__score</code></li>
+      <li>Filter out any record missing either <code>fire_department_comment</code> or <code>jack__score</code></li>
+      <li>Bucket the rest into <strong>HIGH</strong> (jack score &gt; 60, max 15) and <strong>LOW</strong> (jack score &lt; 30, max 15)</li>
+      <li>Inject all examples into the prompt with the narrative and Jack's score, then ask the model for the new incident's score</li>
+    </ol>
+    <p style="margin-top:10px;font-size:0.9em">If no examples qualify yet, the prompt instructs the model to be conservative.</p>
+  </div>
+
+  <div class="card">
+    <h3>Scoring scale (in prompt)</h3>
+    <table class="mtbl">
+      <thead><tr><th>Range</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="val-pill val-bad">0&ndash;10</span></td><td>Trivial, minor, not interesting.</td></tr>
+        <tr><td><span class="val-pill val-bad">11&ndash;25</span></td><td>Small loss, limited damage, likely not worth much.</td></tr>
+        <tr><td><span class="val-pill val-warn">26&ndash;40</span></td><td>Moderate loss, some interest but not a priority.</td></tr>
+        <tr><td><span class="val-pill val-warn">41&ndash;60</span></td><td>Solid lead, meaningful damage, clearly relevant.</td></tr>
+        <tr><td><span class="val-pill val-ok">61&ndash;80</span></td><td>Strong lead, severe damage, high priority.</td></tr>
+        <tr><td><span class="val-pill val-ok">81&ndash;100</span></td><td>Extreme case, multiple structures and/or victims, displacement.</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- III: FIELDS & OBJECTS -->
 <div class="section" id="fields">
   <div class="section-header"><div class="section-num">III</div><div class="section-title">Fields &amp; Objects</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot objects touched and the fields written or read by OpenAI will live here.</p></div>
+
+  <div class="card">
+    <h3>Object touched</h3>
+    <p><code>LotiProperty</code> &middot; custom object id <code>2-174389880</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Read by the Custom Code</h3>
+    <p>From the enrolled LotiProperty (event):</p>
+    <div class="chips">
+      <span class="chip read">hs_object_id</span>
+      <span class="chip read">fire_department_comment</span>
+    </div>
+    <p style="margin-top:14px">From the LIST of other LotiProperties (few-shot examples):</p>
+    <div class="chips">
+      <span class="chip read">fire_department_comment</span>
+      <span class="chip read">jack__score</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Written back</h3>
+    <div class="chips">
+      <span class="chip write">fn__score_jack_calibrated</span>
+      <span class="chip write">model_version</span>
+    </div>
+    <table class="mtbl" style="margin-top:14px">
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>fn__score_jack_calibrated</code></td><td>Number 0&ndash;100. The Jack-style score returned by the model, rounded and clamped.</td></tr>
+        <tr><td><code>model_version</code></td><td>String literal <code>fewshot-gpt5.1-v1</code>. Tags which prompt + model produced the score.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">Inputs declared in the workflow action</div>
+    <p>The Custom Code action exposes ~38 LotiProperty properties as inputs (alarm_level, fire_location, fully_involved, working_fire, ambulance, etc.) but the current code only consumes <code>hs_object_id</code> and <code>fire_department_comment</code>. The rest are wired up so future iterations of the prompt can use them without re-editing the action.</p>
+  </div>
 </div>
 
-<!-- IV: WORKFLOWS / TRIGGERS / SETUP -->
+<!-- IV: WORKFLOW -->
 <div class="section" id="workflow">
-  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflows &amp; Triggers</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot Workflows that trigger OpenAI, the action chain and the fields written back will live here.</p></div>
+  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflow &amp; Triggers</div></div>
+
+  <div class="evidence">
+    <img src="images/openai-workflow-status.png" alt="LotiProperty AI SCORE Property Score workflow in HubSpot, status On">
+    <div class="evidence-cap">HubSpot Workflows &middot; LotiProperty - AI SCORE - Property Score &middot; status On</div>
+  </div>
+
+  <div class="card">
+    <h3>Metadata</h3>
+    <div class="wf-meta">
+      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">LotiProperty - AI SCORE - Property Score</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Status</div><div class="wf-meta-v">On</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">On</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Start triggers</h3>
+  <p style="color:var(--text-light);margin-bottom:16px;font-size:0.95em">Only enroll lotiproperties that meet these conditions.</p>
+
+  <div class="trigger-block">
+    <div class="trigger-head"><span class="trigger-tag">Group 1</span><h4>Fire incident on a house</h4></div>
+    <ul class="crit-list">
+      <li><code>Fire department comment</code> is known</li>
+      <li><code>Incident type</code> is any of <code>Fire</code></li>
+      <li><code>Incident Type - FN</code> is equal to any of <code>HOUSE | FIRE</code></li>
+    </ul>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Action chain</h3>
+
+  <div class="action-chain">
+    <div class="action">
+      <div class="action-num">1</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Delay</span><span class="action-title">Delay for 3 minutes</span></div>
+        <p class="action-detail">Buffer to make sure the FN cleanup workflow has finished writing the canonical fields before scoring runs.</p>
+      </div>
+    </div>
+    <div class="action-arrow">&darr;</div>
+    <div class="action">
+      <div class="action-num">2</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Custom Code</span><span class="action-title">Defined by custom code</span></div>
+        <p class="action-detail">Pulls few-shot examples from past LotiProperties, builds the prompt, calls OpenAI <code>gpt-5.1</code>, parses the JSON response and PATCHes <code>fn__score_jack_calibrated</code> + <code>model_version</code> back onto the LotiProperty. Secrets in scope: <code>Hubspot_rami</code>, <code>OpenAi</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:30px">
+    <h3>Custom Code source</h3>
+    <span class="code-tag">Node.js &middot; axios</span>
+<pre class="code-block">const axios = require("axios");
+
+exports.main = async (event, callback) =&gt; {
+  const f = event.inputFields || {};
+  const recordId = f.hs_object_id;
+  const fireText = f.fire_department_comment || "";
+
+  if (!recordId) {
+    console.error("No hs_object_id provided.");
+    callback({ outputFields: {} });
+    return;
+  }
+  if (!fireText.trim()) {
+    console.log("No fire_department_comment, skipping.");
+    callback({ outputFields: {} });
+    return;
+  }
+
+  const openAiKey = process.env.OpenAi;
+  const hubspotToken = process.env.Hubspot_rami;
+
+  if (!openAiKey || !hubspotToken) {
+    console.error("Missing OpenAi or Hubspot_rami env vars.");
+    callback({ outputFields: {} });
+    return;
+  }
+
+  const objectType = "2-174389880";
+  const clamp = (val, min, max) =&gt; Math.min(max, Math.max(min, val));
+
+  // 1) LIST up to 100 LotiProperties and keep the ones with jack__score
+  let allExamples = [];
+  try {
+    const listUrl = `https://api.hubapi.com/crm/v3/objects/${objectType}` +
+      `?limit=100&amp;properties=fire_department_comment,jack__score&amp;archived=false`;
+    const resp = await axios.get(listUrl, {
+      headers: {
+        Authorization: `Bearer ${hubspotToken}`,
+        "Content-Type": "application/json",
+      },
+      timeout: 15000,
+    });
+    const results = resp.data?.results || [];
+    allExamples = results
+      .map((r) =&gt; {
+        const props = r.properties || {};
+        const comment = props.fire_department_comment || "";
+        const rawJackScore = props.jack__score;
+        if (!comment || rawJackScore == null) return null;
+        return { comment, jackScore: Number(rawJackScore) };
+      })
+      .filter((ex) =&gt; ex !== null);
+  } catch (err) {
+    console.error("Error fetching examples via LIST:", err.response?.data || err.message);
+    allExamples = [];
+  }
+
+  // 2) Bucket into HIGH (&gt;60) and LOW (&lt;30), max 15 each
+  let highExamples = [];
+  let lowExamples = [];
+  allExamples.forEach((ex) =&gt; {
+    if (isNaN(ex.jackScore)) return;
+    if (ex.jackScore &gt; 60 &amp;&amp; highExamples.length &lt; 15) highExamples.push(ex);
+    else if (ex.jackScore &lt; 30 &amp;&amp; lowExamples.length &lt; 15) lowExamples.push(ex);
+  });
+
+  // 3) Build prompt (...few-shot examples + scoring scale + new narrative...)
+
+  // 4) Call OpenAI gpt-5.1 with temperature 0
+  let jackStyleScore = null;
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-5.1",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${openAiKey}`,
+          "Content-Type": "application/json",
+        },
+        timeout: 20000,
+      }
+    );
+    const content = response.data?.choices?.[0]?.message?.content || "";
+    const parsed = JSON.parse(content);
+    jackStyleScore = Number(parsed.jack_style_score);
+    if (isNaN(jackStyleScore)) jackStyleScore = null;
+  } catch (err) {
+    console.error("Error calling OpenAI:", err.message);
+    jackStyleScore = null;
+  }
+
+  if (jackStyleScore === null) {
+    callback({ outputFields: {} });
+    return;
+  }
+
+  const finalScore = clamp(Math.round(jackStyleScore), 0, 100);
+
+  // 5) PATCH the LotiProperty with the calibrated score + model version tag
+  try {
+    await axios.patch(
+      `https://api.hubapi.com/crm/v3/objects/${objectType}/${recordId}`,
+      {
+        properties: {
+          fn__score_jack_calibrated: finalScore,
+          model_version: "fewshot-gpt5.1-v1",
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${hubspotToken}`,
+          "Content-Type": "application/json",
+        },
+        timeout: 15000,
+      }
+    );
+  } catch (err) {
+    console.error("Error patching HubSpot object:", err.response?.data || err.message);
+  }
+
+  callback({
+    outputFields: {
+      fn__score_jack_calibrated: finalScore,
+      model_version: "fewshot-gpt5.1-v1",
+    },
+  });
+};</pre>
+    <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px">Prompt construction collapsed for readability. The full prompt is built inline before the OpenAI call.</p>
+  </div>
 </div>
 
 <!-- V: STATUS -->
 <div class="section" id="status">
   <div class="section-header"><div class="section-num">V</div><div class="section-title">Status</div></div>
+
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
-    <p>Status notes pending.</p>
+    <p>Workflow <strong>LotiProperty - AI SCORE - Property Score</strong> is On. Every qualifying fire incident on a house gets a calibrated score 3 minutes after enrollment.</p>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Failure mode</div>
+    <p>If OpenAI returns malformed JSON, the API errors out, or the env vars are missing, the workflow exits silently with empty <code>outputFields</code>. The LotiProperty stays without a score and no retry is scheduled. Watch the workflow history for these silent skips.</p>
   </div>
 </div>
 

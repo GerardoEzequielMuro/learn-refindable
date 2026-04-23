@@ -191,6 +191,27 @@ footer a { color:var(--orange); text-decoration:none; }
   nav,.btt,.search-wrap,.progress { display:none !important; }
   .section-hidden { display:block !important; }
 }
+
+/* CODE BLOCK */
+.code-block { background:#0F172A; color:#E2E8F0; border-radius:10px; padding:20px 24px; margin:14px 0; font-family:'JetBrains Mono',Menlo,Consolas,monospace; font-size:0.78em; line-height:1.6; overflow-x:auto; white-space:pre; }
+.code-tag { display:inline-block; padding:3px 10px; background:rgba(255,140,66,0.15); color:var(--orange-light); border:1px solid rgba(255,140,66,0.3); border-radius:6px; font-size:0.7em; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+
+/* MAPPING TABLE */
+.mtbl { width:100%; border-collapse:separate; border-spacing:0; margin:8px 0; }
+.mtbl th { text-align:left; font-size:0.7em; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); font-weight:700; padding:10px 14px; border-bottom:2px solid var(--border); }
+.mtbl td { padding:14px; border-bottom:1px solid var(--border); font-size:0.92em; vertical-align:top; }
+.mtbl tr:last-child td { border-bottom:0; }
+.mtbl code { background:var(--gray-bg); padding:2px 7px; border-radius:5px; font-family:'JetBrains Mono',Menlo,monospace; font-size:0.85em; color:var(--dark); }
+.val-pill { display:inline-block; padding:3px 10px; border-radius:100px; font-size:0.72em; font-weight:700; letter-spacing:0.5px; }
+.val-ok  { background:rgba(16,185,129,0.12); color:#047857; border:1px solid rgba(16,185,129,0.3); }
+.val-warn { background:rgba(245,158,11,0.12); color:#B45309; border:1px solid rgba(245,158,11,0.3); }
+.val-bad { background:rgba(239,68,68,0.12); color:#B91C1C; border:1px solid rgba(239,68,68,0.3); }
+
+/* PROPERTY CHIPS GRID */
+.chips { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+.chip { font-family:'JetBrains Mono',Menlo,monospace; font-size:0.75em; padding:4px 10px; background:var(--gray-bg); color:var(--dark); border-radius:6px; border:1px solid var(--border); }
+.chip.read { background:rgba(59,130,246,0.08); color:#1D4ED8; border-color:rgba(59,130,246,0.25); }
+.chip.write { background:rgba(255,92,53,0.08); color:#C2410C; border-color:rgba(255,92,53,0.25); }
 </style>
 </head>
 <body>
@@ -213,7 +234,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="hero-glow"></div>
   <div class="hero-tag">Loti × Refindable</div>
   <h1>Google Maps<br><span>Documentation</span></h1>
-  <p class="hero-sub">Reference page for the Google Maps integration. Content pending.</p>
+  <p class="hero-sub">Generates Google Maps link, Street View house photo and driving distance from El Paso de Robles for every new LotiProperty.</p>
   <div class="hero-meta">
     <span class="hero-pill type">API</span>
     <span class="hero-pill scope">LotiProperty (Map Link, Distance to Rep)</span>
@@ -245,33 +266,257 @@ footer a { color:var(--orange); text-decoration:none; }
 <!-- I: ABOUT -->
 <div class="section" id="about">
   <div class="section-header"><div class="section-num">I</div><div class="section-title">About Google Maps</div></div>
-  <div class="card"><h3>Content pending</h3><p>What Google Maps does and why it is plugged into Loti's HubSpot will live here.</p></div>
+
+  <div class="important">
+    <div class="important-title">Account ownership</div>
+    <p>The Google Maps API key (env var <code>GOOGLE_MAPS_API_KEY</code>) and the HubSpot private app token (env var <code>Hubspot_rami</code>) both live under <strong>Rami's</strong> credentials. Quota and billing for Maps API charges sit on that account.</p>
+  </div>
+
+  <div class="card">
+    <h3>What it does</h3>
+    <p>For every brand-new LotiProperty created today from a fire incident, Google Maps fills in three location fields:</p>
+    <ul>
+      <li><strong>Google Maps link</strong> for the loss address (one-click directions for the rep)</li>
+      <li><strong>Street View house photo</strong> downloaded and re-hosted in HubSpot's File Manager</li>
+      <li><strong>Driving distance</strong> from El Paso de Robles, CA to the property, in miles</li>
+    </ul>
+  </div>
 </div>
 
 <!-- II: HOW IT WORKS -->
 <div class="section" id="how">
   <div class="section-header"><div class="section-num">II</div><div class="section-title">How It Works</div></div>
-  <div class="card"><h3>Content pending</h3><p>Connection method, scope, direction of sync and any setup notes will live here.</p></div>
+
+  <div class="card">
+    <h3>Connection</h3>
+    <div class="spec">
+      <div class="spec-k">Type</div><div class="spec-v">API integration. HubSpot Workflow &rarr; Custom Code &rarr; Google Maps APIs + HubSpot File Manager &rarr; PATCH the LotiProperty.</div>
+      <div class="spec-k">Direction</div><div class="spec-v">HubSpot &rarr; Google &rarr; HubSpot. One pass per LotiProperty creation.</div>
+      <div class="spec-k">Object</div><div class="spec-v"><code>LotiProperty</code> (custom object id <code>2-174389880</code>)</div>
+      <div class="spec-k">Origin</div><div class="spec-v">Driving distance is calculated from the fixed string <code>"El Paso de Robles, CA"</code>. To support more reps the origin needs to be parameterized.</div>
+      <div class="spec-k">Auth (Google)</div><div class="spec-v">API key from env var <code>GOOGLE_MAPS_API_KEY</code> passed as query param.</div>
+      <div class="spec-k">Auth (HubSpot)</div><div class="spec-v">Bearer token from env var <code>Hubspot_rami</code>.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>External APIs called</h3>
+    <table class="mtbl">
+      <thead><tr><th>API</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>maps.googleapis.com/maps/api/streetview</code></td>
+          <td>Downloads a 640&times;640 Street View image of the address as binary.</td>
+        </tr>
+        <tr>
+          <td><code>maps.googleapis.com/maps/api/distancematrix/json</code></td>
+          <td>Returns the driving distance in metric, then the code converts to miles.</td>
+        </tr>
+        <tr>
+          <td><code>api.hubapi.com/filemanager/api/v3/files/upload</code></td>
+          <td>Uploads the Street View image into HubSpot folder <code>/house_photos</code> as <code>PUBLIC_NOT_INDEXABLE</code>. The returned URL is what gets saved on the LotiProperty.</td>
+        </tr>
+        <tr>
+          <td><code>api.hubapi.com/crm/v3/objects/2-174389880/{id}</code></td>
+          <td>PATCHes the LotiProperty with the three computed values.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Heads up: property name mismatch</div>
+    <p>The HubSpot property is named <code>distance_to_rep_km</code> but the value written is in <strong>miles</strong>, not kilometers. The code converts km &rarr; miles before the PATCH. Anyone reading this property should treat it as miles.</p>
+  </div>
 </div>
 
 <!-- III: FIELDS & OBJECTS -->
 <div class="section" id="fields">
   <div class="section-header"><div class="section-num">III</div><div class="section-title">Fields &amp; Objects</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot objects touched and the fields written or read by Google Maps will live here.</p></div>
+
+  <div class="card">
+    <h3>Object touched</h3>
+    <p><code>LotiProperty</code> &middot; custom object id <code>2-174389880</code></p>
+  </div>
+
+  <div class="card">
+    <h3>Read from the enrolled LotiProperty</h3>
+    <div class="chips">
+      <span class="chip read">street</span>
+      <span class="chip read">city</span>
+      <span class="chip read">zip</span>
+      <span class="chip read">country</span>
+    </div>
+    <p style="font-size:0.88em;color:var(--text-muted);margin-top:10px">Joined with commas to build the full address sent to Google.</p>
+  </div>
+
+  <div class="card">
+    <h3>Written back</h3>
+    <div class="chips">
+      <span class="chip write">google_map_link</span>
+      <span class="chip write">house_photo_</span>
+      <span class="chip write">distance_to_rep_km</span>
+    </div>
+    <table class="mtbl" style="margin-top:14px">
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td><code>google_map_link</code></td><td>URL string. Format: <code>https://www.google.com/maps/search/?api=1&amp;query={encodedAddress}</code></td></tr>
+        <tr><td><code>house_photo_</code></td><td>HubSpot File Manager URL. Image lives at <code>/house_photos/house_photo_{recordId}.jpg</code>.</td></tr>
+        <tr><td><code>distance_to_rep_km</code></td><td>Number. <strong>Stored in miles</strong> despite the property name. Rounded to 2 decimals. Origin is <code>El Paso de Robles, CA</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<!-- IV: WORKFLOWS / TRIGGERS / SETUP -->
+<!-- IV: WORKFLOW -->
 <div class="section" id="workflow">
-  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflows &amp; Triggers</div></div>
-  <div class="card"><h3>Content pending</h3><p>HubSpot Workflows that trigger Google Maps, the action chain and the fields written back will live here.</p></div>
+  <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflow &amp; Triggers</div></div>
+
+  <div class="evidence">
+    <img src="images/google-maps-workflow-status.png" alt="LotiProperty Distance Google map LINK House Photo workflow in HubSpot, status On">
+    <div class="evidence-cap">HubSpot Workflows &middot; LotiProperty - Distance (KM). Google map LINK, House Photo &middot; status On</div>
+  </div>
+
+  <div class="card">
+    <h3>Metadata</h3>
+    <div class="wf-meta">
+      <div class="wf-meta-item"><div class="wf-meta-k">Name</div><div class="wf-meta-v">LotiProperty - Distance (KM). Google map LINK, House Photo</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Status</div><div class="wf-meta-v">On</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">Off</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Start triggers</h3>
+  <p style="color:var(--text-light);margin-bottom:16px;font-size:0.95em">Only enroll lotiproperties that meet these conditions.</p>
+
+  <div class="trigger-block">
+    <div class="trigger-head"><span class="trigger-tag">Group 1</span><h4>Brand-new fire incident with a usable address</h4></div>
+    <ul class="crit-list">
+      <li><code>Object create date/time</code> is <code>Today</code></li>
+      <li><code>Fire department comment</code> is known</li>
+      <li><code>Street Address - FN</code> is known</li>
+      <li><code>City</code> is known</li>
+      <li><code>Zip code</code> is known</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Action chain</h3>
+
+  <div class="action-chain">
+    <div class="action">
+      <div class="action-num">1</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Custom Code</span><span class="action-title">Defined by custom code</span></div>
+        <p class="action-detail">Builds the full address from <code>street</code> + <code>city</code> + <code>zip</code> + <code>country</code>, downloads the Street View photo, uploads it to HubSpot File Manager, calls Distance Matrix, converts km &rarr; miles, then PATCHes the LotiProperty. Secrets in scope: <code>Hubspot_rami</code>, <code>GOOGLE_MAPS_API_KEY</code>.</p>
+      </div>
+    </div>
+    <div class="action-arrow">&darr;</div>
+    <div class="action">
+      <div class="action-num">2</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">End</span><span class="action-title">Workflow ends</span></div>
+        <p class="action-detail">No re-enrollment, no retries. If any step fails, the LotiProperty is left without those fields populated until the workflow is re-triggered manually.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:30px">
+    <h3>Custom Code source</h3>
+    <span class="code-tag">Node.js &middot; native https</span>
+<pre class="code-block">const https = require("https");
+
+// helpers (collapsed for readability):
+//   fetchImageBuffer(url)                          -- downloads a binary image
+//   uploadImageToHubSpot(buf, name, hubspotToken)  -- POST to /filemanager/api/v3/files/upload
+//   getDrivingDistanceKm(origin, dest, key)        -- GET /maps/api/distancematrix/json
+
+exports.main = async (event, callback) =&gt; {
+  const hubspotToken = process.env.Hubspot_rami;
+  const googleApiKey = process.env.GOOGLE_MAPS_API_KEY;
+
+  if (!hubspotToken) throw new Error("Falta el secret Hubspot_rami.");
+  if (!googleApiKey) throw new Error("Falta el secret GOOGLE_MAPS_API_KEY.");
+
+  // 1) Build full address from inputs
+  const street  = (event.inputFields.street  || "").trim();
+  const city    = (event.inputFields.city    || "").trim();
+  const zip     = (event.inputFields.zip     || "").trim();
+  const country = (event.inputFields.country || "").trim();
+
+  const parts = [street, city, zip, country].filter(Boolean);
+  if (parts.length === 0) {
+    return callback({ outputFields: { google_map_link: "", house_photo_url: "", distance_to_rep_km: null } });
+  }
+
+  const fullAddress = parts.join(", ");
+  const encodedAddress = encodeURIComponent(fullAddress);
+
+  // 2) URLs
+  const mapsUrl       = `https://www.google.com/maps/search/?api=1&amp;query=${encodedAddress}`;
+  const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?size=640x640&amp;location=${encodedAddress}&amp;key=${googleApiKey}`;
+
+  const objectTypeId = "2-174389880";
+  const objectId = event.object.objectId;
+
+  let uploadedFileUrl = "";
+  let distanceMiles = null;
+
+  try {
+    // 3) Download Street View photo as binary
+    const imageBuffer = await fetchImageBuffer(streetViewUrl);
+
+    // 4) Upload it to HubSpot File Manager (folder: /house_photos)
+    const fileName = `house_photo_${objectId}.jpg`;
+    uploadedFileUrl = await uploadImageToHubSpot(imageBuffer, fileName, hubspotToken);
+
+    // 5) Driving distance from El Paso de Robles, CA
+    try {
+      const distanceKm = await getDrivingDistanceKm("El Paso de Robles, CA", fullAddress, googleApiKey);
+      const miles = distanceKm * 0.621371;
+      distanceMiles = Math.round(miles * 100) / 100;
+    } catch (e) {
+      console.error("Distance lookup failed:", e.message);
+      distanceMiles = null;
+    }
+
+    // 6) PATCH the LotiProperty
+    const body = JSON.stringify({
+      properties: {
+        google_map_link: mapsUrl,
+        house_photo_: uploadedFileUrl,
+        distance_to_rep_km: distanceMiles,  // value is MILES despite the property name
+      },
+    });
+    // ...HTTPS PATCH to /crm/v3/objects/{type}/{id}...
+  } catch (err) {
+    console.error("Error en el proceso general:", err);
+  }
+
+  callback({
+    outputFields: {
+      google_map_link: mapsUrl,
+      house_photo_url: uploadedFileUrl || "",
+      distance_to_rep_km: distanceMiles,
+    },
+  });
+};</pre>
+    <p style="font-size:0.85em;color:var(--text-muted);margin-top:8px">Helper functions and the final PATCH request are collapsed for readability. The full implementation handles multipart upload, HTTPS request streams and error fall-through.</p>
+  </div>
 </div>
 
 <!-- V: STATUS -->
 <div class="section" id="status">
   <div class="section-header"><div class="section-num">V</div><div class="section-title">Status</div></div>
+
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
-    <p>Status notes pending.</p>
+    <p>Workflow <strong>LotiProperty - Distance (KM). Google map LINK, House Photo</strong> is On. Runs once per LotiProperty created today that has a complete address.</p>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Failure modes</div>
+    <p>The action wraps everything in one big try/catch. A Street View 404, a Distance Matrix error, a File Manager upload failure or a HubSpot PATCH timeout all log to the workflow history but never re-throw. If any of those happen, the corresponding output stays empty.</p>
   </div>
 </div>
 
