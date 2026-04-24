@@ -274,12 +274,13 @@ footer a { color:var(--orange); text-decoration:none; }
 
   <div class="card">
     <h3>What it does</h3>
-    <p>For every new LotiProperty that comes from a fire incident, OpenAI generates a 0&ndash;100 <strong>AI Score</strong>. The score is derived by feeding the Fire Department narrative into a few-shot prompt built from past LotiProperties Jack already scored. The model is asked to mimic Jack's style and return only a number.</p>
+    <p>For every new LotiProperty that comes from a fire incident, OpenAI generates a 0&ndash;100 <strong>AI Score</strong> automatically. This happens <strong>before Jack reviews the property</strong>, so the team has a first read on how attractive the lead is the moment it lands.</p>
+    <p>The model feeds itself from the <strong>most recent ~200 LotiProperties that Jack has already scored</strong>. The Fire Department narrative of those examples plus Jack's own scores get packed into the prompt, so the AI learns his style and returns a number meant to anticipate what Jack would score the new incident. As Jack reviews more properties, the prompt naturally improves.</p>
   </div>
 
   <div class="card">
     <h3>Why few-shot</h3>
-    <p>Instead of training a custom model, the workflow pulls up to 100 LotiProperties from HubSpot and grabs whichever already have a <code>jack__score</code> value. It splits them into <strong>15 high-severity</strong> examples (Jack score &gt; 60) and <strong>15 low-severity</strong> examples (Jack score &lt; 30) and stuffs them into the prompt. As Jack scores more properties, the prompt naturally improves.</p>
+    <p>Instead of training a custom model, the workflow pulls the most recent ~200 LotiProperties from HubSpot and grabs whichever already have a <code>jack__score</code> value. It splits them into <strong>15 high-severity</strong> examples (Jack score &gt; 60) and <strong>15 low-severity</strong> examples (Jack score &lt; 30) and stuffs them into the prompt. As Jack scores more properties, the prompt naturally improves.</p>
   </div>
 </div>
 
@@ -303,7 +304,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Few-shot building</h3>
     <ol>
-      <li>LIST up to 100 LotiProperties via <code>GET /crm/v3/objects/2-174389880?limit=100&amp;properties=fire_department_comment,jack__score</code></li>
+      <li>LIST the most recent ~200 LotiProperties via <code>GET /crm/v3/objects/2-174389880?properties=fire_department_comment,jack__score</code></li>
       <li>Filter out any record missing either <code>fire_department_comment</code> or <code>jack__score</code></li>
       <li>Bucket the rest into <strong>HIGH</strong> (jack score &gt; 60, max 15) and <strong>LOW</strong> (jack score &lt; 30, max 15)</li>
       <li>Inject all examples into the prompt with the narrative and Jack's score, then ask the model for the new incident's score</li>
