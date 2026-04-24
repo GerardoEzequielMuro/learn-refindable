@@ -275,12 +275,12 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>What it does</h3>
     <p>For every new LotiProperty that comes from a fire incident, OpenAI generates a 0&ndash;100 <strong>AI Score</strong> automatically. This happens <strong>before Jack reviews the property</strong>, so the team has a first read on how attractive the lead is the moment it lands.</p>
-    <p>The model feeds itself from the <strong>most recent ~200 LotiProperties that Jack has already scored</strong>. The Fire Department narrative of those examples plus Jack's own scores get packed into the prompt, so the AI learns his style and returns a number meant to anticipate what Jack would score the new incident. As Jack reviews more properties, the prompt naturally improves.</p>
+    <p>The model feeds itself from the <strong>most recent 50 LotiProperties that Jack has already scored</strong>. The Fire Department narrative of those examples plus Jack's own scores get packed into the prompt, so the AI learns his style and returns a number meant to anticipate what Jack would score the new incident. As Jack reviews more properties, the prompt naturally improves.</p>
   </div>
 
   <div class="card">
     <h3>Why few-shot</h3>
-    <p>Instead of training a custom model, the workflow pulls the most recent ~200 LotiProperties from HubSpot and grabs whichever already have a <code>jack__score</code> value. It splits them into <strong>15 high-severity</strong> examples (Jack score &gt; 60) and <strong>15 low-severity</strong> examples (Jack score &lt; 30) and stuffs them into the prompt. As Jack scores more properties, the prompt naturally improves.</p>
+    <p>Instead of training a custom model, the workflow pulls the most recent 50 LotiProperties from HubSpot and grabs whichever already have a <code>jack__score</code> value. It splits them into <strong>15 high-severity</strong> examples (Jack score &gt; 60) and <strong>15 low-severity</strong> examples (Jack score &lt; 30) and stuffs them into the prompt. As Jack scores more properties, the prompt naturally improves.</p>
   </div>
 </div>
 
@@ -304,7 +304,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Few-shot building</h3>
     <ol>
-      <li>LIST the most recent ~200 LotiProperties via <code>GET /crm/v3/objects/2-174389880?properties=fire_department_comment,jack__score</code></li>
+      <li>LIST the most recent 50 LotiProperties via <code>GET /crm/v3/objects/2-174389880?properties=fire_department_comment,jack__score</code></li>
       <li>Filter out any record missing either <code>fire_department_comment</code> or <code>jack__score</code></li>
       <li>Bucket the rest into <strong>HIGH</strong> (jack score &gt; 60, max 15) and <strong>LOW</strong> (jack score &lt; 30, max 15)</li>
       <li>Inject all examples into the prompt with the narrative and Jack's score, then ask the model for the new incident's score</li>
@@ -366,9 +366,51 @@ footer a { color:var(--orange); text-decoration:none; }
     </table>
   </div>
 
-  <div class="tip">
-    <div class="tip-title">Inputs declared in the workflow action</div>
-    <p>The Custom Code action exposes ~38 LotiProperty properties as inputs (alarm_level, fire_location, fully_involved, working_fire, ambulance, etc.) but the current code only consumes <code>hs_object_id</code> and <code>fire_department_comment</code>. The rest are wired up so future iterations of the prompt can use them without re-editing the action.</p>
+  <div class="card">
+    <h3>All inputs declared in the workflow action</h3>
+    <p>The Custom Code action exposes <strong>40 LotiProperty properties</strong> as inputs. The current code only consumes <code>hs_object_id</code> and <code>fire_department_comment</code>; the rest are wired up so future iterations of the prompt can use them without re-editing the action.</p>
+    <div class="chips" style="margin-top:14px">
+      <span class="chip read">possible_value_of_lc</span>
+      <span class="chip read">avm_value</span>
+      <span class="chip read">distance_to_rep_km</span>
+      <span class="chip read">type_of_loss</span>
+      <span class="chip read">extent_of_the_dama</span>
+      <span class="chip read">involved__cloned_</span>
+      <span class="chip read">time_on_scene__mi</span>
+      <span class="chip read">boardup</span>
+      <span class="chip read">fire_location</span>
+      <span class="chip read">alarm_level</span>
+      <span class="chip read">someone_got_hurt</span>
+      <span class="chip read">potential_liability_iss</span>
+      <span class="chip read">hs_object_id</span>
+      <span class="chip read">fully_involved</span>
+      <span class="chip read">well_involved</span>
+      <span class="chip read">heavy_fire</span>
+      <span class="chip read">roof_cuts</span>
+      <span class="chip read">fire_in_attic</span>
+      <span class="chip read">ran_attic</span>
+      <span class="chip read">vertical_ventilation</span>
+      <span class="chip read">extension_to_living_</span>
+      <span class="chip read">defensive_attack</span>
+      <span class="chip read">working_fire</span>
+      <span class="chip read">fire_attack</span>
+      <span class="chip read">ceilings_pulled</span>
+      <span class="chip read">fire_showing</span>
+      <span class="chip read">ambulance</span>
+      <span class="chip read">no_fd_response</span>
+      <span class="chip read">no_fire_located</span>
+      <span class="chip read">no_structure_threat</span>
+      <span class="chip read">no_hazards</span>
+      <span class="chip read">extinguished_fire</span>
+      <span class="chip read">extinguished_by_ow</span>
+      <span class="chip read">mobile_home</span>
+      <span class="chip read">detached_structure</span>
+      <span class="chip read">abandoned</span>
+      <span class="chip read">previous_fire</span>
+      <span class="chip read">assessed_total_value</span>
+      <span class="chip read">fire_department_comment</span>
+      <span class="chip write">fn__score_jack_calibrated</span>
+    </div>
   </div>
 </div>
 
@@ -388,6 +430,10 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
       <div class="wf-meta-item"><div class="wf-meta-k">Status</div><div class="wf-meta-v">On</div></div>
       <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">On</div></div>
+    </div>
+    <div class="tip" style="margin-top:18px">
+      <div class="tip-title">Re-enrollment trigger</div>
+      <p>The workflow re-enrolls the same LotiProperty whenever its <code>fire_department_comment</code> changes. New narrative means the AI scores it again from scratch with the updated text, so the score stays in sync with whatever the fire department reports last.</p>
     </div>
   </div>
 
