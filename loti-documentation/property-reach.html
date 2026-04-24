@@ -283,9 +283,9 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Three workflows are wired to it</h3>
     <ol>
-      <li><strong>Get data from PropertyReach - Contacts</strong> — calls the skip-trace API and creates Contacts + Notes on the LotiProperty.</li>
-      <li><strong>Sync House - Contact</strong> — chained from #1 once the LotiProperty has a known county. Writes / edits the LotiProperty record.</li>
-      <li><strong>Match contacts - FN - PopertyReach</strong> — manual trigger. Detects Contacts associated to the same LotiProperty that share a phone number and labels them <code>Possible Duplicate</code>.</li>
+      <li><strong>Get data from PropertyReach - Contacts.</strong> Calls the skip-trace API and creates Contacts + Notes on the LotiProperty.</li>
+      <li><strong>Sync House - Contact.</strong> Chained from #1 once the LotiProperty has a known county. Writes / edits the LotiProperty record.</li>
+      <li><strong>Match contacts - FN - PopertyReach.</strong> Manual trigger. Detects Contacts associated to the same LotiProperty that share a phone number and labels them <code>Possible Duplicate</code>.</li>
     </ol>
     <p style="margin-top:10px;font-size:0.88em;color:var(--text-muted)">Workflow #3's name has a typo (<code>PopertyReach</code> instead of <code>PropertyReach</code>) in HubSpot. Documented as-is.</p>
   </div>
@@ -331,9 +331,9 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Objects touched</h3>
     <ul>
-      <li><code>LotiProperty</code> (<code>2-174389880</code>) &mdash; the enrolled record.</li>
-      <li><code>Contact</code> &mdash; created per persona returned by PropertyReach.</li>
-      <li><code>Note</code> &mdash; created per persona, attached to both the Contact and the LotiProperty.</li>
+      <li><code>LotiProperty</code> (<code>2-174389880</code>): the enrolled record.</li>
+      <li><code>Contact</code>: created per persona returned by PropertyReach.</li>
+      <li><code>Note</code>: created per persona, attached to both the Contact and the LotiProperty.</li>
     </ul>
   </div>
 
@@ -442,7 +442,7 @@ footer a { color:var(--orange); text-decoration:none; }
         <li><code>County</code> is known</li>
       </ul>
     </div>
-    <div class="or-divider">&mdash; OR &mdash;</div>
+    <div class="or-divider">OR</div>
     <div class="trigger-block">
       <div class="trigger-head"><span class="trigger-tag">Group 2</span><h4>Additional condition</h4></div>
       <ul class="crit-list">
