@@ -237,7 +237,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="hero-glow"></div>
   <div class="hero-tag">Loti × Refindable</div>
   <h1>Property Reach<br><span>Documentation</span></h1>
-  <p class="hero-sub">Skip-trace API that turns a LotiProperty into Contacts. Powers three HubSpot workflows: data fetch, house sync and duplicate detection.</p>
+  <p class="hero-sub">Skip-trace API that turns a LotiProperty into Contacts. Powers four HubSpot workflows: house lookup, contact creation, house sync and duplicate detection.</p>
   <div class="hero-meta">
     <span class="hero-pill type">API</span>
     <span class="hero-pill scope">Contact creation + property enrichment</span>
@@ -281,10 +281,11 @@ footer a { color:var(--orange); text-decoration:none; }
   </div>
 
   <div class="card">
-    <h3>Three workflows are wired to it</h3>
+    <h3>Four workflows are wired to it</h3>
     <ol>
+      <li><strong>Get data from PropertyReach - Houses.</strong> Calls the PropertyReach API for each enrolled LotiProperty, fetches the house record and writes the <code>PropertyReach ID</code> back. This is the entry point of the chain.</li>
       <li><strong>Get data from PropertyReach - Contacts.</strong> Calls the skip-trace API and creates Contacts + Notes on the LotiProperty.</li>
-      <li><strong>Sync House - Contact.</strong> Chained from #1 once the LotiProperty has a known county. Writes / edits the LotiProperty record.</li>
+      <li><strong>Sync House - Contact.</strong> Chained from #2 once the LotiProperty has a known county. Copies the LotiProperty (house) info onto each associated Contact.</li>
       <li><strong>Match contacts - FN - PropertyReach.</strong> Manual trigger. Detects Contacts associated to the same LotiProperty that share a phone number and labels them <code>Possible Duplicate</code>.</li>
     </ol>
   </div>
@@ -302,13 +303,13 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="spec-k">Object</div><div class="spec-v"><code>LotiProperty</code> (custom object id <code>2-174389880</code>)</div>
       <div class="spec-k">Endpoint</div><div class="spec-v"><code>POST https://api.propertyreach.com/v1/skip-trace</code> with body <code>&#123; target: &#123; propertyId &#125; &#125;</code></div>
       <div class="spec-k">Auth</div><div class="spec-v">Header <code>x-api-key</code> = env var <code>PropertyReachAPI</code></div>
-      <div class="spec-k">HubSpot SDK</div><div class="spec-v"><code>@hubspot/api-client</code> with token <code>HS_PRIVATE_APP_TOKEN</code> (workflow 1) and raw <code>axios</code> with token <code>Hubspot_rami</code> (workflow 3).</div>
+      <div class="spec-k">HubSpot SDK</div><div class="spec-v"><code>@hubspot/api-client</code> with token <code>HS_PRIVATE_APP_TOKEN</code> (workflow 2) and raw <code>axios</code> with token <code>Hubspot_rami</code> (workflow 4).</div>
     </div>
   </div>
 
   <div class="card">
     <h3>What gets created per persona</h3>
-    <p>For every persona PropertyReach returns on workflow #1, the Custom Code creates:</p>
+    <p>For every persona PropertyReach returns on workflow #2, the Custom Code creates:</p>
     <ol>
       <li>A <strong>Contact</strong> record with <code>firstname</code>, <code>lastname</code>, <code>email</code>, <code>phone</code>, <code>mobilephone</code>, and <code>hs_marketable_status: NON_MARKETABLE</code>.</li>
       <li>An <strong>association</strong> Contact &harr; LotiProperty with the user-defined label <strong>PropertyReach</strong> (associationTypeId <code>63</code>).</li>
@@ -318,7 +319,7 @@ footer a { color:var(--orange); text-decoration:none; }
   </div>
 
   <div class="card">
-    <h3>Phone normalization (workflow #3)</h3>
+    <h3>Phone normalization (workflow #4)</h3>
     <p>The duplicate detector strips non-digits, drops leading <code>1</code>, and only matches numbers that resolve to exactly <strong>10 digits</strong>. Comparison is on the normalized form, so <code>+1 (555) 010-2000</code> and <code>5550102000</code> match.</p>
   </div>
 </div>
@@ -340,7 +341,7 @@ footer a { color:var(--orange); text-decoration:none; }
     <h3>Read</h3>
     <p>From the enrolled LotiProperty:</p>
     <div class="chips"><span class="chip read">propertyreach_id</span><span class="chip read">hs_object_id</span></div>
-    <p style="margin-top:14px">From associated Contacts (workflow #3):</p>
+    <p style="margin-top:14px">From associated Contacts (workflow #4):</p>
     <div class="chips"><span class="chip read">phone</span><span class="chip read">mobilephone</span></div>
   </div>
 
@@ -364,7 +365,7 @@ footer a { color:var(--orange); text-decoration:none; }
         <tr><td>Contact &harr; LotiProperty</td><td><strong>PropertyReach</strong> (USER_DEFINED, typeId <code>63</code>)</td></tr>
         <tr><td>Note &harr; Contact</td><td>Default</td></tr>
         <tr><td>Note &harr; LotiProperty</td><td>Default</td></tr>
-        <tr><td>Contact &harr; LotiProperty (workflow #3)</td><td><strong>Possible Duplicate</strong> (USER_DEFINED, typeId <code>68</code>) added to existing labels, never replaces them</td></tr>
+        <tr><td>Contact &harr; LotiProperty (workflow #4)</td><td><strong>Possible Duplicate</strong> (USER_DEFINED, typeId <code>68</code>) added to existing labels, never replaces them</td></tr>
       </tbody>
     </table>
   </div>
@@ -375,13 +376,48 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="section-header"><div class="section-num">IV</div><div class="section-title">Workflows &amp; Triggers</div></div>
 
   <div class="card">
-    <p>PropertyReach is wired into three HubSpot Workflows on the LotiProperty object. Workflow #1 calls the API and creates Contacts. Workflow #2 is chained from #1 to sync the LotiProperty record. Workflow #3 is a manual job that detects duplicate phones across associated Contacts and labels them.</p>
+    <p>PropertyReach is wired into four HubSpot Workflows on the LotiProperty object. Workflow #1 fetches the house from the PropertyReach API and writes the <code>PropertyReach ID</code>. Workflow #2 picks up that ID, calls the skip-trace endpoint and creates Contacts. Workflow #3 is chained from #2 to copy the LotiProperty (house) info onto each Contact. Workflow #4 is a manual job that detects duplicate phones across associated Contacts and labels them.</p>
   </div>
 
-  <!-- ============== WORKFLOW 1 ============== -->
+  <!-- ============== WORKFLOW 1 (Houses) ============== -->
   <div class="wf-card">
     <div class="wf-card-head">
       <span class="wf-card-tag">Workflow #1</span>
+      <h3>Get data from PropertyReach - Houses</h3>
+    </div>
+    <p class="wf-card-sub">Entry point of the PropertyReach chain. Calls the PropertyReach API on each enrolled LotiProperty to fetch the house record and writes the <code>PropertyReach ID</code> back onto the LotiProperty. Once that ID lands, workflow #2 (Contacts) takes over.</p>
+
+    <div class="wf-meta" style="margin-bottom:18px">
+      <div class="wf-meta-item"><div class="wf-meta-k">Object</div><div class="wf-meta-v"><code>LotiProperty</code></div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Status</div><div class="wf-meta-v">On</div></div>
+      <div class="wf-meta-item"><div class="wf-meta-k">Re-enrollment</div><div class="wf-meta-v">On</div></div>
+    </div>
+
+    <div class="trigger-block">
+      <div class="trigger-head"><span class="trigger-tag">Group 1</span><h4>Enrich opt-in</h4></div>
+      <ul class="crit-list">
+        <li><code>Enrich with PropertyReach</code> is any of <strong>Yes</strong></li>
+      </ul>
+    </div>
+    <div class="or-divider">OR</div>
+    <div class="trigger-block">
+      <div class="trigger-head"><span class="trigger-tag">Group 2</span><h4>Additional condition</h4></div>
+      <ul class="crit-list">
+        <li><em>Conditions cut off in screenshot. Confirm with Rami.</em></li>
+      </ul>
+    </div>
+
+    <div class="action-chain" style="margin-top:18px">
+      <div class="action"><div class="action-num">1</div><div class="action-body"><div class="action-head"><span class="action-type">Delay</span><span class="action-title">Delay for 3 minutes</span></div><p class="action-detail">Buffer before the API call to let the LotiProperty record settle.</p></div></div>
+      <div class="action-arrow">&darr;</div>
+      <div class="action placeholder"><div class="action-num">2+</div><div class="action-body"><div class="action-head"><span class="action-type">Custom Code / Edit record</span><span class="action-title">Fetch house and write PropertyReach ID</span></div><p class="action-detail">Calls the PropertyReach API for the property and writes the returned <code>PropertyReach ID</code> back onto the LotiProperty. Specific endpoint, payload and field mapping not yet captured in screenshot.</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============== WORKFLOW 2 (Contacts) ============== -->
+  <div class="wf-card">
+    <div class="wf-card-head">
+      <span class="wf-card-tag">Workflow #2</span>
       <h3>Get data from PropertyReach - Contacts</h3>
     </div>
     <p class="wf-card-sub">Pulls personas from the PropertyReach skip-trace API and creates Contacts + Notes on the LotiProperty.</p>
@@ -411,7 +447,7 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="action-arrow">&darr;</div>
       <div class="action"><div class="action-num">3</div><div class="action-body"><div class="action-head"><span class="action-type">Webhook</span><span class="action-title">POST https://api.propertyreach.com/v1/skip-trace</span></div><p class="action-detail">Native HubSpot webhook action to the same skip-trace endpoint. Purpose to confirm with Rami; may be a redundant safety call alongside the Custom Code.</p></div></div>
       <div class="action-arrow">&darr;</div>
-      <div class="action"><div class="action-num">4</div><div class="action-body"><div class="action-head"><span class="action-type">Go to workflow</span><span class="action-title">Sync House - Contact</span></div><p class="action-detail">Hands off the LotiProperty to workflow #2 to sync downstream record state.</p></div></div>
+      <div class="action"><div class="action-num">4</div><div class="action-body"><div class="action-head"><span class="action-type">Go to workflow</span><span class="action-title">Sync House - Contact</span></div><p class="action-detail">Hands off the LotiProperty to workflow #3 to sync downstream record state.</p></div></div>
     </div>
 
   </div>
@@ -419,10 +455,10 @@ footer a { color:var(--orange); text-decoration:none; }
   <!-- ============== WORKFLOW 2 ============== -->
   <div class="wf-card">
     <div class="wf-card-head">
-      <span class="wf-card-tag">Workflow #2</span>
+      <span class="wf-card-tag">Workflow #3</span>
       <h3>Sync House - Contact</h3>
     </div>
-    <p class="wf-card-sub">Triggered by workflow #1 via Go-to-workflow. Copies LotiProperty (house) info onto the associated Contact, so each Contact carries the data of the property it came from.</p>
+    <p class="wf-card-sub">Triggered by workflow #2 via Go-to-workflow. Copies LotiProperty (house) info onto the associated Contact, so each Contact carries the data of the property it came from.</p>
 
     <div class="evidence">
       <img src="images/pr-wf-sync-house.png" alt="Sync House - Contact workflow header and trigger">
@@ -459,7 +495,7 @@ footer a { color:var(--orange); text-decoration:none; }
   <!-- ============== WORKFLOW 3 ============== -->
   <div class="wf-card">
     <div class="wf-card-head">
-      <span class="wf-card-tag">Workflow #3</span>
+      <span class="wf-card-tag">Workflow #4</span>
       <h3>Match contacts - FN - PropertyReach</h3>
     </div>
     <p class="wf-card-sub">Manual workflow. For a given LotiProperty, finds Contacts that share a phone number and tags the association with the <strong>Possible Duplicate</strong> label.</p>
@@ -497,7 +533,7 @@ footer a { color:var(--orange); text-decoration:none; }
 
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
-    <p>All three workflows (<strong>Get data from PropertyReach - Contacts</strong>, <strong>Sync House - Contact</strong>, <strong>Match contacts - FN - PropertyReach</strong>) are On.</p>
+    <p>All four workflows (<strong>Get data from PropertyReach - Houses</strong>, <strong>Get data from PropertyReach - Contacts</strong>, <strong>Sync House - Contact</strong>, <strong>Match contacts - FN - PropertyReach</strong>) are On.</p>
   </div>
 </div>
 
