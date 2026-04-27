@@ -623,7 +623,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <p class="desc">HubSpot CRM is connected to several external systems. Some are <strong>native</strong> integrations (installed from the HubSpot Marketplace), others are <strong>custom APIs</strong> wired in through Workflows + Custom Code. This is what's plugged in and what each one does.</p>
 
-<div class="co co-i"><div class="tg">AT A GLANCE</div><p>Lead intake flows in from <strong>Intercom</strong> and <strong>Fire Notification</strong>. Contacts get validated with <strong>Debounce</strong> and enriched with <strong>Property Reach</strong>. Properties get scored by <strong>OpenAI</strong> and geolocated with <strong>Google Maps</strong>. Communication runs through <strong>RingCentral</strong> (calls/SMS) and <strong>Gmail</strong> (email). <strong>Slack</strong> alerts are currently off.</p></div>
+<div class="co co-i"><div class="tg">AT A GLANCE</div><p>Lead intake flows in from <strong>Intercom</strong> and <strong>Fire Notification</strong>. Contacts get validated with <strong>Debounce</strong> and enriched with <strong>Property Reach</strong>. Properties get scored by <strong>OpenAI</strong> and geolocated with <strong>Google Maps</strong>. Communication runs through <strong>RingCentral</strong> (calls/SMS) and <strong>Gmail</strong> (email). Outbound sequences send from purchased inboxes warmed by <strong>Instantly</strong>. <strong>Slack</strong> alerts are currently off.</p></div>
 
 <!-- Whiteboard diagram -->
 <div class="bd-wrap">
@@ -788,6 +788,7 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 <tr><td><strong>Debounce</strong></td><td>API (custom)</td><td>Email validation on new Contacts</td><td>Live</td></tr>
 <tr><td><strong>Property Reach</strong></td><td>API</td><td>Get Contacts associated with a property</td><td>Live</td></tr>
 <tr><td><strong>Fire Notification</strong></td><td>API</td><td>Get Contacts from fire incidents</td><td>Live</td></tr>
+<tr><td><strong>Instantly</strong></td><td>External tool</td><td>Warm-up of purchased sender inboxes used by HubSpot Sequences</td><td>Live</td></tr>
 </tbody>
 </table>
 
@@ -880,6 +881,18 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 </div>
 
 </div><!-- end .ig-grid custom -->
+
+<div class="ss"><h3>External tools</h3><p class="desc">Outside SaaS plugged into the outbound stack. Not a HubSpot integration in the technical sense; the link is operational (warm inboxes that HubSpot then sends from).</p></div>
+
+<div class="ig-grid">
+
+<div class="ig ig-custom">
+<div class="ig-h"><h4 class="ig-t">Instantly</h4><span class="ig-badge live">Live</span></div>
+<div class="ig-meta">External tool &middot; <span>Sender inbox warm-up</span></div>
+<p style="text-align:center;margin:24px 0 4px"><a href="instantly.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--o);color:#fff;text-decoration:none;font-weight:700;font-size:.85em;letter-spacing:.5px;border-radius:10px;transition:all .2s;box-shadow:0 4px 14px rgba(255,92,53,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,92,53,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px rgba(255,92,53,.25)'">Go to documentation &rarr;</a></p>
+</div>
+
+</div><!-- end .ig-grid external -->
 
 <div class="flow">
 <div class="flow-title">How the integrations chain together on a new incident</div>
