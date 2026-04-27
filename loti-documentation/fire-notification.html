@@ -228,7 +228,8 @@ footer a { color:var(--orange); text-decoration:none; }
       <a href="#mapping" class="toc-item"><div class="toc-num">III</div><div class="toc-label">Property Mapping</div></a>
       <a href="#events" class="toc-item"><div class="toc-num">IV</div><div class="toc-label">Event Subscriptions</div></a>
       <a href="#workflow" class="toc-item"><div class="toc-num">V</div><div class="toc-label">FN Integration Workflow</div></a>
-      <a href="#status" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Status</div></a>
+      <a href="#workbook" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Import Workbook</div></a>
+      <a href="#status" class="toc-item"><div class="toc-num">VII</div><div class="toc-label">Status</div></a>
     </div>
   </div>
 </div>
@@ -492,9 +493,71 @@ footer a { color:var(--orange); text-decoration:none; }
   </div>
 </div>
 
-<!-- VI: STATUS -->
+<!-- VI: IMPORT WORKBOOK -->
+<div class="section" id="workbook">
+  <div class="section-header"><div class="section-num">VI</div><div class="section-title">Import Workbook (Manual)</div></div>
+
+  <div class="card">
+    <h3>Purpose</h3>
+    <p>Standalone spreadsheet used to download incidents from the Fire Notification system, clean the values, and bulk-import LotiProperties into HubSpot. Complements the real-time event push (Section IV) for backfills, gaps, or operator-driven imports.</p>
+    <div class="spec">
+      <div class="spec-k">File</div><div class="spec-v"><code>Loti - Fire Notification Automation.xlsx</code> (versioned, latest is the highest "(n)" suffix)</div>
+      <div class="spec-k">Sheets</div><div class="spec-v">3 — Fire Notification (raw), Houses to Import (cleaned), Houses to Import to HubSpot (final)</div>
+      <div class="spec-k">Output</div><div class="spec-v">CSV exported from <em>Houses to Import to HubSpot</em>, imported into the HubSpot LotiProperty object</div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Sheets</h3>
+
+  <div class="action-chain">
+    <div class="action">
+      <div class="action-num">1</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Raw</span><span class="action-title">Fire Notification</span></div>
+        <p class="action-detail">Direct paste from the FN export. 59 columns, one row per incident. Includes INC ID, DATE, TIME, Paged Status, Type, Alarm Level, Location (full address string), City, County, State, Zip, Comments, Contacts, Owner, Owner Address, Year Built, Property Type, Living Area, Bedrooms, Bathrooms, Owner Occupied, Assessed and Market values, Last Sale, Loan and Tax fields.</p>
+      </div>
+    </div>
+    <div class="action-arrow">↓</div>
+    <div class="action">
+      <div class="action-num">2</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Cleaned</span><span class="action-title">Houses to Import</span></div>
+        <p class="action-detail">Formulas pull from <em>Fire Notification</em> and apply transformations. 49 columns aligned to HubSpot field names ("- FN" suffixes where applicable). Static columns added at the end: Route = Yes, Loti - Campaign = BAU Local, State - FN = CA.</p>
+      </div>
+    </div>
+    <div class="action-arrow">↓</div>
+    <div class="action">
+      <div class="action-num">3</div>
+      <div class="action-body">
+        <div class="action-head"><span class="action-type">Final</span><span class="action-title">Houses to Import to HubSpot</span></div>
+        <p class="action-detail">Values-only copy of <em>Houses to Import</em>. This is the sheet exported as CSV and uploaded to HubSpot. Keeping it as values (not formulas) prevents reference errors during import.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:30px 0 16px;font-size:1.05em;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:1.2px;">Cleanup formulas</h3>
+
+  <div class="card">
+    <div class="fm"><div class="fm-src"><div class="fm-name">Street Address - FN</div><div class="fm-desc">Splits the Location field at the first comma to drop city/state. <code>LEFT(Location, FIND(",", Location)-1)</code></div></div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">State Code</div><div class="fm-desc">Maps the full state name to the 2-digit FIPS code (e.g. California → 06, Texas → 48, New York → 36). 50-state <code>IFS</code> lookup.</div></div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Owner Last Name / Owner First Name</div><div class="fm-desc">Splits the House Owner string ("LAST, FIRST") on the comma. Last name = first token, First name = second token, trimmed.</div></div></div>
+    <div class="fm"><div class="fm-src"><div class="fm-name">Route / Loti - Campaign / State - FN</div><div class="fm-desc">Static values applied to every row: <code>Yes</code>, <code>BAU Local</code>, <code>CA</code>.</div></div></div>
+  </div>
+
+  <div class="tip">
+    <div class="tip-title">When to use</div>
+    <p>The real-time event push (Section IV) is the primary path. Use the workbook for bulk backfills, when the FN feed is paused, or when the operator needs to review incidents before they land in HubSpot.</p>
+  </div>
+
+  <div class="important">
+    <div class="important-title">Heads up</div>
+    <p>Sheet 2 uses Google Sheets functions (<code>SPLIT</code>, wrapped in <code>__xludf.DUMMYFUNCTION</code> when opened in Excel). Owner name splits will hold their cached values until the workbook is reopened in Google Sheets. Always validate the final sheet before exporting CSV.</p>
+  </div>
+</div>
+
+<!-- VII: STATUS -->
 <div class="section" id="status">
-  <div class="section-header"><div class="section-num">VI</div><div class="section-title">Status</div></div>
+  <div class="section-header"><div class="section-num">VII</div><div class="section-title">Status</div></div>
 
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
