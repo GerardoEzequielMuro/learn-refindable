@@ -309,22 +309,6 @@ footer a { color:var(--orange); text-decoration:none; }
       <li>Bucket the rest into <strong>HIGH</strong> (jack score &gt; 60, max 15) and <strong>LOW</strong> (jack score &lt; 30, max 15)</li>
       <li>Inject all examples into the prompt with the narrative and Jack's score, then ask the model for the new incident's score</li>
     </ol>
-    <p style="margin-top:10px;font-size:0.9em">If no examples qualify yet, the prompt instructs the model to be conservative.</p>
-  </div>
-
-  <div class="card">
-    <h3>Scoring scale (in prompt)</h3>
-    <table class="mtbl">
-      <thead><tr><th>Range</th><th>Meaning</th></tr></thead>
-      <tbody>
-        <tr><td><span class="val-pill val-bad">0&ndash;10</span></td><td>Trivial, minor, not interesting.</td></tr>
-        <tr><td><span class="val-pill val-bad">11&ndash;25</span></td><td>Small loss, limited damage, likely not worth much.</td></tr>
-        <tr><td><span class="val-pill val-warn">26&ndash;40</span></td><td>Moderate loss, some interest but not a priority.</td></tr>
-        <tr><td><span class="val-pill val-warn">41&ndash;60</span></td><td>Solid lead, meaningful damage, clearly relevant.</td></tr>
-        <tr><td><span class="val-pill val-ok">61&ndash;80</span></td><td>Strong lead, severe damage, high priority.</td></tr>
-        <tr><td><span class="val-pill val-ok">81&ndash;100</span></td><td>Extreme case, multiple structures and/or victims, displacement.</td></tr>
-      </tbody>
-    </table>
   </div>
 </div>
 
@@ -355,13 +339,11 @@ footer a { color:var(--orange); text-decoration:none; }
     <h3>Written back</h3>
     <div class="chips">
       <span class="chip write">fn__score_jack_calibrated</span>
-      <span class="chip write">model_version</span>
     </div>
     <table class="mtbl" style="margin-top:14px">
       <thead><tr><th>Property</th><th>Value</th></tr></thead>
       <tbody>
         <tr><td><code>fn__score_jack_calibrated</code></td><td>Number 0&ndash;100. The Jack-style score returned by the model, rounded and clamped.</td></tr>
-        <tr><td><code>model_version</code></td><td>String literal <code>fewshot-gpt5.1-v1</code>. Tags which prompt + model produced the score.</td></tr>
       </tbody>
     </table>
   </div>
@@ -464,7 +446,7 @@ footer a { color:var(--orange); text-decoration:none; }
       <div class="action-num">2</div>
       <div class="action-body">
         <div class="action-head"><span class="action-type">Custom Code</span><span class="action-title">Defined by custom code</span></div>
-        <p class="action-detail">Pulls few-shot examples from past LotiProperties, builds the prompt, calls OpenAI <code>gpt-5.1</code>, parses the JSON response and PATCHes <code>fn__score_jack_calibrated</code> + <code>model_version</code> back onto the LotiProperty. Secrets in scope: <code>Hubspot_rami</code>, <code>OpenAi</code>.</p>
+        <p class="action-detail">Pulls few-shot examples from past LotiProperties, builds the prompt, calls OpenAI <code>gpt-5.1</code>, parses the JSON response and PATCHes <code>fn__score_jack_calibrated</code> back onto the LotiProperty. Secrets in scope: <code>Hubspot_rami</code>, <code>OpenAi</code>.</p>
       </div>
     </div>
   </div>
@@ -477,11 +459,6 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
     <p>Workflow <strong>LotiProperty - AI SCORE - Property Score</strong> is On. Every qualifying fire incident on a house gets a calibrated score 3 minutes after enrollment.</p>
-  </div>
-
-  <div class="important">
-    <div class="important-title">Failure mode</div>
-    <p>If OpenAI returns malformed JSON, the API errors out, or the env vars are missing, the workflow exits silently with empty <code>outputFields</code>. The LotiProperty stays without a score and no retry is scheduled. Watch the workflow history for these silent skips.</p>
   </div>
 </div>
 
