@@ -422,7 +422,7 @@ footer a { color:var(--orange); text-decoration:none; }
       <span class="wf-card-tag">Workflow #2</span>
       <h3>Sync House - Contact</h3>
     </div>
-    <p class="wf-card-sub">Triggered by workflow #1 via Go-to-workflow. Waits and edits the LotiProperty record. Full action chain not documented here.</p>
+    <p class="wf-card-sub">Triggered by workflow #1 via Go-to-workflow. Copies LotiProperty (house) info onto the associated Contact, so each Contact carries the data of the property it came from.</p>
 
     <div class="evidence">
       <img src="images/pr-wf-sync-house.png" alt="Sync House - Contact workflow header and trigger">
@@ -498,11 +498,6 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card status-live">
     <div class="status-badge"><span class="status-dot"></span>Live</div>
     <p>All three workflows (<strong>Get data from PropertyReach - Contacts</strong>, <strong>Sync House - Contact</strong>, <strong>Match contacts - FN - PropertyReach</strong>) are On.</p>
-  </div>
-
-  <div class="important">
-    <div class="important-title">Open follow-ups</div>
-    <p>Two things are not yet pinned down: (1) whether the redundant <strong>Send a webhook</strong> step in workflow #1 is intentional or legacy, and (2) the full trigger conditions and action chain of <strong>Sync House - Contact</strong> (Group 2 cut off in screenshot, edit-record fields not listed).</p>
   </div>
 </div>
 
