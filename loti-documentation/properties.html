@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Properties Audit | Loti × Refindable</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#FF5C35;--orange-bg:#fff3ee;--dark:#1a1a2e;--text:#333;--text-light:#666;--text-muted:#999;--card:#fff;--bg:#fafafa;--border:#e8e8e8;--green:#10b981;--green-bg:#d1fae5;--red:#ef4444;--red-bg:#fee2e2;--yellow:#f59e0b;--yellow-bg:#fef3c7;--blue:#3b82f6;--blue-bg:#dbeafe}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:var(--text);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--orange);z-index:100;transition:width .1s}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;position:sticky;top:0;z-index:50}
+nav ul{display:flex;list-style:none;gap:18px;align-items:center;font-size:.92em}
+nav a{color:var(--text-light);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--orange)}
+.back-link{color:var(--orange);font-weight:600}
+.hero{background:linear-gradient(135deg,#fff 0%,var(--orange-bg) 100%);padding:50px 24px 36px;text-align:center;border-bottom:1px solid var(--border)}
+.hero h1{font-size:2.4em;font-weight:800;color:var(--dark);letter-spacing:-1px;line-height:1.1}
+.hero h1 span{color:var(--orange)}
+.hero-sub{color:var(--text-light);margin:14px auto 0;max-width:760px;font-size:1em}
+.hero-meta{display:flex;justify-content:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.hero-pill{padding:5px 14px;border-radius:20px;font-size:.78em;font-weight:600;letter-spacing:.4px;text-transform:uppercase;background:#fff;border:1px solid var(--border);color:var(--text-light)}
+.hero-pill.live{background:var(--orange-bg);color:var(--orange);border-color:var(--orange)}
+.tabs{max-width:1400px;margin:24px auto 0;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.tab{background:none;border:none;padding:12px 18px;font-family:inherit;font-size:.9em;font-weight:600;color:var(--text-light);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;transition:.15s}
+.tab:hover{color:var(--orange)}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab .count{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:10px;background:#f1f3f5;font-size:.78em;color:var(--text-light)}
+.tab.active .count{background:var(--orange-bg);color:var(--orange)}
+.summary{max-width:1400px;margin:18px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:.15s;user-select:none}
+.stat:hover{border-color:var(--orange);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.05)}
+.stat .l{font-size:.68em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted)}
+.stat .v{font-size:1.6em;font-weight:800;color:var(--dark);margin-top:3px;line-height:1.1}
+.stat.keep .v{color:var(--green)}
+.stat.del .v{color:var(--red)}
+.stat.chk .v{color:var(--yellow)}
+.stat.pen .v{color:var(--text-light)}
+.stat.active{border-color:var(--orange);background:var(--orange-bg)}
+.toolbar{max-width:1400px;margin:14px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar input,.toolbar select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.88em;background:#fff;color:var(--text)}
+.toolbar input{flex:1 1 240px;min-width:180px}
+.toolbar select{cursor:pointer;max-width:200px}
+.toolbar button{padding:8px 14px;border:none;border-radius:8px;font-family:inherit;font-size:.85em;font-weight:600;cursor:pointer;background:var(--dark);color:#fff;transition:.15s}
+.toolbar button:hover{background:var(--orange)}
+.toolbar button.ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
+.toolbar button.ghost:hover{border-color:var(--red);color:var(--red)}
+.tbl-wrap{max-width:1400px;margin:14px auto 40px;padding:0 24px;overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:.85em;min-width:1180px}
+.tbl thead th{background:#fff;font-weight:700;font-size:.7em;letter-spacing:.6px;text-transform:uppercase;color:var(--text-light);text-align:left;padding:11px 10px;border-bottom:2px solid var(--border);white-space:nowrap;position:sticky;top:0;z-index:5}
+.tbl tbody td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl tbody tr:hover{background:#fafafa}
+.tbl tbody tr.row-keep{background:#f0fdf4}
+.tbl tbody tr.row-del{background:#fef2f2}
+.tbl tbody tr.row-chk{background:#fffbeb}
+.tbl tbody tr.row-keep:hover{background:#dcfce7}
+.tbl tbody tr.row-del:hover{background:#fee2e2}
+.tbl tbody tr.row-chk:hover{background:#fef3c7}
+.tbl .name-cell{min-width:200px;max-width:280px}
+.tbl .name{font-weight:600;color:var(--dark);line-height:1.2}
+.tbl .name-tip{display:block;font-size:.85em;color:var(--text-muted);margin-top:3px;white-space:normal;line-height:1.35}
+.tbl code{background:#f1f3f5;padding:1px 6px;border-radius:4px;font-family:'SF Mono',Menlo,monospace;font-size:.85em;color:#5c4033;display:inline-block;margin-top:2px}
+.tbl select.f-disp,.tbl select.f-issue{padding:5px 6px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.83em;background:#fff;cursor:pointer;width:100%;min-width:115px}
+.tbl select.f-disp.v-keep{background:var(--green-bg);color:#065f46;border-color:var(--green);font-weight:600}
+.tbl select.f-disp.v-del{background:var(--red-bg);color:#991b1b;border-color:var(--red);font-weight:600}
+.tbl select.f-disp.v-chk{background:var(--yellow-bg);color:#92400e;border-color:var(--yellow);font-weight:600}
+.tbl textarea.f-notes{padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.83em;background:#fff;width:100%;min-width:140px;min-height:30px;resize:vertical}
+.fill-bar{position:relative;height:18px;background:#f1f3f5;border-radius:4px;overflow:hidden;min-width:80px}
+.fill-bar-fg{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#fdba74,#fb923c);border-radius:4px}
+.fill-bar.zero .fill-bar-fg{display:none}
+.fill-bar-l{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.76em;color:var(--dark);z-index:2}
+.fill-bar.zero .fill-bar-l{color:var(--text-muted)}
+.usage-pill{display:inline-block;padding:2px 7px;border-radius:10px;font-size:.78em;font-weight:600;background:var(--blue-bg);color:#1e40af;cursor:help}
+.usage-pill.zero{background:#f1f3f5;color:var(--text-muted)}
+.type-pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.78em;background:#f1f3f5;color:var(--text);font-weight:500}
+.type-pill.calc{background:#eef2ff;color:#3730a3;margin-left:4px}
+.muted{color:var(--text-muted)}
+.empty{text-align:center;padding:60px;color:var(--text-muted)}
+footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85em;border-top:1px solid var(--border);background:#fff}
+.note-bar{max-width:1400px;margin:14px auto 0;padding:10px 18px;background:var(--yellow-bg);border:1px solid var(--yellow);border-radius:10px;color:#92400e;font-size:.85em;line-height:1.5}
+.note-bar strong{color:#78350f}
+@media(max-width:900px){.tbl{font-size:.78em}.hero h1{font-size:1.8em}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav>
+  <ul>
+    <li><a href="index.html" class="back-link">← Back to docs</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <h1>Properties <span>Audit</span></h1>
+  <p class="hero-sub">Custom HubSpot properties only (HubSpot-defined ones can't be deleted). Mark each as Mantener / Borrar / Chequear, fill in the Issue from Data Quality (No data / Unused / Duplicate), and add notes. Marks save to your browser automatically.</p>
+  <div class="hero-meta">
+    <span class="hero-pill live">Source: HubSpot Properties Export 2026-04-28</span>
+  </div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div class="note-bar"><strong>Heads up:</strong> dispositions, issues and notes are stored in your browser's localStorage. They persist across reloads on the same browser, but clearing site data wipes them. Use <em>Export marks</em> to back up to CSV.</div>
+
+<div class="summary" id="summary"></div>
+
+<div class="toolbar">
+  <input id="searchBox" placeholder="Search name, internal name, description, creator, group, options...">
+  <select id="filterIssue"><option value="">All issues</option></select>
+  <select id="filterType"><option value="">All types</option></select>
+  <select id="filterGroup"><option value="">All groups</option></select>
+  <select id="filterSource"><option value="">All sources</option></select>
+  <select id="filterCreator"><option value="">All creators</option></select>
+  <button id="exportBtn">Export marks (CSV)</button>
+  <button class="ghost" id="clearBtn">Clear all marks</button>
+</div>
+
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr>
+        <th style="width:120px">Disposition</th>
+        <th style="width:140px">Issue</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Group</th>
+        <th>Creator</th>
+        <th>Fill rate</th>
+        <th>Last updated</th>
+        <th>Source</th>
+        <th>Usages</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<footer>Built by Refindable for Loti · marks stored locally in your browser · click <em>Export marks</em> to back up before clearing site data</footer>
+
+<script>
+const ISSUE_OPTIONS = ['No data', 'Unused', 'Duplicate', 'No data + Unused', 'No data + Duplicate', 'Unused + Duplicate', 'No data + Unused + Duplicate'];
+const OBJECT_LABELS = {contact:'Contacts', company:'Companies', deal:'Deals', lotiproperty:'LotiProperty'};
+let DATA = {};
+let currentObj = 'contact';
+let activeStat = 'all';
+
+function storageKey(obj, internal){ return 'loti-prop-'+obj+'-'+internal }
+function loadMarks(obj, internal){
+  try{const raw=localStorage.getItem(storageKey(obj,internal));return raw?JSON.parse(raw):{disposition:'',issue:'',notes:''}}
+  catch(e){return {disposition:'',issue:'',notes:''}}
+}
+function saveMarks(obj, internal, marks){
+  localStorage.setItem(storageKey(obj,internal), JSON.stringify(marks));
+}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort()}
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fillSelect(id,values,placeholder){
+  const sel=document.getElementById(id);const cur=sel.value;
+  sel.innerHTML='<option value="">'+placeholder+'</option>';
+  values.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)});
+  sel.value=cur;
+}
+
+function renderTabs(){
+  const t=document.getElementById('tabs');
+  t.innerHTML='';
+  Object.keys(OBJECT_LABELS).forEach(k=>{
+    const b=document.createElement('button');
+    b.className='tab'+(k===currentObj?' active':'');
+    b.innerHTML=OBJECT_LABELS[k]+' <span class="count">'+(DATA[k]||[]).length+'</span>';
+    b.addEventListener('click',()=>{currentObj=k;activeStat='all';renderTabs();initFilters();render()});
+    t.appendChild(b);
+  });
+}
+
+function renderSummary(count){
+  const c=document.getElementById('summary');
+  c.innerHTML=`
+    <div class="stat" data-filter="all"><div class="l">Total</div><div class="v">${count.total}</div></div>
+    <div class="stat keep" data-filter="mantener"><div class="l">Mantener</div><div class="v">${count.keep}</div></div>
+    <div class="stat del" data-filter="borrar"><div class="l">Borrar</div><div class="v">${count.del}</div></div>
+    <div class="stat chk" data-filter="chequear"><div class="l">Chequear</div><div class="v">${count.chk}</div></div>
+    <div class="stat pen" data-filter="pending"><div class="l">Pending</div><div class="v">${count.pen}</div></div>
+    <div class="stat" data-filter="zero"><div class="l">Fill rate 0%</div><div class="v">${count.zero}</div></div>
+    <div class="stat" data-filter="never"><div class="l">Never updated</div><div class="v">${count.never}</div></div>
+    <div class="stat" data-filter="noUsage"><div class="l">No usages</div><div class="v">${count.noUse}</div></div>
+  `;
+  c.querySelectorAll('.stat').forEach(s=>{
+    if(s.dataset.filter===activeStat && activeStat!=='all') s.classList.add('active');
+    s.addEventListener('click',()=>{activeStat=activeStat===s.dataset.filter?'all':s.dataset.filter;render()});
+  });
+}
+
+function rowHtml(p, marks){
+  const fillNum=p.fillNum;
+  const fillBarCls = fillNum===0?'fill-bar zero':'fill-bar';
+  const fillW = Math.min(100, fillNum);
+  const usageCls = p.usageCount===0?'usage-pill zero':'usage-pill';
+  let dispCls='';
+  if(marks.disposition==='Mantener') dispCls='v-keep';
+  else if(marks.disposition==='Borrar') dispCls='v-del';
+  else if(marks.disposition==='Chequear') dispCls='v-chk';
+  const issueOpts = [''].concat(ISSUE_OPTIONS).map(o=>`<option value="${escapeHtml(o)}" ${marks.issue===o?'selected':''}>${o||'— —'}</option>`).join('');
+  return `<tr data-internal="${escapeHtml(p.internal)}" data-disposition="${marks.disposition||''}">
+    <td><select class="f-disp ${dispCls}" data-field="disposition">
+      <option value="">— —</option>
+      <option value="Mantener" ${marks.disposition==='Mantener'?'selected':''}>Mantener</option>
+      <option value="Borrar" ${marks.disposition==='Borrar'?'selected':''}>Borrar</option>
+      <option value="Chequear" ${marks.disposition==='Chequear'?'selected':''}>Chequear</option>
+    </select></td>
+    <td><select class="f-issue" data-field="issue">${issueOpts}</select></td>
+    <td class="name-cell">
+      <div class="name">${escapeHtml(p.name)}</div>
+      <code>${escapeHtml(p.internal)}</code>
+      ${p.desc?`<span class="name-tip">${escapeHtml(p.desc.length>180?p.desc.slice(0,180)+'…':p.desc)}</span>`:''}
+    </td>
+    <td><span class="type-pill">${escapeHtml(p.type)}</span>${p.calculated?'<span class="type-pill calc">calc</span>':''}</td>
+    <td>${escapeHtml(p.group)}</td>
+    <td>${escapeHtml(p.creator)||'<span class="muted">—</span>'}</td>
+    <td><div class="${fillBarCls}"><div class="fill-bar-fg" style="width:${fillW}%"></div><span class="fill-bar-l">${escapeHtml(p.fillRate)}</span></div></td>
+    <td>${escapeHtml(p.lastUpdated)||'<span class="muted">—</span>'}</td>
+    <td>${escapeHtml(p.source)||'<span class="muted">—</span>'}</td>
+    <td><span class="${usageCls}" title="${escapeHtml(p.usages)}">${p.usageCount}</span></td>
+    <td><textarea class="f-notes" data-field="notes" rows="1" placeholder="notes…">${escapeHtml(marks.notes)}</textarea></td>
+  </tr>`;
+}
+
+function applyRowClass(tr){
+  tr.classList.remove('row-keep','row-del','row-chk');
+  const d=tr.dataset.disposition;
+  if(d==='Mantener') tr.classList.add('row-keep');
+  else if(d==='Borrar') tr.classList.add('row-del');
+  else if(d==='Chequear') tr.classList.add('row-chk');
+}
+
+function initFilters(){
+  const props = DATA[currentObj]||[];
+  fillSelect('filterIssue', ISSUE_OPTIONS, 'All issues');
+  fillSelect('filterType', uniq(props.map(p=>p.type)), 'All types');
+  fillSelect('filterGroup', uniq(props.map(p=>p.group)), 'All groups');
+  fillSelect('filterSource', uniq(props.map(p=>p.source)), 'All sources');
+  fillSelect('filterCreator', uniq(props.map(p=>p.creator)), 'All creators');
+}
+
+function render(){
+  const props = DATA[currentObj]||[];
+  const q=document.getElementById('searchBox').value.toLowerCase().trim();
+  const fIssue=document.getElementById('filterIssue').value;
+  const fType=document.getElementById('filterType').value;
+  const fGroup=document.getElementById('filterGroup').value;
+  const fSource=document.getElementById('filterSource').value;
+  const fCreator=document.getElementById('filterCreator').value;
+
+  let html='';
+  let count={total:0,keep:0,del:0,chk:0,pen:0,zero:0,never:0,noUse:0};
+  props.forEach(p=>{
+    const marks=loadMarks(currentObj, p.internal);
+    count.total++;
+    if(marks.disposition==='Mantener') count.keep++;
+    else if(marks.disposition==='Borrar') count.del++;
+    else if(marks.disposition==='Chequear') count.chk++;
+    else count.pen++;
+    if(p.fillNum===0) count.zero++;
+    if(!p.lastUpdated) count.never++;
+    if(p.usageCount===0) count.noUse++;
+    if(q){
+      const blob=(p.name+' '+p.internal+' '+p.desc+' '+p.creator+' '+p.group+' '+p.options).toLowerCase();
+      if(!blob.includes(q)) return;
+    }
+    if(fIssue && marks.issue!==fIssue) return;
+    if(fType && p.type!==fType) return;
+    if(fGroup && p.group!==fGroup) return;
+    if(fSource && p.source!==fSource) return;
+    if(fCreator && p.creator!==fCreator) return;
+    if(activeStat==='mantener' && marks.disposition!=='Mantener') return;
+    if(activeStat==='borrar' && marks.disposition!=='Borrar') return;
+    if(activeStat==='chequear' && marks.disposition!=='Chequear') return;
+    if(activeStat==='pending' && marks.disposition) return;
+    if(activeStat==='zero' && p.fillNum!==0) return;
+    if(activeStat==='never' && p.lastUpdated) return;
+    if(activeStat==='noUsage' && p.usageCount!==0) return;
+    html+=rowHtml(p,marks);
+  });
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML=html||'<tr><td colspan="11" class="empty">No properties match the current filters.</td></tr>';
+  tbody.querySelectorAll('tr').forEach(applyRowClass);
+  renderSummary(count);
+}
+
+document.getElementById('tbody').addEventListener('change',e=>{
+  const t=e.target;
+  if(!t.dataset.field) return;
+  const tr=t.closest('tr');
+  const internal=tr.dataset.internal;
+  const marks=loadMarks(currentObj, internal);
+  marks[t.dataset.field]=t.value;
+  saveMarks(currentObj, internal, marks);
+  if(t.dataset.field==='disposition'){
+    tr.dataset.disposition=t.value;
+    applyRowClass(tr);
+    t.classList.remove('v-keep','v-del','v-chk');
+    if(t.value==='Mantener') t.classList.add('v-keep');
+    else if(t.value==='Borrar') t.classList.add('v-del');
+    else if(t.value==='Chequear') t.classList.add('v-chk');
+    render();
+  }
+});
+document.getElementById('tbody').addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.field!=='notes') return;
+  const tr=t.closest('tr');
+  const internal=tr.dataset.internal;
+  const marks=loadMarks(currentObj, internal);
+  marks.notes=t.value;
+  saveMarks(currentObj, internal, marks);
+});
+
+['searchBox','filterIssue','filterType','filterGroup','filterSource','filterCreator'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',render);
+  document.getElementById(id).addEventListener('change',render);
+});
+
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const props = DATA[currentObj]||[];
+  const rows=[['Object','Name','Internal name','Type','Group','Fill rate','Last updated','Source','Usages count','Disposition','Issue','Notes']];
+  props.forEach(p=>{
+    const m=loadMarks(currentObj, p.internal);
+    rows.push([currentObj, p.name, p.internal, p.type, p.group, p.fillRate, p.lastUpdated, p.source, p.usageCount, m.disposition, m.issue, m.notes]);
+  });
+  const csv=rows.map(r=>r.map(c=>{const s=String(c==null?'':c);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='loti-'+currentObj+'-properties-audit-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);
+});
+
+document.getElementById('clearBtn').addEventListener('click',()=>{
+  if(!confirm('Clear all dispositions, issues and notes for the current tab ('+OBJECT_LABELS[currentObj]+') from your browser?')) return;
+  (DATA[currentObj]||[]).forEach(p=>localStorage.removeItem(storageKey(currentObj, p.internal)));
+  render();
+});
+
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%'
+});
+
+fetch('properties-data.json').then(r=>r.json()).then(d=>{
+  DATA = d;
+  renderTabs();
+  initFilters();
+  render();
+}).catch(err=>{
+  document.getElementById('tbody').innerHTML='<tr><td colspan="11" class="empty">Failed to load properties-data.json: '+err.message+'</td></tr>';
+});
+</script>
+</body>
+</html>
