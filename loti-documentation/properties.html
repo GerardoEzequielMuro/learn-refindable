@@ -75,6 +75,11 @@ nav a:hover{color:var(--orange)}
 .usage-pill.zero{background:#f1f3f5;color:var(--text-muted)}
 .type-pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.78em;background:#f1f3f5;color:var(--text);font-weight:500}
 .type-pill.calc{background:#eef2ff;color:#3730a3;margin-left:4px}
+.type-pill.hs{background:#1a1a2e;color:#fff;margin-left:4px}
+.type-pill.custom{background:var(--orange-bg);color:var(--orange);margin-left:4px;font-weight:600}
+.tbl tbody tr.hs-defined td:first-child{position:relative}
+.tbl tbody tr.hs-defined td:first-child::before{content:"🔒";position:absolute;left:-2px;top:8px;font-size:10px;opacity:.5}
+.tbl select.f-disp option:disabled{color:var(--text-muted)}
 .muted{color:var(--text-muted)}
 .empty{text-align:center;padding:60px;color:var(--text-muted)}
 footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85em;border-top:1px solid var(--border);background:#fff}
@@ -94,7 +99,7 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
 
 <div class="hero">
   <h1>Properties <span>Audit</span></h1>
-  <p class="hero-sub">Custom HubSpot properties only (HubSpot-defined ones can't be deleted). Mark each as Mantener / Borrar / Chequear, fill in the Issue from Data Quality (No data / Unused / Duplicate), and add notes. Marks save to your browser automatically.</p>
+  <p class="hero-sub">All HubSpot properties for the audit. <strong>Borrar</strong> is locked on HubSpot-defined ones (they can't be deleted). Mark Mantener / Borrar / Chequear, capture the Issue from Data Quality, and add notes. Marks save to your browser automatically.</p>
   <div class="hero-meta">
     <span class="hero-pill live">Source: HubSpot Properties Export 2026-04-28</span>
   </div>
@@ -180,6 +185,7 @@ function renderSummary(count){
   const c=document.getElementById('summary');
   c.innerHTML=`
     <div class="stat" data-filter="all"><div class="l">Total</div><div class="v">${count.total}</div></div>
+    <div class="stat" data-filter="custom"><div class="l">Custom (deletable)</div><div class="v" style="color:var(--orange)">${count.custom}</div></div>
     <div class="stat keep" data-filter="mantener"><div class="l">Mantener</div><div class="v">${count.keep}</div></div>
     <div class="stat del" data-filter="borrar"><div class="l">Borrar</div><div class="v">${count.del}</div></div>
     <div class="stat chk" data-filter="chequear"><div class="l">Chequear</div><div class="v">${count.chk}</div></div>
@@ -204,11 +210,16 @@ function rowHtml(p, marks){
   else if(marks.disposition==='Borrar') dispCls='v-del';
   else if(marks.disposition==='Chequear') dispCls='v-chk';
   const issueOpts = [''].concat(ISSUE_OPTIONS).map(o=>`<option value="${escapeHtml(o)}" ${marks.issue===o?'selected':''}>${o||'— —'}</option>`).join('');
-  return `<tr data-internal="${escapeHtml(p.internal)}" data-disposition="${marks.disposition||''}">
+  const deletable = !p.hubspotDefined;
+  const borrarOpt = deletable
+    ? `<option value="Borrar" ${marks.disposition==='Borrar'?'selected':''}>Borrar</option>`
+    : `<option value="Borrar" disabled title="HubSpot-defined property cannot be deleted">Borrar (locked)</option>`;
+  const hsPill = p.hubspotDefined ? '<span class="type-pill hs" title="HubSpot-defined, cannot be deleted">HS</span>' : '<span class="type-pill custom" title="Custom property">Custom</span>';
+  return `<tr data-internal="${escapeHtml(p.internal)}" data-disposition="${marks.disposition||''}" class="${p.hubspotDefined?'hs-defined':''}">
     <td><select class="f-disp ${dispCls}" data-field="disposition">
       <option value="">— —</option>
       <option value="Mantener" ${marks.disposition==='Mantener'?'selected':''}>Mantener</option>
-      <option value="Borrar" ${marks.disposition==='Borrar'?'selected':''}>Borrar</option>
+      ${borrarOpt}
       <option value="Chequear" ${marks.disposition==='Chequear'?'selected':''}>Chequear</option>
     </select></td>
     <td><select class="f-issue" data-field="issue">${issueOpts}</select></td>
@@ -217,7 +228,7 @@ function rowHtml(p, marks){
       <code>${escapeHtml(p.internal)}</code>
       ${p.desc?`<span class="name-tip">${escapeHtml(p.desc.length>180?p.desc.slice(0,180)+'…':p.desc)}</span>`:''}
     </td>
-    <td><span class="type-pill">${escapeHtml(p.type)}</span>${p.calculated?'<span class="type-pill calc">calc</span>':''}</td>
+    <td><span class="type-pill">${escapeHtml(p.type)}</span>${p.calculated?'<span class="type-pill calc">calc</span>':''}${hsPill}</td>
     <td>${escapeHtml(p.group)}</td>
     <td>${escapeHtml(p.creator)||'<span class="muted">—</span>'}</td>
     <td><div class="${fillBarCls}"><div class="fill-bar-fg" style="width:${fillW}%"></div><span class="fill-bar-l">${escapeHtml(p.fillRate)}</span></div></td>
@@ -255,10 +266,11 @@ function render(){
   const fCreator=document.getElementById('filterCreator').value;
 
   let html='';
-  let count={total:0,keep:0,del:0,chk:0,pen:0,zero:0,never:0,noUse:0};
+  let count={total:0,custom:0,keep:0,del:0,chk:0,pen:0,zero:0,never:0,noUse:0};
   props.forEach(p=>{
     const marks=loadMarks(currentObj, p.internal);
     count.total++;
+    if(!p.hubspotDefined) count.custom++;
     if(marks.disposition==='Mantener') count.keep++;
     else if(marks.disposition==='Borrar') count.del++;
     else if(marks.disposition==='Chequear') count.chk++;
@@ -275,6 +287,7 @@ function render(){
     if(fGroup && p.group!==fGroup) return;
     if(fSource && p.source!==fSource) return;
     if(fCreator && p.creator!==fCreator) return;
+    if(activeStat==='custom' && p.hubspotDefined) return;
     if(activeStat==='mantener' && marks.disposition!=='Mantener') return;
     if(activeStat==='borrar' && marks.disposition!=='Borrar') return;
     if(activeStat==='chequear' && marks.disposition!=='Chequear') return;
