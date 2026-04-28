@@ -108,7 +108,7 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
 
 <div class="hero">
   <h1>Properties <span>Audit</span></h1>
-  <p class="hero-sub">All HubSpot properties for the audit. La columna <strong>Recomendación</strong> es mi sugerencia automática (Mantener / Borrar / Chequear) basada en fill rate, last updated, usages y si es HubSpot-defined. Vos confirmás o cambiás en <strong>Disposición</strong>. <strong>Borrar</strong> está bloqueado en las HubSpot-defined porque no se pueden eliminar.</p>
+  <p class="hero-sub">All HubSpot properties for the audit. The <strong>Recommendation</strong> column is my automatic suggestion (Keep / Delete / Check) based on fill rate, last updated, usages and HubSpot-defined status. You confirm or change in <strong>Disposition</strong>. <strong>Delete</strong> is locked on HubSpot-defined properties because they can't be removed.</p>
   <div class="hero-meta">
     <span class="hero-pill live">Source: HubSpot Properties Export 2026-04-28</span>
   </div>
@@ -127,7 +127,7 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
   <select id="filterGroup"><option value="">All groups</option></select>
   <select id="filterSource"><option value="">All sources</option></select>
   <select id="filterCreator"><option value="">All creators</option></select>
-  <button id="applyRecomBtn" title="Aplica la Recomendación a todas las filas que estén en — — (no toca las que ya marcaste)">Aplicar recomendaciones a pendientes</button>
+  <button id="applyRecomBtn" title="Applies the Recommendation to every row still on — — (does not overwrite manual marks)">Apply recommendations to pending</button>
   <button id="exportBtn">Export marks (CSV)</button>
   <button class="ghost" id="clearBtn">Clear all marks</button>
 </div>
@@ -136,8 +136,8 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
   <table class="tbl">
     <thead>
       <tr>
-        <th style="width:130px">Recomendación</th>
-        <th style="width:120px">Disposición</th>
+        <th style="width:130px">Recommendation</th>
+        <th style="width:120px">Disposition</th>
         <th style="width:130px">Issue</th>
         <th>Name</th>
         <th>Type</th>
@@ -164,9 +164,18 @@ let currentObj = 'contact';
 let activeStat = 'all';
 
 function storageKey(obj, internal){ return 'loti-prop-'+obj+'-'+internal }
+const DISP_MIGRATION = {'Mantener':'Keep','Borrar':'Delete','Chequear':'Check'};
 function loadMarks(obj, internal){
-  try{const raw=localStorage.getItem(storageKey(obj,internal));return raw?JSON.parse(raw):{disposition:'',issue:'',notes:''}}
-  catch(e){return {disposition:'',issue:'',notes:''}}
+  try{
+    const raw=localStorage.getItem(storageKey(obj,internal));
+    if(!raw) return {disposition:'',issue:'',notes:''};
+    const m=JSON.parse(raw);
+    if(DISP_MIGRATION[m.disposition]){
+      m.disposition=DISP_MIGRATION[m.disposition];
+      localStorage.setItem(storageKey(obj,internal), JSON.stringify(m));
+    }
+    return m;
+  }catch(e){return {disposition:'',issue:'',notes:''}}
 }
 function saveMarks(obj, internal, marks){
   localStorage.setItem(storageKey(obj,internal), JSON.stringify(marks));
@@ -197,9 +206,9 @@ function renderSummary(count){
   c.innerHTML=`
     <div class="stat" data-filter="all"><div class="l">Total</div><div class="v">${count.total}</div></div>
     <div class="stat" data-filter="custom"><div class="l">Custom (deletable)</div><div class="v" style="color:var(--orange)">${count.custom}</div></div>
-    <div class="stat keep" data-filter="mantener"><div class="l">Mantener</div><div class="v">${count.keep}</div></div>
-    <div class="stat del" data-filter="borrar"><div class="l">Borrar</div><div class="v">${count.del}</div></div>
-    <div class="stat chk" data-filter="chequear"><div class="l">Chequear</div><div class="v">${count.chk}</div></div>
+    <div class="stat keep" data-filter="keep"><div class="l">Keep</div><div class="v">${count.keep}</div></div>
+    <div class="stat del" data-filter="delete"><div class="l">Delete</div><div class="v">${count.del}</div></div>
+    <div class="stat chk" data-filter="check"><div class="l">Check</div><div class="v">${count.chk}</div></div>
     <div class="stat pen" data-filter="pending"><div class="l">Pending</div><div class="v">${count.pen}</div></div>
     <div class="stat" data-filter="zero"><div class="l">Fill rate 0%</div><div class="v">${count.zero}</div></div>
     <div class="stat" data-filter="never"><div class="l">Never updated</div><div class="v">${count.never}</div></div>
@@ -228,20 +237,20 @@ function issuePillsHtml(issues){
 }
 
 function recommend(p, issues){
-  if(p.hubspotDefined) return {value:'Mantener', reason:'HubSpot-defined: no se puede borrar.'};
+  if(p.hubspotDefined) return {value:'Keep', reason:'HubSpot-defined property: cannot be deleted.'};
   const hasNoData = issues.includes('No data');
   const hasUnused = issues.includes('Unused');
   const hasDup = issues.includes('Duplicate');
-  if(hasNoData && hasUnused && !hasDup) return {value:'Borrar', reason:'Sin datos en ningún record y sin referencias en ningún asset. Candidato fuerte a borrar.'};
-  if(hasNoData && hasUnused && hasDup) return {value:'Chequear', reason:'Sin datos y sin uso, pero hay otra property con el mismo nombre. Comparar antes de borrar.'};
-  if(hasDup) return {value:'Chequear', reason:'Nombre duplicado con otra property. Decidir cuál se queda.'};
-  if(hasNoData && !hasUnused) return {value:'Chequear', reason:'Sin datos en ningún record pero está referenciada en algún asset. Revisar para qué se usa.'};
-  if(!hasNoData && hasUnused) return {value:'Chequear', reason:'Tiene datos cargados pero no se usa en ningún asset. Revisar antes de borrar.'};
-  return {value:'Mantener', reason:'Tiene datos cargados y está en uso.'};
+  if(hasNoData && hasUnused && !hasDup) return {value:'Delete', reason:'No data in any record and not referenced in any asset. Strong delete candidate.'};
+  if(hasNoData && hasUnused && hasDup) return {value:'Check', reason:'No data and unused, but another property shares the name. Compare before deleting.'};
+  if(hasDup) return {value:'Check', reason:'Duplicate display name with another property. Decide which one stays.'};
+  if(hasNoData && !hasUnused) return {value:'Check', reason:'No data in any record but referenced somewhere. Review what it is used for.'};
+  if(!hasNoData && hasUnused) return {value:'Check', reason:'Has data but not referenced in any asset. Review before deleting.'};
+  return {value:'Keep', reason:'Has data and is in use.'};
 }
 
 function recomPillHtml(rec){
-  const cls = rec.value==='Mantener'?'recom-keep':rec.value==='Borrar'?'recom-del':'recom-chk';
+  const cls = rec.value==='Keep'?'recom-keep':rec.value==='Delete'?'recom-del':'recom-chk';
   return `<span class="recom-pill ${cls}" title="${escapeHtml(rec.reason)}">${rec.value}</span>`;
 }
 
@@ -258,23 +267,23 @@ function rowHtml(p, marks){
   const fillW = Math.min(100, fillNum);
   const usageCls = p.usageCount===0?'usage-pill zero':'usage-pill';
   let dispCls='';
-  if(marks.disposition==='Mantener') dispCls='v-keep';
-  else if(marks.disposition==='Borrar') dispCls='v-del';
-  else if(marks.disposition==='Chequear') dispCls='v-chk';
+  if(marks.disposition==='Keep') dispCls='v-keep';
+  else if(marks.disposition==='Delete') dispCls='v-del';
+  else if(marks.disposition==='Check') dispCls='v-chk';
   const issues = deriveIssue(p, DUP_SET);
   const rec = recommend(p, issues);
   const deletable = !p.hubspotDefined;
-  const borrarOpt = deletable
-    ? `<option value="Borrar" ${marks.disposition==='Borrar'?'selected':''}>Borrar</option>`
-    : `<option value="Borrar" disabled title="HubSpot-defined property cannot be deleted">Borrar (locked)</option>`;
+  const deleteOpt = deletable
+    ? `<option value="Delete" ${marks.disposition==='Delete'?'selected':''}>Delete</option>`
+    : `<option value="Delete" disabled title="HubSpot-defined property cannot be deleted">Delete (locked)</option>`;
   const hsPill = p.hubspotDefined ? '<span class="type-pill hs" title="HubSpot-defined, cannot be deleted">HS</span>' : '<span class="type-pill custom" title="Custom property">Custom</span>';
   return `<tr data-internal="${escapeHtml(p.internal)}" data-disposition="${marks.disposition||''}" data-recom="${rec.value}" class="${p.hubspotDefined?'hs-defined':''}">
     <td>${recomPillHtml(rec)}</td>
     <td><select class="f-disp ${dispCls}" data-field="disposition">
       <option value="">— —</option>
-      <option value="Mantener" ${marks.disposition==='Mantener'?'selected':''}>Mantener</option>
-      ${borrarOpt}
-      <option value="Chequear" ${marks.disposition==='Chequear'?'selected':''}>Chequear</option>
+      <option value="Keep" ${marks.disposition==='Keep'?'selected':''}>Keep</option>
+      ${deleteOpt}
+      <option value="Check" ${marks.disposition==='Check'?'selected':''}>Check</option>
     </select></td>
     <td>${issuePillsHtml(issues)}</td>
     <td class="name-cell">
@@ -296,9 +305,9 @@ function rowHtml(p, marks){
 function applyRowClass(tr){
   tr.classList.remove('row-keep','row-del','row-chk');
   const d=tr.dataset.disposition;
-  if(d==='Mantener') tr.classList.add('row-keep');
-  else if(d==='Borrar') tr.classList.add('row-del');
-  else if(d==='Chequear') tr.classList.add('row-chk');
+  if(d==='Keep') tr.classList.add('row-keep');
+  else if(d==='Delete') tr.classList.add('row-del');
+  else if(d==='Check') tr.classList.add('row-chk');
 }
 
 function initFilters(){
@@ -324,15 +333,7 @@ function render(){
   let count={total:0,custom:0,keep:0,del:0,chk:0,pen:0,zero:0,never:0,noUse:0};
   props.forEach(p=>{
     const marks=loadMarks(currentObj, p.internal);
-    count.total++;
-    if(!p.hubspotDefined) count.custom++;
-    if(marks.disposition==='Mantener') count.keep++;
-    else if(marks.disposition==='Borrar') count.del++;
-    else if(marks.disposition==='Chequear') count.chk++;
-    else count.pen++;
-    if(p.fillNum===0) count.zero++;
-    if(!p.lastUpdated) count.never++;
-    if(p.usageCount===0) count.noUse++;
+    // First-pass filters (search + dropdowns) — counts reflect this scope
     if(q){
       const blob=(p.name+' '+p.internal+' '+p.desc+' '+p.creator+' '+p.group+' '+p.options).toLowerCase();
       if(!blob.includes(q)) return;
@@ -345,10 +346,21 @@ function render(){
     if(fGroup && p.group!==fGroup) return;
     if(fSource && p.source!==fSource) return;
     if(fCreator && p.creator!==fCreator) return;
+    // count after first-pass
+    count.total++;
+    if(!p.hubspotDefined) count.custom++;
+    if(marks.disposition==='Keep') count.keep++;
+    else if(marks.disposition==='Delete') count.del++;
+    else if(marks.disposition==='Check') count.chk++;
+    else count.pen++;
+    if(p.fillNum===0) count.zero++;
+    if(!p.lastUpdated) count.never++;
+    if(p.usageCount===0) count.noUse++;
+    // Second-pass filter (active stat card) — only restricts the rendered rows
     if(activeStat==='custom' && p.hubspotDefined) return;
-    if(activeStat==='mantener' && marks.disposition!=='Mantener') return;
-    if(activeStat==='borrar' && marks.disposition!=='Borrar') return;
-    if(activeStat==='chequear' && marks.disposition!=='Chequear') return;
+    if(activeStat==='keep' && marks.disposition!=='Keep') return;
+    if(activeStat==='delete' && marks.disposition!=='Delete') return;
+    if(activeStat==='check' && marks.disposition!=='Check') return;
     if(activeStat==='pending' && marks.disposition) return;
     if(activeStat==='zero' && p.fillNum!==0) return;
     if(activeStat==='never' && p.lastUpdated) return;
@@ -373,9 +385,9 @@ document.getElementById('tbody').addEventListener('change',e=>{
     tr.dataset.disposition=t.value;
     applyRowClass(tr);
     t.classList.remove('v-keep','v-del','v-chk');
-    if(t.value==='Mantener') t.classList.add('v-keep');
-    else if(t.value==='Borrar') t.classList.add('v-del');
-    else if(t.value==='Chequear') t.classList.add('v-chk');
+    if(t.value==='Keep') t.classList.add('v-keep');
+    else if(t.value==='Delete') t.classList.add('v-del');
+    else if(t.value==='Check') t.classList.add('v-chk');
     render();
   }
 });
@@ -403,7 +415,7 @@ document.getElementById('applyRecomBtn').addEventListener('click',()=>{
     saveMarks(currentObj, p.internal, marks);
     applied++;
   });
-  alert('Aplicadas '+applied+' recomendaciones a filas pendientes en '+OBJECT_LABELS[currentObj]+'.');
+  alert('Applied '+applied+' recommendations to pending rows in '+OBJECT_LABELS[currentObj]+'.');
   render();
 });
 
@@ -415,7 +427,7 @@ document.getElementById('applyRecomBtn').addEventListener('click',()=>{
 document.getElementById('exportBtn').addEventListener('click',()=>{
   const props = DATA[currentObj]||[];
   buildDupSet(props);
-  const rows=[['Object','Name','Internal name','Type','HubSpot defined','Group','Fill rate','Last updated','Source','Usages count','Issue','Recomendación','Disposición','Notes']];
+  const rows=[['Object','Name','Internal name','Type','HubSpot defined','Group','Fill rate','Last updated','Source','Usages count','Issue','Recommendation','Disposition','Notes']];
   props.forEach(p=>{
     const m=loadMarks(currentObj, p.internal);
     const issues = deriveIssue(p, DUP_SET);
@@ -429,7 +441,7 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
 });
 
 document.getElementById('clearBtn').addEventListener('click',()=>{
-  if(!confirm('Clear all dispositions, issues and notes for the current tab ('+OBJECT_LABELS[currentObj]+') from your browser?')) return;
+  if(!confirm('Clear all dispositions and notes for the current tab ('+OBJECT_LABELS[currentObj]+') from your browser?')) return;
   (DATA[currentObj]||[]).forEach(p=>localStorage.removeItem(storageKey(currentObj, p.internal)));
   render();
 });
