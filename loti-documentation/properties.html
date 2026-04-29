@@ -127,6 +127,13 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
     <option value="custom">Custom only</option>
     <option value="hubspot">HubSpot defined only</option>
   </select>
+  <select id="filterDisposition">
+    <option value="">All dispositions</option>
+    <option value="Keep">Keep</option>
+    <option value="Delete">Delete</option>
+    <option value="Check">Check</option>
+    <option value="__pending">Pending (no mark)</option>
+  </select>
   <select id="filterIssue"><option value="">All issues</option></select>
   <select id="filterType"><option value="">All types</option></select>
   <select id="filterGroup"><option value="">All groups</option></select>
@@ -329,6 +336,7 @@ function render(){
   const props = DATA[currentObj]||[];
   const q=document.getElementById('searchBox').value.toLowerCase().trim();
   const fOrigin=document.getElementById('filterOrigin').value;
+  const fDisp=document.getElementById('filterDisposition').value;
   const fIssue=document.getElementById('filterIssue').value;
   const fType=document.getElementById('filterType').value;
   const fGroup=document.getElementById('filterGroup').value;
@@ -346,6 +354,8 @@ function render(){
     }
     if(fOrigin==='custom' && p.hubspotDefined) return;
     if(fOrigin==='hubspot' && !p.hubspotDefined) return;
+    if(fDisp==='__pending' && marks.disposition) return;
+    if(fDisp && fDisp!=='__pending' && marks.disposition!==fDisp) return;
     if(fIssue){
       const issues = deriveIssue(p, DUP_SET);
       if(!issues.includes(fIssue)) return;
@@ -427,7 +437,7 @@ document.getElementById('applyRecomBtn').addEventListener('click',()=>{
   render();
 });
 
-['searchBox','filterOrigin','filterIssue','filterType','filterGroup','filterSource','filterCreator'].forEach(id=>{
+['searchBox','filterOrigin','filterDisposition','filterIssue','filterType','filterGroup','filterSource','filterCreator'].forEach(id=>{
   document.getElementById(id).addEventListener('input',render);
   document.getElementById(id).addEventListener('change',render);
 });
