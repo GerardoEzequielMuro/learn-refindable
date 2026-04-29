@@ -122,6 +122,11 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
 
 <div class="toolbar">
   <input id="searchBox" placeholder="Search name, internal name, description, creator, group, options...">
+  <select id="filterOrigin">
+    <option value="">All origins</option>
+    <option value="custom">Custom only</option>
+    <option value="hubspot">HubSpot defined only</option>
+  </select>
   <select id="filterIssue"><option value="">All issues</option></select>
   <select id="filterType"><option value="">All types</option></select>
   <select id="filterGroup"><option value="">All groups</option></select>
@@ -323,6 +328,7 @@ function initFilters(){
 function render(){
   const props = DATA[currentObj]||[];
   const q=document.getElementById('searchBox').value.toLowerCase().trim();
+  const fOrigin=document.getElementById('filterOrigin').value;
   const fIssue=document.getElementById('filterIssue').value;
   const fType=document.getElementById('filterType').value;
   const fGroup=document.getElementById('filterGroup').value;
@@ -338,6 +344,8 @@ function render(){
       const blob=(p.name+' '+p.internal+' '+p.desc+' '+p.creator+' '+p.group+' '+p.options).toLowerCase();
       if(!blob.includes(q)) return;
     }
+    if(fOrigin==='custom' && p.hubspotDefined) return;
+    if(fOrigin==='hubspot' && !p.hubspotDefined) return;
     if(fIssue){
       const issues = deriveIssue(p, DUP_SET);
       if(!issues.includes(fIssue)) return;
@@ -419,7 +427,7 @@ document.getElementById('applyRecomBtn').addEventListener('click',()=>{
   render();
 });
 
-['searchBox','filterIssue','filterType','filterGroup','filterSource','filterCreator'].forEach(id=>{
+['searchBox','filterOrigin','filterIssue','filterType','filterGroup','filterSource','filterCreator'].forEach(id=>{
   document.getElementById(id).addEventListener('input',render);
   document.getElementById(id).addEventListener('change',render);
 });
