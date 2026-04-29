@@ -355,16 +355,16 @@ footer a { color:var(--orange); text-decoration:none; }
   <div class="card">
     <h3>Forwarding targets</h3>
     <div class="spec">
-      <div class="spec-k">Jack</div><div class="spec-v"><code>jack@loti.com</code></div>
-      <div class="spec-k">Mike</div><div class="spec-v"><code>mike@loti.com</code></div>
-      <div class="spec-k">Sean</div><div class="spec-v"><code>sean@loti.com</code></div>
+      <div class="spec-k">Jack</div><div class="spec-v"><code>jack@loti.com</code> &middot; <span style="color:#10b981;font-weight:600">forwarding live</span></div>
+      <div class="spec-k">Mike</div><div class="spec-v"><code>mike@loti.com</code> &middot; <span style="color:#10b981;font-weight:600">forwarding live</span></div>
+      <div class="spec-k">Sean</div><div class="spec-v"><code>sean@loti.com</code> &middot; <span style="color:#b45309;font-weight:600">forwarding pending</span></div>
     </div>
     <p style="margin-top:14px;color:var(--text-light);font-size:0.95em">Each purchased sender inbox routes its replies to the corresponding rep based on which rep owns the sequence using that inbox.</p>
   </div>
 
   <div class="important">
-    <div class="important-title">In progress</div>
-    <p>Auto-forwarding from every purchased inbox to the matching <code>@loti.com</code> mailbox is currently being set up. Until forwarding is enabled on every inbox, replies that arrive at a non-forwarded inbox have to be checked manually inside that inbox.</p>
+    <div class="important-title">Partial rollout</div>
+    <p>Auto-forwarding is <strong>live for Jack and Mike</strong>: every purchased inbox routed to either of them already forwards replies into <code>jack@loti.com</code> / <code>mike@loti.com</code>. <strong>Sean's inboxes are pending</strong>; until forwarding is enabled on those, replies arriving at a Sean-routed inbox have to be checked manually inside that inbox.</p>
   </div>
 </div>
 
@@ -378,8 +378,8 @@ footer a { color:var(--orange); text-decoration:none; }
   </div>
 
   <div class="card">
-    <div class="status-badge" style="background:#fff3e0;color:#b45309;border:1px solid #fdba74"><span class="status-dot" style="background:#f59e0b"></span>In progress</div>
-    <p style="margin-top:10px">Auto-forwarding from every warm-up inbox to <code>jack@loti.com</code> / <code>mike@loti.com</code> / <code>sean@loti.com</code> is being rolled out across all purchased inboxes.</p>
+    <div class="status-badge" style="background:#fff3e0;color:#b45309;border:1px solid #fdba74"><span class="status-dot" style="background:#f59e0b"></span>Partial</div>
+    <p style="margin-top:10px">Auto-forwarding is <strong>live</strong> for <code>jack@loti.com</code> and <code>mike@loti.com</code>. <strong>Pending</strong> for <code>sean@loti.com</code>.</p>
   </div>
 </div>
 
