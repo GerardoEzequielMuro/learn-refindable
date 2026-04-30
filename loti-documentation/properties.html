@@ -601,45 +601,97 @@ function maybeShowMigrateBtn(){
   }
 }
 
+const MIGRATE_STATE_KEY = 'loti-migrate-state';
+function getMigrateState(){
+  try{ return new Set(JSON.parse(localStorage.getItem(MIGRATE_STATE_KEY)||'[]')) }
+  catch(e){ return new Set() }
+}
+function setMigrateState(set){
+  localStorage.setItem(MIGRATE_STATE_KEY, JSON.stringify([...set]));
+}
+
 document.getElementById('migrateBtn').addEventListener('click', async ()=>{
-  const found = scanLocalMarks();
-  if(!found.length){ alert('No local marks found in this browser.'); return; }
-  const conflicts = found.filter(f => REMOTE.has(rkey(f.obj, f.internal))).length;
-  const byObj = found.reduce((a,f)=>{a[f.obj]=(a[f.obj]||0)+1;return a},{});
-  const summary = Object.keys(byObj).map(o=>'  '+OBJECT_LABELS[o]+': '+byObj[o]).join('\n');
-  const msg = 'Found '+found.length+' local marks in this browser:\n'+summary+
-              '\n\nConflicts with shared (will be overwritten): '+conflicts+
-              '\n\nOK = upload all to shared Google Sheet\nCancel = abort';
-  if(!confirm(msg)) return;
-  SYNC_STATE='loading'; updateSyncBadge();
-  let done=0, failed=0;
-  for(const f of found){
-    try{
-      const res = await fetch(SCRIPT_URL, {
-        method:'POST',
-        headers:{'Content-Type':'text/plain;charset=utf-8'},
-        body: JSON.stringify({object:f.obj, internal:f.internal,
-          disposition:f.marks.disposition||'',
-          issue:f.marks.issue||'',
-          notes:f.marks.notes||''})
-      });
-      const j = await res.json();
-      if(j.ok){
-        REMOTE.set(rkey(f.obj,f.internal), {
-          disposition:f.marks.disposition||'',
-          issue:f.marks.issue||'',
-          notes:f.marks.notes||''
-        });
-        done++;
-      } else failed++;
-    }catch(e){ failed++ }
+  const allFound = scanLocalMarks();
+  if(!allFound.length){ alert('No local marks found in this browser.'); return; }
+  const alreadyDone = getMigrateState();
+  const pending = allFound.filter(f => !alreadyDone.has(rkey(f.obj, f.internal)));
+  if(!pending.length){
+    alert('All local marks already uploaded. Hide the button and you are done.');
+    document.getElementById('migrateBtn').style.display = 'none';
+    return;
   }
-  SYNC_STATE = failed===0 ? 'ok' : 'error';
+  const conflicts = pending.filter(f => REMOTE.has(rkey(f.obj, f.internal))).length;
+  const byObj = pending.reduce((a,f)=>{a[f.obj]=(a[f.obj]||0)+1;return a},{});
+  const summary = Object.keys(byObj).map(o=>'  '+OBJECT_LABELS[o]+': '+byObj[o]).join('\n');
+  const resumed = allFound.length - pending.length;
+  const msg = 'Pending to upload: '+pending.length+
+              (resumed?' (already uploaded earlier: '+resumed+')':'')+
+              '\n'+summary+
+              '\n\nConflicts with shared (will be overwritten): '+conflicts+
+              '\n\nOK = upload to shared Google Sheet (in batches of 50)\nCancel = abort';
+  if(!confirm(msg)) return;
+
+  const btn = document.getElementById('migrateBtn');
+  btn.disabled = true;
+  SYNC_STATE='loading'; updateSyncBadge();
+
+  const BATCH = 50;
+  let uploaded = 0, failedBatch = 0;
+  for(let i=0; i<pending.length; i+=BATCH){
+    const slice = pending.slice(i, i+BATCH);
+    const body = JSON.stringify({
+      action: 'batch',
+      marks: slice.map(f => ({
+        object:f.obj, internal:f.internal,
+        disposition:f.marks.disposition||'',
+        issue:f.marks.issue||'',
+        notes:f.marks.notes||''
+      }))
+    });
+    let ok=false, lastErr=null;
+    for(let attempt=0; attempt<2 && !ok; attempt++){
+      try{
+        const res = await fetch(SCRIPT_URL, {
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body
+        });
+        const j = await res.json();
+        if(j.ok){
+          ok = true;
+          slice.forEach(f => {
+            REMOTE.set(rkey(f.obj,f.internal), {
+              disposition:f.marks.disposition||'',
+              issue:f.marks.issue||'',
+              notes:f.marks.notes||''
+            });
+            alreadyDone.add(rkey(f.obj,f.internal));
+          });
+          setMigrateState(alreadyDone);
+          uploaded += slice.length;
+        } else lastErr = j.error||'remote error';
+      }catch(e){ lastErr = e.message }
+    }
+    btn.textContent = 'Migrating… '+(uploaded)+'/'+pending.length;
+    if(!ok){
+      console.warn('Batch failed:', lastErr);
+      failedBatch = slice.length;
+      break;
+    }
+  }
+  SYNC_STATE = failedBatch===0 ? 'ok' : 'error';
   updateSyncBadge();
-  alert('Migration finished.\n  uploaded: '+done+'\n  failed: '+failed+
-        (failed?'\n\nCheck the browser console for details.':''));
+  btn.disabled = false;
+  if(failedBatch===0){
+    alert('Migration done. Uploaded '+uploaded+' marks.');
+    btn.style.display = 'none';
+    localStorage.removeItem(MIGRATE_STATE_KEY);
+  } else {
+    const remaining = pending.length - uploaded;
+    btn.textContent = 'Resume migration ('+remaining+' left)';
+    alert('Partial: uploaded '+uploaded+' of '+pending.length+'.\nClick the button again to retry the rest.');
+  }
   render();
-  document.getElementById('migrateBtn').style.display = 'none';
 });
 
 document.getElementById('clearBtn').addEventListener('click',async ()=>{

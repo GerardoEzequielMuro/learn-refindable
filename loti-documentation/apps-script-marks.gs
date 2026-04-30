@@ -67,12 +67,15 @@ function doGet(e) {
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {
-    lock.waitLock(8000);
+    lock.waitLock(15000);
     const body = JSON.parse(e.postData.contents);
     const sh = getSheet_();
 
     if (body.action === 'clear') {
       return clearObject_(sh, body.object);
+    }
+    if (body.action === 'batch') {
+      return upsertBatch_(sh, body.marks);
     }
 
     return upsert_(sh, body);
@@ -81,6 +84,44 @@ function doPost(e) {
   } finally {
     try { lock.releaseLock(); } catch (e) {}
   }
+}
+
+function upsertBatch_(sh, marks) {
+  if (!Array.isArray(marks) || !marks.length) {
+    return jsonOut_({ ok: false, error: 'Empty batch' });
+  }
+  const lastRow = sh.getLastRow();
+  let rows = [];
+  if (lastRow >= 2) {
+    rows = sh.getRange(2, 1, lastRow - 1, HEADERS.length).getValues();
+  }
+  const idx = new Map();
+  rows.forEach(function (r, i) { if (r[0] && r[1]) idx.set(r[0] + ':' + r[1], i); });
+  const now = new Date().toISOString();
+  let updated = 0, inserted = 0;
+  for (var i = 0; i < marks.length; i++) {
+    var m = marks[i];
+    if (!m || !m.object || !m.internal) continue;
+    var row = [m.object, m.internal, m.disposition || '', m.issue || '', m.notes || '', now];
+    var k = m.object + ':' + m.internal;
+    if (idx.has(k)) {
+      rows[idx.get(k)] = row;
+      updated++;
+    } else {
+      idx.set(k, rows.length);
+      rows.push(row);
+      inserted++;
+    }
+  }
+  sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  if (lastRow >= 2) {
+    sh.getRange(2, 1, lastRow - 1, HEADERS.length).clearContent();
+  }
+  if (rows.length) {
+    sh.getRange(2, 1, rows.length, HEADERS.length).setValues(rows);
+  }
+  sh.setFrozenRows(1);
+  return jsonOut_({ ok: true, action: 'batch', updated: updated, inserted: inserted, total: marks.length });
 }
 
 function upsert_(sh, body) {
