@@ -36,6 +36,7 @@ nav a:hover{color:var(--orange)}
 .stat.keep .v{color:var(--green)}
 .stat.del .v{color:var(--red)}
 .stat.chk .v{color:var(--yellow)}
+.stat.mtp .v{color:var(--blue)}
 .stat.pen .v{color:var(--text-light)}
 .stat.active{border-color:var(--orange);background:var(--orange-bg)}
 .toolbar{max-width:1400px;margin:14px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -54,9 +55,11 @@ nav a:hover{color:var(--orange)}
 .tbl tbody tr.row-keep{background:#f0fdf4}
 .tbl tbody tr.row-del{background:#fef2f2}
 .tbl tbody tr.row-chk{background:#fffbeb}
+.tbl tbody tr.row-mtp{background:#eff6ff}
 .tbl tbody tr.row-keep:hover{background:#dcfce7}
 .tbl tbody tr.row-del:hover{background:#fee2e2}
 .tbl tbody tr.row-chk:hover{background:#fef3c7}
+.tbl tbody tr.row-mtp:hover{background:#dbeafe}
 .tbl .name-cell{min-width:200px;max-width:280px}
 .tbl .name{font-weight:600;color:var(--dark);line-height:1.2}
 .tbl .name-tip{display:block;font-size:.85em;color:var(--text-muted);margin-top:3px;white-space:normal;line-height:1.35}
@@ -74,6 +77,7 @@ nav a:hover{color:var(--orange)}
 .tbl select.f-disp.v-keep{background:var(--green-bg);color:#065f46;border-color:var(--green);font-weight:600}
 .tbl select.f-disp.v-del{background:var(--red-bg);color:#991b1b;border-color:var(--red);font-weight:600}
 .tbl select.f-disp.v-chk{background:var(--yellow-bg);color:#92400e;border-color:var(--yellow);font-weight:600}
+.tbl select.f-disp.v-mtp{background:var(--blue-bg);color:#1e3a8a;border-color:var(--blue);font-weight:600}
 .tbl textarea.f-notes{padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.83em;background:#fff;width:100%;min-width:140px;min-height:30px;resize:vertical}
 .fill-bar{position:relative;height:18px;background:#f1f3f5;border-radius:4px;overflow:hidden;min-width:80px}
 .fill-bar-fg{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,#fdba74,#fb923c);border-radius:4px}
@@ -132,6 +136,7 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
     <option value="Keep">Keep</option>
     <option value="Delete">Delete</option>
     <option value="Check">Check</option>
+    <option value="Move to policy">Move to policy</option>
     <option value="__pending">Pending (no mark)</option>
   </select>
   <select id="filterIssue"><option value="">All issues</option></select>
@@ -221,6 +226,7 @@ function renderSummary(count){
     <div class="stat keep" data-filter="keep"><div class="l">Keep</div><div class="v">${count.keep}</div></div>
     <div class="stat del" data-filter="delete"><div class="l">Delete</div><div class="v">${count.del}</div></div>
     <div class="stat chk" data-filter="check"><div class="l">Check</div><div class="v">${count.chk}</div></div>
+    <div class="stat mtp" data-filter="movetopolicy"><div class="l">Move to policy</div><div class="v">${count.mtp}</div></div>
     <div class="stat pen" data-filter="pending"><div class="l">Pending</div><div class="v">${count.pen}</div></div>
     <div class="stat" data-filter="zero"><div class="l">Fill rate 0%</div><div class="v">${count.zero}</div></div>
     <div class="stat" data-filter="never"><div class="l">Never updated</div><div class="v">${count.never}</div></div>
@@ -282,6 +288,7 @@ function rowHtml(p, marks){
   if(marks.disposition==='Keep') dispCls='v-keep';
   else if(marks.disposition==='Delete') dispCls='v-del';
   else if(marks.disposition==='Check') dispCls='v-chk';
+  else if(marks.disposition==='Move to policy') dispCls='v-mtp';
   const issues = deriveIssue(p, DUP_SET);
   const rec = recommend(p, issues);
   const deletable = !p.hubspotDefined;
@@ -296,6 +303,7 @@ function rowHtml(p, marks){
       <option value="Keep" ${marks.disposition==='Keep'?'selected':''}>Keep</option>
       ${deleteOpt}
       <option value="Check" ${marks.disposition==='Check'?'selected':''}>Check</option>
+      <option value="Move to policy" ${marks.disposition==='Move to policy'?'selected':''}>Move to policy</option>
     </select></td>
     <td>${issuePillsHtml(issues)}</td>
     <td class="name-cell">
@@ -315,11 +323,12 @@ function rowHtml(p, marks){
 }
 
 function applyRowClass(tr){
-  tr.classList.remove('row-keep','row-del','row-chk');
+  tr.classList.remove('row-keep','row-del','row-chk','row-mtp');
   const d=tr.dataset.disposition;
   if(d==='Keep') tr.classList.add('row-keep');
   else if(d==='Delete') tr.classList.add('row-del');
   else if(d==='Check') tr.classList.add('row-chk');
+  else if(d==='Move to policy') tr.classList.add('row-mtp');
 }
 
 function initFilters(){
@@ -344,7 +353,7 @@ function render(){
   const fCreator=document.getElementById('filterCreator').value;
 
   let html='';
-  let count={total:0,custom:0,keep:0,del:0,chk:0,pen:0,zero:0,never:0,noUse:0};
+  let count={total:0,custom:0,keep:0,del:0,chk:0,mtp:0,pen:0,zero:0,never:0,noUse:0};
   props.forEach(p=>{
     const marks=loadMarks(currentObj, p.internal);
     // First-pass filters (search + dropdowns) — counts reflect this scope
@@ -370,6 +379,7 @@ function render(){
     if(marks.disposition==='Keep') count.keep++;
     else if(marks.disposition==='Delete') count.del++;
     else if(marks.disposition==='Check') count.chk++;
+    else if(marks.disposition==='Move to policy') count.mtp++;
     else count.pen++;
     if(p.fillNum===0) count.zero++;
     if(!p.lastUpdated) count.never++;
@@ -379,6 +389,7 @@ function render(){
     if(activeStat==='keep' && marks.disposition!=='Keep') return;
     if(activeStat==='delete' && marks.disposition!=='Delete') return;
     if(activeStat==='check' && marks.disposition!=='Check') return;
+    if(activeStat==='movetopolicy' && marks.disposition!=='Move to policy') return;
     if(activeStat==='pending' && marks.disposition) return;
     if(activeStat==='zero' && p.fillNum!==0) return;
     if(activeStat==='never' && p.lastUpdated) return;
@@ -402,10 +413,11 @@ document.getElementById('tbody').addEventListener('change',e=>{
   if(t.dataset.field==='disposition'){
     tr.dataset.disposition=t.value;
     applyRowClass(tr);
-    t.classList.remove('v-keep','v-del','v-chk');
+    t.classList.remove('v-keep','v-del','v-chk','v-mtp');
     if(t.value==='Keep') t.classList.add('v-keep');
     else if(t.value==='Delete') t.classList.add('v-del');
     else if(t.value==='Check') t.classList.add('v-chk');
+    else if(t.value==='Move to policy') t.classList.add('v-mtp');
     render();
   }
 });
