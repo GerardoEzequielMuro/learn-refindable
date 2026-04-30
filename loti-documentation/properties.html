@@ -96,8 +96,18 @@ nav a:hover{color:var(--orange)}
 .muted{color:var(--text-muted)}
 .empty{text-align:center;padding:60px;color:var(--text-muted)}
 footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85em;border-top:1px solid var(--border);background:#fff}
-.note-bar{max-width:1400px;margin:14px auto 0;padding:10px 18px;background:var(--yellow-bg);border:1px solid var(--yellow);border-radius:10px;color:#92400e;font-size:.85em;line-height:1.5}
+.note-bar{max-width:1400px;margin:14px auto 0;padding:10px 18px;background:var(--yellow-bg);border:1px solid var(--yellow);border-radius:10px;color:#92400e;font-size:.85em;line-height:1.5;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .note-bar strong{color:#78350f}
+.sync-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:.78em;font-weight:700;letter-spacing:.3px;white-space:nowrap;cursor:help}
+.sync-badge::before{content:"";width:7px;height:7px;border-radius:50%;display:inline-block}
+.sync-badge.sync-ok{background:var(--green-bg);color:#065f46;border:1px solid var(--green)}
+.sync-badge.sync-ok::before{background:var(--green)}
+.sync-badge.sync-loading{background:var(--blue-bg);color:#1e3a8a;border:1px solid var(--blue)}
+.sync-badge.sync-loading::before{background:var(--blue)}
+.sync-badge.sync-error{background:var(--red-bg);color:#991b1b;border:1px solid var(--red)}
+.sync-badge.sync-error::before{background:var(--red)}
+.sync-badge.sync-local{background:#f1f3f5;color:var(--text-light);border:1px solid var(--border)}
+.sync-badge.sync-local::before{background:var(--text-muted)}
 @media(max-width:900px){.tbl{font-size:.78em}.hero h1{font-size:1.8em}}
 </style>
 </head>
@@ -120,7 +130,10 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
 
 <div class="tabs" id="tabs"></div>
 
-<div class="note-bar"><strong>Heads up:</strong> dispositions, issues and notes are stored in your browser's localStorage. They persist across reloads on the same browser, but clearing site data wipes them. Use <em>Export marks</em> to back up to CSV.</div>
+<div class="note-bar">
+  <span><strong>Heads up:</strong> when synced, dispositions and notes are shared across everyone via Google Sheet. In local-only mode they live in this browser. Use <em>Export marks</em> for a CSV backup.</span>
+  <span id="syncBadge" class="sync-badge sync-local" title="">Local only</span>
+</div>
 
 <div class="summary" id="summary"></div>
 
@@ -176,13 +189,94 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
 <script>
 const ISSUE_OPTIONS = ['No data', 'Unused', 'Duplicate'];
 const OBJECT_LABELS = {contact:'Contacts', company:'Companies', deal:'Deals', lotiproperty:'LotiProperty'};
+// Shared backend URL (Google Apps Script Web App). Leave empty to fall back to per-browser localStorage.
+// See apps-script-marks.gs for setup instructions.
+const SCRIPT_URL = '';
 let DATA = {};
 let currentObj = 'contact';
 let activeStat = 'all';
+const REMOTE = new Map(); // 'obj:internal' -> {disposition, issue, notes}
+let SYNC_STATE = SCRIPT_URL ? 'loading' : 'local';
 
+function rkey(obj, internal){ return obj+':'+internal }
 function storageKey(obj, internal){ return 'loti-prop-'+obj+'-'+internal }
+
+async function fetchRemote(){
+  if(!SCRIPT_URL) return;
+  try{
+    SYNC_STATE = 'loading'; updateSyncBadge();
+    const r = await fetch(SCRIPT_URL, {method:'GET'});
+    const j = await r.json();
+    if(!j.ok) throw new Error(j.error||'remote error');
+    REMOTE.clear();
+    (j.marks||[]).forEach(m => REMOTE.set(rkey(m.object, m.internal), {
+      disposition: m.disposition||'', issue: m.issue||'', notes: m.notes||''
+    }));
+    SYNC_STATE = 'ok';
+  }catch(e){
+    console.warn('fetchRemote failed', e);
+    SYNC_STATE = 'error';
+  }
+  updateSyncBadge();
+}
+
+function pushRemote(obj, internal, marks){
+  if(!SCRIPT_URL) return;
+  REMOTE.set(rkey(obj,internal), {
+    disposition: marks.disposition||'',
+    issue: marks.issue||'',
+    notes: marks.notes||''
+  });
+  fetch(SCRIPT_URL, {
+    method:'POST',
+    // text/plain avoids CORS preflight (Apps Script doesn't handle OPTIONS).
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({object:obj, internal:internal, ...marks})
+  }).then(r=>r.json()).then(j=>{
+    SYNC_STATE = j.ok ? 'ok' : 'error';
+    updateSyncBadge();
+  }).catch(e=>{
+    console.warn('pushRemote failed', e);
+    SYNC_STATE = 'error';
+    updateSyncBadge();
+  });
+}
+
+function clearRemoteObject(obj){
+  if(!SCRIPT_URL) return Promise.resolve();
+  return fetch(SCRIPT_URL, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({action:'clear', object:obj})
+  }).then(r=>r.json()).then(j=>{
+    if(j.ok){
+      // drop from local cache
+      [...REMOTE.keys()].forEach(k=>{ if(k.startsWith(obj+':')) REMOTE.delete(k) });
+    }
+    return j;
+  });
+}
+
+function updateSyncBadge(){
+  const el = document.getElementById('syncBadge');
+  if(!el) return;
+  const cfg = {
+    local: {txt:'Local only', cls:'sync-local', tip:'No shared backend configured. Marks save in this browser only.'},
+    loading: {txt:'Syncing…', cls:'sync-loading', tip:'Fetching shared marks from Google Sheet.'},
+    ok: {txt:'Synced', cls:'sync-ok', tip:'Marks are shared across everyone via Google Sheet.'},
+    error: {txt:'Sync error', cls:'sync-error', tip:'Could not reach shared backend. Changes may not be saved for others.'}
+  }[SYNC_STATE] || {txt:'?', cls:'', tip:''};
+  el.textContent = cfg.txt;
+  el.title = cfg.tip;
+  el.className = 'sync-badge '+cfg.cls;
+}
 const DISP_MIGRATION = {'Mantener':'Keep','Borrar':'Delete','Chequear':'Check'};
 function loadMarks(obj, internal){
+  if(SCRIPT_URL){
+    const r = REMOTE.get(rkey(obj,internal));
+    return r ? {disposition:r.disposition||'', issue:r.issue||'', notes:r.notes||''}
+             : {disposition:'',issue:'',notes:''};
+  }
   try{
     const raw=localStorage.getItem(storageKey(obj,internal));
     if(!raw) return {disposition:'',issue:'',notes:''};
@@ -195,6 +289,10 @@ function loadMarks(obj, internal){
   }catch(e){return {disposition:'',issue:'',notes:''}}
 }
 function saveMarks(obj, internal, marks){
+  if(SCRIPT_URL){
+    pushRemote(obj, internal, marks);
+    return;
+  }
   localStorage.setItem(storageKey(obj,internal), JSON.stringify(marks));
 }
 function uniq(arr){return [...new Set(arr.filter(Boolean))].sort()}
@@ -470,9 +568,17 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   const a=document.createElement('a');a.href=url;a.download='loti-'+currentObj+'-properties-audit-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);
 });
 
-document.getElementById('clearBtn').addEventListener('click',()=>{
-  if(!confirm('Clear all dispositions and notes for the current tab ('+OBJECT_LABELS[currentObj]+') from your browser?')) return;
-  (DATA[currentObj]||[]).forEach(p=>localStorage.removeItem(storageKey(currentObj, p.internal)));
+document.getElementById('clearBtn').addEventListener('click',async ()=>{
+  const scope = SCRIPT_URL ? 'for everyone (shared Google Sheet)' : 'from your browser';
+  if(!confirm('Clear all dispositions and notes for '+OBJECT_LABELS[currentObj]+' '+scope+'?')) return;
+  if(SCRIPT_URL){
+    SYNC_STATE='loading'; updateSyncBadge();
+    try{ await clearRemoteObject(currentObj); SYNC_STATE='ok'; }
+    catch(e){ console.warn(e); SYNC_STATE='error'; }
+    updateSyncBadge();
+  } else {
+    (DATA[currentObj]||[]).forEach(p=>localStorage.removeItem(storageKey(currentObj, p.internal)));
+  }
   render();
 });
 
@@ -481,14 +587,20 @@ window.addEventListener('scroll',()=>{
   document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%'
 });
 
-fetch('properties-data.json').then(r=>r.json()).then(d=>{
-  DATA = d;
+async function bootstrap(){
+  try{
+    const d = await fetch('properties-data.json').then(r=>r.json());
+    DATA = d;
+  }catch(err){
+    document.getElementById('tbody').innerHTML='<tr><td colspan="12" class="empty">Failed to load properties-data.json: '+err.message+'</td></tr>';
+    return;
+  }
+  await fetchRemote();
   renderTabs();
   initFilters();
   render();
-}).catch(err=>{
-  document.getElementById('tbody').innerHTML='<tr><td colspan="12" class="empty">Failed to load properties-data.json: '+err.message+'</td></tr>';
-});
+}
+bootstrap();
 </script>
 </body>
 </html>
