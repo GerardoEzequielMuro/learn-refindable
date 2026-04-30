@@ -159,6 +159,7 @@ footer{padding:20px 24px;text-align:center;color:var(--text-muted);font-size:.85
   <select id="filterCreator"><option value="">All creators</option></select>
   <button id="applyRecomBtn" title="Applies the Recommendation to every row still on — — (does not overwrite manual marks)">Apply recommendations to pending</button>
   <button id="exportBtn">Export marks (CSV)</button>
+  <button class="ghost" id="migrateBtn" style="display:none" title="Push marks saved in this browser (localStorage) to the shared Google Sheet">Migrate local marks to shared</button>
   <button class="ghost" id="clearBtn">Clear all marks</button>
 </div>
 
@@ -568,6 +569,79 @@ document.getElementById('exportBtn').addEventListener('click',()=>{
   const a=document.createElement('a');a.href=url;a.download='loti-'+currentObj+'-properties-audit-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);
 });
 
+function scanLocalMarks(){
+  const objs = Object.keys(OBJECT_LABELS);
+  const found = [];
+  for(let i=0; i<localStorage.length; i++){
+    const k = localStorage.key(i);
+    if(!k || !k.startsWith('loti-prop-')) continue;
+    const rest = k.slice('loti-prop-'.length);
+    let obj=null, internal=null;
+    for(const o of objs){
+      if(rest.startsWith(o+'-')){ obj=o; internal=rest.slice(o.length+1); break }
+    }
+    if(!obj || !internal) continue;
+    let m;
+    try{ m = JSON.parse(localStorage.getItem(k)); }catch(e){ continue }
+    if(!m) continue;
+    if(DISP_MIGRATION[m.disposition]) m.disposition = DISP_MIGRATION[m.disposition];
+    if(!m.disposition && !m.issue && !m.notes) continue;
+    found.push({obj, internal, marks:m});
+  }
+  return found;
+}
+
+function maybeShowMigrateBtn(){
+  if(!SCRIPT_URL) return;
+  const found = scanLocalMarks();
+  if(found.length){
+    const btn = document.getElementById('migrateBtn');
+    btn.style.display = '';
+    btn.textContent = 'Migrate '+found.length+' local marks to shared';
+  }
+}
+
+document.getElementById('migrateBtn').addEventListener('click', async ()=>{
+  const found = scanLocalMarks();
+  if(!found.length){ alert('No local marks found in this browser.'); return; }
+  const conflicts = found.filter(f => REMOTE.has(rkey(f.obj, f.internal))).length;
+  const byObj = found.reduce((a,f)=>{a[f.obj]=(a[f.obj]||0)+1;return a},{});
+  const summary = Object.keys(byObj).map(o=>'  '+OBJECT_LABELS[o]+': '+byObj[o]).join('\n');
+  const msg = 'Found '+found.length+' local marks in this browser:\n'+summary+
+              '\n\nConflicts with shared (will be overwritten): '+conflicts+
+              '\n\nOK = upload all to shared Google Sheet\nCancel = abort';
+  if(!confirm(msg)) return;
+  SYNC_STATE='loading'; updateSyncBadge();
+  let done=0, failed=0;
+  for(const f of found){
+    try{
+      const res = await fetch(SCRIPT_URL, {
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify({object:f.obj, internal:f.internal,
+          disposition:f.marks.disposition||'',
+          issue:f.marks.issue||'',
+          notes:f.marks.notes||''})
+      });
+      const j = await res.json();
+      if(j.ok){
+        REMOTE.set(rkey(f.obj,f.internal), {
+          disposition:f.marks.disposition||'',
+          issue:f.marks.issue||'',
+          notes:f.marks.notes||''
+        });
+        done++;
+      } else failed++;
+    }catch(e){ failed++ }
+  }
+  SYNC_STATE = failed===0 ? 'ok' : 'error';
+  updateSyncBadge();
+  alert('Migration finished.\n  uploaded: '+done+'\n  failed: '+failed+
+        (failed?'\n\nCheck the browser console for details.':''));
+  render();
+  document.getElementById('migrateBtn').style.display = 'none';
+});
+
 document.getElementById('clearBtn').addEventListener('click',async ()=>{
   const scope = SCRIPT_URL ? 'for everyone (shared Google Sheet)' : 'from your browser';
   if(!confirm('Clear all dispositions and notes for '+OBJECT_LABELS[currentObj]+' '+scope+'?')) return;
@@ -599,6 +673,7 @@ async function bootstrap(){
   renderTabs();
   initFilters();
   render();
+  maybeShowMigrateBtn();
 }
 bootstrap();
 </script>
