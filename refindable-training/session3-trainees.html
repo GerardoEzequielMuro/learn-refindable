@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 3 · Properties, Listas y Segmentación | Refindable Academy</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}.brand span{color:var(--ac)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:600;background:var(--gs);padding:3px 10px;border-radius:100px}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--acl));transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t)}
+.bn{background:var(--ac);color:#fff}.bn:hover:not(:disabled){background:var(--acl);transform:translateY(-1px)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.2);padding:5px 14px;border-radius:100px;font-size:13px;color:var(--acl);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.disc-b{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:#a855f7}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-.02em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;transition:all .3s}
+.cd:hover{border-color:var(--ac);transform:translateY(-2px)}
+.cd-i{font-size:26px;margin-bottom:8px;display:block}
+.cd h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 4px}
+.cd p{font-size:15px;line-height:1.4;margin:0}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:var(--rad);overflow:hidden;border:1px solid var(--bd)}
+.cmp-c{padding:18px}.cmp-c.bad{background:var(--rs)}.cmp-c.good{background:var(--gs)}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.cmp-c.bad .cmp-h{color:var(--r)}.cmp-c.good .cmp-h{color:var(--g)}
+.cmp-i{font-size:15px;color:var(--tm);padding:5px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.4}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.sr{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+.st{flex:1;min-width:130px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:18px;text-align:center}
+.st-n{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700}
+.st-l{font-size:14px;color:var(--tm);margin-top:2px}
+.ex{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);margin-bottom:8px;overflow:hidden}
+.ex-h{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s;user-select:none}
+.ex-h:hover{background:var(--s2)}
+.ex-h h4{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
+.ex-a{transition:transform .3s;color:var(--td);font-size:11px}
+.ex.open .ex-a{transform:rotate(180deg)}
+.ex-b{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.ex.open .ex-b{max-height:1200px}
+.ex-c{padding:0 18px 14px;font-size:15px;color:var(--tm);line-height:1.7}
+.ex-c strong{color:var(--t)}
+.ex-c ul{list-style:none;padding:0;margin:6px 0}
+.ex-c li{padding:3px 0 3px 16px;position:relative}
+.ex-c li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:11px}
+.pipe{display:flex;gap:6px;margin:20px 0;overflow-x:auto;padding-bottom:6px}
+.pipe-s{border-radius:10px;padding:12px 14px;min-width:108px;text-align:center;flex-shrink:0}
+.pipe-s .pipe-e{font-size:18px;margin-bottom:4px}
+.pipe-s .pipe-t{font-size:11px;font-weight:600}
+.pipe-arr{display:flex;align-items:center;color:var(--td);font-size:12px;flex-shrink:0}
+.sn{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;margin:16px 0}
+.sn-bar{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--bd)}
+.sn-tab{padding:10px 14px;font-size:12px;font-weight:500;color:var(--td);cursor:pointer;white-space:nowrap;transition:all .2s;border-bottom:2px solid transparent}
+.sn-tab:hover{color:var(--t);background:var(--s2)}
+.sn-tab.active{color:var(--ac);border-bottom-color:var(--ac);background:var(--acs)}
+.sn-c{padding:16px;min-height:70px}
+.sn-p{display:none;font-size:13px;color:var(--tm);line-height:1.6;animation:si .3s ease}
+.sn-p.active{display:block}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:border-color .3s}
+.qq.ok{border-color:var(--g)}.qq.bad{border-color:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;display:flex;align-items:center;gap:10px}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs)}
+.qopt .mk{width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.35}.qopt.dis.correct{opacity:1}
+.qfb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.match-area{margin:16px 0}
+.match-cols{display:grid;grid-template-columns:1fr 40px 1fr;gap:8px;align-items:start}
+.match-left,.match-right{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:14px 18px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);font-size:15px;cursor:pointer;transition:all .2s;text-align:center;user-select:none}
+.match-item:hover{border-color:var(--ac)}
+.match-item.selected{border-color:var(--ac);background:var(--acs);color:var(--ac)}
+.match-item.matched{border-color:var(--g);background:var(--gs);color:var(--g);pointer-events:none}
+.match-item.wrong-flash{border-color:var(--r);background:var(--rs);color:var(--r)}
+.match-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--td);font-size:18px}
+.match-score{text-align:center;margin-top:12px;font-size:14px;font-weight:600;color:var(--g);display:none}
+.scenario{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:16px 0}
+.scenario-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--o);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.scenario p{font-size:16px;color:var(--tm);margin-bottom:12px}
+.scenario-options{display:flex;flex-direction:column;gap:8px}
+.scenario-opt{padding:16px 20px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s}
+.scenario-opt:hover:not(.dis){border-color:var(--o);color:var(--t)}
+.scenario-opt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}
+.scenario-opt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}
+.scenario-opt.dis{pointer-events:none;opacity:.35}.scenario-opt.dis.correct{opacity:1}
+.scenario-fb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.scenario-fb.show{display:block}.scenario-fb.sfbok{background:var(--gs);color:var(--g)}.scenario-fb.sfbbad{background:var(--rs);color:var(--r)}
+.disc{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:var(--rad);padding:24px;margin:16px 0}
+.disc h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#a855f7;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.disc p{font-size:16px;color:var(--tm);margin-bottom:8px}
+.disc ul{list-style:none;padding:0}.disc li{padding:4px 0 4px 16px;position:relative;font-size:15px;color:var(--tm)}.disc li::before{content:'\1F4AC';position:absolute;left:0;font-size:10px}
+.tt{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+.tt th{background:var(--s2);padding:10px 14px;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:.04em;color:var(--td);border-bottom:1px solid var(--bd)}
+.tt td{padding:10px 14px;border-bottom:1px solid var(--bd);color:var(--tm)}
+.tt tr:last-child td{border-bottom:none}.tt tr:hover td{background:var(--s1)}
+.gl{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;margin:16px 0}
+.gl-i{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.gl-t{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--ac);min-width:110px;flex-shrink:0}
+.gl-d{font-size:14px;color:var(--tm);line-height:1.4}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:56px;font-weight:700;text-align:center;margin:16px 0}
+.final-s.great{color:var(--g)}.final-s.ok{color:var(--o)}.final-s.low{color:var(--r)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px;gap:4px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.code-snip{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);padding:14px 16px;font-family:'Space Grotesk',monospace;font-size:14px;color:var(--t);margin:10px 0;line-height:1.6}
+.code-snip .ck{color:var(--ac);font-weight:600}.code-snip .cv{color:var(--g)}.code-snip .co2{color:var(--td);font-style:italic}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.tag.t-r{background:var(--rs);border-color:rgba(239,68,68,.2);color:var(--r)}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+body.light .pipe-s{color:var(--t)}
+@media(max-width:640px){.cmp,.match-cols{grid-template-columns:1fr}.cg{grid-template-columns:1fr}.sr{flex-direction:column}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}.gl{grid-template-columns:1fr}.match-cols{grid-template-columns:1fr;gap:16px}.match-mid{flex-direction:row;gap:4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--tm)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Sesión 3 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleLang()" id="langBtn" title="Switch language">🌐 EN</div>
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">✨ 0 pts</div>
+<div class="pg-text" id="pgText">1 / 26</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">📘 Sesión 3 · Properties + Listas</div>
+<h1>Properties, Listas y <span class="hl">Segmentación</span></h1>
+<p>La data que cargás importa tanto como la que excluís. Hoy unimos cómo se estructura (properties) con cómo se filtra (listas).</p>
+<div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
+<span style="font-size:12px;color:var(--td)">⏱ 45-60 min</span>
+<span style="font-size:12px;color:var(--td)">🧩 26 slides</span>
+<span style="font-size:12px;color:var(--td)">🧠 2 quizzes + 1 matching + 2 escenarios</span>
+</div></div>
+</div>
+
+<!-- S1: Recap Sesión 2 -->
+<div class="sl" data-s="1">
+<div class="badge">00 · Recap</div>
+<h2>¿Qué vimos la sesión pasada?</h2>
+<div class="sn"><div class="sn-bar">
+<div class="sn-tab active" onclick="st(this,0)">Contactos</div>
+<div class="sn-tab" onclick="st(this,1)">Companies</div>
+<div class="sn-tab" onclick="st(this,2)">Deals</div>
+<div class="sn-tab" onclick="st(this,3)">Asociaciones</div>
+</div><div class="sn-c">
+<div class="sn-p active"><strong>Contactos:</strong> personas individuales. El email es el identificador único. Lifecycle Stage y Lead Status marcan en qué momento del funnel están.</div>
+<div class="sn-p"><strong>Companies:</strong> organizaciones. Se identifican por dominio. HubSpot las asocia automáticamente a contactos con el mismo dominio (salvo genéricos como gmail).</div>
+<div class="sn-p"><strong>Deals:</strong> oportunidades de venta. Tienen monto, etapa y owner. Pasan por un pipeline hasta Closed Won o Closed Lost.</div>
+<div class="sn-p"><strong>Asociaciones:</strong> los 3 objetos se conectan entre sí. Un deal tiene contactos, los contactos pertenecen a companies. Esa red es lo que permite reportar.</div>
+</div></div>
+<div class="co tip"><div>💡</div><div><p>Todos esos objetos tienen <strong>campos de datos</strong>. Esos campos son las <strong>properties</strong>. Y las properties son lo que vas a usar para <strong>segmentar</strong>. Esa es la sesión de hoy.</p></div></div>
+</div>
+
+<!-- S2: ¿Qué es una property? -->
+<div class="sl" data-s="2">
+<div class="badge">01 · Properties</div>
+<h2>¿Qué es una property?</h2>
+<p>Una <strong>property</strong> es un campo de datos sobre un objeto. Si el contacto es una ficha, las properties son cada línea de esa ficha.</p>
+<div class="code-snip">
+<span class="co2">// Contact: maria@techcorp.com</span><br>
+<span class="ck">first_name</span>: <span class="cv">"María"</span><br>
+<span class="ck">lifecycle_stage</span>: <span class="cv">"marketingqualifiedlead"</span><br>
+<span class="ck">job_title</span>: <span class="cv">"Head of RevOps"</span><br>
+<span class="ck">hs_lead_status</span>: <span class="cv">"NEW"</span><br>
+<span class="ck">last_activity_date</span>: <span class="cv">"2026-05-10"</span>
+</div>
+<div class="co warn"><div>⚠️</div><div><p>Cada objeto (Contact, Company, Deal, Ticket) tiene <strong>su propio set</strong> de properties. Una property de Contact NO existe en Deal salvo que la copies.</p></div></div>
+<div class="co tip"><div>💡</div><div><p>Si la property no existe, <strong>no podés filtrar por ella, automatizar con ella, ni reportar sobre ella</strong>. Por eso el diseño de properties define lo que el CRM puede hacer.</p></div></div>
+</div>
+
+<!-- S3: Tipos de campo overview -->
+<div class="sl" data-s="3">
+<div class="badge">01 · Properties</div>
+<h2>Los tipos de campo</h2>
+<p>HubSpot te da varios tipos. Elegir mal acá te jode para siempre.</p>
+<div class="cg">
+<div class="cd"><div class="cd-i">📝</div><h3>Single-line text</h3><p>Una línea. Para nombres, IDs, URLs cortas.</p></div>
+<div class="cd"><div class="cd-i">📄</div><h3>Multi-line text</h3><p>Párrafos. Notas, descripciones.</p></div>
+<div class="cd"><div class="cd-i">🔢</div><h3>Number</h3><p>Para reportar y filtrar por rangos. NUNCA poné números en text.</p></div>
+<div class="cd"><div class="cd-i">📅</div><h3>Date / Datetime</h3><p>Fechas. Lo que permite "hace X días" en filtros.</p></div>
+<div class="cd"><div class="cd-i">▼</div><h3>Dropdown select</h3><p>Una sola opción de una lista cerrada.</p></div>
+<div class="cd"><div class="cd-i">☑</div><h3>Multi checkbox</h3><p>Varias opciones de una lista. Ej: regiones de interés.</p></div>
+<div class="cd"><div class="cd-i">🔘</div><h3>Radio select</h3><p>Una sola opción visible (para formularios).</p></div>
+<div class="cd"><div class="cd-i">✅</div><h3>Single checkbox</h3><p>Sí/No. Booleano puro.</p></div>
+<div class="cd"><div class="cd-i">👤</div><h3>HubSpot user</h3><p>Owner-like. Lista del equipo.</p></div>
+<div class="cd"><div class="cd-i">🧮</div><h3>Calculation</h3><p>Fórmula entre properties. Read-only.</p></div>
+<div class="cd"><div class="cd-i">📊</div><h3>Score</h3><p>Suma puntos según reglas (lead scoring).</p></div>
+<div class="cd"><div class="cd-i">📎</div><h3>File</h3><p>Adjuntá un archivo al registro.</p></div>
+</div>
+</div>
+
+<!-- S4: Tipos profundizados -->
+<div class="sl" data-s="4">
+<div class="badge">01 · Properties</div>
+<h2>Tres decisiones que te van a doler si las hacés mal</h2>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🔢 Text vs Number</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si guardás "1500" como <strong>single-line text</strong>, no podés filtrar "mayor a 1000" ni sumarlo en un reporte. Es texto, no número.</p><ul><li><strong>Cantidad de empleados:</strong> Number</li><li><strong>Ingreso anual:</strong> Number</li><li><strong>Código de país (ARG, USA):</strong> Single-line text</li><li><strong>Teléfono:</strong> Single-line text (puede empezar en 0)</li></ul></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>▼ Dropdown vs Multi-checkbox vs Text libre</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si el campo es <strong>Industry</strong>, ¿qué pasa si dejás texto libre? Algunos cargan "Software", otros "SaaS", otros "Tech". Ahora no podés segmentar por industria sin agruparlas a mano.</p><ul><li><strong>Una opción cerrada</strong> (industria, tamaño, país): <strong>Dropdown</strong></li><li><strong>Múltiples opciones cerradas</strong> (regiones de interés, productos comprados): <strong>Multi-checkbox</strong></li><li><strong>Texto único e impredecible</strong> (nombre, nota, comentario): <strong>Text</strong></li></ul></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📅 Date vs Datetime</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>Date:</strong> solo día (cumpleaños, fecha de firma). <strong>Datetime:</strong> día + hora exacta (última conexión, momento del click).</p><p>Si después querés filtrar "en las últimas 4 horas", necesitás Datetime. Date no lo permite.</p></div></div></div>
+<div class="co tip"><div>💡</div><div><p>Regla mental: <strong>"¿Voy a querer ordenar, sumar, o filtrar por rango?"</strong> Si la respuesta es sí, no es text. Es number o date.</p></div></div>
+</div>
+
+<!-- S5: Default vs Custom -->
+<div class="sl" data-s="5">
+<div class="badge">01 · Properties</div>
+<h2>Default vs Custom</h2>
+<div class="cmp">
+<div class="cmp-c good">
+<div class="cmp-h">✓ Default (vienen con HubSpot)</div>
+<div class="cmp-i">📌 First Name, Last Name, Email, Phone</div>
+<div class="cmp-i">📌 Lifecycle Stage, Lead Status</div>
+<div class="cmp-i">📌 Last Activity Date, Create Date</div>
+<div class="cmp-i">📌 Original Source, Latest Source</div>
+<div class="cmp-i">📌 Contact / Company / Deal Owner</div>
+</div>
+<div class="cmp-c bad">
+<div class="cmp-h">⚠ Custom (las creás vos)</div>
+<div class="cmp-i">📌 Las definís y las nombrás vos</div>
+<div class="cmp-i">📌 Una vez creadas, son <strong>difíciles de eliminar</strong> sin perder data</div>
+<div class="cmp-i">📌 Si dos personas crean la misma con nombre distinto, queda un quilombo</div>
+<div class="cmp-i">📌 Cada custom es <strong>un compromiso</strong>: hay que cargarla siempre</div>
+</div>
+</div>
+<div class="co hs"><div>🟠</div><div><p>En HubSpot las default <strong>no se pueden borrar</strong>. Pero las podés ocultar de la vista de un objeto si no las usás.</p></div></div>
+</div>
+
+<!-- S6: Decision framework -->
+<div class="sl" data-s="6">
+<div class="badge">01 · Properties</div>
+<h2>¿Cuándo crear una custom?</h2>
+<p>Antes de crear, pasá por estos 4 filtros:</p>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>1️⃣ ¿Ya existe una default que cubre esto?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Antes de crear "Fecha de alta", chequeá <strong>Create Date</strong>. Antes de crear "Vendedor asignado", chequeá <strong>Contact Owner</strong>. El 60% de las custom mal hechas duplican algo que ya existe.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>2️⃣ ¿Voy a filtrar, reportar o automatizar con esto?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si la respuesta es "no, es solo para que el sales lo vea cuando abre el contacto", <strong>una nota en Notes alcanza</strong>. Las properties son para data que el sistema va a procesar.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>3️⃣ ¿Quién la va a cargar y cuándo?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si la respuesta es "el sales, cuando se acuerde", probablemente quede vacía en el 80% de los registros. Property que nadie carga = property que no podés usar para filtrar.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>4️⃣ ¿Esto cambia por contacto, o es para una company / deal entero?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>"Industria" es de la <strong>company</strong>. "Cargo" es del <strong>contacto</strong>. "Monto" es del <strong>deal</strong>. Property en el objeto equivocado = no la podés cruzar bien.</p></div></div></div>
+<div class="co warn"><div>⚠️</div><div><p>Antes de pedir una property nueva, <strong>buscala</strong>. HubSpot tiene cientos de default. La mayoría existen.</p></div></div>
+</div>
+
+<!-- S7: Naming conventions -->
+<div class="sl" data-s="7">
+<div class="badge">01 · Properties</div>
+<h2>Naming conventions</h2>
+<p>Una vez creás una property, su nombre te queda para siempre. No hay refactor barato.</p>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">✗ Mal</div>
+<div class="cmp-i">⛔ "campo1", "test", "nuevo"</div>
+<div class="cmp-i">⛔ "Fecha" (¿de qué?)</div>
+<div class="cmp-i">⛔ "MQL Date Marketing 2026" (versionado en el nombre)</div>
+<div class="cmp-i">⛔ Mezcla de español/inglés sin criterio</div>
+<div class="cmp-i">⛔ "$$" "%%" caracteres raros</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✓ Bien</div>
+<div class="cmp-i">✅ Específico: "MQL Date" no "Fecha"</div>
+<div class="cmp-i">✅ Idioma único en toda la org</div>
+<div class="cmp-i">✅ Prefijo de equipo si corresponde: "Sales_Tier", "Marketing_Persona"</div>
+<div class="cmp-i">✅ Internal name limpio (se autocompleta del label)</div>
+<div class="cmp-i">✅ Descripción siempre completa</div>
+</div>
+</div>
+<div class="co tip"><div>💡</div><div><p>El <strong>internal name</strong> (el que ve la API) se genera del label cuando creás la property. Si después cambiás el label, el internal name <strong>NO cambia</strong>. Por eso el primer nombre importa.</p></div></div>
+</div>
+
+<!-- S8: Property groups -->
+<div class="sl" data-s="8">
+<div class="badge">01 · Properties</div>
+<h2>Property groups</h2>
+<p>Los <strong>groups</strong> son carpetas donde se ordenan las properties dentro de un objeto. Sin groups, la ficha del contacto es un kilombo de 200 campos sin orden.</p>
+<div class="tag-row">
+<span class="tag">Contact information</span>
+<span class="tag">Conversion information</span>
+<span class="tag">Email information</span>
+<span class="tag t-g">Sales properties</span>
+<span class="tag t-g">Marketing properties</span>
+<span class="tag t-o">Custom: Apollograph_Sync</span>
+<span class="tag t-o">Custom: Eventos</span>
+</div>
+<div class="co tip"><div>💡</div><div><p>Cuando creás una custom property, <strong>siempre asignala a un group</strong>. Si no sabés a cuál, creá uno nuevo con un prefijo claro (ej: "Custom · Equipo X").</p></div></div>
+<div class="co warn"><div>⚠️</div><div><p>Las default <strong>no se pueden mover</strong> de group. Las custom sí.</p></div></div>
+</div>
+
+<!-- S9: Quiz 1 -->
+<div class="sl" data-s="9" data-quiz="1">
+<div class="badge quiz-b">🧠 Quiz 1 · Respondé para avanzar</div>
+<h2>Properties</h2>
+<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Tu jefe te pide armar un reporte de "contactos con más de 100 empleados en su empresa". Cuando filtrás, no podés porque la property "Número de empleados" está como Single-line text. ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Filtro con "contiene" y pruebo combinaciones (100, 200, 300...)</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Pido crear una property nueva como Number, migro los valores con una importación, y uso esa para el reporte</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Le digo a mi jefe que HubSpot no permite eso</div>
+</div><div class="qfb" id="q1-fb"></div></div>
+
+<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Un compañero te pide crear una custom property llamada "Notas del último call". ¿Cuál es la respuesta correcta?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Crearla como Multi-line text en el group "Custom"</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>No crearla. Para notas de call ya existen las Notes nativas. Crear una property para texto libre no aporta valor y nadie la mantiene</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Crearla como Single-line text en Contact information</div>
+</div><div class="qfb" id="q2-fb"></div></div>
+
+<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>Querés segmentar contactos por "regiones de interés", donde un mismo contacto puede tener varias (LATAM, EMEA, NA). ¿Qué tipo de property usás?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Single-line text donde el sales escribe las regiones separadas por coma</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">B</div>Dropdown select con una opción "LATAM/EMEA/NA"</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">C</div>Multi-checkbox con las tres opciones definidas</div>
+</div><div class="qfb" id="q3-fb"></div></div>
+</div>
+
+<!-- S10: Escenario 1 -->
+<div class="sl" data-s="10" data-quiz="1">
+<div class="badge act-b">🎯 Escenario 1 · ¿Custom property o no?</div>
+<h2>El pedido de Marketing</h2>
+<div class="scenario">
+<div class="scenario-title">📩 Pedido recibido</div>
+<p>Marketing te escribe: <em>"Necesito una property nueva para marcar contactos que descargaron el whitepaper de Q1 2026. La llamamos 'Whitepaper Q1 download' y la cargamos como checkbox single."</em></p>
+<p>Antes de crearla, ¿qué hacés primero?</p>
+<div class="scenario-options">
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">La creo. Es un pedido de Marketing, ellos saben lo que necesitan.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Le pregunto si ya tienen una <strong>lista de descargantes</strong> o si pueden filtrar por el <strong>form submission del whitepaper</strong>. Si la respuesta es sí, no hace falta la property: ya tienen la data en el form y en la lista activa.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Le digo que pidan una mejor naming y la creo igual.</div>
+</div>
+<div class="scenario-fb" id="sc1-fb"></div>
+</div>
+</div>
+
+<!-- S11: Transición a listas -->
+<div class="sl" data-s="11">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Ahora que tenés data, ¿cómo la usás?</h2>
+<p>Tener properties bien armadas no sirve de nada si no podés <strong>agrupar contactos</strong> por criterios. Ahí entran las <strong>listas</strong>.</p>
+<div class="pipe">
+<div class="pipe-s" style="background:var(--acs);color:var(--ac)"><div class="pipe-e">📋</div><div class="pipe-t">Properties</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--os);color:var(--o)"><div class="pipe-e">🔍</div><div class="pipe-t">Filtros</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--gs);color:var(--g)"><div class="pipe-e">📦</div><div class="pipe-t">Lista</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--hss);color:var(--hs)"><div class="pipe-e">🚀</div><div class="pipe-t">Acción (email, workflow, reporte)</div></div>
+</div>
+<p>Una lista es un <strong>grupo de contactos (o companies, o deals)</strong> que cumplen ciertos filtros. Esa lista después la usás para:</p>
+<div class="cg">
+<div class="cd"><div class="cd-i">📧</div><h3>Emails</h3><p>Mandar campañas a un público específico</p></div>
+<div class="cd"><div class="cd-i">⚙️</div><h3>Workflows</h3><p>Disparar automatizaciones</p></div>
+<div class="cd"><div class="cd-i">📊</div><h3>Reportes</h3><p>Medir un segmento específico</p></div>
+<div class="cd"><div class="cd-i">📤</div><h3>Sincronización</h3><p>Exportar a Salesforce, Apollo, etc.</p></div>
+</div>
+</div>
+
+<!-- S12: Active vs Static -->
+<div class="sl" data-s="12">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Active vs Static · la decisión clave</h2>
+<div class="cmp">
+<div class="cmp-c good">
+<div class="cmp-h">⚡ Active List</div>
+<div class="cmp-i">🔄 Se actualiza <strong>sola</strong> cada vez que un contacto entra o sale del criterio</div>
+<div class="cmp-i">📈 Si hoy María cumple los filtros, entra. Si mañana cambia su lifecycle, sale.</div>
+<div class="cmp-i">✅ Ideal para: <strong>nurturing, re-engagement, segmentaciones permanentes</strong></div>
+<div class="cmp-i">⚠ NO podés agregar contactos a mano</div>
+</div>
+<div class="cmp-c bad">
+<div class="cmp-h">📸 Static List</div>
+<div class="cmp-i">🧊 Es una <strong>foto</strong> en el momento que la creás. No se actualiza.</div>
+<div class="cmp-i">📝 Después podés agregar o sacar contactos a mano (uno por uno o importando)</div>
+<div class="cmp-i">✅ Ideal para: <strong>invitados de un evento, send-once, lista cerrada de cuentas target</strong></div>
+<div class="cmp-i">⚠ Si los criterios cambian, la lista queda congelada</div>
+</div>
+</div>
+<div class="co warn"><div>⚠️</div><div><p>Si elegís mal acá te equivocás feo. <strong>Active</strong> para todo lo que evoluciona. <strong>Static</strong> para snapshots o cuando necesitás control manual.</p></div></div>
+</div>
+
+<!-- S13: Anatomía de un filtro -->
+<div class="sl" data-s="13">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Anatomía de un filtro</h2>
+<p>Cada filtro en una lista tiene 3 partes:</p>
+<div class="code-snip">
+<span class="ck">[Property o criterio]</span>  <span class="cv">+</span>  <span class="ck">[Operador]</span>  <span class="cv">+</span>  <span class="ck">[Valor]</span><br><br>
+<span class="co2">// Ejemplo:</span><br>
+<span class="ck">Lifecycle Stage</span>  <span class="cv">is any of</span>  <span class="ck">"MQL", "SQL"</span><br>
+<span class="ck">Last Activity Date</span>  <span class="cv">is more than</span>  <span class="ck">30 days ago</span><br>
+<span class="ck">Country</span>  <span class="cv">is none of</span>  <span class="ck">"Argentina"</span>
+</div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📌 Operadores comunes</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><ul><li><strong>is any of / is none of:</strong> dropdown / multi-checkbox</li><li><strong>is known / is unknown:</strong> el campo tiene valor o no</li><li><strong>is equal to / is not equal to:</strong> match exacto</li><li><strong>contains / doesn't contain:</strong> texto parcial</li><li><strong>is greater than / less than:</strong> números</li><li><strong>is more than X days ago / is less than X days ago:</strong> fechas relativas</li><li><strong>is between / is on:</strong> fechas absolutas</li><li><strong>has ever been / has never been:</strong> historia del campo</li></ul></div></div></div>
+</div>
+
+<!-- S14: Operadores -->
+<div class="sl" data-s="14">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Operadores que confunden</h2>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>"is unknown" NO es "is equal to empty"</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>is unknown:</strong> la property nunca fue cargada. NULL.</p><p><strong>is equal to empty string:</strong> alguien la cargó con "". Espacio vacío.</p><p>Para filtrar "contactos sin email" siempre usá <strong>is unknown</strong>.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>"contains" no es exacto</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si filtrás Job Title <strong>contains</strong> "manager", te trae "Project Manager", "Manager", "Senior Manager", pero también "Management Consultant".</p><p>Si querés match exacto, usá <strong>is equal to</strong>. Si querés varias opciones cerradas, mejor un dropdown.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>"has ever been" vs "is"</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>is MQL:</strong> hoy es MQL.</p><p><strong>has ever been MQL:</strong> en algún momento estuvo en MQL, aunque hoy sea Customer o Subscriber.</p><p>Para targeting de reactivación, "has ever been" es tu amigo.</p></div></div></div>
+<div class="co tip"><div>💡</div><div><p>En cada filtro, antes de guardar, <strong>mirá el preview count</strong>. Si esperabas 500 contactos y te aparecen 12.000, hay algo mal.</p></div></div>
+</div>
+
+<!-- S15: AND vs OR -->
+<div class="sl" data-s="15">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>AND vs OR · lógica de grupos</h2>
+<p>HubSpot organiza filtros en <strong>grupos (AND filter groups)</strong>. Dentro de un grupo: AND. Entre grupos: OR.</p>
+<div class="code-snip">
+<span class="co2">// Caso: MQLs en LATAM O Customers en EMEA</span><br><br>
+<span class="ck">[Grupo 1]</span><br>
+  Lifecycle Stage <span class="cv">is</span> MQL<br>
+  <span class="ck">AND</span><br>
+  Country <span class="cv">is any of</span> Argentina, México, Brasil<br><br>
+<span class="ck">OR</span><br><br>
+<span class="ck">[Grupo 2]</span><br>
+  Lifecycle Stage <span class="cv">is</span> Customer<br>
+  <span class="ck">AND</span><br>
+  Country <span class="cv">is any of</span> Spain, Germany, France
+</div>
+<div class="co warn"><div>⚠️</div><div><p>El error más común: poner todo en un solo grupo con AND cuando querías OR. Si tu lista queda <strong>vacía</strong>, casi siempre es porque tenés filtros que se contradicen dentro de un mismo grupo.</p></div></div>
+</div>
+
+<!-- S16: Filtros temporales -->
+<div class="sl" data-s="16">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Filtros temporales · "cuándo" importa más que "qué"</h2>
+<p>Las fechas relativas son el filtro más poderoso (y mal usado) de HubSpot.</p>
+<table class="tt"><thead><tr><th>Operador</th><th>Qué hace</th><th>Caso de uso</th></tr></thead><tbody>
+<tr><td><strong>is less than X days ago</strong></td><td>Pasó dentro de los últimos X días</td><td>"Contactos creados en la última semana"</td></tr>
+<tr><td><strong>is more than X days ago</strong></td><td>Hace más de X días que no pasa</td><td>"Sin actividad hace 60+ días" (re-engagement)</td></tr>
+<tr><td><strong>is between</strong></td><td>Rango fijo</td><td>"Deals cerrados entre 01-Abr y 30-Abr" (reporte mensual)</td></tr>
+<tr><td><strong>is in the next X days</strong></td><td>Va a pasar en los próximos X</td><td>"Renovaciones que vencen en 30 días"</td></tr>
+<tr><td><strong>is unknown</strong></td><td>Nunca pasó</td><td>"Contactos que nunca abrieron un email"</td></tr>
+</tbody></table>
+<div class="co tip"><div>💡</div><div><p>"Last Activity Date <strong>is more than</strong> 30 days ago" es el filtro más usado para detectar <strong>contactos fríos</strong>.</p></div></div>
+</div>
+
+<!-- S17: Tipos de criterios -->
+<div class="sl" data-s="17">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Más allá de las properties · otros criterios</h2>
+<p>No todo se filtra por property. HubSpot te deja filtrar por <strong>comportamiento</strong>:</p>
+<div class="cg">
+<div class="cd"><div class="cd-i">📝</div><h3>Form submission</h3><p>"Llenó este formulario", "llenó cualquiera", "llenó X en esta página"</p></div>
+<div class="cd"><div class="cd-i">📧</div><h3>Email activity</h3><p>"Abrió", "clickeó", "rebotó", "se desuscribió"</p></div>
+<div class="cd"><div class="cd-i">👀</div><h3>Page view</h3><p>"Visitó esta URL", "visitó cualquier página con /pricing"</p></div>
+<div class="cd"><div class="cd-i">⚙️</div><h3>Workflow status</h3><p>"Está enrolado en X", "completó Y"</p></div>
+<div class="cd"><div class="cd-i">📦</div><h3>List membership</h3><p>"Es miembro de la lista X" o "NO es miembro"</p></div>
+<div class="cd"><div class="cd-i">🎯</div><h3>Marketing event</h3><p>"Asistió", "se registró pero no asistió", "canceló"</p></div>
+</div>
+<div class="co tip"><div>💡</div><div><p><strong>List membership</strong> es clave para excluir. Ej: "MQLs en LATAM" <strong>AND</strong> "no es miembro de la lista 'Clientes activos'".</p></div></div>
+</div>
+
+<!-- S18: Matching -->
+<div class="sl" data-s="18" data-quiz="1">
+<div class="badge act-b">🎯 Ejercicio · ¿Active o Static?</div>
+<h2>Asigná cada caso al tipo correcto</h2>
+<p style="font-size:14px">Click un caso de la izquierda, después el tipo correcto de la derecha.</p>
+<div class="match-area"><div class="match-cols">
+<div class="match-left" id="ml">
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos sin actividad en 60+ días"</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"Invitados al evento del 15 de Mayo"</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"MQLs en LATAM que no son clientes"</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"100 cuentas target priorizadas por el equipo"</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos que visitaron /pricing esta semana"</div>
+</div>
+<div class="match-mid">
+<div>↔</div><div>↔</div><div>↔</div><div>↔</div><div>↔</div>
+</div>
+<div class="match-right" id="mr">
+<div class="match-item" data-m="a" onclick="matchClick(this,'r')">⚡ Active List</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'r')">📸 Static List</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'r')">⚡ Active List</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'r')">📸 Static List</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'r')">⚡ Active List</div>
+</div>
+</div>
+<div class="match-score" id="matchScore"></div>
+</div>
+<div class="co tip"><div>💡</div><div><p>Regla: si el criterio depende de <strong>data que cambia</strong>, es Active. Si es una <strong>decisión humana puntual</strong>, es Static.</p></div></div>
+</div>
+
+<!-- S19: Casos reales -->
+<div class="sl" data-s="19">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>3 casos que vas a hacer sí o sí</h2>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🔁 Re-engagement de fríos</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>Lista active:</strong></p><ul><li>Last Activity Date <strong>is more than</strong> 90 days ago</li><li><strong>AND</strong> Lifecycle Stage <strong>has ever been</strong> MQL or SQL</li><li><strong>AND</strong> Email opt-in <strong>is</strong> Yes</li><li><strong>AND</strong> NOT miembro de "Clientes activos"</li></ul><p>→ Workflow de re-engagement de 3 emails. Si abre o clickea, sale de la lista.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🌱 Nurturing por industria</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>Lista active por industria:</strong></p><ul><li>Industry <strong>is</strong> SaaS</li><li><strong>AND</strong> Lifecycle Stage <strong>is any of</strong> Lead, Subscriber, MQL</li><li><strong>AND</strong> Country <strong>is any of</strong> Argentina, México, Brasil</li></ul><p>→ Email mensual con contenido específico de SaaS para LATAM.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🙋 Hand-raisers (quieren hablar ya)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p><strong>Lista active de alta prioridad:</strong></p><ul><li>Form submission <strong>is</strong> "Contact Sales" (en cualquier página)</li><li><strong>OR</strong> Page view <strong>contains</strong> /pricing AND last activity <strong>is less than</strong> 3 days ago</li></ul><p>→ Workflow que notifica al sales owner por Slack / email en cuanto entra alguien.</p></div></div></div>
+</div>
+
+<!-- S20: Pitfalls -->
+<div class="sl" data-s="20">
+<div class="badge">02 · Listas y Segmentación</div>
+<h2>Pitfalls que cuestan caro</h2>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">⛔ Errores comunes</div>
+<div class="cmp-i">🪤 Mezclar AND/OR sin entender grupos → lista vacía o con 50.000 sin sentido</div>
+<div class="cmp-i">🪤 No excluir clientes / unsubscribed en campañas de nurturing</div>
+<div class="cmp-i">🪤 Usar Static cuando debería ser Active (queda obsoleta en 1 semana)</div>
+<div class="cmp-i">🪤 Filtros sobre properties vacías al 80% → la lista no representa nada</div>
+<div class="cmp-i">🪤 Naming de listas: "test", "lista nueva 2", "Marcos prueba"</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✓ Buenas prácticas</div>
+<div class="cmp-i">✨ Naming: <strong>"[Tipo] · [Audiencia] · [Owner]"</strong> ej: "ACT · MQL LATAM · Marketing"</div>
+<div class="cmp-i">✨ Siempre excluir: unsubscribed, customers (si la campaña es de adquisición), duplicates</div>
+<div class="cmp-i">✨ Mirar el <strong>preview count</strong> antes de guardar</div>
+<div class="cmp-i">✨ Si la lista alimenta un workflow, comentarla en la descripción</div>
+<div class="cmp-i">✨ Archivar listas que ya no se usan en vez de borrarlas</div>
+</div>
+</div>
+</div>
+
+<!-- S21: Quiz 2 -->
+<div class="sl" data-s="21" data-quiz="1">
+<div class="badge quiz-b">🧠 Quiz 2 · Listas y filtros</div>
+<h2>Últimas preguntas</h2>
+<div class="qq" id="q4"><div class="qq-n">Pregunta 1</div><p>Necesitás mandar un email a los 50 invitados confirmados a una cena de clientes el viernes. La lista te la pasa el sales head por Excel. ¿Active o Static?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Active list filtrando por una custom property "invitado cena 15 mayo"</div>
+<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">B</div>Static list. Importás el CSV y queda fija</div>
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">C</div>Active list filtrando por Lifecycle Stage Customer</div>
+</div><div class="qfb" id="q4-fb"></div></div>
+
+<div class="qq" id="q5"><div class="qq-n">Pregunta 2</div><p>Tenés una lista que debería traer MQLs en LATAM y te aparece vacía. Mirás los filtros y están como: Lifecycle Stage <strong>is</strong> MQL <strong>AND</strong> Country <strong>is</strong> Argentina <strong>AND</strong> Country <strong>is</strong> México. ¿Por qué está vacía?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>HubSpot no soporta filtrar por dos países</div>
+<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>Los 3 filtros están en un mismo grupo con AND. Un contacto no puede tener Country = Argentina Y México al mismo tiempo. Usá "is any of" o separá en grupos con OR</div>
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Tenés que cambiarla a Static</div>
+</div><div class="qfb" id="q5-fb"></div></div>
+
+<div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Querés armar una lista de "clientes que en algún momento fueron MQL". ¿Cuál filtro usás?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Lifecycle Stage <strong>is</strong> MQL</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>Lifecycle Stage <strong>is</strong> Customer</div>
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">C</div>Lifecycle Stage <strong>is</strong> Customer <strong>AND</strong> Lifecycle Stage <strong>has ever been</strong> MQL</div>
+</div><div class="qfb" id="q6-fb"></div></div>
+</div>
+
+<!-- S22: Escenario 2 -->
+<div class="sl" data-s="22" data-quiz="1">
+<div class="badge act-b">🎯 Escenario 2 · Caso real combinado</div>
+<h2>El pedido del lunes a la mañana</h2>
+<div class="scenario">
+<div class="scenario-title">📩 Sales head te escribe</div>
+<p><em>"Necesito una lista para que el SDR llame esta semana: cuentas SaaS de LATAM, con MQLs creados en los últimos 30 días, donde la company tenga más de 50 empleados. Que NO incluya clientes actuales ni los que ya están enrolados en el workflow de outbound. Por favor para hoy a las 2pm."</em></p>
+<p>Mirás el portal y notás que:</p>
+<ul style="font-size:15px;color:var(--tm);line-height:1.8;margin-left:20px">
+<li>Industry está como text libre, con variantes ("SaaS", "Software", "Tech")</li>
+<li>Número de empleados está como Number, ok</li>
+<li>Hay una lista activa "Customers activos"</li>
+<li>Hay un workflow "Outbound SDR Q2"</li>
+</ul>
+<p>¿Cómo encarás?</p>
+<div class="scenario-options">
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Hago la lista active con Industry <strong>contains</strong> "SaaS" y avanzo</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Primero hablo con Marketing para que <strong>normalicen Industry a dropdown</strong>. Mientras tanto armo la lista con Industry <strong>is any of</strong> "SaaS", "Software", "Tech" para no perder data. Sumo los filtros de empleados, country LATAM, lifecycle MQL, create date últimos 30 días, <strong>NOT miembro de "Customers activos"</strong>, <strong>NOT enrolado en "Outbound SDR Q2"</strong></div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Static list con los contactos que cumplen hoy</div>
+</div>
+<div class="scenario-fb" id="sc2-fb"></div>
+</div>
+</div>
+
+<!-- S23: Tarea -->
+<div class="sl" data-s="23">
+<div class="badge">📌 Para la próxima</div>
+<h2>Tu tarea antes de la Sesión 4</h2>
+<div class="cg">
+<div class="cd"><div class="cd-i">🔎</div><h3>Auditá properties</h3><p>Mirá la ficha de un contacto en tu portal. Encontrá 3 properties que parecen duplicadas o mal nombradas.</p></div>
+<div class="cd"><div class="cd-i">📦</div><h3>Armá una lista active</h3><p>Creá una lista active con al menos 2 grupos AND/OR. Mirá el count y verificá si tiene sentido.</p></div>
+<div class="cd"><div class="cd-i">🧪</div><h3>Probá una static</h3><p>Importá un CSV de 10 contactos a una lista static y comprobá que no se actualiza cuando cambian datos.</p></div>
+<div class="cd"><div class="cd-i">📝</div><h3>Documentá</h3><p>Escribí en 3 líneas para qué sirve cada lista que vas a crear. Si no podés, probablemente no la necesitás.</p></div>
+</div>
+<div class="co tip"><div>💡</div><div><p>La <strong>Sesión 4</strong> es sobre <strong>Workflows</strong>. Las listas son el INPUT de los workflows. Si esto te queda claro, lo que viene es directo.</p></div></div>
+</div>
+
+<!-- S24: Glosario -->
+<div class="sl" data-s="24">
+<div class="badge">📖 Referencia</div>
+<h2>Glosario de esta sesión</h2>
+<div class="gl">
+<div class="gl-i"><div class="gl-t">Property</div><div class="gl-d">Campo de datos sobre un objeto (Contact, Company, Deal)</div></div>
+<div class="gl-i"><div class="gl-t">Default property</div><div class="gl-d">Property que viene con HubSpot. No se borra</div></div>
+<div class="gl-i"><div class="gl-t">Custom property</div><div class="gl-d">Property creada por el usuario</div></div>
+<div class="gl-i"><div class="gl-t">Internal name</div><div class="gl-d">Nombre técnico que ve la API. No cambia al renombrar el label</div></div>
+<div class="gl-i"><div class="gl-t">Property group</div><div class="gl-d">Carpeta donde se ordenan properties dentro de un objeto</div></div>
+<div class="gl-i"><div class="gl-t">Dropdown select</div><div class="gl-d">Property de una opción cerrada</div></div>
+<div class="gl-i"><div class="gl-t">Multi-checkbox</div><div class="gl-d">Property de múltiples opciones cerradas</div></div>
+<div class="gl-i"><div class="gl-t">Calculation property</div><div class="gl-d">Property de fórmula entre otras properties</div></div>
+<div class="gl-i"><div class="gl-t">Active list</div><div class="gl-d">Lista que se actualiza sola según filtros</div></div>
+<div class="gl-i"><div class="gl-t">Static list</div><div class="gl-d">Lista congelada en el momento de creación</div></div>
+<div class="gl-i"><div class="gl-t">Filter group</div><div class="gl-d">Grupo de filtros unidos por AND. Entre grupos: OR</div></div>
+<div class="gl-i"><div class="gl-t">is unknown</div><div class="gl-d">Operador para detectar properties nunca cargadas</div></div>
+<div class="gl-i"><div class="gl-t">has ever been</div><div class="gl-d">Operador de historia. Filtra por valores pasados</div></div>
+<div class="gl-i"><div class="gl-t">List membership</div><div class="gl-d">Criterio que filtra por pertenencia a otra lista</div></div>
+<div class="gl-i"><div class="gl-t">Form submission</div><div class="gl-d">Criterio que filtra por completar un formulario</div></div>
+<div class="gl-i"><div class="gl-t">Page view</div><div class="gl-d">Criterio que filtra por visita a una URL</div></div>
+</div>
+</div>
+
+<!-- S25: Final Score -->
+<div class="sl" data-s="25">
+<div class="badge">🎉 Fin de la sesión</div>
+<h2>Tu resultado</h2>
+<div class="final-s" id="finalS">—</div>
+<p style="text-align:center;font-size:16px" id="finalM">Completá los quizzes y ejercicios para ver tu score.</p>
+<div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;margin:24px 0">
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 12px">📌 Preview Sesión 4 · Workflows</h3>
+<p style="font-size:14px">Hasta acá tenés <strong>data estructurada (properties)</strong> y <strong>data agrupada (listas)</strong>. La próxima vemos cómo <strong>actuar sobre esa data automáticamente</strong>: workflows, triggers, acciones, branching, delays y los errores que dejan workflows corriendo en silencio durante meses.</p>
+</div>
+<p style="text-align:center;color:var(--td);font-size:13px;margin-top:20px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Sesión 3 (unificada 3+4) de 11</p>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 26</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=26;let cur=0,pts=0,ad={},mSel={l:null,r:null},mDone=0,mTotal=5;
+const qSlides={9:['q1','q2','q3'],21:['q4','q5','q6']};
+const scSlides={10:'sc1',22:'sc2'};
+
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+document.getElementById('scoreBadge').textContent='✨ '+pts+' pts';
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.style.display='none';updFinal();return}
+b.style.display='flex';
+var sl=document.querySelector('[data-s="'+cur+'"]');
+var qz=sl.dataset.quiz;
+if(qz){
+var locked=false;
+if(qSlides[cur]){locked=!qSlides[cur].every(function(q){return ad[q]!==undefined})}
+if(scSlides[cur]){locked=ad[scSlides[cur]]===undefined}
+if(cur===18){locked=mDone<mTotal}
+if(locked){b.classList.add('locked');b.textContent='🔒 Completá para avanzar'}
+else{b.classList.remove('locked');b.textContent='Siguiente →'}
+}else{b.classList.remove('locked');b.textContent=cur===T-2?'Ver resultado →':'Siguiente →'}
+document.querySelector('.sa').scrollTop=0;
+}
+
+function goNext(){var b=document.getElementById('bN');if(b.classList.contains('locked'))return;if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+
+function ans(el,qId,c){
+if(ad[qId]!==undefined)return;
+ad[qId]=c;if(c)pts+=10;
+var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');fb.textContent='✅ ¡Correcto! +10 pts';fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});fb.textContent='❌ Incorrecta.';fb.className='qfb show fbbad';q.classList.add('bad')}
+upd();
+}
+
+function scAns(el,scId,c){
+if(ad[scId]!==undefined)return;
+ad[scId]=c;if(c)pts+=15;
+var sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');
+if(scId==='sc1')fb.textContent='✅ Exacto. Antes de crear una property, probá si la data ya vive en otro lado (form submission, lista). Cada property nueva es un compromiso de mantenimiento.';
+else fb.textContent='✅ Exacto. La normalización de Industry es deuda técnica que arrastra todo el equipo. Mientras tanto, "is any of" rescata. Y los NOT excluyen lo que no queremos volver a tocar.';
+fb.className='scenario-fb show sfbok'}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
+if(scId==='sc1')fb.textContent='❌ Crear una property por cada pedido lleva al caos. Preguntá dónde ya vive la data antes de duplicar.';
+else fb.textContent='❌ "contains SaaS" pierde los que cargaron "Software" o "Tech". Y sin excluir customers y enrolados, le mandás el SDR a gente equivocada.';
+fb.className='scenario-fb show sfbbad'}
+upd();
+}
+
+function matchClick(el,side){
+if(el.classList.contains('matched'))return;
+if(side==='l'){
+document.querySelectorAll('#ml .match-item').forEach(function(i){i.classList.remove('selected')});
+el.classList.add('selected');mSel.l=el;
+}else{
+document.querySelectorAll('#mr .match-item').forEach(function(i){i.classList.remove('selected')});
+el.classList.add('selected');mSel.r=el;
+}
+if(mSel.l&&mSel.r){
+if(mSel.l.dataset.m===mSel.r.dataset.m){
+mSel.l.classList.remove('selected');mSel.r.classList.remove('selected');
+mSel.l.classList.add('matched');mSel.r.classList.add('matched');
+mDone++;pts+=5;
+if(mDone===mTotal){document.getElementById('matchScore').style.display='block';document.getElementById('matchScore').textContent='✅ ¡Todo correcto! +'+mTotal*5+' pts'}
+}else{
+mSel.l.classList.add('wrong-flash');mSel.r.classList.add('wrong-flash');
+var a=mSel.l,b2=mSel.r;
+setTimeout(function(){a.classList.remove('selected','wrong-flash');b2.classList.remove('selected','wrong-flash')},600);
+}
+mSel={l:null,r:null};
+upd();
+}
+}
+
+function st(el,i){
+el.parentElement.querySelectorAll('.sn-tab').forEach(function(t){t.classList.remove('active')});
+el.classList.add('active');
+var p=el.closest('.sn').querySelectorAll('.sn-p');
+p.forEach(function(x){x.classList.remove('active')});p[i].classList.add('active');
+}
+
+function updFinal(){
+var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
+var maxPts=115;// 6 quiz*10 + 5 match*5 + 2 scenarios*15
+var pct=Math.round((pts/maxPts)*100);
+el.textContent=pts+' pts ('+pct+'%)';
+if(pct>=80){el.className='final-s great';msg.textContent='🔥 Excelente. Properties y listas son la base de todo lo que viene. La tenés clara.'}
+else if(pct>=50){el.className='final-s ok';msg.textContent='👍 Bien, pero repasá active vs static y los filter groups antes de la próxima sesión.'}
+else{el.className='final-s low';msg.textContent='📖 Volvé a las slides de filter groups y active/static. Sin esto, los workflows no van a tener sentido.'}
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+
+var currentLang='es';
+function toggleLang(){
+currentLang=currentLang==='es'?'en':'es';
+document.getElementById('langBtn').textContent=currentLang==='es'?'🌐 EN':'🌐 ES';
+document.querySelector('.top-info').textContent=currentLang==='es'?'Sesión 3 · Trainees':'Session 3 · Trainees';
+}
+
+upd();
+</script>
+</body>
+</html>
