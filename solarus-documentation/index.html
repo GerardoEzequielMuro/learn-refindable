@@ -67,7 +67,20 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 .back-to-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;border-radius:50%;background:var(--o);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(255,92,53,.35);opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;z-index:99}
 .back-to-top.visible{opacity:1;transform:translateY(0)}
 .back-to-top:hover{background:var(--o2)}
-@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.fields-grid{grid-template-columns:1fr}}
+@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.fields-grid{grid-template-columns:1fr}.timeline{padding-left:16px}}
+.timeline{position:relative;padding-left:28px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--o),var(--ob),transparent)}
+.tl-step{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-24px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--o);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--o)}
+.tl-card{background:#fff;border:1px solid var(--bd);border-left:3px solid var(--o);border-radius:8px;padding:14px 18px;transition:border-color .2s}
+.tl-card:hover{border-left-color:var(--o2)}
+.tl-num{font-family:'Bebas Neue',sans-serif;font-size:.8em;letter-spacing:1.5px;color:var(--o);margin-bottom:2px}
+.tl-text{font-size:.88em;color:var(--tl);line-height:1.6}.tl-text strong{color:var(--t)}
+.tl-label{font-size:.78em;color:var(--tl);font-style:italic;margin-top:4px}
+.note-box{background:rgba(52,152,219,.07);border-left:4px solid var(--b);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.85em;line-height:1.6;color:var(--t)}
+.warning-box{background:rgba(231,76,60,.07);border-left:4px solid var(--r);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.85em;line-height:1.6;color:var(--t)}
+.section-divider{border:none;border-top:2px solid var(--bd);margin:32px 0}
+.badge{display:inline-block;background:rgba(39,174,96,.1);color:var(--g);font-size:.55em;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;vertical-align:middle;margin-left:8px}
 </style>
 </head>
 <body>
@@ -111,6 +124,65 @@ footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;
 
 <!-- I. SALES PROCESS -->
 <div class="sh" id="sales"><span class="nm">I</span><h2>Sales Process</h2></div><div class="sl"></div>
+
+<!-- AUTOMATION 1: LEAD ASSIGNMENT -->
+<div class="ss"><p class="tl-num" style="margin-bottom:0">Automation 1</p>
+<h3>Lead Assignment Automations <span class="badge">Ready to walkthrough</span></h3>
+<p class="desc">When a new lead is created, the system notifies the CSR team. After manual assignment, the sales rep receives a task and email notification. Automated follow-ups escalate if the lead goes inactive.</p></div>
+
+<div class="timeline">
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 1</p>
+<p class="tl-text">Lead is created — automated notification sent to <strong>sales@solarus.net</strong> to alert CSRs</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 2</p>
+<p class="tl-text">CSR assigns the lead to a sales rep</p>
+<p class="tl-label">Manually — rep receives email notification + HubSpot task</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 3</p>
+<p class="tl-text">If <strong>48 hours</strong> pass with no activity (note, call, or email): automated reminder email sent to the sales rep to update the lead</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 4</p>
+<p class="tl-text">If still no activity after <strong>72 hours</strong>: automated email sent to CSR to re-assign the lead</p>
+<p class="tl-label">CSR re-assigns manually or contacts the rep</p>
+</div></div>
+</div>
+
+<div class="note-box"><strong>Note:</strong> Same process applies to inactive leads that have been in the pipeline for 96 hours or more with no activity.</div>
+
+<hr class="section-divider">
+
+<!-- AUTOMATION 2: QUOTE FOLLOW-UP -->
+<div class="ss"><p class="tl-num" style="margin-bottom:0">Automation 2</p>
+<h3>Quote Follow-up Automations <span class="badge">Ready to walkthrough</span></h3>
+<p class="desc">After a quote is sent to a customer, the system creates tasks and sends notifications at key intervals. If the quote is not accepted within 45 days, the deal moves to closed lost automatically.</p></div>
+
+<div class="timeline">
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 1</p>
+<p class="tl-text">Quote is sent — if no acceptance after <strong>48 hours</strong>: a task + email assigned to sales rep to follow up</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 2</p>
+<p class="tl-text"><strong>7 days</strong> after the quote was sent with no acceptance: another task and notification sent to the rep</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 3</p>
+<p class="tl-text"><strong>30 days</strong> with no acceptance: another task and notification sent to the rep</p>
+</div></div>
+<div class="tl-step"><div class="tl-dot"></div><div class="tl-card">
+<p class="tl-num">Step 4</p>
+<p class="tl-text">At <strong>42 days</strong>: CSR team receives a notification to review the deal</p>
+<p class="tl-label">If not moved, deal auto-closes as lost after 3 more days (day 45)</p>
+</div></div>
+</div>
+
+<div class="warning-box"><strong>Closed lost deadline:</strong> If the deal stage is not updated by day 45 with no quote acceptance, HubSpot automatically moves the deal to <em>Closed Lost</em>.</div>
+
+<hr class="section-divider">
 
 <div class="ss"><h3>How to work leads and opportunities in HubSpot</h3>
 <p class="desc">End-to-end walkthrough — from the moment a lead is assigned to you through converting it into a deal and creating a quote.</p></div>
@@ -534,7 +606,7 @@ Always create the <strong>contact first</strong> if the person is not already in
 
 </div>
 
-<footer>Solarus x <span>Refindable</span> &middot; HubSpot Learning Hub &middot; Last updated April 2026</footer>
+<footer>Solarus x <span>Refindable</span> &middot; HubSpot Learning Hub &middot; Last updated May 2026</footer>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
