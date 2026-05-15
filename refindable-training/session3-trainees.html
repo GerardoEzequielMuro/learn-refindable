@@ -434,7 +434,7 @@ body.light .pipe-s{color:var(--t)}
 <span class="ck">Last Activity Date</span>  <span class="cv">is more than</span>  <span class="ck">30 days ago</span><br>
 <span class="ck">Country</span>  <span class="cv">is none of</span>  <span class="ck">"Argentina"</span>
 </div>
-<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📌 Operadores comunes</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><ul><li><strong>is any of / is none of:</strong> dropdown / multi-checkbox</li><li><strong>is known / is unknown:</strong> el campo tiene valor o no</li><li><strong>is equal to / is not equal to:</strong> match exacto</li><li><strong>contains / doesn't contain:</strong> texto parcial</li><li><strong>is greater than / less than:</strong> números</li><li><strong>is more than X days ago / is less than X days ago:</strong> fechas relativas</li><li><strong>is between / is on:</strong> fechas absolutas</li><li><strong>has ever been / has never been:</strong> historia del campo</li></ul></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📌 Operadores comunes</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><ul><li><strong>is any of / is none of:</strong> dropdown / multi-checkbox</li><li><strong>is known / is unknown:</strong> el campo tiene valor o no</li><li><strong>is equal to / is not equal to:</strong> match exacto</li><li><strong>contains / doesn't contain:</strong> texto parcial</li><li><strong>is greater than / less than:</strong> números</li><li><strong>is more than / is less than X days ago:</strong> fechas relativas hacia el pasado</li><li><strong>is more than / is less than X days from now:</strong> fechas relativas hacia el futuro</li><li><strong>is between / is on:</strong> fechas absolutas</li><li><strong>has ever been / has never been:</strong> historia del campo</li></ul></div></div></div>
 </div>
 
 <!-- S14: Operadores -->
@@ -476,7 +476,8 @@ body.light .pipe-s{color:var(--t)}
 <tr><td><strong>is less than X days ago</strong></td><td>Pasó dentro de los últimos X días</td><td>"Contactos creados en la última semana"</td></tr>
 <tr><td><strong>is more than X days ago</strong></td><td>Hace más de X días que no pasa</td><td>"Sin actividad hace 60+ días" (re-engagement)</td></tr>
 <tr><td><strong>is between</strong></td><td>Rango fijo</td><td>"Deals cerrados entre 01-Abr y 30-Abr" (reporte mensual)</td></tr>
-<tr><td><strong>is in the next X days</strong></td><td>Va a pasar en los próximos X</td><td>"Renovaciones que vencen en 30 días"</td></tr>
+<tr><td><strong>is less than X days from now</strong></td><td>Va a pasar dentro de los próximos X días</td><td>"Renovaciones que vencen en 30 días"</td></tr>
+<tr><td><strong>is more than X days from now</strong></td><td>Va a pasar después de X días desde hoy</td><td>"Subscriptions que vencen más allá de 90 días"</td></tr>
 <tr><td><strong>is unknown</strong></td><td>Nunca pasó</td><td>"Contactos que nunca abrieron un email"</td></tr>
 </tbody></table>
 <div class="co tip"><div>💡</div><div><p>"Last Activity Date <strong>is more than</strong> 30 days ago" es el filtro más usado para detectar <strong>contactos fríos</strong>.</p></div></div>
@@ -577,7 +578,7 @@ body.light .pipe-s{color:var(--t)}
 </div><div class="qfb" id="q5-fb"></div></div>
 
 <div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Tu lista active "Renovation candidates" debería traer contactos con <strong>Subscription end date</strong> en los próximos 60 días. Configurás: Subscription end date <strong>is less than</strong> 60 days ago. Sale vacía aunque sabés que hay renovaciones próximas. ¿Por qué?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">A</div>"<strong>is less than</strong> 60 days ago" mira hacia el <strong>pasado</strong>: fechas que ocurrieron entre hoy y 60 días atrás. Para fechas futuras necesitás "<strong>is in the next</strong> 60 days".</div>
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">A</div>"<strong>is less than</strong> 60 days ago" mira hacia el <strong>pasado</strong>: fechas que ocurrieron entre hoy y 60 días atrás. Para fechas futuras necesitás "<strong>is less than</strong> 60 days <strong>from now</strong>" (mismo operador, pero el sufijo cambia el sentido).</div>
 <div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>HubSpot trata las fechas futuras como "is unknown" hasta que llegan. Tenés que armar un workflow que copie el valor a una property auxiliar para que el filtro vea la fecha.</div>
 <div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>El operador "is less than X days ago" solo aplica a date properties del sistema (Create date, Modify date). Para custom dates tenés que usar "is between" con rango fijo.</div>
 </div><div class="qfb" id="q6-fb"></div></div>
