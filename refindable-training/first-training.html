@@ -325,8 +325,8 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="7" data-quiz="1">
 <div class="badge quiz-b">🧠 Quiz 1 — Respondé para avanzar</div>
 <h2>Fundamentos del CRM</h2>
-<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>¿Qué significa CRM?</p><div class="qo"><div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Central Resource Manager</div><div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Customer Relationship Management</div><div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Client Record Module</div></div><div class="qfb" id="q1-fb"></div></div>
-<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>¿Qué pasa con un CRM mal implementado?</p><div class="qo"><div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Funciona igual, solo más lento</div><div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>Es peor que no tener CRM</div><div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Se arregla solo con el tiempo</div></div><div class="qfb" id="q2-fb"></div></div>
+<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Tu primo te dice: <em>"yo tengo todos los clientes en una planilla de Excel con sus emails y teléfonos. Eso es un CRM, ¿no?"</em>. ¿Qué le explicás?</p><div class="qo"><div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Sí. Cualquier sistema que guarde data de clientes cumple. Excel está bien hasta cierto tamaño.</div><div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>No. Un CRM no es solo el storage: es el storage + el <strong>historial de interacciones</strong> (llamadas, emails, reuniones) + la posibilidad de <strong>automatizar y compartir con un equipo</strong>. Una planilla no hace nada de eso.</div><div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>No, porque un CRM tiene que ser una herramienta paga como HubSpot o Salesforce. Excel es gratis y eso lo descalifica.</div></div><div class="qfb" id="q1-fb"></div></div>
+<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>En una agencia, el equipo de sales empieza a tomar notas en docs personales en lugar de cargarlas al CRM. El CRM existe pero no se usa. ¿Cuál es el problema <strong>más grave</strong> que esto genera?</p><div class="qo"><div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Que pagan licencias del CRM que no se aprovechan. Es un tema de costo.</div><div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>Que la data se vuelve <strong>invisible para el resto del equipo</strong>: si un vendedor renuncia o se enferma, nadie sabe qué pasó con sus prospectos. Los reportes de pipeline mienten porque la mitad de los deals no figuran.</div><div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Que el CRM se pone lento porque hay menos data indexada.</div></div><div class="qfb" id="q2-fb"></div></div>
 </div>
 
 <!-- S6: Pilares -->
@@ -390,11 +390,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="match-area">
 <div class="match-cols">
 <div class="match-left" id="ml">
-<div class="match-item" data-m="a" onclick="matchClick(this,'l')">juan<span>@</span>empresaabc.com</div>
-<div class="match-item" data-m="b" onclick="matchClick(this,'l')">$15,000 — Propuesta enviada</div>
-<div class="match-item" data-m="c" onclick="matchClick(this,'l')">Empresa ABC — Tech — 50 empl.</div>
-<div class="match-item" data-m="d" onclick="matchClick(this,'l')">Problema con la facturación</div>
-<div class="match-item" data-m="e" onclick="matchClick(this,'l')">Llamada de 15 min con cliente</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Cliente VIP que pidió descuento el lunes"</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'l')">"Renovación contrato 2026 — $42K — etapa Negociación"</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'l')">"Acme Industries — acme.io — 50 empleados"</div>
+<div class="match-item" data-m="d" onclick="matchClick(this,'l')">"Reclamo por SLA roto, prioridad alta"</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'l')">"Demo agendada para el jueves a las 10am"</div>
 </div>
 <div class="match-mid">↔<br>↔<br>↔<br>↔<br>↔</div>
 <div class="match-right" id="mr">
@@ -413,8 +413,8 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="12" data-quiz="3">
 <div class="badge quiz-b">🧠 Quiz 2 — Pilares del CRM</div>
 <h2>Verificación rápida</h2>
-<div class="qq" id="q3"><div class="qq-n">Pregunta 1</div><p>¿Cuál es el identificador más común de un Contacto?</p><div class="qo"><div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Nombre completo</div><div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>Email</div><div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>Número de teléfono</div></div><div class="qfb" id="q3-fb"></div></div>
-<div class="qq" id="q4"><div class="qq-n">Pregunta 2</div><p>¿Qué es un Pipeline?</p><div class="qo"><div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Un tipo de reporte</div><div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">B</div>Un contacto VIP</div><div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">C</div>El proceso por etapas de una venta</div></div><div class="qfb" id="q4-fb"></div></div>
+<div class="qq" id="q3"><div class="qq-n">Pregunta 1</div><p>Estás cargando a <strong>Juan Pérez</strong> en HubSpot. Notás que ya existe un contacto con el mismo nombre y apellido pero con email distinto: <code>juan.perez@empresaabc.com</code> vs <code>juan@personalmail.com</code>. ¿Qué hacés?</p><div class="qo"><div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Los mergeo. Mismo nombre = misma persona, no tiene sentido duplicar el registro.</div><div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>Los dejo separados. HubSpot usa <strong>el email como ID único</strong>: para el sistema son 2 personas distintas, y de hecho podrían serlo (dos Juan Pérez existe). Si después confirmás que es la misma persona, ahí mergeás manual.</div><div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>Borro el de personalmail (es Gmail genérico) y dejo solo el corporativo.</div></div><div class="qfb" id="q3-fb"></div></div>
+<div class="qq" id="q4"><div class="qq-n">Pregunta 2</div><p>Tu jefe te dice: <em>"necesito ver dónde están todos los deals en proceso, organizados por etapa, para la reunión de mañana"</em>. ¿Qué le mostrás?</p><div class="qo"><div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Un Report nuevo en Reporting con Amount, Stage y Owner. Para una pregunta de management, los reportes son la herramienta apropiada.</div><div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">B</div>El listado de Contactos con <strong>Lifecycle Stage = Opportunity</strong>. Ahí están los que están en proceso de venta.</div><div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">C</div>La vista <strong>Board (Pipeline)</strong> de Deals — un kanban por etapas donde cada deal es una tarjeta con monto, owner y fecha. Es justo lo que un pipeline es: el <strong>proceso por etapas visualizado</strong>.</div></div><div class="qfb" id="q4-fb"></div></div>
 </div>
 
 <!-- S11: HubSpot intro -->
@@ -487,12 +487,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="17" data-quiz="4">
 <div class="badge act-b">🎬 Escenario — ¿Qué harías?</div>
 <h2>Caso práctico #1</h2>
-<div class="scenario" id="sc1"><div class="scenario-title">📞 Situación</div><p>Recibís una llamada de <strong>María López</strong> de <strong>TechCorp</strong>. Te dice que está interesada en contratar servicios de CRM. Le pasaste un precio de <strong>$8,000</strong> y quedaron en hablar la semana que viene.</p><p><strong>¿Qué registrarías en HubSpot?</strong></p>
+<div class="scenario" id="sc1"><div class="scenario-title">📞 Situación</div><p>Recibís una llamada de <strong>María López</strong> de <strong>TechCorp</strong>. Está interesada en CRM. Le pasaste un precio de <strong>$8.000</strong> y quedaron en hablar la semana que viene.</p><p><strong>¿Cómo lo registrás en HubSpot?</strong></p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Solo creo un Contacto con su nombre y email</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Solo creo un Deal por $8,000</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Contacto + Company + Deal + Logueo la llamada + Tarea para la semana que viene</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Le mando un email y listo</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Creo el contacto y el deal por $8.000. La llamada no hace falta loguearla — ya está la info en el deal y en mi cabeza. El follow-up me lo agendo en mi calendar personal.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Creo el contacto + busco si TechCorp ya existe como Company (si está, lo asocio; si no, la creo) + creo el deal por $8.000 en etapa "Contactado" + logueo la llamada con notas de qué hablaron + creo una <strong>tarea</strong> de follow-up para la semana que viene. Lifecycle del contacto: Lead u Opportunity.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Creo el contacto y le mando un email de seguimiento. El deal lo creo la semana que viene <strong>cuando ella confirme</strong> que sigue interesada — sino se llena el pipeline de cosas frías.</div>
 </div>
 <div class="scenario-fb" id="sc1-fb"></div></div>
 </div>
@@ -501,12 +500,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="18" data-quiz="5">
 <div class="badge act-b">🎬 Escenario — ¿Qué harías?</div>
 <h2>Caso práctico #2</h2>
-<div class="scenario" id="sc2"><div class="scenario-title">😡 Situación</div><p>Un cliente existente, <strong>Pedro de DataFlow</strong>, te escribe enojado porque le están cobrando doble. Tu compañera Sol habló con él ayer pero no sabés qué le dijo.</p><p><strong>¿Dónde buscás la info?</strong></p>
+<div class="scenario" id="sc2"><div class="scenario-title">😡 Situación</div><p>Un cliente existente, <strong>Pedro de DataFlow</strong>, te escribe enojado porque le están cobrando doble. Tu compañera Sol habló con él ayer pero <strong>no sabés qué le dijo</strong> — y Sol está hoy con licencia.</p><p><strong>¿Cómo procedés sin hacer esperar a Pedro?</strong></p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Le mando un WhatsApp a Sol preguntando</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Abro el contacto de Pedro en HubSpot y reviso el timeline</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Busco en mi bandeja de email</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Le digo a Pedro que me mande un email</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Abro el contacto de Pedro en HubSpot y reviso el <strong>timeline</strong>. La llamada o el email de Sol queda logueada ahí (con notas si Sol las dejó). Con ese contexto le respondo a Pedro.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Le mando un WhatsApp a Sol y espero a que responda. Hasta entonces no le digo nada a Pedro para no contradecir lo que Sol le haya prometido.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Le pregunto directamente a Pedro qué le dijo Sol. El cliente sabe mejor que nadie qué le ofrecieron.</div>
 </div>
 <div class="scenario-fb" id="sc2-fb"></div></div>
 </div>
@@ -550,12 +548,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="21" data-quiz="6">
 <div class="badge act-b">🎬 Escenario final</div>
 <h2>Caso práctico #3</h2>
-<div class="scenario" id="sc3"><div class="scenario-title">🤔 Situación</div><p>Tu jefe te pide: "Necesito saber cuántos deals tenemos abiertos arriba de $10,000, quién es el owner de cada uno, y en qué etapa están."</p><p><strong>¿Dónde lo encontrás en HubSpot?</strong></p>
+<div class="scenario" id="sc3"><div class="scenario-title">🤔 Situación</div><p>Tu jefe te pide en el momento: <em>"necesito saber cuántos deals tenemos abiertos arriba de $10.000, quién es el owner de cada uno, en qué etapa están, y la fecha de cierre estimada."</em></p><p><strong>¿Cuál es la forma <strong>más rápida</strong> de resolverlo?</strong></p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc3',0)">En el menú Marketing → Campaigns</div>
-<div class="scenario-opt" onclick="scAns(this,'sc3',0)">En Service → Tickets</div>
-<div class="scenario-opt" onclick="scAns(this,'sc3',1)">En CRM → Deals, filtro por Amount > $10K, veo columnas de Stage y Owner</div>
-<div class="scenario-opt" onclick="scAns(this,'sc3',0)">En Reporting → hago un reporte nuevo</div>
+<div class="scenario-opt" onclick="scAns(this,'sc3',1)">Voy a <strong>CRM → Deals</strong>, agrego filtro <code>Amount &gt; 10000</code> + <code>Deal Stage ≠ Closed Won/Lost</code>, sumo columnas Owner, Stage y Close Date. Si lo va a pedir seguido, guardo la vista. Le mando el link.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc3',0)">Hago un Report nuevo en Reporting con esos filtros. Para preguntas de management, los reportes son la herramienta apropiada — vista guardada es para uso diario, no para reporting.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc3',0)">Exporto todos los deals a Excel y se los mando. El jefe filtra como quiera, así no le impongo mi criterio de columnas.</div>
 </div>
 <div class="scenario-fb" id="sc3-fb"></div></div>
 </div>
@@ -564,9 +561,9 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="22" data-quiz="7">
 <div class="badge quiz-b">🧠 Quiz Final</div>
 <h2>Últimas preguntas</h2>
-<div class="qq" id="q5"><div class="qq-n">Pregunta 1</div><p>¿Qué comparten todos los Hubs de HubSpot?</p><div class="qo"><div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>Son sistemas separados</div><div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>La misma base de datos (CRM)</div><div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Cada Hub necesita cuenta diferente</div></div><div class="qfb" id="q5-fb"></div></div>
-<div class="qq" id="q6"><div class="qq-n">Pregunta 2</div><p>¿Cuál es la diferencia entre Lifecycle Stage y Pipeline?</p><div class="qo"><div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">A</div>Lifecycle = etapa del contacto. Pipeline = etapa del deal.</div><div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>Son lo mismo con nombres diferentes</div><div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Lifecycle es para marketing, Pipeline para service</div></div><div class="qfb" id="q6-fb"></div></div>
-<div class="qq" id="q7"><div class="qq-n">Pregunta 3</div><p>¿Dónde encontrás Workflows en HubSpot?</p><div class="qo"><div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">A</div>En CRM</div><div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">B</div>En Reporting</div><div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">C</div>En Automations</div></div><div class="qfb" id="q7-fb"></div></div>
+<div class="qq" id="q5"><div class="qq-n">Pregunta 1</div><p>Tu empresa usa <strong>Marketing Hub</strong> para mandar emails y <strong>Sales Hub</strong> para gestionar deals. Marketing crea una lista "MQLs LATAM" para una campaña. ¿Sales puede usar esa misma lista para enrolar contactos en un workflow de outbound?</p><div class="qo"><div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>No, cada Hub tiene su propia base de datos. Hay que exportar la lista de Marketing y re-importarla a Sales.</div><div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">B</div>Sí, pero hay que copiar la lista en "modo Sales" desde el menú de Hubs.</div><div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">C</div>Sí, directamente. <strong>Todos los Hubs comparten la misma DB (el CRM)</strong>. La lista existe una sola vez y cualquier Hub la usa como audiencia para emails, workflows, reportes, etc.</div></div><div class="qfb" id="q5-fb"></div></div>
+<div class="qq" id="q6"><div class="qq-n">Pregunta 2</div><p>Un contacto tiene <strong>Lifecycle Stage = "Opportunity"</strong> y un <strong>Deal asociado en etapa "Negociación"</strong>. El cliente firma. ¿Qué cambia y qué no, en HubSpot, <strong>por default</strong> (sin workflows custom)?</p><div class="qo"><div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">A</div>Solo el Deal pasa a "Closed Won". El Lifecycle Stage del contacto <strong>no cambia automáticamente</strong> — lo actualizás vos a "Customer" (o lo hace un workflow que vos configures).</div><div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>Cambia todo al mismo tiempo: el deal pasa a "Closed Won" y el Lifecycle del contacto pasa a "Customer" automáticamente.</div><div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Solo cambia el Lifecycle del contacto a "Customer". El deal queda abierto hasta que se facture.</div></div><div class="qfb" id="q6-fb"></div></div>
+<div class="qq" id="q7"><div class="qq-n">Pregunta 3</div><p>Querés que cada vez que un contacto fillee el form "Demo Request", se cree automáticamente un <strong>Deal asociado</strong> en etapa "Nuevo Lead" Y se le notifique al sales owner por Slack. ¿Qué herramienta de HubSpot usás?</p><div class="qo"><div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">A</div>Un Workflow (en Automations). Los workflows disparan acciones (crear deal, mandar notificación, asignar owner) cuando se cumple un trigger.</div><div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">B</div>Una Lista active filtrada por "fillearon Demo Request". Cuando entra alguien, se crea el deal solo.</div><div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">C</div>Una Vista guardada en Contacts con filtro de submission del form. El equipo de sales la revisa cada mañana.</div></div><div class="qfb" id="q7-fb"></div></div>
 </div>
 
 <!-- S21: Glosario -->
@@ -653,11 +650,15 @@ if(ad[scId]!==undefined)return;
 ad[scId]=c;if(c)pts+=15;
 const sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
 opts.forEach(o=>o.classList.add('dis'));
-if(c){el.classList.add('correct');fb.textContent='✅ ¡Correcto! +15 pts. Siempre registrá todo en el CRM.';fb.className='scenario-fb show sfbok'}
+if(c){el.classList.add('correct');
+if(scId==='sc1')fb.textContent='✅ Exacto. La regla es: contacto + company + deal + actividad + tarea. Si no queda en el CRM, no existe — y el lunes que viene nadie va a saber dónde quedó la conversación.';
+else if(scId==='sc2')fb.textContent='✅ Exacto. El timeline tiene todo el historial — llamadas, emails, notas que Sol haya dejado. Resolvés sin bloquearte en otra persona y sin pedirle al cliente enojado que te repita lo que ya contó.';
+else fb.textContent='✅ Exacto. CRM → Deals con filtros es la forma más directa. Reporting es para algo recurrente o con visualización; para una pregunta one-off, una vista es más rápida.';
+fb.className='scenario-fb show sfbok'}
 else{el.classList.add('wrong');opts.forEach(o=>{if(o.getAttribute('onclick')?.includes(',1)')){o.classList.remove('dis');o.classList.add('correct')}});
-  if(scId==='sc1')fb.textContent='❌ Hay que registrar TODO: contacto, empresa, deal, actividad y tarea de follow-up.';
-  else if(scId==='sc2')fb.textContent='❌ El timeline del contacto tiene todo el historial. Ahí ves qué habló Sol.';
-  else fb.textContent='❌ CRM → Deals, con filtros. Es la forma más directa.';
+  if(scId==='sc1')fb.textContent='❌ Hay que registrar TODO: contacto + company (asociada o creada) + deal + llamada logueada + tarea de follow-up. Crear el deal recién "cuando confirme" pierde la conversación inicial; el deal puede vivir abierto en una etapa temprana.';
+  else if(scId==='sc2')fb.textContent='❌ El timeline tiene todo el historial. Esperar a Sol bloquea, y pedirle al cliente enojado que te recuente lo que ya habló es peor — siente que arrancan de cero.';
+  else fb.textContent='❌ Lo más rápido es CRM → Deals con filtros + columnas. Reporting es overkill para una pregunta puntual, y mandarle el Excel al jefe le pasa el trabajo a él.';
   fb.className='scenario-fb show sfbbad'}
 upd();
 }

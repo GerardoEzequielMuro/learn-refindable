@@ -271,22 +271,22 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="7" data-quiz="1">
 <div class="badge quiz-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Quiz 1 | Respondé para avanzar</div>
 <h2>Contactos y Companies</h2>
-<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Importás 200 contactos. 50 tienen email de @gmail.com y 150 tienen emails corporativos de 30 empresas distintas. ¿Cuántas Companies se crean automáticamente?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>200, una por cada contacto</div>
-<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">B</div>31, una por cada dominio incluyendo Gmail</div>
-<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">C</div>30, solo las corporativas, Gmail se ignora por ser dominio genérico</div>
+<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Importás 200 contactos. 50 tienen email <code>@gmail.com</code>, 120 tienen emails corporativos de 30 empresas distintas, y 30 son <code>@yahoo.com.ar</code>. ¿Cuántas Companies se crean automáticamente por auto-asociación de dominio?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">A</div><strong>30</strong>. HubSpot solo auto-crea companies para dominios corporativos. Gmail, Yahoo, Hotmail y otros <strong>free email providers</strong> están en la lista de dominios ignorados.</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">B</div><strong>32</strong>. Cada dominio único genera una company: 30 corporativos + gmail.com + yahoo.com.ar.</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div><strong>200</strong>. HubSpot crea una company por contacto, después vos las consolidás manualmente.</div>
 </div><div class="qfb" id="q1-fb"></div></div>
 
-<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Un contacto tiene Lifecycle Stage = "Customer". Su empresa acaba de pedir una cotización para un segundo producto. ¿Qué hacés?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Cambio el Lifecycle Stage a "Lead" para arrancar de cero</div>
-<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>Lo dejo como Customer y creo un nuevo Deal asociado</div>
-<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Creo un contacto nuevo para el segundo producto</div>
+<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Un contacto (Lifecycle = <strong>Customer</strong>) acaba de pedir cotización para un <strong>segundo producto distinto</strong> al que ya usa. ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Cambio el Lifecycle a "Opportunity" o "MQL" mientras evalúa, y creo un Deal nuevo. El estado del contacto refleja que está en proceso de evaluación otra vez.</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>Lo dejo como <strong>Customer</strong> (es cliente, no deja de serlo por evaluar otro producto) y creo un Deal nuevo asociado. El Lifecycle es el estado <strong>global del contacto</strong>, no se baja por una venta en curso — para eso está el Pipeline del Deal.</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Creo un contacto nuevo "Juan - Segundo producto" para que el deal nuevo no se mezcle con el deal histórico. Así cada producto tiene su propio timeline.</div>
 </div><div class="qfb" id="q2-fb"></div></div>
 
-<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>María trabaja como consultora para 3 empresas. Tiene un solo email: maria@gmail.com. ¿Cómo la asociás a las 3 Companies en HubSpot?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>No se puede, un contacto solo puede estar en una Company</div>
-<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">B</div>Creo 3 contactos duplicados, uno por empresa</div>
-<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">C</div>La asocio manualmente a las 3 Companies desde su registro</div>
+<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>María trabaja como <strong>consultora freelance</strong> para 3 empresas distintas. Tiene un solo email personal <code>maria@gmail.com</code>. ¿Cómo la modelás en HubSpot?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Creo 3 contactos duplicados, uno por empresa. Así cada relación se mantiene independiente con su propio timeline.</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>La asocio manualmente a las 3 Companies (HubSpot soporta <strong>múltiples company associations</strong> por contacto, con una designada como Primary). Como <code>@gmail.com</code> es <strong>free domain</strong>, no hubo auto-asociación: las 3 son a mano.</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>No se puede tener un contacto en 3 companies. La asocio a la más importante y registro las otras 2 como Notes en su contact record.</div>
 </div><div class="qfb" id="q3-fb"></div></div>
 </div>
 
@@ -354,11 +354,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="match-area">
 <div class="match-cols">
 <div class="match-left" id="ml">
-<div class="match-item" data-m="a" onclick="matchClick(this,'l')">Annual Revenue</div>
-<div class="match-item" data-m="b" onclick="matchClick(this,'l')">Close Date</div>
-<div class="match-item" data-m="c" onclick="matchClick(this,'l')">Job Title</div>
-<div class="match-item" data-m="d" onclick="matchClick(this,'l')">Deal Stage</div>
-<div class="match-item" data-m="e" onclick="matchClick(this,'l')">Domain Name</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">Number of Employees</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'l')">Deal Probability</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'l')">Lifecycle Stage</div>
+<div class="match-item" data-m="d" onclick="matchClick(this,'l')">Amount in Company Currency</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'l')">Industry</div>
 </div>
 <div class="match-mid">↔<br>↔<br>↔<br>↔<br>↔</div>
 <div class="match-right" id="mr">
@@ -377,22 +377,22 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="12" data-quiz="3">
 <div class="badge quiz-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Quiz 2 | Deals</div>
 <h2>Verificación rápida</h2>
-<div class="qq" id="q4"><div class="qq-n">Pregunta 1</div><p>Tenés un deal "TechCorp - CRM - Q2" en etapa Negociación (80%) por $50,000. El cliente dice que quiere pero necesita 6 meses. ¿Qué hacés con el deal?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Lo paso a Closed Lost porque no va a comprar ahora</div>
-<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">B</div>Lo dejo en Negociación y espero 6 meses</div>
-<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">C</div>Cambio el Close Date a 6 meses, lo muevo a una etapa anterior, y creo una tarea de follow-up</div>
+<div class="qq" id="q4"><div class="qq-n">Pregunta 1</div><p>Un deal "TechCorp - CRM - Q2" está en etapa <strong>Negociación (80%)</strong> por $50K. El cliente te dice: <em>"nos encanta, pero por temas de presupuesto recién podemos arrancar en 6 meses"</em>. ¿Qué hacés con el deal?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Lo paso a <strong>Closed Lost</strong> con motivo "Timing/Presupuesto" para limpiar el pipeline. Cuando estén listos lo recreo nuevo en 6 meses.</div>
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">B</div>Lo dejo en Negociación tal cual. Sigue siendo una venta probable — cambio solo el Close Date para que refleje los 6 meses.</div>
+<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">C</div>Cambio el <strong>Close Date a 6 meses</strong>, <strong>muevo el deal a una etapa anterior</strong> (Propuesta o Reunión) porque la negociación quedó pausada, <strong>bajo la probabilidad real</strong>, y creo una <strong>tarea de follow-up a T-30 días</strong> para no perderle el rastro.</div>
 </div><div class="qfb" id="q4-fb"></div></div>
 
-<div class="qq" id="q5"><div class="qq-n">Pregunta 2</div><p>Un deal lleva 45 días en "Propuesta enviada". El contacto no responde emails ni llamadas. ¿Cuál es la PEOR decisión?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>Registrarlo como Closed Lost con motivo "Sin respuesta"</div>
-<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>No hacer nada y dejarlo ahí indefinidamente</div>
-<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Intentar contactar por otro canal antes de cerrarlo</div>
+<div class="qq" id="q5"><div class="qq-n">Pregunta 2</div><p>Un deal lleva 45 días en "Propuesta enviada". El contacto no responde emails ni llamadas. Tu manager pide que limpies el pipeline antes del review trimestral. ¿Cuál es la <strong>PEOR</strong> decisión?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>Marcarlo como <strong>Closed Lost</strong> con motivo "No response" y agregar al timeline las fechas y canales que intentaste. Si reabre la conversación más adelante, podés crear un deal nuevo o reabrir éste.</div>
+<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div><strong>Dejarlo en "Propuesta enviada" sin actividad</strong> — capaz responde la semana que viene, total el pipeline tiene lugar.</div>
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Dar un último intento por otro canal (LinkedIn / referral) <strong>antes</strong> de cerrarlo. Si en 7 días no hay respuesta, ahí lo paso a Closed Lost.</div>
 </div><div class="qfb" id="q5-fb"></div></div>
 
-<div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Cerraste un deal como "Closed Won" por $20,000 pero el cliente reduce el alcance y ahora son $12,000. ¿Qué hacés en HubSpot?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Nada, ya está cerrado</div>
-<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">B</div>Actualizo el monto a $12,000 en el deal existente</div>
-<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Creo un deal nuevo por $12,000 y borro el viejo</div>
+<div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Cerraste un deal como <strong>Closed Won</strong> por $20K. El cliente arranca el onboarding pero a las 2 semanas <strong>reduce el scope</strong>: ahora son $12K. ¿Qué hacés en HubSpot?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Cambio el deal original a <strong>Closed Lost</strong> y creo un deal nuevo por $12K en Closed Won. Así el revenue refleja el dinero real.</div>
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">B</div>Actualizo el Amount a $12K <strong>en el mismo deal</strong> y agrego una nota al timeline explicando el cambio de scope. El deal sigue Closed Won.</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Creo un deal "ajuste" por -$8K asociado al mismo contacto y company. La suma neta da los $12K reales sin tocar el deal original.</div>
 </div><div class="qfb" id="q6-fb"></div></div>
 </div>
 
@@ -435,12 +435,11 @@ body.light .pipe-s{color:var(--t)}
 <div class="badge act-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg> Escenario | ¿Qué harías?</div>
 <h2>Llegaron 500 leads de una feria</h2>
 <div class="scenario" id="sc1"><div class="scenario-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg> Situación</div>
-<p>Volvés de <strong>TechFair 2026</strong> con un Excel de 500 contactos. Tu jefe quiere que estén en HubSpot HOY. Pero al revisar el archivo encontrás: 80 sin email, 30 con emails duplicados entre sí, celdas con formato raro (nombres en mayúsculas, teléfonos con guiones y paréntesis), y una columna "Interés" que no existe como propiedad en HubSpot. ¿Qué hacés?</p>
+<p>Volvés de <strong>TechFair 2026</strong> con un Excel de 500 contactos. Tu jefe quiere que estén en HubSpot HOY (a las 6pm es el review con el CMO). Al abrir el archivo encontrás: <strong>80 sin email</strong>, <strong>30 emails duplicados</strong> entre sí, 50 teléfonos en formato raro (guiones, paréntesis, sin código de país), una columna <strong>"Interés del visitante"</strong> que no existe como property, y "Origen booth" con valores inconsistentes (<code>Stand A</code>, <code>stand a</code>, <code>STAND A</code>). Son las 4pm.</p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">A) Importo todo rápido para cumplir con el jefe, después limpio</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',1)">B) Limpio el CSV (quito los sin email, normalizo formato, creo la propiedad custom "Interés"), importo los válidos, y manejo los 80 sin email por separado</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">C) Le digo al jefe que no se puede importar hasta que todos tengan email</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">D) Importo solo los que tienen email sin limpiar nada más</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">A) Importo los 500 sin tocar nada para cumplir la deadline. Mañana limpio lo que entre sucio.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">B) Le digo al jefe que no llego para las 6pm: importar data sucia es peor que no importar. Le pido extender la deadline.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',1)">C) Limpio rápido lo crítico (saco los sin email + duplicados, normalizo "Origen booth" a un solo casing), <strong>creo la custom property "Interés del visitante"</strong> antes de importar, los <strong>tageo todos con "TechFair 2026"</strong> en el import para identificarlos después, e importo los ~390 válidos. Los 80 sin email los reviso aparte mañana.</div>
 </div>
 <div class="scenario-fb" id="sc1-fb"></div></div>
 </div>
@@ -484,16 +483,15 @@ body.light .pipe-s{color:var(--t)}
 <div class="badge act-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg> Escenario final</div>
 <h2>El manager quiere saber</h2>
 <div class="scenario" id="sc2"><div class="scenario-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg> Situación</div>
-<p>Sos el nuevo vendedor de una empresa. Es tu primer día usando HubSpot. Te asignan 3 tareas:</p>
-<p>1. Un cliente existente (<strong>Pedro de DataFlow</strong>) llamó enojado. Dice que le prometieron un descuento que nunca llegó. Vos no hablaste con él antes, fue tu compañero que renunció la semana pasada.<br>
-2. Tenés que crear un deal nuevo para <strong>ABC Corp</strong>, ya son contactos en el CRM pero nunca se les vendió nada.<br>
-3. Tu manager quiere saber cuántos deals tiene cada vendedor abiertos y cuáles están trabados hace más de 2 semanas.</p>
-<p><strong>¿Dónde arrancás para resolver las 3 cosas?</strong></p>
+<p>Sos el nuevo vendedor de una empresa. Es tu primer día usando HubSpot. Tu manager te asigna 3 cosas para resolver en el día:</p>
+<p>1. <strong>Pedro de DataFlow</strong> (cliente existente) llamó enojado: dice que le prometieron un <strong>descuento que nunca llegó</strong>. La conversación la tuvo tu compañero <strong>que renunció la semana pasada</strong> y no podés preguntarle.<br>
+2. Crear un deal nuevo para <strong>ABC Corp</strong>: ya son contactos en el CRM pero nunca se les vendió nada.<br>
+3. El manager quiere saber <strong>cuántos deals abiertos tiene cada vendedor</strong> y cuáles están trabados <strong>hace más de 2 semanas en la misma etapa</strong>.</p>
+<p><strong>¿Cómo encarás las 3?</strong></p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">A) Llamo a Pedro primero porque está enojado, después veo el resto</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',1)">B) Abro el contacto de Pedro y reviso el timeline para saber qué le prometieron. Después voy a ABC Corp y creo el deal desde la Company. Para lo del manager, filtro deals por Owner y Days in Stage.</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">C) Le pregunto a un compañero qué le dijeron a Pedro</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">D) Creo los 3 deals primero y después me fijo lo de Pedro</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">A) Llamo a Pedro <strong>primero sin preparación</strong> porque está enojado y la prioridad es bajarle la espuma. Después me ocupo del deal de ABC y del reporte para el manager.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',1)">B) Abro el contacto de Pedro y reviso <strong>el timeline completo</strong> — ahí están los emails, llamadas y notas que dejó mi excompañero. Con el contexto, le respondo a Pedro. Después voy a la company ABC Corp y creo el deal desde ahí para que se asocie solo. Para el manager, en CRM → Deals filtro por <code>Owner</code> + <code>Days in current stage &gt; 14</code> y le guardo la vista.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">C) Le pregunto a otro compañero qué se sabe del caso de Pedro. Mientras espero respuesta, creo el deal de ABC y armo el filtro para el manager.</div>
 </div>
 <div class="scenario-fb" id="sc2-fb"></div></div>
 </div>
@@ -502,16 +500,16 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="19" data-quiz="6">
 <div class="badge quiz-b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> Quiz Final | Cerremos la sesión</div>
 <h2>Últimas preguntas</h2>
-<div class="qq" id="q7"><div class="qq-n">Pregunta 1</div><p>Descubrís que hay 3 registros de la misma persona: maria@gmail.com, maria.lopez@techcorp.com, y m.lopez@techcorp.com. ¿Qué deberías hacer?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">A</div>Dejarlos separados, son emails distintos, son personas distintas</div>
-<div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">B</div>Mergear los 3 registros en uno solo, eligiendo el email corporativo como primario</div>
-<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">C</div>Borrar los duplicados y quedarse solo con el de Gmail</div>
+<div class="qq" id="q7"><div class="qq-n">Pregunta 1</div><p>Descubrís 3 registros que parecen ser la misma persona: <code>maria@gmail.com</code>, <code>maria.lopez@techcorp.com</code> y <code>m.lopez@techcorp.com</code>. Verificás en LinkedIn que efectivamente es la misma María López. ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">A</div>Los dejo separados. Son emails distintos = son contactos distintos para HubSpot. Mergear puede pisar data importante (notas, asociaciones) que tenga cada uno.</div>
+<div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">B</div>Mergeo los 3, eligiendo el <strong>email corporativo más usado</strong> como primario. HubSpot conserva las actividades, deals y asociaciones de los 3 registros en el mergeado, y los emails no-primarios quedan como <strong>secondary emails</strong> en el record.</div>
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">C</div>Borro los duplicados con menos actividad y dejo el que tiene más timeline. Es más limpio que mergear.</div>
 </div><div class="qfb" id="q7-fb"></div></div>
 
-<div class="qq" id="q8"><div class="qq-n">Pregunta 2</div><p>Tu manager pide un reporte de "deals que llevan más de 30 días sin avanzar de etapa". No existe ese reporte. ¿Cómo lo resolvés en menos de 5 minutos?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">A</div>Le digo que HubSpot no puede hacer eso</div>
-<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">B</div>Exporto todos los deals a Excel y filtro manualmente</div>
-<div class="qopt" onclick="ans(this,'q8',1)"><div class="mk">C</div>Voy a CRM → Deals, creo una vista con filtro "Days in current stage > 30" y la guardo</div>
+<div class="qq" id="q8"><div class="qq-n">Pregunta 2</div><p>Tu manager pide en el momento: <em>"necesito ver los deals que llevan más de 30 días <strong>sin avanzar de etapa</strong>"</em>. No existe un reporte así. ¿Cómo lo resolvés en menos de 5 minutos sin involucrar a IT?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">A</div>Exporto todos los deals a Excel, calculo manualmente los días en stage actual con una fórmula, y mando el filtrado.</div>
+<div class="qopt" onclick="ans(this,'q8',1)"><div class="mk">B</div>En CRM → Deals creo una vista con filtro <code>Days in current stage &gt; 30</code> + <code>Deal Stage ≠ Closed</code>. HubSpot trae esa property nativa por default. Guardo la vista y le mando el link al manager.</div>
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">C</div>Le digo al manager que esa info no la tracking HubSpot directamente, hay que armar un workflow que setee una property custom "Days in stage" para poder filtrar.</div>
 </div><div class="qfb" id="q8-fb"></div></div>
 </div>
 
@@ -622,12 +620,12 @@ ad[scId]=c;if(c)pts+=15;
 var sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
 opts.forEach(function(o){o.classList.add('dis')});
 if(c){el.classList.add('correct');
-if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u2705 Exactly. Clean first, always. Contacts without email are handled separately with an enrichment strategy.':'\u2705 Exacto. Limpieza primero, siempre. Los contactos sin email se manejan aparte con una estrategia de enriquecimiento.');
-else fb.textContent=(currentLang==='en'?'\u2705 Exactly. CRM \u2192 Deals. With the right filters you have that in 2 minutes.':'\u2705 Exacto. CRM \u2192 Deals. Con los filtros correctos ten\u00e9s eso en 2 minutos.');
+if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u2705 Exactly. Clean the critical issues (no email, duplicates, casing) + create the custom property + tag the source = data quality is preserved, deadline is met. The "no email" ones go into a separate enrichment workflow tomorrow.':'\u2705 Exacto. Limpiar lo cr\u00edtico (sin email, duplicados, casing) + crear la custom property + tagear el origen = preserv\u00e1s calidad de data y llegas a la deadline. Los sin email se enriquecen aparte ma\u00f1ana.');
+else fb.textContent=(currentLang==='en'?'\u2705 Exactly. Pedro\'s timeline has everything your ex-coworker logged. Building the new deal from the Company auto-associates. And "Days in current stage" is a native HubSpot property \u2014 no custom workflow needed.':'\u2705 Exacto. El timeline de Pedro tiene todo lo que loguee\u00f3 tu excompa\u00f1ero. Crear el deal desde la Company auto-asocia. Y "Days in current stage" es una property nativa de HubSpot \u2014 no necesit\u00e1s workflow custom.');
 fb.className='scenario-fb show sfbok'}
 else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
-if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u274c Always clean the CSV first. Those without email are handled separately.':'\u274c Siempre limpi\u00e1 el CSV antes. Los que no tienen email se manejan por separado.');
-else fb.textContent=(currentLang==='en'?'\u274c CRM \u2192 Deals with filters is the most direct way. Reporting is for something more elaborate.':'\u274c CRM \u2192 Deals con filtros es la forma m\u00e1s directa. Reporting es para algo m\u00e1s elaborado.');
+if(scId==='sc1')fb.textContent=(currentLang==='en'?'\u274c Importing dirty data without cleaning means garbage in your CRM forever. Skipping the deadline means you don\'t meet expectations. The right move is fast triage: clean critical issues + create needed properties + tag the source, all before the import.':'\u274c Importar sucio entra basura al CRM para siempre. No importar te hace quedar mal con la deadline. Lo correcto es triage r\u00e1pido: limpiar lo cr\u00edtico + crear properties necesarias + tagear el origen, todo antes del import.');
+else fb.textContent=(currentLang==='en'?'\u274c The CRM has the answers. Calling Pedro without checking the timeline is unprofessional. Asking a coworker blocks you on their availability. Always: timeline first.':'\u274c El CRM tiene las respuestas. Llamar a Pedro sin chequear el timeline es poco profesional. Preguntarle a otro compa\u00f1ero te bloquea en su disponibilidad. Siempre: timeline primero.');
 fb.className='scenario-fb show sfbbad'}
 upd();
 }
