@@ -334,22 +334,22 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="9" data-quiz="1">
 <div class="badge quiz-b">🧠 Quiz 1 · Respondé para avanzar</div>
 <h2>Properties</h2>
-<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Tu jefe te pide armar un reporte de "contactos con más de 100 empleados en su empresa". Cuando filtrás, no podés porque la property "Número de empleados" está como Single-line text. ¿Qué hacés?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Filtro con "contiene" y pruebo combinaciones (100, 200, 300...)</div>
-<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Pido crear una property nueva como Number, migro los valores con una importación, y uso esa para el reporte</div>
-<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Le digo a mi jefe que HubSpot no permite eso</div>
+<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Tenés "Número de empleados" como Single-line text con valores como "100", "100+", "~150", "1.000", "ten". Tu jefe quiere reportar "empresas con más de 100 empleados". ¿Cuál es el camino correcto?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Filtro la lista con "Número de empleados" <strong>is greater than</strong> 100. HubSpot interpreta los strings numéricos al comparar.</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Creo "Número de empleados (num)" como Number, exporto los valores, los normalizo en Excel, importo en la property nueva, y migro listas/workflows que usan la vieja antes de archivarla.</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Desde Settings → Properties → Edit, cambio el field type de Single-line text a Number. Mantiene la property y se ahorra la migración.</div>
 </div><div class="qfb" id="q1-fb"></div></div>
 
-<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Un compañero te pide crear una custom property llamada "Notas del último call". ¿Cuál es la respuesta correcta?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Crearla como Multi-line text en el group "Custom"</div>
-<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>No crearla. Para notas de call ya existen las Notes nativas. Crear una property para texto libre no aporta valor y nadie la mantiene</div>
-<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Crearla como Single-line text en Contact information</div>
+<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Sales pide una custom property "Notas del último call" en Contact. ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>La creo como Multi-line text. Para texto largo es el field type correcto, y le da al sales un campo dedicado visible en el contact view sin tener que abrir la timeline.</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>No la creo. Las <strong>Notes nativas</strong> ya hacen eso, con timeline, asociaciones (call/meeting/deal), búsqueda y permisos por rol. Una property de texto libre duplica info y nadie la mantiene al día.</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>La creo como Single-line text con un límite implícito. Así forzás al sales a escribir solo highlights y no se vuelve un mini-CRM dentro de una property.</div>
 </div><div class="qfb" id="q2-fb"></div></div>
 
-<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>Querés segmentar contactos por "regiones de interés", donde un mismo contacto puede tener varias (LATAM, EMEA, NA). ¿Qué tipo de property usás?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Single-line text donde el sales escribe las regiones separadas por coma</div>
-<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">B</div>Dropdown select con una opción "LATAM/EMEA/NA"</div>
-<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">C</div>Multi-checkbox con las tres opciones definidas</div>
+<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>Querés segmentar por "regiones de interés" (un contacto puede tener varias: LATAM, EMEA, NA, APAC). Marketing además quiere usar la property como token en emails: "Te enviamos contenido de <strong>{{token}}</strong>". ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Multi-checkbox con las 4 regiones. Una sola property, filtros con "is any of", y el token muestra automáticamente las regiones del contacto.</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>Multi-checkbox para segmentar + una property auxiliar tipo text ("Regions display") que un workflow popula con el formato legible ("LATAM y EMEA"). El email usa la auxiliar como token, las listas usan la multi-checkbox.</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>4 properties booleanas separadas (<code>region_latam</code>, <code>region_emea</code>, <code>region_na</code>, <code>region_apac</code>). Cada una se filtra individualmente y se renderiza como token condicional con if/else en el email.</div>
 </div><div class="qfb" id="q3-fb"></div></div>
 </div>
 
@@ -359,12 +359,18 @@ body.light .pipe-s{color:var(--t)}
 <h2>El pedido de Marketing</h2>
 <div class="scenario" id="sc1">
 <div class="scenario-title">📩 Pedido recibido</div>
-<p>Marketing te escribe: <em>"Necesito una property nueva para marcar contactos que descargaron el whitepaper de Q1 2026. La llamamos 'Whitepaper Q1 download' y la cargamos como checkbox single."</em></p>
-<p>Antes de crearla, ¿qué hacés primero?</p>
+<p>Marketing te escribe: <em>"Necesitamos una property 'Whitepaper Q1 download' (checkbox single) para marcar quien descargó el material. La vamos a usar para nurturing y para personalizar emails con tokens tipo <strong>'{{first_name}}, ya leíste nuestro Whitepaper Q1'</strong>."</em></p>
+<p>Revisás el portal y notás:</p>
+<ul style="font-size:15px;color:var(--tm);line-height:1.8;margin-left:20px">
+<li>Ya existe el form <strong>"Whitepaper Q1 - Download"</strong> con 234 submissions</li>
+<li>Ya existe una lista active <strong>"Form fills · Whitepaper Q1"</strong> que se actualiza sola</li>
+<li>Marketing tiene acceso a Listas, Emails y Forms pero <strong>NO a Workflows</strong></li>
+</ul>
+<p>¿Qué hacés?</p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">La creo. Es un pedido de Marketing, ellos saben lo que necesitan.</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Le pregunto si ya tienen una <strong>lista de descargantes</strong> o si pueden filtrar por el <strong>form submission del whitepaper</strong>. Si la respuesta es sí, no hace falta la property: ya tienen la data en el form y en la lista activa.</div>
-<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Le digo que pidan una mejor naming y la creo igual.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">No creo la property. Les muestro la lista active del form fill y les explico que la pueden usar directo como audiencia del nurturing. Property nueva = más mantenimiento, mejor evitarla.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Creo la property y un workflow que la setee en True al fillear el form. La data ya existe en el form fill, pero el <strong>token de personalización en el email necesita una property</strong> — los emails no pueden tomar membership de lista como token. Sin la property no podés hacer el "ya leíste nuestro Whitepaper".</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Creo property + workflow + dejo la lista existente. Marketing usa la que prefiera según el caso. Más opciones siempre es mejor.</div>
 </div>
 <div class="scenario-fb" id="sc1-fb"></div>
 </div>
@@ -499,11 +505,11 @@ body.light .pipe-s{color:var(--t)}
 <p style="font-size:14px">Click un caso de la izquierda, después el tipo correcto de la derecha.</p>
 <div class="match-area"><div class="match-cols">
 <div class="match-left" id="ml">
-<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos sin actividad en 60+ días"</div>
-<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"Invitados al evento del 15 de Mayo"</div>
-<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"MQLs en LATAM que no son clientes"</div>
-<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"100 cuentas target priorizadas por el equipo"</div>
-<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos que visitaron /pricing esta semana"</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"Speakers que confirmaron asistencia al webinar del 12-Jul"</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos con NPS score &lt; 7 en la última encuesta"</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Webinar on-demand: registrados mientras la grabación esté disponible"</div>
+<div class="match-item" data-m="s" onclick="matchClick(this,'l')">"20 betatesters elegidos a dedo por el PM"</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">"Contactos que <em>alguna vez</em> fueron MQL"</div>
 </div>
 <div class="match-mid">
 <div>↔</div><div>↔</div><div>↔</div><div>↔</div><div>↔</div>
@@ -558,22 +564,22 @@ body.light .pipe-s{color:var(--t)}
 <div class="sl" data-s="21" data-quiz="1">
 <div class="badge quiz-b">🧠 Quiz 2 · Listas y filtros</div>
 <h2>Últimas preguntas</h2>
-<div class="qq" id="q4"><div class="qq-n">Pregunta 1</div><p>Necesitás mandar un email a los 50 invitados confirmados a una cena de clientes el viernes. La lista te la pasa el sales head por Excel. ¿Active o Static?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Active list filtrando por una custom property "invitado cena 15 mayo"</div>
-<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">B</div>Static list. Importás el CSV y queda fija</div>
-<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">C</div>Active list filtrando por Lifecycle Stage Customer</div>
+<div class="qq" id="q4"><div class="qq-n">Pregunta 1</div><p>Sales head te pasa un Excel con 50 invitados a una cena de clientes el viernes. Marketing además quiere disparar un email de recordatorio el día anterior usando un workflow que se enrole por list membership. ¿Active o Static?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Active list filtrando por una custom property booleana "Invitado cena 16-May" que cargás manualmente desde cada contact view. Si alguien se suma después, le marcás la property y entra solo.</div>
+<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">B</div>Static list. Importás el CSV con match por email contra los contacts existentes. Los workflows pueden enrolar por static list igual que por active. Si alguien se suma después, lo agregás manual a la lista.</div>
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">C</div>Active list filtrando Lifecycle Stage <strong>is</strong> Customer <strong>AND</strong> Last Activity Date <strong>is less than</strong> 30 days ago. Trae ~800 contactos pero el SDR los filtra antes del envío.</div>
 </div><div class="qfb" id="q4-fb"></div></div>
 
-<div class="qq" id="q5"><div class="qq-n">Pregunta 2</div><p>Tenés una lista que debería traer MQLs en LATAM y te aparece vacía. Mirás los filtros y están como: Lifecycle Stage <strong>is</strong> MQL <strong>AND</strong> Country <strong>is</strong> Argentina <strong>AND</strong> Country <strong>is</strong> México. ¿Por qué está vacía?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>HubSpot no soporta filtrar por dos países</div>
-<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>Los 3 filtros están en un mismo grupo con AND. Un contacto no puede tener Country = Argentina Y México al mismo tiempo. Usá "is any of" o separá en grupos con OR</div>
-<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Tenés que cambiarla a Static</div>
+<div class="qq" id="q5"><div class="qq-n">Pregunta 2</div><p>Una lista que debería traer "MQLs en LATAM activos" aparece vacía. Los filtros, todos en el mismo grupo con AND:<br>Lifecycle Stage <strong>is</strong> MQL <strong>AND</strong> Country <strong>is</strong> Argentina <strong>AND</strong> Country <strong>is</strong> México <strong>AND</strong> Last Activity Date <strong>is more than</strong> 30 days ago.<br>¿Cuál es el problema y cómo lo arreglás?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>Country <strong>is</strong> Argentina <strong>AND</strong> Country <strong>is</strong> México se contradicen (un contacto no puede tener dos países a la vez). Reemplazo por Country <strong>is any of</strong> "Argentina","México". Listo.</div>
+<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>Dos problemas a la vez: Country se contradice (lo junto en "is any of"), <strong>y</strong> "Last Activity is more than 30 days ago" excluye MQLs activos porque "activos" implica actividad reciente. Cambio a "is less than 30 days ago" o lo saco según defina el sales head.</div>
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>El AND entre filtros es el problema general. Separo cada criterio en su propio grupo para que el contacto entre si cumple cualquiera de los criterios.</div>
 </div><div class="qfb" id="q5-fb"></div></div>
 
-<div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Querés armar una lista de "clientes que en algún momento fueron MQL". ¿Cuál filtro usás?</p><div class="qo">
-<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Lifecycle Stage <strong>is</strong> MQL</div>
-<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>Lifecycle Stage <strong>is</strong> Customer</div>
-<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">C</div>Lifecycle Stage <strong>is</strong> Customer <strong>AND</strong> Lifecycle Stage <strong>has ever been</strong> MQL</div>
+<div class="qq" id="q6"><div class="qq-n">Pregunta 3</div><p>Tu lista active "Renovation candidates" debería traer contactos con <strong>Subscription end date</strong> en los próximos 60 días. Configurás: Subscription end date <strong>is less than</strong> 60 days ago. Sale vacía aunque sabés que hay renovaciones próximas. ¿Por qué?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">A</div>"<strong>is less than</strong> 60 days ago" mira hacia el <strong>pasado</strong>: fechas que ocurrieron entre hoy y 60 días atrás. Para fechas futuras necesitás "<strong>is in the next</strong> 60 days".</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">B</div>HubSpot trata las fechas futuras como "is unknown" hasta que llegan. Tenés que armar un workflow que copie el valor a una property auxiliar para que el filtro vea la fecha.</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>El operador "is less than X days ago" solo aplica a date properties del sistema (Create date, Modify date). Para custom dates tenés que usar "is between" con rango fijo.</div>
 </div><div class="qfb" id="q6-fb"></div></div>
 </div>
 
@@ -582,20 +588,21 @@ body.light .pipe-s{color:var(--t)}
 <div class="badge act-b">🎯 Escenario 2 · Caso real combinado</div>
 <h2>El pedido del lunes a la mañana</h2>
 <div class="scenario" id="sc2">
-<div class="scenario-title">📩 Sales head te escribe</div>
-<p><em>"Necesito una lista para que el SDR llame esta semana: cuentas SaaS de LATAM, con MQLs creados en los últimos 30 días, donde la company tenga más de 50 empleados. Que NO incluya clientes actuales ni los que ya están enrolados en el workflow de outbound. Por favor para hoy a las 2pm."</em></p>
-<p>Mirás el portal y notás que:</p>
+<div class="scenario-title">📩 Sales head te escribe el lunes 9am</div>
+<p><em>"Necesito una lista para que el SDR llame esta semana: cuentas SaaS de LATAM, MQLs creados en los últimos 30 días, company con más de 50 empleados. Que NO incluya clientes actuales ni los que ya están enrolados en 'Outbound SDR Q2'. Para hoy a las 2pm."</em></p>
+<p>Revisás el portal:</p>
 <ul style="font-size:15px;color:var(--tm);line-height:1.8;margin-left:20px">
-<li>Industry está como text libre, con variantes ("SaaS", "Software", "Tech")</li>
-<li>Número de empleados está como Number, ok</li>
-<li>Hay una lista activa "Customers activos"</li>
+<li>Industry está como text libre con variantes: "SaaS", "Software", "Tech", "Saas", "saas", "SAAS"</li>
+<li>Número de empleados es Number ✓</li>
+<li>Hay una lista active "Customers activos"</li>
 <li>Hay un workflow "Outbound SDR Q2"</li>
+<li>Algunos contactos tienen Country = "Argentina " (con espacio al final) o "argentina" (lowercase)</li>
 </ul>
 <p>¿Cómo encarás?</p>
 <div class="scenario-options">
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Hago la lista active con Industry <strong>contains</strong> "SaaS" y avanzo</div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Primero hablo con Marketing para que <strong>normalicen Industry a dropdown</strong>. Mientras tanto armo la lista con Industry <strong>is any of</strong> "SaaS", "Software", "Tech" para no perder data. Sumo los filtros de empleados, country LATAM, lifecycle MQL, create date últimos 30 días, <strong>NOT miembro de "Customers activos"</strong>, <strong>NOT enrolado en "Outbound SDR Q2"</strong></div>
-<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Static list con los contactos que cumplen hoy</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Lista active con Industry <strong>is any of</strong> "SaaS","Software","Tech","Saas","saas","SAAS". Para Country uso <strong>is any of</strong> con cada variante de casing que encuentro. Sumo empleados &gt;50, lifecycle MQL, create date últimos 30 días, NOT customers ni outbound. La entrego con un caveat sobre la data sucia.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Lista active. Industry <strong>contains</strong> "saas" (los text match en HubSpot son <strong>case-insensitive</strong>, captura todas las variantes). Country <strong>is any of</strong> los países LATAM (los matches ignoran case). Empleados &gt;50, lifecycle MQL, create date últimos 30 días, NOT miembros de "Customers activos", NOT enrolados en "Outbound SDR Q2". Mando un Slack a Marketing pidiendo normalizar Industry a dropdown.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Static list. Hago un export de MQLs recientes, los filtro en Excel para sortear toda la data sucia, e importo como static. Sales tiene la lista del lunes 2pm sin riesgo de que cambie durante la semana.</div>
 </div>
 <div class="scenario-fb" id="sc2-fb"></div>
 </div>
@@ -710,12 +717,12 @@ ad[scId]=c;if(c)pts+=15;
 var sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
 opts.forEach(function(o){o.classList.add('dis')});
 if(c){el.classList.add('correct');
-if(scId==='sc1')fb.textContent='✅ Exacto. Antes de crear una property, probá si la data ya vive en otro lado (form submission, lista). Cada property nueva es un compromiso de mantenimiento.';
-else fb.textContent='✅ Exacto. La normalización de Industry es deuda técnica que arrastra todo el equipo. Mientras tanto, "is any of" rescata. Y los NOT excluyen lo que no queremos volver a tocar.';
+if(scId==='sc1')fb.textContent='✅ Exacto. La lista del form fill resuelve la segmentación pero los tokens de personalización en email SÍ requieren una property — no podés usar list membership como token. Sin la property no podés decir "ya leíste nuestro Whitepaper" en el body. La regla "no dupliques data" tiene una excepción: cuando el formato de la data se necesita en un canal donde solo las properties llegan.';
+else fb.textContent='✅ Exacto. HubSpot hace match case-insensitive en text contains, así que "saas" captura SaaS/SAAS/Saas — más mantenible que listar cada casing (mañana llega "Saas " con espacio y rompe). Los NOT excluyen lo que no querés tocar. Y normalizar Industry es deuda técnica que avisás para no repetir el problema.';
 fb.className='scenario-fb show sfbok'}
 else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
-if(scId==='sc1')fb.textContent='❌ Crear una property por cada pedido lleva al caos. Preguntá dónde ya vive la data antes de duplicar.';
-else fb.textContent='❌ "contains SaaS" pierde los que cargaron "Software" o "Tech". Y sin excluir customers y enrolados, le mandás el SDR a gente equivocada.';
+if(scId==='sc1')fb.textContent='❌ Faltó leer el requisito completo. Los tokens en email necesitan una property — list membership no es tokenizable. La opción de "no crear nada" rompe el caso de personalización. La de "crear todo y dejar la lista" rompe la regla de una sola fuente de verdad.';
+else fb.textContent='❌ Listar cada variante de casing funciona hoy pero se rompe mañana cuando llegue "Saas " o "SaaS ". Y static no aplica porque los criterios siguen cambiando durante la semana: MQLs nuevos no entran, contactos que pasan a Customer no salen.';
 fb.className='scenario-fb show sfbbad'}
 upd();
 }
