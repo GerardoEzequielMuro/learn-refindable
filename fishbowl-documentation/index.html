@@ -157,17 +157,12 @@ footer a { color:var(--orange); text-decoration:none; }
 .legend-row { display:flex; gap:18px; flex-wrap:wrap; align-items:center; padding:10px 14px; background:var(--gray-bg); border-radius:8px; font-size:0.85em; margin:14px 0; color:var(--text-light); }
 .legend-row strong { color:var(--text); }
 
-/* MARKETO ICONS (Aptitude8 style: lightning, bulb, envelope, clipboard, airplane) */
-.mi { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:6px; flex-shrink:0; }
-.mi svg { width:26px; height:26px; }
-.mi-sm { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:5px; vertical-align:-9px; margin-right:10px; flex-shrink:0; }
-.mi-sm svg { width:20px; height:20px; }
-/* Yellow icons: triggers + smart campaigns (active assets in Marketo) */
-.mi.bolt, .mi.bulb, .mi-sm.bolt, .mi-sm.bulb { background:#FFF1B8; color:#D49A0B; }
-/* Blue icons: emails, forms, landing pages, programs */
-.mi.mail, .mi.form, .mi.plane, .mi.program, .mi.list, .mi-sm.mail, .mi-sm.form, .mi-sm.plane, .mi-sm.program, .mi-sm.list { background:#DCE4ED; color:#4A6F8E; }
-/* Inactive (gray): Marketo's "paused" state */
-.mi.off, .mi-sm.off { background:#F1F3F5; color:#9CA3AF; }
+/* MARKETO ICONS (actual icons from Aptitude8 / Marketo UI) */
+.mi { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; flex-shrink:0; }
+.mi img { width:38px; height:38px; object-fit:contain; display:block; }
+.mi-sm { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; vertical-align:-8px; margin-right:8px; flex-shrink:0; }
+.mi-sm img { width:24px; height:24px; object-fit:contain; display:block; }
+.mi.off img, .mi-sm.off img { filter:grayscale(1) opacity(0.55); }
 
 /* FISHBOWL DECISIONS LOG (project-state panel, not part of numbered playbook) */
 .fbl { max-width:900px; margin:60px auto; padding:0 24px; }
@@ -313,46 +308,16 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><span class="mi bolt" title="Triggers"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h6l-2 8L20 10h-6l1-8z" fill="currentColor"/></svg></span></td>
-            <td>Triggers</td>
-            <td>Workflows</td>
-          </tr>
-          <tr>
-            <td><span class="mi bulb" title="Smart Campaign"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7 4 4 0 0 1 1 2.3v1h6v-1a4 4 0 0 1 1-2.3A7 7 0 0 0 12 2zM9 19h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1z" fill="currentColor"/></svg></span></td>
-            <td>Batch or Smart Campaign</td>
-            <td>Workflows or Form Automation</td>
-          </tr>
-          <tr>
-            <td><span class="mi mail" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></span></td>
-            <td>Email</td>
-            <td>Marketing Email</td>
-          </tr>
-          <tr>
-            <td><span class="mi mail" title="Email Template"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></span></td>
-            <td>Email Template</td>
-            <td>Marketing Email Templates</td>
-          </tr>
-          <tr>
-            <td><span class="mi form" title="Form"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h2a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span></td>
-            <td>Form</td>
-            <td>Forms</td>
-          </tr>
-          <tr>
-            <td><span class="mi plane" title="Landing Page"><svg viewBox="0 0 24 24"><path d="M21.5 11.2L4 4l3 8-3 8 17.5-7.2c.7-.3.7-1.3 0-1.6z" fill="currentColor"/></svg></span></td>
-            <td>Landing Page</td>
-            <td>Landing Pages</td>
-          </tr>
-          <tr>
-            <td><span class="mi list" title="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="6" r="1.3" fill="currentColor"/><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="5" cy="18" r="1.3" fill="currentColor"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg></span></td>
-            <td>Smart List / Static List</td>
-            <td>Active List / Static List</td>
-          </tr>
-          <tr>
-            <td><span class="mi program" title="Program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg></span></td>
-            <td>Program</td>
-            <td>Campaigns</td>
-          </tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/trigger.webp" alt="Triggers" loading="lazy"></span></td><td>Triggers</td><td>Workflows</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/smart-campaign.webp" alt="Batch or Smart Campaign" loading="lazy"></span></td><td>Batch or Smart Campaign</td><td>Workflows or Form Automation</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/email.webp" alt="Email" loading="lazy"></span></td><td>Email</td><td>Marketing Email</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/email-template.webp" alt="Email Template" loading="lazy"></span></td><td>Email Template</td><td>Marketing Email Templates</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/form.webp" alt="Form" loading="lazy"></span></td><td>Form</td><td>Forms</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/landing-page.webp" alt="Landing Page" loading="lazy"></span></td><td>Landing Page</td><td>Landing Pages</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/landing-page-template.webp" alt="Landing Page Template" loading="lazy"></span></td><td>Landing Page Template</td><td>Design Tools, Templates, and Themes</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/smart-list.webp" alt="Smart List" loading="lazy"></span></td><td>Smart List</td><td>Active Lists</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/static-list.webp" alt="Static List" loading="lazy"></span></td><td>Static List</td><td>Static Lists</td></tr>
+          <tr><td><span class="mi"><img src="img/marketo-icons/program.webp" alt="Program" loading="lazy"></span></td><td>Program</td><td>Campaigns</td></tr>
         </tbody>
       </table>
     </div>
@@ -365,63 +330,56 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
   <div class="fbl-card">
     <div class="fbl-tag">Fishbowl · Project state · 2026-05-21</div>
     <h2>Fishbowl <span>decisions log</span></h2>
-    <p class="fbl-lede">Everything below is Fishbowl-specific and lives outside the generic methodology. Update this section as discovery closes and decisions land. The numbered playbook sections (II onwards) describe <em>how</em>; this section describes <em>where we are</em>.</p>
 
     <h3>Stakeholders</h3>
     <table class="stake-tbl">
-      <thead><tr><th>Name</th><th>Role</th><th>What they decide / why we need them</th></tr></thead>
       <tbody>
-        <tr><td>Whitney</td><td>Current SF / Marketo SME</td><td>Most critical not to lose during the sprint. Authoritative on current state, lifecycle rules, integration history.</td></tr>
-        <tr><td>Sarah</td><td>New CMO</td><td>Owns the redefinition of MQL and the marketing strategy post-cutover. Sign-off on lifecycle stage definitions and scoring.</td></tr>
-        <tr><td>Derek</td><td>IT, software spend decision-maker</td><td>License tier confirmation, IT change-control sign-off.</td></tr>
-        <tr><td>Cade</td><td>Sales / SDR</td><td>Lead routing changes, ChiliPiper config sign-off.</td></tr>
-        <tr><td>Jared</td><td>Diversis</td><td>GTM audit author. Reference for upstream context.</td></tr>
-        <tr><td>Lara</td><td>Marketing</td><td>Day-to-day Marketo operator. Form, campaign, list audits.</td></tr>
+        <tr><td>Whitney</td><td>Current SF/Marketo SME. Authoritative on lifecycle rules, integration history. Critical not to lose during sprint.</td></tr>
+        <tr><td>Sarah</td><td>New CMO. Owns MQL redefinition + scoring sign-off.</td></tr>
+        <tr><td>Derek</td><td>IT. License tier + change-control sign-off.</td></tr>
+        <tr><td>Cade</td><td>Sales / SDR. ChiliPiper routing sign-off.</td></tr>
+        <tr><td>Jared</td><td>Diversis. GTM audit author.</td></tr>
+        <tr><td>Lara</td><td>Marketing. Day-to-day Marketo operator.</td></tr>
       </tbody>
     </table>
 
-    <h3>Timeline (per SOW)</h3>
+    <h3>SOW phases</h3>
     <table class="phase-tbl">
       <tbody>
-        <tr><td>May 11-21</td><td><strong>Mobilize &amp; Discovery</strong>. Discovery sessions, asset inventory, integration classification. Maps to Section III of this doc.</td></tr>
-        <tr><td>May 26-Jun 19</td><td><strong>Build</strong>. HubSpot foundation, fields, forms, workflows, scoring. Sections IV-IX.</td></tr>
-        <tr><td>Jun 22-Jul 10</td><td><strong>Migration &amp; Integrations</strong>. Data import, integration remap, sandbox validation. Section X plus Section XI.</td></tr>
-        <tr><td>Jun 29-Jul 10</td><td><strong>UAT &amp; Go-Live Prep</strong>. Regression test, suppression lists, DNS prep. Section XII (parallel-run prep).</td></tr>
-        <tr><td>Jul 13</td><td><strong>Target Go-Live</strong> · cutover day. Section XII (DNS + Redirects).</td></tr>
+        <tr><td>May 11-21</td><td>Mobilize &amp; Discovery (Section III)</td></tr>
+        <tr><td>May 26-Jun 19</td><td>Build (Sections IV-IX)</td></tr>
+        <tr><td>Jun 22-Jul 10</td><td>Migration &amp; Integrations (X-XI)</td></tr>
+        <tr><td>Jun 29-Jul 10</td><td>UAT &amp; Go-Live Prep (XII)</td></tr>
+        <tr><td>Jul 13</td><td>Target Go-Live</td></tr>
       </tbody>
     </table>
 
-    <h3>Discovery answers to date</h3>
+    <h3>Decisions: closed vs open</h3>
     <div class="dual-col">
       <div>
         <p style="color:#34D399;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Closed</p>
         <ul class="closed">
-          <li>Historical activity data is <strong>not migrating</strong> via forms. Change order if requested later (Section VII).</li>
-          <li>Object scope: HubSpot Contacts only. <strong>No Deals/Opportunities sync.</strong> Marketing is not the system of record for pipeline. Sales is self-sourcing in SF (Whitney, Discovery 3).</li>
-          <li>SF Lead vs SF Contact pivot at conversion: documented in Section V. HubSpot Contact maps to SF Lead pre-conversion, SF Contact post-conversion.</li>
-          <li>Parent-child accounts in SF stay as default sync behavior. Out of scope for custom hierarchy mapping.</li>
-          <li>Renewal pipeline visibility in HubSpot: <strong>out of scope</strong> for this engagement.</li>
-          <li>Outreach unsubscribe (<code>email_opt_out</code>) sync today: bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover: HubSpot is source of truth, sync to Outreach preserved (Section X).</li>
+          <li>Historical activity data: not migrating via forms. Change order if requested.</li>
+          <li>Object scope: Contacts only. No Deals/Opp sync (sales is self-sourcing in SF).</li>
+          <li>HS Contact ↔ SF Lead pre-conversion, ↔ SF Contact post-conversion.</li>
+          <li>Parent-child accounts: default sync, no custom hierarchy mapping.</li>
+          <li>Renewal pipeline: out of scope.</li>
+          <li>Outreach unsubscribe (<code>email_opt_out</code>): bidirectional, HubSpot source of truth post-cutover.</li>
         </ul>
       </div>
       <div>
         <p style="color:#FBBF24;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Open</p>
         <ul class="open">
-          <li><strong>MQL definition.</strong> Sarah does not want 99.9% of leads becoming MQL just for entering a sequence (Discovery 4). Final definition pending before wiring lifecycle automations.</li>
-          <li><strong>Business-critical campaigns that can't pause.</strong> Mostly event/webinar one-offs but needs explicit confirmation from Sarah + Whitney.</li>
-          <li><strong>External webhooks from Marketo.</strong> Inventory still TBC. Each yes is hours not scoped.</li>
-          <li><strong>APAC scoring model.</strong> SOW flagged this needs separate development. Deferred to hypercare or change order.</li>
-          <li><strong>First-touch vs last-touch attribution.</strong> SF is first-touch today; marketing wants both. Original_source + recent_source properties to be defined.</li>
+          <li><strong>MQL definition</strong> (Sarah): more restrictive than current SF rule. Blocks lifecycle wiring.</li>
+          <li><strong>Business-critical campaigns</strong> that can't pause (Sarah + Whitney).</li>
+          <li><strong>External webhooks</strong> from Marketo: inventory TBC.</li>
+          <li><strong>APAC scoring model</strong>: deferred to hypercare / change order.</li>
+          <li><strong>First-touch vs last-touch</strong> attribution properties to define.</li>
         </ul>
       </div>
     </div>
 
-    <h3>Authoritative source-of-truth docs</h3>
-    <ul>
-      <li><strong>Lead Flow Cheatsheet</strong>: current SF lifecycle rules (New / Working / Demo / Converted) referenced in Section IV.</li>
-      <li><strong>Fishbowl Prospect to Customer Lifecycle</strong>: end-to-end flow referenced in Section V (object mapping pivot) and Section IX (scoring tier routing).</li>
-      <li><strong>Diversis GTM audit (March 2026)</strong>: upstream document. Every SOW decision sits downstream of it.</li>
-    </ul>
+    <p class="fbl-lede" style="margin-top:20px;margin-bottom:0;font-size:0.85em">Source docs: Lead Flow Cheatsheet · Fishbowl Prospect to Customer Lifecycle · Diversis GTM audit (Mar 2026).</p>
   </div>
 </div>
 
@@ -468,7 +426,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
     <div class="protip">
       <div class="protip-tag">Pro Tip · Aptitude8</div>
-      <p>Inside Marketo's Marketing Activities, each smart campaign shows its state through the icon color. Active: <span class="mi-sm bulb" style="margin-right:4px"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7 4 4 0 0 1 1 2.3v1h6v-1a4 4 0 0 1 1-2.3A7 7 0 0 0 12 2zM9 19h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1z" fill="currentColor"/></svg></span> Inactive: <span class="mi-sm off" style="margin-right:4px"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7 4 4 0 0 1 1 2.3v1h6v-1a4 4 0 0 1 1-2.3A7 7 0 0 0 12 2zM9 19h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1z" fill="currentColor"/></svg></span> Use it as your first-pass filter when building the inventory. Anything gray is a "deprecate by default" candidate unless someone explicitly defends it.</p>
+      <p>Inside Marketo's Marketing Activities, each smart campaign shows its state through the icon color. Active: <span class="mi-sm" style="margin-right:2px"><img src="img/marketo-icons/smart-campaign.webp" alt="active" loading="lazy"></span> Inactive: <span class="mi-sm off" style="margin-right:2px"><img src="img/marketo-icons/smart-campaign.webp" alt="inactive" loading="lazy"></span> Use it as your first-pass filter when building the inventory. Anything gray is a "deprecate by default" candidate unless someone explicitly defends it.</p>
     </div>
 
     <h3>Inventory spreadsheet structure</h3>
@@ -477,9 +435,9 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       <table class="data">
         <thead><tr><th>Tab</th><th>What goes in it</th></tr></thead>
         <tbody>
-          <tr><td><strong>Users, Properties &amp; <span class="mi-sm form"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h2a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span>Forms</strong></td><td>Users to provision (team + permission set), every Marketo property mapped to its HubSpot counterpart (internal name, object type, picklist options), every form with notification recipients, required fields, hidden fields</td></tr>
-          <tr><td><strong><span class="mi-sm list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="6" r="1.3" fill="currentColor"/><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="5" cy="18" r="1.3" fill="currentColor"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg></span>Lists &amp; <span class="mi-sm bulb"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7 4 4 0 0 1 1 2.3v1h6v-1a4 4 0 0 1 1-2.3A7 7 0 0 0 12 2zM9 19h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1z" fill="currentColor"/></svg></span>Smart Campaigns</strong></td><td>Lists with Active/Static flag, link to the Marketo list, dependencies (which workflows reference it), folder path; workflows with exact name, link to the Marketo Members List (needed for suppression at go-live), and a side-by-side link to the HubSpot version once built</td></tr>
-          <tr><td><strong><span class="mi-sm mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></span>Emails, <span class="mi-sm plane"><svg viewBox="0 0 24 24"><path d="M21.5 11.2L4 4l3 8-3 8 17.5-7.2c.7-.3.7-1.3 0-1.6z" fill="currentColor"/></svg></span>Landing Pages &amp; <span class="mi-sm program"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/></svg></span>Programs</strong></td><td>Email templates to rebuild, individual emails with subscription type and template, landing-page templates, landing pages with Marketo and HubSpot links, campaigns/programs</td></tr>
+          <tr><td><strong>Users, Properties &amp; <span class="mi-sm"><img src="img/marketo-icons/form.webp" alt="Form" loading="lazy"></span>Forms</strong></td><td>Users to provision (team + permission set), every Marketo property mapped to its HubSpot counterpart, every form with notification recipients, required fields, hidden fields</td></tr>
+          <tr><td><strong><span class="mi-sm"><img src="img/marketo-icons/smart-list.webp" alt="Smart List" loading="lazy"></span>Lists &amp; <span class="mi-sm"><img src="img/marketo-icons/smart-campaign.webp" alt="Smart Campaign" loading="lazy"></span>Smart Campaigns</strong></td><td>Lists with Active/Static flag, link to the Marketo list, dependencies (which workflows reference it), folder path; workflows with exact name, link to the Marketo Members List (needed for suppression at go-live)</td></tr>
+          <tr><td><strong><span class="mi-sm"><img src="img/marketo-icons/email.webp" alt="Email" loading="lazy"></span>Emails, <span class="mi-sm"><img src="img/marketo-icons/landing-page.webp" alt="Landing Page" loading="lazy"></span>Landing Pages &amp; <span class="mi-sm"><img src="img/marketo-icons/program.webp" alt="Program" loading="lazy"></span>Programs</strong></td><td>Email templates to rebuild, individual emails with subscription type and template, landing-page templates, landing pages with Marketo and HubSpot links, campaigns/programs</td></tr>
         </tbody>
       </table>
     </div>
@@ -641,7 +599,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
 <!-- ───────────────────────────── VI. FORMS ───────────────────────────── -->
 <div class="section" id="forms">
-  <div class="section-header"><div class="section-num">VI</div><div class="section-title"><span class="mi-sm form"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h2a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span>Forms migration</div></div>
+  <div class="section-header"><div class="section-num">VI</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/form.webp" alt="" loading="lazy"></span>Forms migration</div></div>
   <p class="section-lede">Fishbowl has 67 approved Marketo forms. Apollo had a different scale but the same problem: forms accumulate, dedupe is inconsistent, embeds are scattered.</p>
 
   <div class="card">
@@ -658,7 +616,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
 <!-- ───────────────────────────── VII. CAMPAIGNS ───────────────────────────── -->
 <div class="section" id="campaigns">
-  <div class="section-header"><div class="section-num">VII</div><div class="section-title"><span class="mi-sm bulb"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7 4 4 0 0 1 1 2.3v1h6v-1a4 4 0 0 1 1-2.3A7 7 0 0 0 12 2zM9 19h6v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1z" fill="currentColor"/></svg></span>Campaigns &amp; Salesforce sync <span class="badge fishbowl">The big one</span></div></div>
+  <div class="section-header"><div class="section-num">VII</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/smart-campaign.webp" alt="" loading="lazy"></span>Campaigns &amp; Salesforce sync <span class="badge fishbowl">The big one</span></div></div>
   <p class="section-lede">This is the most expensive workstream in any Marketo migration. Fishbowl has 141 active campaigns out of 6,464 total. Apollo's numbers were smaller, the pattern is identical.</p>
 
   <div class="card">
@@ -737,7 +695,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
 <!-- ───────────────────────────── VIII. EMAILS ───────────────────────────── -->
 <div class="section" id="emails">
-  <div class="section-header"><div class="section-num">VIII</div><div class="section-title"><span class="mi-sm mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 7l9 6 9-6"/></svg></span>Email templates</div></div>
+  <div class="section-header"><div class="section-num">VIII</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/email-template.webp" alt="" loading="lazy"></span>Email templates</div></div>
   <p class="section-lede">200 approved templates in Marketo, almost all from 2021 to 2022. The clean-rebuild approach applies even harder here than for fields or campaigns.</p>
 
   <div class="card">
@@ -855,7 +813,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
 <!-- ───────────────────────────── XI. LISTS ───────────────────────────── -->
 <div class="section" id="lists">
-  <div class="section-header"><div class="section-num">XI</div><div class="section-title"><span class="mi-sm list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="5" cy="6" r="1.3" fill="currentColor"/><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="5" cy="18" r="1.3" fill="currentColor"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg></span>Lists &amp; segmentation</div></div>
+  <div class="section-header"><div class="section-num">XI</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/static-list.webp" alt="" loading="lazy"></span>Lists &amp; segmentation</div></div>
   <p class="section-lede">The SOW barely mentions this. Treat it as its own workstream or it will eat a week of unscoped time.</p>
 
   <div class="card">
