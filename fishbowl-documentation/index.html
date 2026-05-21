@@ -169,6 +169,34 @@ footer a { color:var(--orange); text-decoration:none; }
 /* Inactive (gray): Marketo's "paused" state */
 .mi.off, .mi-sm.off { background:#F1F3F5; color:#9CA3AF; }
 
+/* FISHBOWL DECISIONS LOG (project-state panel, not part of numbered playbook) */
+.fbl { max-width:900px; margin:60px auto; padding:0 24px; }
+.fbl-card { background:#1a1a2e; color:#fff; border-radius:16px; padding:36px 40px; box-shadow:0 12px 40px rgba(0,0,0,0.18); border:1px solid rgba(255,255,255,0.06); }
+.fbl-tag { display:inline-block; padding:5px 12px; background:rgba(255,92,53,0.18); border:1px solid rgba(255,92,53,0.35); color:var(--orange-light); border-radius:100px; font-size:0.65em; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; margin-bottom:14px; }
+.fbl-card h2 { font-size:1.7em; margin-bottom:6px; color:#fff; }
+.fbl-card h2 span { color:var(--orange); }
+.fbl-card .fbl-lede { color:rgba(255,255,255,0.6); font-size:0.95em; margin-bottom:24px; }
+.fbl-card h3 { color:var(--orange-light); font-size:0.78em; text-transform:uppercase; letter-spacing:1.4px; margin:24px 0 12px; font-weight:700; }
+.fbl-card h3:first-of-type { margin-top:0; }
+.fbl-card p { color:rgba(255,255,255,0.85); font-size:0.93em; margin-bottom:10px; }
+.fbl-card ul { list-style:none; padding-left:0; }
+.fbl-card ul li { padding:7px 0 7px 22px; position:relative; color:rgba(255,255,255,0.85); font-size:0.92em; }
+.fbl-card ul li::before { content:""; position:absolute; left:0; top:14px; width:8px; height:2px; background:var(--orange); }
+.fbl-card ul.closed li::before { background:var(--green); }
+.fbl-card ul.open li::before { background:#FBBF24; }
+.fbl-card a { color:var(--orange-light); }
+.fbl-card .stake-tbl { width:100%; border-collapse:collapse; font-size:0.88em; margin-top:8px; }
+.fbl-card .stake-tbl th { text-align:left; padding:8px 12px; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.55); font-weight:600; font-size:0.72em; text-transform:uppercase; letter-spacing:1.2px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.fbl-card .stake-tbl td { padding:9px 12px; color:rgba(255,255,255,0.85); border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:top; }
+.fbl-card .stake-tbl td:first-child { font-weight:700; color:#fff; white-space:nowrap; }
+.fbl-card .phase-tbl { width:100%; border-collapse:collapse; font-size:0.88em; margin-top:8px; }
+.fbl-card .phase-tbl td { padding:8px 12px; color:rgba(255,255,255,0.85); border-bottom:1px solid rgba(255,255,255,0.05); }
+.fbl-card .phase-tbl td:first-child { color:var(--orange-light); font-weight:700; white-space:nowrap; font-family:'JetBrains Mono',monospace; font-size:0.82em; }
+.fbl-card .phase-tbl tr:last-child td { border-bottom:none; background:rgba(255,92,53,0.08); }
+.fbl-card .phase-tbl tr:last-child td:first-child { color:var(--orange); }
+.dual-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media (max-width:700px) { .dual-col { grid-template-columns:1fr; } }
+
 /* APTITUDE8-STYLE YELLOW REFERENCE TABLE */
 .apt-wrap { margin:18px 0; overflow-x:auto; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
 table.apt { width:100%; border-collapse:collapse; background:#FFE572; color:#1F2937; font-size:0.92em; }
@@ -222,11 +250,11 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
   <div class="hero-glow"></div>
   <div class="hero-tag">Fishbowl × Refindable</div>
   <h1>Marketo to HubSpot <span>Migration Playbook</span></h1>
-  <p class="hero-sub">The version of this guide we wish we had on day one of the Apollo migration. Rewritten for the Fishbowl engagement (May to June 2026), but the procedure works for any Marketo to HubSpot project. Swap the numbers, keep the steps.</p>
+  <p class="hero-sub">The version of this guide we wish we had on day one of the Apollo migration. Rewritten for the Fishbowl engagement, but the procedure works for any Marketo to HubSpot project. Swap the numbers, keep the steps.</p>
   <div class="hero-meta">
     <span class="hero-pill type">Internal Reference</span>
-    <span class="hero-pill scope">8-week sprint</span>
-    <span class="hero-pill status">Draft v1.1</span>
+    <span class="hero-pill scope">Target go-live: Jul 13, 2026</span>
+    <span class="hero-pill status">Draft v1.2</span>
   </div>
 </div>
 
@@ -235,6 +263,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
     <div class="toc-title">Table of Contents</div>
     <div class="toc-grid">
       <a href="#about" class="toc-item"><div class="toc-num">I</div><div class="toc-label">About this playbook</div></a>
+      <a href="#fishbowl-log" class="toc-item"><div class="toc-num" style="background:var(--orange);color:#fff">★</div><div class="toc-label">Fishbowl decisions log</div></a>
       <a href="#prekickoff" class="toc-item"><div class="toc-num">II</div><div class="toc-label">Pre-kickoff checklist</div></a>
       <a href="#discovery" class="toc-item"><div class="toc-num">III</div><div class="toc-label">Discovery (weeks 1 to 2)</div></a>
       <a href="#foundation" class="toc-item"><div class="toc-num">IV</div><div class="toc-label">HubSpot foundation</div></a>
@@ -259,7 +288,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
   <div class="card">
     <p>We ran the Apollo GraphQL migration in April 2026. It went live but it was harder than it had to be: integrations were a black box, custom SF middleware ate 60 unscoped hours, and we kept rediscovering things in week 5 that should have closed in week 1. This document is what we wrote down afterwards.</p>
-    <p>Fishbowl is the next migration. NewEdge prime, Refindable sub. 8-week sprint, late May to end of July 2026, Marketo contract through October as fallback. Numbers below (814 fields, 141 active campaigns of 6,464, 67 forms, 200 templates) are Fishbowl-specific. The methodology is not.</p>
+    <p>Fishbowl is the next migration. NewEdge prime, Refindable sub. Engagement runs Mobilize (May 11-21) → Build (May 26-Jun 19) → Migration &amp; Integrations (Jun 22-Jul 10) → UAT (Jun 29-Jul 10) → Target Go-Live July 13. Marketo contract through October as fallback. Numbers below (814 fields, 141 active campaigns of 6,464, 67 forms, 200 templates) are Fishbowl-specific. The methodology is not. Stakeholders, current state, and open decisions live in the <a href="#fishbowl-log">Fishbowl decisions log</a> below.</p>
 
     <h3>Sources</h3>
     <ul>
@@ -328,6 +357,71 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       </table>
     </div>
     <p class="muted">Color matters. <strong>Yellow</strong> (bolt, bulb) means the asset is <span class="state on">Active</span>. <strong>Gray</strong> means <span class="state off">Inactive</span> / paused. We use the same coloring throughout this doc, and we recommend you trust the icon color when triaging Marketo's Marketing Activities tree during discovery.</p>
+  </div>
+</div>
+
+<!-- ───────────────────────────── FISHBOWL DECISIONS LOG ───────────────────────────── -->
+<div class="fbl" id="fishbowl-log">
+  <div class="fbl-card">
+    <div class="fbl-tag">Fishbowl · Project state · 2026-05-21</div>
+    <h2>Fishbowl <span>decisions log</span></h2>
+    <p class="fbl-lede">Everything below is Fishbowl-specific and lives outside the generic methodology. Update this section as discovery closes and decisions land. The numbered playbook sections (II onwards) describe <em>how</em>; this section describes <em>where we are</em>.</p>
+
+    <h3>Stakeholders</h3>
+    <table class="stake-tbl">
+      <thead><tr><th>Name</th><th>Role</th><th>What they decide / why we need them</th></tr></thead>
+      <tbody>
+        <tr><td>Whitney</td><td>Current SF / Marketo SME</td><td>Most critical not to lose during the sprint. Authoritative on current state, lifecycle rules, integration history.</td></tr>
+        <tr><td>Sarah</td><td>New CMO</td><td>Owns the redefinition of MQL and the marketing strategy post-cutover. Sign-off on lifecycle stage definitions and scoring.</td></tr>
+        <tr><td>Derek</td><td>IT, software spend decision-maker</td><td>License tier confirmation, IT change-control sign-off.</td></tr>
+        <tr><td>Cade</td><td>Sales / SDR</td><td>Lead routing changes, ChiliPiper config sign-off.</td></tr>
+        <tr><td>Jared</td><td>Diversis</td><td>GTM audit author. Reference for upstream context.</td></tr>
+        <tr><td>Lara</td><td>Marketing</td><td>Day-to-day Marketo operator. Form, campaign, list audits.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Timeline (per SOW)</h3>
+    <table class="phase-tbl">
+      <tbody>
+        <tr><td>May 11-21</td><td><strong>Mobilize &amp; Discovery</strong>. Discovery sessions, asset inventory, integration classification. Maps to Section III of this doc.</td></tr>
+        <tr><td>May 26-Jun 19</td><td><strong>Build</strong>. HubSpot foundation, fields, forms, workflows, scoring. Sections IV-IX.</td></tr>
+        <tr><td>Jun 22-Jul 10</td><td><strong>Migration &amp; Integrations</strong>. Data import, integration remap, sandbox validation. Section X plus Section XI.</td></tr>
+        <tr><td>Jun 29-Jul 10</td><td><strong>UAT &amp; Go-Live Prep</strong>. Regression test, suppression lists, DNS prep. Section XII (parallel-run prep).</td></tr>
+        <tr><td>Jul 13</td><td><strong>Target Go-Live</strong> · cutover day. Section XII (DNS + Redirects).</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Discovery answers to date</h3>
+    <div class="dual-col">
+      <div>
+        <p style="color:#34D399;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Closed</p>
+        <ul class="closed">
+          <li>Historical activity data is <strong>not migrating</strong> via forms. Change order if requested later (Section VII).</li>
+          <li>Object scope: HubSpot Contacts only. <strong>No Deals/Opportunities sync.</strong> Marketing is not the system of record for pipeline. Sales is self-sourcing in SF (Whitney, Discovery 3).</li>
+          <li>SF Lead vs SF Contact pivot at conversion: documented in Section V. HubSpot Contact maps to SF Lead pre-conversion, SF Contact post-conversion.</li>
+          <li>Parent-child accounts in SF stay as default sync behavior. Out of scope for custom hierarchy mapping.</li>
+          <li>Renewal pipeline visibility in HubSpot: <strong>out of scope</strong> for this engagement.</li>
+          <li>Outreach unsubscribe (<code>email_opt_out</code>) sync today: bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover: HubSpot is source of truth, sync to Outreach preserved (Section X).</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:#FBBF24;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Open</p>
+        <ul class="open">
+          <li><strong>MQL definition.</strong> Sarah does not want 99.9% of leads becoming MQL just for entering a sequence (Discovery 4). Final definition pending before wiring lifecycle automations.</li>
+          <li><strong>Business-critical campaigns that can't pause.</strong> Mostly event/webinar one-offs but needs explicit confirmation from Sarah + Whitney.</li>
+          <li><strong>External webhooks from Marketo.</strong> Inventory still TBC. Each yes is hours not scoped.</li>
+          <li><strong>APAC scoring model.</strong> SOW flagged this needs separate development. Deferred to hypercare or change order.</li>
+          <li><strong>First-touch vs last-touch attribution.</strong> SF is first-touch today; marketing wants both. Original_source + recent_source properties to be defined.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Authoritative source-of-truth docs</h3>
+    <ul>
+      <li><strong>Lead Flow Cheatsheet</strong>: current SF lifecycle rules (New / Working / Demo / Converted) referenced in Section IV.</li>
+      <li><strong>Fishbowl Prospect to Customer Lifecycle</strong>: end-to-end flow referenced in Section V (object mapping pivot) and Section IX (scoring tier routing).</li>
+      <li><strong>Diversis GTM audit (March 2026)</strong>: upstream document. Every SOW decision sits downstream of it.</li>
+    </ul>
   </div>
 </div>
 
@@ -418,17 +512,12 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       <p>Apollo's SF integration was custom middleware (<code>createSFCampaign.js</code> + <code>syncCampaignMember.js</code>), not native. That added roughly 60 hours that were not in the estimate. For any integration marked TBC, assume custom-middleware effort until proven otherwise.</p>
     </div>
 
-    <h3>Discovery questions to client</h3>
-    <p>Shared doc with named owners per question, 48-hour SLA. The three questions that move the timeline the most:</p>
-    <ul>
-      <li><strong>How far back do you need historical activity data in HubSpot?</strong> Anything beyond "last 12 months" is a yellow flag.</li>
-      <li><strong>Are any campaigns business-critical and unable to pause during migration?</strong> Dictates the parallel-run strategy.</li>
-      <li><strong>Are there active webhooks calling external systems from Marketo?</strong> Every yes is hours that are not scoped.</li>
-    </ul>
+    <h3>Discovery answers (live state)</h3>
+    <p>The discovery answers and open items for Fishbowl live in the <a href="#fishbowl-log"><strong>Fishbowl decisions log</strong></a> at the top of this doc. Closed items there are decisions you can act on. Open items there block phase exit.</p>
 
     <div class="important">
-      <div class="important-title">Stop and replan if discovery is open at week 2</div>
-      <p>Phase exit requires: field inventory with Keep/Kill signed off, must-migrate campaign list signed off, integrations classified, discovery questions answered, cutover date confirmed. If any is open at end of week 2, do not start building. The cost of replanning now is small. The cost of finding the gap at week 5 is the project.</p>
+      <div class="important-title">Stop and replan if discovery is open at Mobilize end (May 21)</div>
+      <p>Phase exit requires: field inventory with Keep/Kill signed off, must-migrate campaign list signed off, integrations classified, all "open" items in the Fishbowl decisions log resolved, cutover date confirmed. If any is open at end of Mobilize phase, do not start Build. The cost of replanning now is small. The cost of finding the gap during UAT is the project.</p>
     </div>
   </div>
 </div>
@@ -454,8 +543,24 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 
     <h3>Users, lifecycle, sync</h3>
     <p>Start from HubSpot's built-in Permission Sets (View Only, Standard User, Content Marketer, Marketing Manager, Sales Manager, Sales Rep, Super Admin) and only build custom sets where needed. Name Teams to match. Lowest permission level that lets us work. MFA enforced.</p>
-    <p>Lifecycle stages are the spine of the system: map SF <code>Lead.Status</code> values to HubSpot's <code>lifecyclestage</code> + <code>hs_lead_status</code>, decide source of truth per field (typical default: SF for lifecycle, HubSpot for engagement-driven), disable automatic stage progression until the rules are wired explicitly.</p>
-    <p>HubSpot to Salesforce sync: install the official integration, authenticate with a dedicated integration user (never a real person), default Fishbowl inclusion list is marketable contacts only, conflict resolution defined per field, sync errors dashboard pinned with an owner. Activate in test mode on a handful of records, validate, then turn on full sync.</p>
+
+    <h4 style="font-size:0.95em;margin-top:18px">Lifecycle stages (Fishbowl current state, per Lead Flow Cheatsheet)</h4>
+    <p>The current SF flow that we need to replicate or redefine in HubSpot:</p>
+    <ul>
+      <li><strong>New</strong> (Lead) → <strong>Working</strong> (MQL): trigger = enrolled in Outreach sequence OR Chili Piper event added</li>
+      <li><strong>Working</strong> → <strong>Demo</strong> (SAL): trigger = Demo event placed in SF</li>
+      <li><strong>Demo</strong> → <strong>Converted</strong> (SQL): manual, AE converts the Lead in SF</li>
+    </ul>
+    <div class="important">
+      <div class="important-title">MQL definition is an open decision (Sarah)</div>
+      <p>Sarah does not want 99.9% of leads becoming MQL just because they entered an Outreach sequence (Discovery 4). The HubSpot MQL trigger will likely be more restrictive than the current SF rule, probably tied to the scoring tier (Section IX). <strong>Do not wire lifecycle automations until Sarah signs off on the new MQL definition.</strong></p>
+    </div>
+
+    <h4 style="font-size:0.95em;margin-top:18px">Sync configuration</h4>
+    <p>HubSpot to Salesforce sync: install the official integration, authenticate with a dedicated integration user (never a real person), default Fishbowl inclusion list is marketable contacts only, conflict resolution defined per field, sync errors dashboard pinned with an owner. Activate in test mode on a handful of records, validate, then turn on full sync. Source of truth per field defined in the mapping doc <strong>before</strong> turning sync on (see Apollo lesson below).</p>
+
+    <h4 style="font-size:0.95em;margin-top:18px">Email opt-out / unsubscribe (compliance)</h4>
+    <p>Today <code>email_opt_out</code> syncs bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover, HubSpot becomes source of truth and the sync to Outreach must be preserved. If this breaks, SDRs receive opt-out complaints and we have a potential GDPR/CAN-SPAM exposure. Validate the subscription preference round-trip (HubSpot unsubscribe → SF contact opt-out → Outreach exclude) in sandbox before go-live.</p>
 
     <div class="apollo">
       <div class="apollo-title">Apollo lesson</div>
@@ -463,10 +568,14 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
     </div>
 
     <h3>Custom property prefixes</h3>
-    <p>Create only what the field-mapping doc requires. Prefix policy keeps ownership obvious post-launch:</p>
+    <p>Create only what the field-mapping doc requires. Prefix policy keeps ownership obvious post-launch. Rule: any third-party-written field gets a prefix matching the source system.</p>
     <div class="spec">
       <div class="spec-k">clay_</div><div class="spec-v">written by Clay</div>
       <div class="spec-k">warmly_</div><div class="spec-v">written by Warmly</div>
+      <div class="spec-k">ringlead_</div><div class="spec-v">written by RingLead (dedupe / enrichment)</div>
+      <div class="spec-k">chilipiper_</div><div class="spec-v">written by ChiliPiper (booking events)</div>
+      <div class="spec-k">outreach_</div><div class="spec-v">written by Outreach (sequence membership, opt-out state)</div>
+      <div class="spec-k">nooks_</div><div class="spec-v">written by Nooks (dialer state)</div>
       <div class="spec-k">mkto_legacy_</div><div class="spec-v">preserved from Marketo for reporting continuity, not active in HubSpot</div>
       <div class="spec-k">sf_</div><div class="spec-v">synced from Salesforce, no native HubSpot equivalent</div>
     </div>
@@ -480,13 +589,24 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
   <p class="section-lede">The principle: do not migrate fields. Migrate the records, and let the active fields populate naturally. Bring along only what HubSpot needs to function or what reporting continuity requires.</p>
 
   <div class="card">
-    <h3>Object mapping</h3>
-    <p>Before any field-level work, agree on object equivalence. From Aptitude8:</p>
+    <h3>Object mapping (Fishbowl-specific)</h3>
+    <p>The generic Aptitude8 mapping is misleading for Fishbowl because Salesforce uses Lead AND Contact as separate objects, and HubSpot has neither distinction. The real mapping:</p>
     <div class="spec">
-      <div class="spec-k"><span class="mkt">M</span>Person</div><div class="spec-v"><span class="hs">H</span>Contact</div>
-      <div class="spec-k"><span class="mkt">M</span>Company</div><div class="spec-v"><span class="hs">H</span>Company</div>
-      <div class="spec-k"><span class="mkt">M</span>Opportunity</div><div class="spec-v"><span class="hs">H</span>Deal</div>
-      <div class="spec-k"><span class="mkt">M</span>Custom Object</div><div class="spec-v"><span class="hs">H</span>Custom Object (Enterprise + dev time, do not assume parity)</div>
+      <div class="spec-k"><span class="hs">H</span>Contact (pre-SQL)</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Lead</div>
+      <div class="spec-k"><span class="hs">H</span>Contact (post-SQL / converted)</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Contact</div>
+      <div class="spec-k"><span class="hs">H</span>Company</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Account (default sync; no custom parent/child hierarchy in scope)</div>
+      <div class="spec-k"><span class="hs">H</span>Deal</div><div class="spec-v"><strong>Out of scope.</strong> Sales is self-sourcing in SF, Opportunities do not sync to HubSpot. If marketing needs commercial visibility, expose as synced Contact properties (<code>sf_last_opp_stage</code>, <code>sf_last_opp_amount</code>) one-way SF→HS.</div>
+    </div>
+
+    <div class="important">
+      <div class="important-title">The Lead-to-Contact pivot at conversion</div>
+      <p>This is the most fragile part of the native HS↔SF sync. When an AE converts an SF Lead to an SF Contact, the same human now exists under a different SF object. HubSpot still has one Contact record. The integration needs to know to start syncing to the new SF Contact ID instead of the archived Lead ID.</p>
+      <p>To survive the pivot:</p>
+      <ul style="margin-top:8px">
+        <li>Store the HubSpot Contact ID on both <code>Lead.HubSpot_Contact_ID__c</code> and <code>Contact.HubSpot_Contact_ID__c</code> so the integration can find its way back from either side.</li>
+        <li>Configure the SF connector's inclusion criteria to include Leads <em>and</em> Contacts, not one or the other.</li>
+        <li>Validate end-to-end with a test conversion in sandbox before go-live. The most common failure mode is a duplicate HubSpot Contact created post-conversion because the integration lost the link.</li>
+      </ul>
     </div>
 
     <h3>Do not recreate what HubSpot ships with</h3>
@@ -505,6 +625,17 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       <div class="important-title">Property creation order</div>
       <p>Create every target HubSpot property <strong>before</strong> running any list or contact import. The import flow maps CSV columns to existing properties; if the target is missing, the only path is to abort, create it, and restart. Aptitude8 flags this as one of the most common time-loss mistakes in data migration.</p>
     </div>
+
+    <h3>SF validation rules to capture as required fields</h3>
+    <p>Whitney called out that SF blocks Lead → Demo conversion if certain fields are missing or invalid (e.g., <code>accounting_system</code> empty, <code>company_name</code> = "no", country in a disqualified list). These rules become silent sync failures if HubSpot writes a record that does not pass SF validation. Capture them in the field mapping spreadsheet under a <code>sf_required_for_conversion</code> column and reflect them as required fields on the relevant HubSpot forms.</p>
+    <p>Country-based disqualification, which Marketo handles automatically today, migrates as either (a) a HubSpot workflow that sets a <code>disqualified</code> property when country is in the unsupported list, or (b) an SF validation rule. Decide which side owns it before cutover.</p>
+
+    <h3>Attribution properties</h3>
+    <p>SF is first-touch today; marketing wants visibility of both. Define two HubSpot properties in the mapping doc:</p>
+    <ul>
+      <li><code>original_source</code>: first-touch, set on contact create, never overwritten. Maps to SF Lead's first-touch field.</li>
+      <li><code>recent_source</code>: last-touch, updated on every new engagement. Sync direction HS→SF.</li>
+    </ul>
   </div>
 </div>
 
@@ -647,11 +778,21 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       </table>
     </div>
 
-    <h3>Gates before deployment</h3>
-    <p>Do not deploy scoring on dirty data. Required first: Clay enrichment writing <code>Industry</code> and <code>Accounting System</code> back to SF; the 14 Clay-SFDC writeback race conditions resolved (one Clay table per SF field); Lead Source normalized across Marketo, HubSpot, SF; tier-based routing configured in ChiliPiper or SF lead-assignment.</p>
+    <h3>Gates before deployment (strict order)</h3>
+    <p>Do not deploy scoring on dirty data. Execute the gates in order; each one is a precondition for the next. Risk R6 in Section XIV is what happens if you skip this sequence.</p>
+    <ol>
+      <li>Resolve the 14 Clay → SFDC writeback race conditions (one Clay table per SF field).</li>
+      <li>Activate Clay writeback in Phase 1 (777 accounts).</li>
+      <li>Normalize <code>Lead Source</code> across Marketo, HubSpot, and SF.</li>
+      <li>Configure the scoring property in HubSpot (formula, calculated tier property).</li>
+      <li>Backfill the score on all in-scope contacts and validate the distribution against the audit's predictions.</li>
+      <li>Activate tier-based routing in ChiliPiper (or SF lead-assignment).</li>
+    </ol>
+    <p><strong>Scoring does not turn on until gates 1-5 are green.</strong> This is a visible check, not a soft preference. Routing in step 6 is the last switch flipped.</p>
 
     <h3>Deployment</h3>
-    <p>Build the formula in HubSpot's <code>Score</code> property (or <code>HubSpot Score</code> on Enterprise). Inbound and Outbound become two separate properties if the model differs. Tier is a calculated property based on the score, synced to SF for routing. Backfill the score on all in-scope contacts and validate the distribution against the audit's predictions before going live.</p>
+    <p>Build the formula in HubSpot's <code>Score</code> property (or <code>HubSpot Score</code> on Enterprise). Inbound and Outbound become two separate properties if the model differs. Tier is a calculated property based on the score, synced to SF for routing.</p>
+    <p class="muted"><strong>Scope note:</strong> the model below applies to NA and UK. The SOW flags that APAC requires separate development. APAC scoring is deferred to hypercare or a change order; do not attempt to fit one model across regions.</p>
 
     <div class="important">
       <div class="important-title">Two HubSpot caveats Aptitude8 calls out</div>
@@ -696,6 +837,16 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
       <div class="apollo-title">Apollo lesson</div>
       <p>Apollo had only the SF integration as custom-middleware effort. Fishbowl has at least Clay + Warmly + Webflow Conversion API setup that could each easily reach custom-middleware effort. Budget accordingly.</p>
     </div>
+
+    <h3>Out of scope (state it explicitly so nobody scopes it back in)</h3>
+    <ul>
+      <li><strong>Renewal pipeline visibility</strong> in HubSpot. Marketing does not need it. Defaults apply.</li>
+      <li><strong>Custom parent-child account hierarchy mapping.</strong> SF has it, HubSpot's parent/child Company model is not 1:1, default sync behavior is what we use.</li>
+      <li><strong>Opportunity / Deal sync.</strong> Covered in Section V. Sales is self-sourcing in SF.</li>
+    </ul>
+
+    <h3>Compliance: Outreach unsubscribe sync</h3>
+    <p>Cross-referenced from Section IV. Today <code>email_opt_out</code> is bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover the chain becomes HubSpot (source of truth) → SF → Outreach. Test the round-trip in sandbox before go-live: unsubscribe in HubSpot must reflect in Outreach's exclude list within the documented sync window. If this breaks at production scale, SDRs will surface it within hours and we have a CAN-SPAM / GDPR exposure.</p>
 
     <h3>Monitoring</h3>
     <p>For every integration that goes live: failed-sync dashboard with an owner, alert rule for credential expiration, runbook entry for failure recovery, kill switch documented.</p>
@@ -835,7 +986,7 @@ table.apt tr:hover td { background:rgba(255,255,255,0.18); }
 </div>
 
 <footer>
-  Built by Refindable for the Fishbowl engagement · v1.1 draft · based on the Apollo migration (April 2026) and Aptitude8's <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">Marketo to HubSpot guide</a> · <a href="../index.html">Back to docs</a>
+  Built by Refindable for the Fishbowl engagement · v1.2 draft (Fishbowl decisions log + Lead↔Contact pivot + scoring gates ordered) · based on the Apollo migration and Aptitude8's <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">Marketo to HubSpot guide</a> · <a href="../index.html">Back to docs</a>
 </footer>
 
 <button class="btt" id="btt" aria-label="Back to top">
