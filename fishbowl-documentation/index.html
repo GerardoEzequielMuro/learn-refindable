@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOP: Marketo to HubSpot Migration | Refindable</title>
-<link rel="icon" type="image/png" sizes="32x32" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-192x192.png">
-<link rel="shortcut icon" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-180x180.png">
+<link rel="icon" type="image/png" href="img/refindable-icon.png">
+<link rel="shortcut icon" href="img/refindable-icon.png">
+<link rel="apple-touch-icon" href="img/refindable-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -21,7 +20,7 @@
   --gray-bg: #F9FAFB;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:120px; }
+html { scroll-behavior:smooth; scroll-padding-top:80px; }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
 body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.65; font-size:15px; }
 
@@ -35,10 +34,10 @@ body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-syste
 /* STICKY NAVBAR */
 .nav { position:sticky; top:0; background:var(--dark); color:#fff; z-index:50; border-bottom:1px solid rgba(255,255,255,0.06); }
 .nav-inner { max-width:1180px; margin:0 auto; padding:0 24px; display:flex; align-items:center; gap:18px; min-height:60px; }
-.nav-brand { display:flex; align-items:baseline; gap:10px; text-decoration:none; flex-shrink:0; }
-.nav-brand .logo { font-weight:800; color:#fff; font-size:1em; letter-spacing:-0.3px; }
-.nav-brand .logo span { color:var(--orange); }
-.nav-brand .ref-code { font-size:0.72em; color:rgba(255,255,255,0.5); font-family:'JetBrains Mono',ui-monospace,monospace; letter-spacing:0.5px; }
+.nav-brand { display:flex; align-items:center; gap:12px; text-decoration:none; flex-shrink:0; }
+.nav-brand img { height:24px; width:auto; display:block; }
+.nav-brand .divider { width:1px; height:18px; background:rgba(255,255,255,0.2); }
+.nav-brand .ref-code { font-size:0.72em; color:rgba(255,255,255,0.55); font-family:'JetBrains Mono',ui-monospace,monospace; letter-spacing:0.5px; }
 .nav-toc { display:flex; gap:2px; flex:1; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; }
 .nav-toc::-webkit-scrollbar { display:none; }
 .nav-toc a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.82em; font-weight:500; padding:8px 12px; border-radius:6px; white-space:nowrap; transition:background .15s, color .15s; }
@@ -77,8 +76,8 @@ mark.search-hit.current { background:var(--orange); color:#fff; }
 .btt.show { opacity:1; visibility:visible; }
 .btt svg { width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
 
-/* SECTION ANCHOR HOVER (copy-link-on-hover affordance) */
-h2[id], h3[id] { scroll-margin-top:90px; }
+/* Anchor scroll offset: navbar (60px) + breathing room */
+h1[id], h2[id], h3[id] { scroll-margin-top:80px; }
 
 h1 { font-size:2.2em; font-weight:800; color:var(--dark); margin:36px 0 14px; letter-spacing:-0.8px; line-height:1.15; }
 .ref { font-size:0.95em; color:var(--text-light); margin-bottom:36px; }
@@ -162,7 +161,8 @@ footer a { color:var(--orange); }
 <nav class="nav" aria-label="Document navigation">
   <div class="nav-inner">
     <a href="#top" class="nav-brand" aria-label="Refindable SOP MAR 001">
-      <span class="logo">Refindable<span>.</span></span>
+      <img src="img/refindable-logo.png" alt="Refindable">
+      <span class="divider" aria-hidden="true"></span>
       <span class="ref-code">SOP-MAR-001</span>
     </a>
     <div class="nav-toc" role="navigation" aria-label="Sections">
@@ -479,20 +479,30 @@ footer a { color:var(--orange); }
   toggleBtt();
 
   // ===== Active section in TOC (intersection observer) =====
+  // The TOC's horizontal scroll is updated manually (NOT via scrollIntoView)
+  // so it never interferes with the page's vertical smooth scroll.
+  var tocBar = document.querySelector('.nav-toc');
   var tocLinks = document.querySelectorAll('.nav-toc a');
   var idToLink = {};
   tocLinks.forEach(function (a) { idToLink[a.dataset.anchor] = a; });
   var headings = document.querySelectorAll('main h2[id]');
+
+  function centerLinkInToc(link) {
+    if (!tocBar || !link) return;
+    var barRect = tocBar.getBoundingClientRect();
+    var linkRect = link.getBoundingClientRect();
+    var offset = (linkRect.left - barRect.left) - (barRect.width / 2) + (linkRect.width / 2);
+    tocBar.scrollBy({ left: offset, behavior: 'smooth' });
+  }
+
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
-        tocLinks.forEach(function (l) { l.classList.remove('active'); });
         var link = idToLink[e.target.id];
-        if (link) {
-          link.classList.add('active');
-          // keep active link in view inside the scrollable nav
-          link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
+        if (!link) return;
+        tocLinks.forEach(function (l) { l.classList.remove('active'); });
+        link.classList.add('active');
+        centerLinkInToc(link);
       }
     });
   }, { rootMargin: '-80px 0px -70% 0px' });
