@@ -3,968 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketo to HubSpot Migration Playbook | Fishbowl × Refindable</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>SOP: Marketo to HubSpot Migration | Refindable</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --orange: #FF5C35; --orange-light: #FF8C42;
-  --orange-bg: rgba(255,92,53,0.08); --orange-border: rgba(255,92,53,0.2);
-  --red: #DC2626; --red-light: #EF4444;
-  --bg: #FAFAFA; --card: #FFFFFF; --dark: #1a1a2e;
-  --text: #333; --text-light: #666; --text-muted: #999; --border: #e8e8e8;
-  --shadow: 0 2px 20px rgba(0,0,0,0.06); --shadow-hover: 0 8px 40px rgba(255,92,53,0.12);
-  --green: #10B981; --green-bg: rgba(16,185,129,0.08);
-  --gray: #6B7280; --gray-bg: #F3F4F6;
-  --yellow: #F59E0B; --yellow-bg: #FEF3C7;
-  --blue: #3B82F6; --blue-bg: #DBEAFE;
+  --orange: #FF5C35;
+  --dark: #1a1a2e;
+  --text: #1F2937;
+  --text-light: #4B5563;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+  --bg: #FFFFFF;
+  --gray-bg: #F9FAFB;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.7; font-size:15px; }
-.progress { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--orange),var(--orange-light)); z-index:1000; transition:width 0.1s; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.65; font-size:15px; }
 
-/* NAV */
-nav { background:var(--dark); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
-nav .brand { font-weight:700; font-size:0.85em; color:var(--orange-light); letter-spacing:1px; text-transform:uppercase; text-decoration:none; }
-nav .brand:hover { color:var(--orange); }
-.nav-links { display:flex; gap:20px; list-style:none; align-items:center; }
-.nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.8em; font-weight:500; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.2s; }
-.nav-links a:hover { color:var(--orange); }
-.back-link { padding:6px 14px; border-radius:100px; background:rgba(255,92,53,0.15); color:var(--orange) !important; }
-.back-link:hover { background:rgba(255,92,53,0.22); color:var(--orange-light) !important; }
+.topbar { background:var(--dark); padding:14px 32px; }
+.topbar a { color:#fff; text-decoration:none; font-size:0.82em; font-weight:500; letter-spacing:0.5px; }
+.topbar a:hover { color:var(--orange); }
 
-/* HERO */
-.hero { background:linear-gradient(135deg,var(--dark),#16213e); color:white; padding:80px 24px 100px; text-align:center; position:relative; overflow:hidden; }
-.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:40px 40px; }
-.hero-glow { position:absolute; width:500px; height:500px; background:radial-gradient(circle,rgba(255,92,53,0.18) 0%,transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); }
-.hero-tag { display:inline-block; padding:6px 14px; background:rgba(255,92,53,0.15); border:1px solid rgba(255,92,53,0.3); color:var(--orange-light); border-radius:100px; font-size:0.75em; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:24px; position:relative; z-index:1; }
-.hero h1 { font-size:clamp(2.2em,5vw,3.5em); font-weight:800; line-height:1.15; position:relative; z-index:1; }
-.hero h1 span { color:var(--orange); }
-.hero-sub { font-size:1.05em; color:rgba(255,255,255,0.6); margin:16px auto 0; max-width:640px; line-height:1.7; position:relative; z-index:1; }
-.hero-meta { display:flex; gap:10px; justify-content:center; margin-top:24px; flex-wrap:wrap; position:relative; z-index:1; }
-.hero-pill { padding:6px 14px; border-radius:100px; font-size:0.7em; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
-.hero-pill.type { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); }
-.hero-pill.status { background:rgba(16,185,129,0.18); color:#34D399; border:1px solid rgba(16,185,129,0.35); }
-.hero-pill.scope { background:rgba(255,140,66,0.15); color:var(--orange-light); border:1px solid rgba(255,140,66,0.3); }
+.brand-bar { padding:24px 0 16px; border-bottom:1px solid var(--border); }
+.brand-bar .logo { font-size:1.05em; font-weight:800; color:var(--dark); letter-spacing:-0.3px; }
+.brand-bar .logo span { color:var(--orange); }
 
-/* TOC */
-.toc { max-width:960px; margin:-30px auto 0; padding:0 24px; position:relative; z-index:2; }
-.toc-card { background:var(--card); border-radius:16px; padding:32px 40px; box-shadow:var(--shadow); border:1px solid var(--border); }
-.toc-title { font-size:0.7em; text-transform:uppercase; letter-spacing:2px; color:var(--orange); font-weight:700; margin-bottom:20px; }
-.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; }
-.toc-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:10px; text-decoration:none; color:var(--text); transition:all 0.2s; border:1px solid transparent; }
-.toc-item:hover { background:var(--orange-bg); border-color:var(--orange-border); transform:translateX(4px); }
-.toc-num { width:28px; height:28px; background:var(--orange-bg); color:var(--orange); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.72em; flex-shrink:0; }
-.toc-label { font-weight:500; font-size:0.9em; }
+main { max-width:860px; margin:0 auto; padding:0 32px 80px; }
 
-/* SECTIONS */
-.section { max-width:900px; margin:60px auto; padding:0 24px; }
-.section-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:16px; border-bottom:2px solid var(--orange); }
-.section-num { width:44px; height:44px; background:var(--orange); color:white; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1em; flex-shrink:0; }
-.section-title { font-size:1.55em; font-weight:700; }
-.section-lede { color:var(--text-light); font-size:1em; margin-bottom:20px; }
-.section-lede strong { color:var(--text); }
+h1 { font-size:2.2em; font-weight:800; color:var(--dark); margin:36px 0 14px; letter-spacing:-0.8px; line-height:1.15; }
+.ref { font-size:0.95em; color:var(--text-light); margin-bottom:36px; }
+.ref strong { color:var(--text); font-weight:700; }
 
-/* CARDS */
-.card { background:var(--card); border-radius:12px; padding:26px 30px; box-shadow:var(--shadow); border:1px solid var(--border); margin-bottom:20px; }
-.card h3 { font-size:1.05em; font-weight:700; margin-bottom:12px; color:var(--dark); }
-.card h3:not(:first-child) { margin-top:22px; }
-.card h4 { font-size:0.78em; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-muted); margin:20px 0 10px; }
-.card p { margin-bottom:12px; color:var(--text); }
-.card p.muted { color:var(--text-light); font-size:0.92em; }
-.card ul,.card ol { padding-left:20px; margin-bottom:12px; }
-.card li { margin-bottom:7px; color:var(--text); }
-.card li strong { color:var(--dark); }
-.card code { background:var(--gray-bg); padding:1px 7px; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:0.84em; color:#5c4033; }
-.card a { color:var(--orange); text-decoration:none; }
-.card a:hover { text-decoration:underline; }
+h2 { font-size:1.4em; font-weight:700; color:var(--dark); margin:42px 0 14px; padding-top:8px; }
+h3 { font-size:1.08em; font-weight:700; color:var(--dark); margin:24px 0 10px; }
 
-/* CHECKLIST */
-.cl { list-style:none !important; padding-left:0 !important; }
-.cl li { padding:8px 0 8px 28px; position:relative; border-bottom:1px dashed var(--border); }
-.cl li:last-child { border-bottom:none; }
-.cl li::before { content:""; position:absolute; left:0; top:13px; width:16px; height:16px; border:1.5px solid var(--orange); border-radius:4px; background:var(--orange-bg); }
+p { margin-bottom:12px; color:var(--text); }
+p.note { color:var(--text-light); font-size:0.93em; }
 
-/* CALLOUTS */
-.tip,.important,.apollo { padding:16px 20px; border-radius:0 10px 10px 0; margin:16px 0; }
-.tip { background:var(--orange-bg); border-left:4px solid var(--orange); }
-.tip-title { font-weight:700; color:var(--orange); font-size:0.78em; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.tip p { color:var(--text); font-size:0.92em; margin:0; }
-.important { background:#FFF3E0; border-left:4px solid var(--yellow); }
-.important-title { font-weight:700; color:#B45309; font-size:0.78em; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.important p { color:var(--text); font-size:0.92em; margin:0; }
-.apollo { background:var(--blue-bg); border-left:4px solid var(--blue); }
-.apollo-title { font-weight:700; color:#1E3A8A; font-size:0.78em; text-transform:uppercase; letter-spacing:1.2px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
-.apollo-title::before { content:"◆"; color:var(--blue); }
-.apollo p { color:var(--text); font-size:0.92em; margin:0 0 8px; }
-.apollo p:last-child { margin-bottom:0; }
+ul, ol { padding-left:22px; margin-bottom:14px; }
+li { margin-bottom:6px; color:var(--text); }
+li > ul, li > ol { margin-top:6px; margin-bottom:0; }
 
-/* TABLES */
-.tbl-wrap { overflow-x:auto; margin:14px 0; border-radius:10px; border:1px solid var(--border); }
-table.data { width:100%; border-collapse:collapse; font-size:0.88em; background:var(--card); }
-table.data th { background:var(--gray-bg); text-align:left; font-weight:700; font-size:0.7em; text-transform:uppercase; letter-spacing:1px; color:var(--text-light); padding:11px 14px; border-bottom:1px solid var(--border); }
-table.data td { padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top; }
-table.data tr:last-child td { border-bottom:none; }
-table.data tr:hover td { background:var(--bg); }
-table.data td code { font-size:0.85em; }
-table.data .pill { display:inline-block; padding:3px 9px; border-radius:5px; font-size:0.78em; font-weight:600; white-space:nowrap; }
-.pill.high { background:#FEE2E2; color:#991B1B; }
-.pill.med { background:#FEF3C7; color:#92400E; }
-.pill.low { background:#DBEAFE; color:#1E3A8A; }
+strong { font-weight:700; color:var(--dark); }
+code { background:var(--gray-bg); padding:1px 6px; border-radius:4px; font-family:'JetBrains Mono',ui-monospace,monospace; font-size:0.86em; color:#5c4033; }
+a { color:var(--orange); text-decoration:underline; text-underline-offset:2px; }
+a:hover { color:#e63d12; }
 
-/* SPEC */
-.spec { display:grid; grid-template-columns:170px 1fr; gap:12px 24px; margin:8px 0 18px; }
-.spec-k { font-size:0.7em; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; color:var(--text-muted); padding-top:3px; }
-.spec-v { color:var(--text); font-size:0.95em; }
-.spec-v code { background:var(--gray-bg); padding:2px 8px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:0.85em; color:var(--dark); }
+table { width:100%; border-collapse:collapse; margin:14px 0 22px; font-size:0.94em; border:1px solid var(--border); }
+table th { background:var(--gray-bg); text-align:left; font-weight:700; padding:10px 14px; border:1px solid var(--border); color:var(--text); font-size:0.92em; }
+table td { padding:10px 14px; border:1px solid var(--border); vertical-align:top; color:var(--text); }
+table td:first-child { font-weight:600; color:var(--dark); }
 
-/* CODE BLOCK */
-pre.code { background:#0F172A; color:#E2E8F0; border-radius:10px; padding:18px 22px; margin:14px 0; font-family:'JetBrains Mono',monospace; font-size:0.82em; overflow-x:auto; line-height:1.6; white-space:pre; }
-pre.code .c { color:#94A3B8; font-style:italic; }
-pre.code .k { color:#FF8C42; }
-pre.code .s { color:#34D399; }
-pre.code .v { color:#F1F5F9; }
+/* Aptitude8-style yellow icon legend (kept verbatim from source) */
+.apt-wrap { margin:18px 0 28px; overflow-x:auto; border-radius:8px; }
+table.apt { width:100%; border-collapse:collapse; background:#FFE572; color:#1F2937; font-size:0.92em; border:none; }
+table.apt th { background:#F2C53A; padding:11px 16px; text-align:left; font-weight:700; border:1.5px solid #fff; color:#1F2937; font-size:0.78em; text-transform:uppercase; letter-spacing:0.8px; }
+table.apt td { padding:12px 16px; border:1.5px solid #fff; vertical-align:middle; color:#1F2937; font-weight:500; }
+table.apt td:first-child { width:72px; text-align:center; font-weight:500; }
+.mi-img { width:36px; height:36px; object-fit:contain; display:inline-block; }
 
-/* INLINE BADGES */
-.badge { display:inline-block; padding:2px 9px; border-radius:100px; font-size:0.7em; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; margin-left:6px; vertical-align:middle; }
-.badge.weeks { background:var(--blue-bg); color:#1E3A8A; }
-.badge.fishbowl { background:var(--orange-bg); color:var(--orange); }
+.screenshot { margin:14px 0 22px; }
+.screenshot img { max-width:100%; height:auto; border:1px solid var(--border); border-radius:6px; display:block; }
+.screenshot .cap { font-size:0.82em; color:var(--text-muted); margin-top:6px; }
 
-/* NEXT STEPS */
-.next-steps { max-width:900px; margin:60px auto; padding:0 24px; }
-.next-steps-card { background:linear-gradient(135deg,var(--dark),#16213e); color:white; border-radius:16px; padding:40px; }
-.next-steps-card h2 { font-size:1.7em; margin-bottom:14px; }
-.next-steps-card h2 span { color:var(--orange); }
-.next-steps-card p { color:rgba(255,255,255,0.7); }
-.next-steps-card ul { list-style:none; padding:0; margin-top:20px; }
-.next-steps-card li { padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; align-items:flex-start; gap:12px; color:rgba(255,255,255,0.8); font-size:0.95em; }
-.next-steps-card li:last-child { border-bottom:none; }
-.next-steps-card li::before { content:"→"; color:var(--orange); font-weight:700; flex-shrink:0; }
+.protip { background:#FFFBEB; border-left:3px solid #F59E0B; padding:14px 18px; margin:14px 0 22px; border-radius:0 6px 6px 0; font-size:0.94em; }
+.protip strong { color:#92400E; }
 
-footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-size:0.85em; border-top:1px solid var(--border); max-width:900px; margin:0 auto; }
-footer a { color:var(--orange); text-decoration:none; }
-
-/* BACK TO TOP */
-.btt { position:fixed; bottom:32px; right:32px; width:46px; height:46px; border-radius:50%; background:var(--orange); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(255,92,53,.4); opacity:0; visibility:hidden; transition:all .3s ease; z-index:999; }
-.btt.visible { opacity:1; visibility:visible; }
-.btt:hover { transform:translateY(-3px) scale(1.08); box-shadow:0 6px 24px rgba(255,92,53,.55); }
-.btt svg { width:22px; height:22px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
-
-/* PLATFORM LOGOS */
-.mkt, .hs { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:5px; font-size:0.68em; font-weight:800; color:#fff; margin-right:7px; vertical-align:-4px; font-family:'Inter',sans-serif; letter-spacing:0; }
-.mkt { background:#5C4C9F; }
-.hs { background:var(--orange); }
-.legend-row { display:flex; gap:18px; flex-wrap:wrap; align-items:center; padding:10px 14px; background:var(--gray-bg); border-radius:8px; font-size:0.85em; margin:14px 0; color:var(--text-light); }
-.legend-row strong { color:var(--text); }
-
-/* MARKETO ICONS (actual icons from Aptitude8 / Marketo UI) */
-.mi { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; flex-shrink:0; }
-.mi img { width:38px; height:38px; object-fit:contain; display:block; }
-.mi-sm { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; vertical-align:-8px; margin-right:8px; flex-shrink:0; }
-.mi-sm img { width:24px; height:24px; object-fit:contain; display:block; }
-.mi.off img, .mi-sm.off img { filter:grayscale(1) opacity(0.55); }
-
-/* FISHBOWL DECISIONS LOG (project-state panel, not part of numbered playbook) */
-.fbl { max-width:900px; margin:60px auto; padding:0 24px; }
-.fbl-card { background:#1a1a2e; color:#fff; border-radius:16px; padding:36px 40px; box-shadow:0 12px 40px rgba(0,0,0,0.18); border:1px solid rgba(255,255,255,0.06); }
-.fbl-tag { display:inline-block; padding:5px 12px; background:rgba(255,92,53,0.18); border:1px solid rgba(255,92,53,0.35); color:var(--orange-light); border-radius:100px; font-size:0.65em; font-weight:700; letter-spacing:1.6px; text-transform:uppercase; margin-bottom:14px; }
-.fbl-card h2 { font-size:1.7em; margin-bottom:6px; color:#fff; }
-.fbl-card h2 span { color:var(--orange); }
-.fbl-card .fbl-lede { color:rgba(255,255,255,0.6); font-size:0.95em; margin-bottom:24px; }
-.fbl-card h3 { color:var(--orange-light); font-size:0.78em; text-transform:uppercase; letter-spacing:1.4px; margin:24px 0 12px; font-weight:700; }
-.fbl-card h3:first-of-type { margin-top:0; }
-.fbl-card p { color:rgba(255,255,255,0.85); font-size:0.93em; margin-bottom:10px; }
-.fbl-card ul { list-style:none; padding-left:0; }
-.fbl-card ul li { padding:7px 0 7px 22px; position:relative; color:rgba(255,255,255,0.85); font-size:0.92em; }
-.fbl-card ul li::before { content:""; position:absolute; left:0; top:14px; width:8px; height:2px; background:var(--orange); }
-.fbl-card ul.closed li::before { background:var(--green); }
-.fbl-card ul.open li::before { background:#FBBF24; }
-.fbl-card a { color:var(--orange-light); }
-.fbl-card .stake-tbl { width:100%; border-collapse:collapse; font-size:0.88em; margin-top:8px; }
-.fbl-card .stake-tbl th { text-align:left; padding:8px 12px; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.55); font-weight:600; font-size:0.72em; text-transform:uppercase; letter-spacing:1.2px; border-bottom:1px solid rgba(255,255,255,0.08); }
-.fbl-card .stake-tbl td { padding:9px 12px; color:rgba(255,255,255,0.85); border-bottom:1px solid rgba(255,255,255,0.05); vertical-align:top; }
-.fbl-card .stake-tbl td:first-child { font-weight:700; color:#fff; white-space:nowrap; }
-.fbl-card .phase-tbl { width:100%; border-collapse:collapse; font-size:0.88em; margin-top:8px; }
-.fbl-card .phase-tbl td { padding:8px 12px; color:rgba(255,255,255,0.85); border-bottom:1px solid rgba(255,255,255,0.05); }
-.fbl-card .phase-tbl td:first-child { color:var(--orange-light); font-weight:700; white-space:nowrap; font-family:'JetBrains Mono',monospace; font-size:0.82em; }
-.fbl-card .phase-tbl tr:last-child td { border-bottom:none; background:rgba(255,92,53,0.08); }
-.fbl-card .phase-tbl tr:last-child td:first-child { color:var(--orange); }
-.dual-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-@media (max-width:700px) { .dual-col { grid-template-columns:1fr; } }
-
-/* APTITUDE8-STYLE YELLOW REFERENCE TABLE */
-.apt-wrap { margin:18px 0; overflow-x:auto; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
-table.apt { width:100%; border-collapse:collapse; background:#FFE572; color:#1F2937; font-size:0.92em; }
-table.apt th { background:#F2C53A; padding:13px 18px; text-align:left; font-weight:700; border:1.5px solid #fff; color:#1F2937; font-size:0.78em; text-transform:uppercase; letter-spacing:0.8px; }
-table.apt td { padding:14px 18px; border:1.5px solid #fff; vertical-align:middle; color:#1F2937; font-weight:500; }
-table.apt td:first-child { width:80px; text-align:center; }
-table.apt tr:hover td { background:rgba(255,255,255,0.18); }
-
-/* PRO TIP (Aptitude8 yellow style) */
-.protip { background:#FFFBEB; border:1px solid #FCD34D; border-left:4px solid #F59E0B; padding:14px 18px; border-radius:8px; margin:16px 0; }
-.protip-tag { display:inline-block; font-weight:800; color:#92400E; font-size:0.72em; text-transform:uppercase; letter-spacing:1.4px; margin-bottom:4px; }
-.protip p { color:var(--text); font-size:0.92em; margin:0; }
-
-/* ACTIVE / INACTIVE STATE BADGES */
-.state { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:100px; font-size:0.7em; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; vertical-align:middle; }
-.state::before { content:""; width:7px; height:7px; border-radius:50%; }
-.state.on { background:#FEF3C7; color:#92400E; border:1px solid #FCD34D; }
-.state.on::before { background:#F59E0B; }
-.state.off { background:#F3F4F6; color:#6B7280; border:1px solid #D1D5DB; }
-.state.off::before { background:#9CA3AF; }
+footer { max-width:860px; margin:60px auto 0; padding:24px 32px; border-top:1px solid var(--border); color:var(--text-muted); font-size:0.85em; }
+footer a { color:var(--orange); }
 
 @media (max-width:640px) {
-  .hero { padding:60px 20px 80px; }
-  .toc-card { padding:24px 22px; }
-  .card { padding:20px 22px; }
-  .spec { grid-template-columns:1fr; gap:4px; }
-  .spec-k { padding-top:6px; }
-}
-
-@media print {
-  nav,.btt,.progress { display:none !important; }
+  main { padding:0 20px 60px; }
+  h1 { font-size:1.7em; }
+  table { font-size:0.86em; }
 }
 </style>
 </head>
 <body>
-<div class="progress" id="progress"></div>
 
-<nav>
-  <a href="../index.html" class="brand">Refindable Docs</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#discovery">Discovery</a></li>
-    <li><a href="#campaigns">Campaigns</a></li>
-    <li><a href="#cutover">Cutover</a></li>
-    <li><a href="../index.html" class="back-link">← Back to docs</a></li>
-  </ul>
-</nav>
-
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-tag">Fishbowl × Refindable</div>
-  <h1>Marketo to HubSpot <span>Migration Playbook</span></h1>
-  <p class="hero-sub">The version of this guide we wish we had on day one of the Apollo migration. Rewritten for the Fishbowl engagement, but the procedure works for any Marketo to HubSpot project. Swap the numbers, keep the steps.</p>
-  <div class="hero-meta">
-    <span class="hero-pill type">Internal Reference</span>
-    <span class="hero-pill scope">Target go-live: Jul 13, 2026</span>
-    <span class="hero-pill status">Draft v1.2</span>
-  </div>
+<div class="topbar">
+  <a href="../index.html">← Back to docs</a>
 </div>
 
-<div class="toc">
-  <div class="toc-card">
-    <div class="toc-title">Table of Contents</div>
-    <div class="toc-grid">
-      <a href="#about" class="toc-item"><div class="toc-num">I</div><div class="toc-label">About this playbook</div></a>
-      <a href="#fishbowl-log" class="toc-item"><div class="toc-num" style="background:var(--orange);color:#fff">★</div><div class="toc-label">Fishbowl decisions log</div></a>
-      <a href="#prekickoff" class="toc-item"><div class="toc-num">II</div><div class="toc-label">Pre-kickoff checklist</div></a>
-      <a href="#discovery" class="toc-item"><div class="toc-num">III</div><div class="toc-label">Discovery (weeks 1 to 2)</div></a>
-      <a href="#foundation" class="toc-item"><div class="toc-num">IV</div><div class="toc-label">HubSpot foundation</div></a>
-      <a href="#fields" class="toc-item"><div class="toc-num">V</div><div class="toc-label">Field migration</div></a>
-      <a href="#forms" class="toc-item"><div class="toc-num">VI</div><div class="toc-label">Forms migration</div></a>
-      <a href="#campaigns" class="toc-item"><div class="toc-num">VII</div><div class="toc-label">Campaigns &amp; SF sync</div></a>
-      <a href="#emails" class="toc-item"><div class="toc-num">VIII</div><div class="toc-label">Email templates</div></a>
-      <a href="#scoring" class="toc-item"><div class="toc-num">IX</div><div class="toc-label">Lead scoring</div></a>
-      <a href="#integrations" class="toc-item"><div class="toc-num">X</div><div class="toc-label">Integrations remapping</div></a>
-      <a href="#lists" class="toc-item"><div class="toc-num">XI</div><div class="toc-label">Lists &amp; segmentation</div></a>
-      <a href="#cutover" class="toc-item"><div class="toc-num">XII</div><div class="toc-label">Cutover plan</div></a>
-      <a href="#hypercare" class="toc-item"><div class="toc-num">XIII</div><div class="toc-label">Hypercare</div></a>
-      <a href="#risks" class="toc-item"><div class="toc-num">XIV</div><div class="toc-label">Risk register</div></a>
-      <a href="#lessons" class="toc-item"><div class="toc-num">XV</div><div class="toc-label">Apollo lessons</div></a>
-    </div>
-  </div>
+<div class="brand-bar">
+  <main>
+    <div class="logo">Refindable<span>.</span></div>
+  </main>
 </div>
 
-<!-- ───────────────────────────── I. ABOUT ───────────────────────────── -->
-<div class="section" id="about">
-  <div class="section-header"><div class="section-num">I</div><div class="section-title">About this playbook</div></div>
+<main>
 
-  <div class="card">
-    <p>We ran the Apollo GraphQL migration in April 2026. It went live but it was harder than it had to be: integrations were a black box, custom SF middleware ate 60 unscoped hours, and we kept rediscovering things in week 5 that should have closed in week 1. This document is what we wrote down afterwards.</p>
-    <p>Fishbowl is the next migration. NewEdge prime, Refindable sub. Engagement runs Mobilize (May 11-21) → Build (May 26-Jun 19) → Migration &amp; Integrations (Jun 22-Jul 10) → UAT (Jun 29-Jul 10) → Target Go-Live July 13. Marketo contract through October as fallback. Numbers below (814 fields, 141 active campaigns of 6,464, 67 forms, 200 templates) are Fishbowl-specific. The methodology is not. Stakeholders, current state, and open decisions live in the <a href="#fishbowl-log">Fishbowl decisions log</a> below.</p>
+<h1>Marketo to HubSpot Migration</h1>
+<p class="ref"><strong>Reference:</strong> SOP-MAR-001</p>
 
-    <h3>Sources</h3>
-    <ul>
-      <li><strong>Apollo GraphQL migration (April 2026).</strong> Our own field notes.</li>
-      <li><strong>Aptitude8's <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">step-by-step guide</a>.</strong> The most thorough public reference. We lean on it for the tactical parts Apollo did not cover (HubSpot UI paths, Marketo actions without direct HubSpot equivalent, suppression-list mechanics, DNS timing).</li>
-    </ul>
+<h2>1. Purpose</h2>
+<p>This SOP outlines the steps to migrate a marketing automation environment from Marketo to HubSpot. It covers asset inventory, portal configuration, asset migration, data export and import, suppression-list setup, cutover, and post-launch monitoring. The goal is a clean migration with no double sends, no broken redirects, and no lost contact records.</p>
 
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>On a tight engagement, the bottleneck is almost never the build. It is client responsiveness and integration audits. Plan around those.</p>
-    </div>
+<h2>2. Scope</h2>
+<p>This SOP applies to any team executing a Marketo to HubSpot migration. It assumes a HubSpot license is already purchased and that the migrator has admin access in both platforms. Custom-object work, deep custom-code integrations, and historical activity log imports are out of scope and require a separate workstream.</p>
 
-    <h3>Marketo icon reference</h3>
-    <p>Marketo uses a fixed set of icons across its UI to identify each asset type. You will see these in the Marketing Activities tree, in workflow steps, and in our screenshots throughout this doc. Recognize them and you can skim Marketo faster.</p>
-    <div class="apt-wrap">
-      <table class="apt">
-        <thead>
-          <tr>
-            <th>Marketo icon</th>
-            <th>Marketo tool</th>
-            <th>Corresponding HubSpot tool</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="mi"><img src="img/marketo-icons/trigger.webp" alt="Triggers" loading="lazy"></span></td><td>Triggers</td><td>Workflows</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/smart-campaign.webp" alt="Batch or Smart Campaign" loading="lazy"></span></td><td>Batch or Smart Campaign</td><td>Workflows or Form Automation</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/email.webp" alt="Email" loading="lazy"></span></td><td>Email</td><td>Marketing Email</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/email-template.webp" alt="Email Template" loading="lazy"></span></td><td>Email Template</td><td>Marketing Email Templates</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/form.webp" alt="Form" loading="lazy"></span></td><td>Form</td><td>Forms</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/landing-page.webp" alt="Landing Page" loading="lazy"></span></td><td>Landing Page</td><td>Landing Pages</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/landing-page-template.webp" alt="Landing Page Template" loading="lazy"></span></td><td>Landing Page Template</td><td>Design Tools, Templates, and Themes</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/smart-list.webp" alt="Smart List" loading="lazy"></span></td><td>Smart List</td><td>Active Lists</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/static-list.webp" alt="Static List" loading="lazy"></span></td><td>Static List</td><td>Static Lists</td></tr>
-          <tr><td><span class="mi"><img src="img/marketo-icons/program.webp" alt="Program" loading="lazy"></span></td><td>Program</td><td>Campaigns</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted">Color matters. <strong>Yellow</strong> (bolt, bulb) means the asset is <span class="state on">Active</span>. <strong>Gray</strong> means <span class="state off">Inactive</span> / paused. We use the same coloring throughout this doc, and we recommend you trust the icon color when triaging Marketo's Marketing Activities tree during discovery.</p>
-  </div>
+<h2>3. Definitions</h2>
+<ul>
+  <li><strong>Asset:</strong> Any Marketo element to migrate (form, email, template, list, smart campaign, landing page, program, property).</li>
+  <li><strong>Smart Campaign:</strong> Marketo's term for an automated workflow. Equivalent to a HubSpot Workflow.</li>
+  <li><strong>Smart List:</strong> Marketo's dynamic list (criteria-based, recalculated on the fly). Equivalent to a HubSpot Active List.</li>
+  <li><strong>Static List:</strong> A fixed list of records. Equivalent on both platforms.</li>
+  <li><strong>Subscription Type:</strong> A HubSpot-level category that every marketing email requires. Manages opt-in / opt-out per channel.</li>
+  <li><strong>Suppression List:</strong> A static list attached to a workflow that prevents specific contacts from re-running through it. Used to keep Marketo-era enrollees out of the HubSpot version of the same workflow at cutover.</li>
+  <li><strong>Cutover:</strong> The moment HubSpot becomes the system of record and Marketo stops sending.</li>
+</ul>
+
+<h3>3.1 Marketo icon reference</h3>
+<p>Marketo uses a fixed icon per asset type across its UI. Yellow icons are active assets; gray icons are inactive. Use the icon to triage what to migrate.</p>
+
+<div class="apt-wrap">
+  <table class="apt">
+    <thead>
+      <tr><th>Marketo icon</th><th>Marketo tool</th><th>HubSpot equivalent</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><img class="mi-img" src="img/marketo-icons/trigger.webp" alt="Triggers"></td><td>Triggers</td><td>Workflows</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/smart-campaign.webp" alt="Smart Campaign"></td><td>Batch or Smart Campaign</td><td>Workflows or Form Automation</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/email.webp" alt="Email"></td><td>Email</td><td>Marketing Email</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/email-template.webp" alt="Email Template"></td><td>Email Template</td><td>Marketing Email Templates</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/form.webp" alt="Form"></td><td>Form</td><td>Forms</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/landing-page.webp" alt="Landing Page"></td><td>Landing Page</td><td>Landing Pages</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/landing-page-template.webp" alt="Landing Page Template"></td><td>Landing Page Template</td><td>Design Tools, Templates, and Themes</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/smart-list.webp" alt="Smart List"></td><td>Smart List</td><td>Active Lists</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/static-list.webp" alt="Static List"></td><td>Static List</td><td>Static Lists</td></tr>
+      <tr><td><img class="mi-img" src="img/marketo-icons/program.webp" alt="Program"></td><td>Program</td><td>Campaigns</td></tr>
+    </tbody>
+  </table>
 </div>
 
-<!-- ───────────────────────────── FISHBOWL DECISIONS LOG ───────────────────────────── -->
-<div class="fbl" id="fishbowl-log">
-  <div class="fbl-card">
-    <div class="fbl-tag">Fishbowl · Project state · 2026-05-21</div>
-    <h2>Fishbowl <span>decisions log</span></h2>
+<h2>4. Roles and Responsibilities</h2>
+<table>
+  <thead>
+    <tr><th>Role</th><th>Responsibilities</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Migration Lead</td><td>Owns the migration plan, asset inventory, and timeline. Coordinates across roles and signs off on go-live.</td></tr>
+    <tr><td>Marketing Operator</td><td>Audits Marketo assets, decides what migrates and what gets deprecated, validates email templates and lead scoring in HubSpot.</td></tr>
+    <tr><td>IT / CRM Admin</td><td>Configures HubSpot portal defaults, users and permissions, sending domain, tracking domain, and any CRM sync (e.g., Salesforce).</td></tr>
+    <tr><td>Developer (as needed)</td><td>Rebuilds custom HTML email or landing-page templates, configures custom objects, handles API-based data transfer for large databases.</td></tr>
+    <tr><td>Stakeholders</td><td>Sign off on Kill/Keep decisions, subscription strategy, and cutover date.</td></tr>
+  </tbody>
+</table>
 
-    <h3>Stakeholders</h3>
-    <table class="stake-tbl">
-      <tbody>
-        <tr><td>Whitney</td><td>Current SF/Marketo SME. Authoritative on lifecycle rules, integration history. Critical not to lose during sprint.</td></tr>
-        <tr><td>Sarah</td><td>New CMO. Owns MQL redefinition + scoring sign-off.</td></tr>
-        <tr><td>Derek</td><td>IT. License tier + change-control sign-off.</td></tr>
-        <tr><td>Cade</td><td>Sales / SDR. ChiliPiper routing sign-off.</td></tr>
-        <tr><td>Jared</td><td>Diversis. GTM audit author.</td></tr>
-        <tr><td>Lara</td><td>Marketing. Day-to-day Marketo operator.</td></tr>
-      </tbody>
-    </table>
+<h2>5. Prerequisites</h2>
+<ul>
+  <li>HubSpot license active, with admin access for the migration team. Marketing Hub Enterprise plus Operations Hub Professional is recommended.</li>
+  <li>Marketo admin access for the migration team.</li>
+  <li>Access to all integrations Marketo connects to (Salesforce, dedupe tools, ad platforms, sales-engagement tools).</li>
+  <li>Shared documentation space (Google Drive, Notion, Confluence) for the asset inventory.</li>
+  <li>A copy of <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">Aptitude8's Marketo to HubSpot guide</a> for visual reference of HubSpot UI screens.</li>
+</ul>
 
-    <h3>SOW phases</h3>
-    <table class="phase-tbl">
-      <tbody>
-        <tr><td>May 11-21</td><td>Mobilize &amp; Discovery (Section III)</td></tr>
-        <tr><td>May 26-Jun 19</td><td>Build (Sections IV-IX)</td></tr>
-        <tr><td>Jun 22-Jul 10</td><td>Migration &amp; Integrations (X-XI)</td></tr>
-        <tr><td>Jun 29-Jul 10</td><td>UAT &amp; Go-Live Prep (XII)</td></tr>
-        <tr><td>Jul 13</td><td>Target Go-Live</td></tr>
-      </tbody>
-    </table>
+<h2>6. Procedure</h2>
 
-    <h3>Decisions: closed vs open</h3>
-    <div class="dual-col">
-      <div>
-        <p style="color:#34D399;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Closed</p>
-        <ul class="closed">
-          <li>Historical activity data: not migrating via forms. Change order if requested.</li>
-          <li>Object scope: Contacts only. No Deals/Opp sync (sales is self-sourcing in SF).</li>
-          <li>HS Contact ↔ SF Lead pre-conversion, ↔ SF Contact post-conversion.</li>
-          <li>Parent-child accounts: default sync, no custom hierarchy mapping.</li>
-          <li>Renewal pipeline: out of scope.</li>
-          <li>Outreach unsubscribe (<code>email_opt_out</code>): bidirectional, HubSpot source of truth post-cutover.</li>
-        </ul>
-      </div>
-      <div>
-        <p style="color:#FBBF24;font-weight:700;font-size:0.78em;letter-spacing:1px;text-transform:uppercase">Open</p>
-        <ul class="open">
-          <li><strong>MQL definition</strong> (Sarah): more restrictive than current SF rule. Blocks lifecycle wiring.</li>
-          <li><strong>Business-critical campaigns</strong> that can't pause (Sarah + Whitney).</li>
-          <li><strong>External webhooks</strong> from Marketo: inventory TBC.</li>
-          <li><strong>APAC scoring model</strong>: deferred to hypercare / change order.</li>
-          <li><strong>First-touch vs last-touch</strong> attribution properties to define.</li>
-        </ul>
-      </div>
-    </div>
+<h3>6.1 Build the asset inventory</h3>
+<p>Create a shared spreadsheet with one tab per asset family. Document each item to migrate, its dependencies, and its HubSpot target.</p>
+<ul>
+  <li><strong>Users, Properties &amp; Forms tab:</strong> users to provision (team + permission set), every Marketo property mapped to its HubSpot counterpart (with type and picklist options), every form with notification recipients, required fields, hidden fields.</li>
+  <li><strong>Lists &amp; Workflows tab:</strong> lists with Active/Static flag and link to the Marketo source; workflows with exact name, link to the Marketo Members List (needed at cutover for suppression), and a side-by-side link to the HubSpot version once built.</li>
+  <li><strong>Emails, Landing Pages &amp; Programs tab:</strong> email templates to rebuild, individual emails with subscription type, landing pages with both Marketo and HubSpot URLs, and the associated program/campaign.</li>
+</ul>
 
-    <p class="fbl-lede" style="margin-top:20px;margin-bottom:0;font-size:0.85em">Source docs: Lead Flow Cheatsheet · Fishbowl Prospect to Customer Lifecycle · Diversis GTM audit (Mar 2026).</p>
-  </div>
+<div class="protip">
+  <strong>Pro Tip:</strong> Picklist values must match exactly between platforms (case-sensitive). Mismatches cause silent sync failures later.
 </div>
 
-<!-- ───────────────────────────── II. PRE-KICKOFF ───────────────────────────── -->
-<div class="section" id="prekickoff">
-  <div class="section-header"><div class="section-num">II</div><div class="section-title">Pre-kickoff checklist</div></div>
-  <p class="section-lede">Get these in writing before signing or starting work. These are derived from the IKT Prep document and from the things Apollo taught us about scope creep.</p>
-
-  <div class="card">
-    <p>Get these in writing before signing:</p>
-    <ul>
-      <li><strong>Cutover is conditional, not promised.</strong> Depends on client responsiveness, Day-1 system access, integration findings during discovery. Date moves if any slips.</li>
-      <li><strong>Day-1 integration audit.</strong> Nothing is plug-and-play by default. Every integration classified in week 1 as <code>native</code>, <code>low-effort</code>, <code>medium</code>, or <code>custom-middleware</code>. Hours flow from classification, not the SOW.</li>
-      <li><strong>Hour split between prime and sub.</strong> Fishbowl's 150 hours/month across 4 roles is roughly 9 hours/week per person, too thin for execution. Push back before kickoff.</li>
-      <li><strong>GTM audit access.</strong> Demand a copy of the upstream audit (Fishbowl: March 2026 Diversis). Every SOW decision sits downstream of it.</li>
-      <li><strong>Contact record scope.</strong> Full database or marketable-only? Swings hours by 20-40 percent.</li>
-      <li><strong>List migration scope.</strong> SOWs routinely under-scope this. Static, smart, or both.</li>
-      <li><strong>License tier.</strong> Aptitude8 is explicit and we agree: Marketing Hub Enterprise + Operations Hub Professional is the floor for this work. Enterprise unlocks calculated properties, sandboxes, and Custom Code Actions. Confirm before discovery starts.</li>
-    </ul>
-    <p class="muted">Tooling for week 1: shared Notion/Confluence space, field-mapping spreadsheet skeleton, per-integration intake doc template, Slack channels (joint + sub-only).</p>
-
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>On Apollo we stepped on the SF admin's toes because nobody had drawn the line between MAP migration and SF schema cleanup. For Fishbowl the risk repeats. Negotiate the boundary in week 1.</p>
-    </div>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Useres%2c%20Properties%2c%20Forms.png" alt="Users, Properties &amp; Forms tab" loading="lazy">
+  <div class="cap">Users, Properties &amp; Forms tab. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── III. DISCOVERY ───────────────────────────── -->
-<div class="section" id="discovery">
-  <div class="section-header"><div class="section-num">III</div><div class="section-title">Discovery <span class="badge weeks">Weeks 1 to 2</span></div></div>
-  <p class="section-lede">The first two weeks are not for building. They are for getting an accurate picture of what is actually in Marketo, what is actually in SF, and what the integrations actually do. The SOW numbers (Fishbowl: 814 fields) are a starting point, not the truth.</p>
+<h3>6.2 Configure the HubSpot portal</h3>
+<p>Navigate to <em>Settings → Account Setup → Account Defaults</em>. Configure the tabs in order: General (company name, domain, address), Security (SSO, 2FA), Branding (Brand Kit logos, colors, theme), User Defaults (set before adding users; defaults do not retroactively apply), and Currency.</p>
 
-  <div class="card">
-    <h3>Marketo audit, five outputs in order</h3>
-    <ol>
-      <li><strong>Field inventory.</strong> API name, label, type, last-updated date, last-used date, whether it syncs to SF, whether any active campaign or form references it.</li>
-      <li><strong>Smart campaign inventory.</strong> Name, status (active vs paused), last enrolled, trigger type, webhooks yes/no, dependencies.</li>
-      <li><strong>Form inventory.</strong> Name, embed locations, submissions in last 90 days, dedupe behavior, fields collected.</li>
-      <li><strong>Email template inventory.</strong> Name, last edited date, custom-coded sections yes/no, dynamic content yes/no.</li>
-      <li><strong>LaunchPoint integrations.</strong> Every active connection, data direction, trigger, credential validity.</li>
-    </ol>
-    <p class="muted">Format: one tab per inventory in a single Google Sheet. Owner: HubSpot Solutions Architect with Marketo admin access.</p>
+<h3>6.3 Configure tracking and analytics</h3>
+<p>Navigate to <em>Tools → Tracking &amp; Analytics → Tracking Code</em>.</p>
+<ul>
+  <li>Add every domain you want tracked under the Advanced Tracking tab, including external (non-HubSpot-hosted) domains.</li>
+  <li>Enable <strong>Automatic Cross-Domain Tracking</strong>. Without it, traffic from external domains defaults to Direct and source attribution is lost.</li>
+  <li>Enable Bot Filtering.</li>
+  <li>Create one Analytics View per tracked domain. Views are not retroactive, so create them on day one.</li>
+</ul>
 
-    <div class="protip">
-      <div class="protip-tag">Pro Tip · Aptitude8</div>
-      <p>Inside Marketo's Marketing Activities, each smart campaign shows its state through the icon color. Active: <span class="mi-sm" style="margin-right:2px"><img src="img/marketo-icons/smart-campaign.webp" alt="active" loading="lazy"></span> Inactive: <span class="mi-sm off" style="margin-right:2px"><img src="img/marketo-icons/smart-campaign.webp" alt="inactive" loading="lazy"></span> Use it as your first-pass filter when building the inventory. Anything gray is a "deprecate by default" candidate unless someone explicitly defends it.</p>
-    </div>
+<h3>6.4 Set up users, teams, and permissions</h3>
+<p>Navigate to <em>Settings → Users &amp; Teams</em>. Create Teams that match the org structure (Sales, Marketing, Service, Admin). Start from HubSpot's built-in Permission Sets (View Only, Standard User, Content Marketer, Marketing Manager, Sales Manager, Sales Rep, Super Admin); only build custom sets when none of the defaults fit. Name Permission Sets and Teams the same where they map for clarity. Enforce MFA.</p>
 
-    <h3>Inventory spreadsheet structure</h3>
-    <p>Aptitude8's recommended template, which we adopted, splits the inventory across three tabs:</p>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Tab</th><th>What goes in it</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Users, Properties &amp; <span class="mi-sm"><img src="img/marketo-icons/form.webp" alt="Form" loading="lazy"></span>Forms</strong></td><td>Users to provision (team + permission set), every Marketo property mapped to its HubSpot counterpart, every form with notification recipients, required fields, hidden fields</td></tr>
-          <tr><td><strong><span class="mi-sm"><img src="img/marketo-icons/smart-list.webp" alt="Smart List" loading="lazy"></span>Lists &amp; <span class="mi-sm"><img src="img/marketo-icons/smart-campaign.webp" alt="Smart Campaign" loading="lazy"></span>Smart Campaigns</strong></td><td>Lists with Active/Static flag, link to the Marketo list, dependencies (which workflows reference it), folder path; workflows with exact name, link to the Marketo Members List (needed for suppression at go-live)</td></tr>
-          <tr><td><strong><span class="mi-sm"><img src="img/marketo-icons/email.webp" alt="Email" loading="lazy"></span>Emails, <span class="mi-sm"><img src="img/marketo-icons/landing-page.webp" alt="Landing Page" loading="lazy"></span>Landing Pages &amp; <span class="mi-sm"><img src="img/marketo-icons/program.webp" alt="Program" loading="lazy"></span>Programs</strong></td><td>Email templates to rebuild, individual emails with subscription type and template, landing-page templates, landing pages with Marketo and HubSpot links, campaigns/programs</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted">Picklist values: make them match exactly between Marketo and HubSpot. Mismatched casing breaks the sync silently.</p>
+<h3>6.5 Build templates and themes</h3>
+<p><strong>Website / Landing pages:</strong> upload or customize a theme under <em>Settings → Tools → Website → Themes</em>. Recreate Marketo landing-page templates as HubSpot templates via Design Manager.</p>
+<p><strong>Emails:</strong> use HubSpot's stock drag-and-drop email templates as a starting point. Choose the one closest to each Marketo template, customize, and save as a HubSpot template. Map Marketo personalization tokens to HubSpot tokens, and Marketo dynamic-content segments to HubSpot lists.</p>
 
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>Fishbowl's SOW says 814 fields. Apollo had roughly 200 of 600+ in real scope. The real number to migrate is almost always around 25 percent of the inventory. Do not let the client convince you everything is critical. Force a Keep/Kill audit on every category.</p>
-    </div>
+<h3>6.6 Migrate properties</h3>
+<p>Most Marketo default properties map directly to HubSpot defaults (First Name, Last Name, Email, Phone, City, State, Job Title, Company). Do not recreate these as custom properties. For everything else:</p>
+<ol>
+  <li>Run a deprecation pass first: kill orphaned fields, deduplicate, drop fields with no value in the last 12 months and no reference in any active asset.</li>
+  <li>Create the surviving fields as HubSpot custom properties before any import. <strong>Property creation must come before data import</strong> or the import wizard will not find a target column.</li>
+  <li>Replicate picklist, checkbox, and radio-button options exactly.</li>
+</ol>
 
-    <h3>Salesforce current-state audit</h3>
-    <p>SF stays in place, but the HubSpot to SF sync depends on what is already there. Pull: lifecycle stages (<code>Lead.Status</code>, <code>Opportunity.StageName</code>), the existing Marketo-to-SF field map, custom fields Marketo writes to, validation rules that could block writes, and the integration users with their permission sets.</p>
+<table>
+  <thead><tr><th>Marketo object</th><th>HubSpot object</th></tr></thead>
+  <tbody>
+    <tr><td>Person</td><td>Contact</td></tr>
+    <tr><td>Company</td><td>Company</td></tr>
+    <tr><td>Opportunity</td><td>Deal</td></tr>
+    <tr><td>Custom Object</td><td>Custom Object (Enterprise + developer time)</td></tr>
+  </tbody>
+</table>
 
-    <h3>Integration inventory</h3>
-    <p>Use the HubSpot Integrations General template, one file per integration. For Fishbowl: Clay, ChiliPiper, Warmly, Outreach, Nooks, RingLead, Webflow, LinkedIn LaunchPoint, plus the ad platforms and a Zapier audit. Classify each:</p>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Classification</th><th>Definition</th><th>Hours estimate</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Native</strong></td><td>HubSpot Marketplace app, OAuth, no custom code</td><td>1 to 2</td></tr>
-          <tr><td><strong>Low-effort</strong></td><td>Native plus per-field mapping config</td><td>3 to 8</td></tr>
-          <tr><td><strong>Medium</strong></td><td>Webhook glue or limited custom code</td><td>8 to 24</td></tr>
-          <tr><td><strong>Custom middleware</strong></td><td>Workflow Custom Code Actions or external service</td><td>24 to 80</td></tr>
-        </tbody>
-      </table>
-    </div>
+<h3>6.7 Migrate lists</h3>
+<p><strong>Smart Lists (active in Marketo) → HubSpot Active Lists.</strong> In Marketo, open each list and check whether the Smart List tab uses "Use ALL Filters" or "Use Advanced filters with custom rules." Replicate the AND/OR logic in HubSpot using filter branches. Reuse the exact Marketo list name in HubSpot for searchable QA.</p>
 
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>Apollo's SF integration was custom middleware (<code>createSFCampaign.js</code> + <code>syncCampaignMember.js</code>), not native. That added roughly 60 hours that were not in the estimate. For any integration marked TBC, assume custom-middleware effort until proven otherwise.</p>
-    </div>
-
-    <h3>Discovery answers (live state)</h3>
-    <p>The discovery answers and open items for Fishbowl live in the <a href="#fishbowl-log"><strong>Fishbowl decisions log</strong></a> at the top of this doc. Closed items there are decisions you can act on. Open items there block phase exit.</p>
-
-    <div class="important">
-      <div class="important-title">Stop and replan if discovery is open at Mobilize end (May 21)</div>
-      <p>Phase exit requires: field inventory with Keep/Kill signed off, must-migrate campaign list signed off, integrations classified, all "open" items in the Fishbowl decisions log resolved, cutover date confirmed. If any is open at end of Mobilize phase, do not start Build. The cost of replanning now is small. The cost of finding the gap during UAT is the project.</p>
-    </div>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Active%20%26%20Static%20Lists%201.png" alt="Marketo Smart List criteria" loading="lazy">
+  <div class="cap">Marketo Smart List criteria. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── IV. FOUNDATION ───────────────────────────── -->
-<div class="section" id="foundation">
-  <div class="section-header"><div class="section-num">IV</div><div class="section-title">HubSpot foundation</div></div>
-  <p class="section-lede">The boring-but-critical phase. Most issues post go-live trace back to skipped steps here.</p>
+<p><strong>Static Lists → HubSpot Static Lists.</strong> Export from Marketo via <em>List Actions → Export List</em>. The export runs in the background; small lists take minutes, large lists hours. Import to HubSpot only after the target properties exist.</p>
 
-  <div class="card">
-    <h3>Portal &amp; tracking</h3>
-    <p>Settings → Account Setup → Account Defaults. Tier (Marketing Hub Enterprise for Fishbowl), time zone, currency, locale, sending domain (DKIM/SPF/DMARC), tracking domain, IP warmup plan if volume justifies it. Configure <em>User Defaults</em> before adding users; defaults applied later do not retroactively update existing accounts.</p>
-    <p>Tools → Tracking &amp; Analytics → Tracking Code. The four settings Aptitude8 flags and that we have seen go wrong most often:</p>
-    <ul>
-      <li><strong>Add every external domain</strong> under Advanced Tracking, not just HubSpot-hosted ones</li>
-      <li><strong>Automatic Cross-Domain Tracking on.</strong> Without it, traffic from external domains back to HubSpot pages defaults to Direct and the source data is gone</li>
-      <li><strong>Bot Filtering on</strong></li>
-      <li><strong>One Analytics View per domain.</strong> Views are not retroactive, so create on day one</li>
-    </ul>
+<h3>6.8 Migrate workflows</h3>
+<p>For each surviving smart campaign, create the equivalent HubSpot workflow using the exact Marketo name. Marketo's Flow tab maps to HubSpot's Workflow Actions; Marketo's Smart List tab maps to HubSpot's enrollment triggers.</p>
 
-    <h3>Brand Kit &amp; subdomains</h3>
-    <p>Settings → Branding: upload logos in every variant HubSpot requests, define brand colors as named tokens (not hex pasted into 40 places), create one theme and reuse in Design Manager. Decide subdomain conventions in Domains &amp; URLs early: <code>info.</code> / <code>go.</code> / <code>content.</code> for landing pages, <code>email.</code> for email tracking, <code>downloads.</code> for gated assets.</p>
+<p>Five Marketo flow actions do not have a direct HubSpot equivalent. Use the documented workaround:</p>
 
-    <h3>Users, lifecycle, sync</h3>
-    <p>Start from HubSpot's built-in Permission Sets (View Only, Standard User, Content Marketer, Marketing Manager, Sales Manager, Sales Rep, Super Admin) and only build custom sets where needed. Name Teams to match. Lowest permission level that lets us work. MFA enforced.</p>
+<table>
+  <thead><tr><th>Marketo action</th><th>HubSpot approach</th></tr></thead>
+  <tbody>
+    <tr><td>Change Program Status</td><td>No equivalent. Assign the workflow to the corresponding HubSpot Campaign for attribution.</td></tr>
+    <tr><td>Change Data Value (conditional)</td><td>Use an If/Then branch + Set Property Value action + Go-To action to rejoin the main flow.</td></tr>
+    <tr><td>Request Campaign</td><td>Maps to "Enroll in another workflow."</td></tr>
+    <tr><td>Campaign is Requested (trigger)</td><td>Use HubSpot's Enrollment Triggers: Setup Triggers → Workflows → Enrolled in Workflow → Enrolled By Workflow → select source workflow.</td></tr>
+    <tr><td>Remove From Flow</td><td>Use the Goals feature. The Goal acts as an automatic un-enroll when a contact meets the criteria.</td></tr>
+  </tbody>
+</table>
 
-    <h4 style="font-size:0.95em;margin-top:18px">Lifecycle stages (Fishbowl current state, per Lead Flow Cheatsheet)</h4>
-    <p>The current SF flow that we need to replicate or redefine in HubSpot:</p>
-    <ul>
-      <li><strong>New</strong> (Lead) → <strong>Working</strong> (MQL): trigger = enrolled in Outreach sequence OR Chili Piper event added</li>
-      <li><strong>Working</strong> → <strong>Demo</strong> (SAL): trigger = Demo event placed in SF</li>
-      <li><strong>Demo</strong> → <strong>Converted</strong> (SQL): manual, AE converts the Lead in SF</li>
-    </ul>
-    <div class="important">
-      <div class="important-title">MQL definition is an open decision (Sarah)</div>
-      <p>Sarah does not want 99.9% of leads becoming MQL just because they entered an Outreach sequence (Discovery 4). The HubSpot MQL trigger will likely be more restrictive than the current SF rule, probably tied to the scoring tier (Section IX). <strong>Do not wire lifecycle automations until Sarah signs off on the new MQL definition.</strong></p>
-    </div>
-
-    <h4 style="font-size:0.95em;margin-top:18px">Sync configuration</h4>
-    <p>HubSpot to Salesforce sync: install the official integration, authenticate with a dedicated integration user (never a real person), default Fishbowl inclusion list is marketable contacts only, conflict resolution defined per field, sync errors dashboard pinned with an owner. Activate in test mode on a handful of records, validate, then turn on full sync. Source of truth per field defined in the mapping doc <strong>before</strong> turning sync on (see Apollo lesson below).</p>
-
-    <h4 style="font-size:0.95em;margin-top:18px">Email opt-out / unsubscribe (compliance)</h4>
-    <p>Today <code>email_opt_out</code> syncs bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover, HubSpot becomes source of truth and the sync to Outreach must be preserved. If this breaks, SDRs receive opt-out complaints and we have a potential GDPR/CAN-SPAM exposure. Validate the subscription preference round-trip (HubSpot unsubscribe → SF contact opt-out → Outreach exclude) in sandbox before go-live.</p>
-
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>Apollo had lifecycle drift because both sides could write without conflict rules. Define source of truth per field in the mapping doc <strong>before</strong> turning sync on.</p>
-    </div>
-
-    <h3>Custom property prefixes</h3>
-    <p>Create only what the field-mapping doc requires. Prefix policy keeps ownership obvious post-launch. Rule: any third-party-written field gets a prefix matching the source system.</p>
-    <div class="spec">
-      <div class="spec-k">clay_</div><div class="spec-v">written by Clay</div>
-      <div class="spec-k">warmly_</div><div class="spec-v">written by Warmly</div>
-      <div class="spec-k">ringlead_</div><div class="spec-v">written by RingLead (dedupe / enrichment)</div>
-      <div class="spec-k">chilipiper_</div><div class="spec-v">written by ChiliPiper (booking events)</div>
-      <div class="spec-k">outreach_</div><div class="spec-v">written by Outreach (sequence membership, opt-out state)</div>
-      <div class="spec-k">nooks_</div><div class="spec-v">written by Nooks (dialer state)</div>
-      <div class="spec-k">mkto_legacy_</div><div class="spec-v">preserved from Marketo for reporting continuity, not active in HubSpot</div>
-      <div class="spec-k">sf_</div><div class="spec-v">synced from Salesforce, no native HubSpot equivalent</div>
-    </div>
-    <p>Single approver for new property creation post-launch. Without this, schema fragments fast.</p>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Automation%201.png" alt="Marketo Flow tab" loading="lazy">
+  <div class="cap">Marketo Flow tab (Smart List, Flow, Schedule). Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── V. FIELDS ───────────────────────────── -->
-<div class="section" id="fields">
-  <div class="section-header"><div class="section-num">V</div><div class="section-title">Field migration (clean rebuild)</div></div>
-  <p class="section-lede">The principle: do not migrate fields. Migrate the records, and let the active fields populate naturally. Bring along only what HubSpot needs to function or what reporting continuity requires.</p>
+<h3>6.9 Configure subscription types</h3>
+<p>Navigate to <em>Tools → Marketing → Email</em>. Define subscription types before migrating any email; every HubSpot marketing email requires one. Do not mirror Marketo subscription types one-for-one; consolidate to the smallest set that lets users opt in/out per channel intent (Newsletter, Product Updates, Events) plus regional variants if consent law requires.</p>
 
-  <div class="card">
-    <h3>Object mapping (Fishbowl-specific)</h3>
-    <p>The generic Aptitude8 mapping is misleading for Fishbowl because Salesforce uses Lead AND Contact as separate objects, and HubSpot has neither distinction. The real mapping:</p>
-    <div class="spec">
-      <div class="spec-k"><span class="hs">H</span>Contact (pre-SQL)</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Lead</div>
-      <div class="spec-k"><span class="hs">H</span>Contact (post-SQL / converted)</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Contact</div>
-      <div class="spec-k"><span class="hs">H</span>Company</div><div class="spec-v">⇄ <span class="mkt" style="background:#1798c1">S</span>SF Account (default sync; no custom parent/child hierarchy in scope)</div>
-      <div class="spec-k"><span class="hs">H</span>Deal</div><div class="spec-v"><strong>Out of scope.</strong> Sales is self-sourcing in SF, Opportunities do not sync to HubSpot. If marketing needs commercial visibility, expose as synced Contact properties (<code>sf_last_opp_stage</code>, <code>sf_last_opp_amount</code>) one-way SF→HS.</div>
-    </div>
+<h3>6.10 Configure lead scoring</h3>
+<p>HubSpot scoring rules live under <em>Settings → Properties → Contact Properties → HubSpot Score</em>. Replicate Marketo's positive and negative rules.</p>
+<ul>
+  <li>HubSpot does not support setting the score to an absolute value or resetting to zero. Where Marketo sets a value, use HubSpot's "add N" instead, anchored to the same trigger.</li>
+  <li>Use date ranges in rules (e.g., "form submitted in the last 30 days") to prevent runaway scores.</li>
+</ul>
 
-    <div class="important">
-      <div class="important-title">The Lead-to-Contact pivot at conversion</div>
-      <p>This is the most fragile part of the native HS↔SF sync. When an AE converts an SF Lead to an SF Contact, the same human now exists under a different SF object. HubSpot still has one Contact record. The integration needs to know to start syncing to the new SF Contact ID instead of the archived Lead ID.</p>
-      <p>To survive the pivot:</p>
-      <ul style="margin-top:8px">
-        <li>Store the HubSpot Contact ID on both <code>Lead.HubSpot_Contact_ID__c</code> and <code>Contact.HubSpot_Contact_ID__c</code> so the integration can find its way back from either side.</li>
-        <li>Configure the SF connector's inclusion criteria to include Leads <em>and</em> Contacts, not one or the other.</li>
-        <li>Validate end-to-end with a test conversion in sandbox before go-live. The most common failure mode is a duplicate HubSpot Contact created post-conversion because the integration lost the link.</li>
-      </ul>
-    </div>
+<h3>6.11 Test in sandbox</h3>
+<p>On HubSpot Enterprise, sync all rebuilt assets to a Sandbox first. Run test contacts through workflows and emails before touching production data.</p>
 
-    <h3>Do not recreate what HubSpot ships with</h3>
-    <p>HubSpot defaults align with Marketo defaults for almost all common fields. Recreating them as custom properties is the most common rookie mistake. The ones that map directly:</p>
-    <p class="muted">First &amp; Last Name · Email Address · Phone Number · City, State, Zip · Job Title · Company Name</p>
-    <p>If Marketo has a custom property by the same name as a HubSpot default, map to the default. Do not create a parallel custom property.</p>
-
-    <h3>Deprecation pass</h3>
-    <p>For everything that is not a default-to-default mapping, kill dead fields in Marketo first: orphaned fields (Fishbowl: 20), duplicate clusters (Fishbowl: 59), fields not referenced by any active campaign/form/workflow, fields with no value in any record in the last 12 months. Output: a <code>Migrate / Keep in Marketo / Deprecate</code> decision per field, signed off by marketing and the SF admin.</p>
-
-    <h3>Field mapping spreadsheet</h3>
-    <p>One row per surviving field. Columns: <code>marketo_name</code>, <code>marketo_label</code>, <code>marketo_type</code>, <code>hubspot_name</code>, <code>hubspot_label</code>, <code>hubspot_type</code>, <code>hubspot_group</code>, <code>sf_name</code>, <code>direction</code>, <code>source_of_truth</code>, <code>transformation</code>, <code>migration_required</code> (Y/N), <code>owner</code>.</p>
-    <p class="muted">Naming: <code>snake_case</code> for internal names. Apply the prefix policy from Section IV. Picklist values must match casing across HubSpot and SF; mismatches fail silently.</p>
-
-    <div class="important">
-      <div class="important-title">Property creation order</div>
-      <p>Create every target HubSpot property <strong>before</strong> running any list or contact import. The import flow maps CSV columns to existing properties; if the target is missing, the only path is to abort, create it, and restart. Aptitude8 flags this as one of the most common time-loss mistakes in data migration.</p>
-    </div>
-
-    <h3>SF validation rules to capture as required fields</h3>
-    <p>Whitney called out that SF blocks Lead → Demo conversion if certain fields are missing or invalid (e.g., <code>accounting_system</code> empty, <code>company_name</code> = "no", country in a disqualified list). These rules become silent sync failures if HubSpot writes a record that does not pass SF validation. Capture them in the field mapping spreadsheet under a <code>sf_required_for_conversion</code> column and reflect them as required fields on the relevant HubSpot forms.</p>
-    <p>Country-based disqualification, which Marketo handles automatically today, migrates as either (a) a HubSpot workflow that sets a <code>disqualified</code> property when country is in the unsupported list, or (b) an SF validation rule. Decide which side owns it before cutover.</p>
-
-    <h3>Attribution properties</h3>
-    <p>SF is first-touch today; marketing wants visibility of both. Define two HubSpot properties in the mapping doc:</p>
-    <ul>
-      <li><code>original_source</code>: first-touch, set on contact create, never overwritten. Maps to SF Lead's first-touch field.</li>
-      <li><code>recent_source</code>: last-touch, updated on every new engagement. Sync direction HS→SF.</li>
-    </ul>
-  </div>
+<div class="protip">
+  <strong>Pro Tip:</strong> HubSpot Sandboxes do not sync changes back to production. Keep a change log during sandbox QA and replay it manually in production before go-live.
 </div>
 
-<!-- ───────────────────────────── VI. FORMS ───────────────────────────── -->
-<div class="section" id="forms">
-  <div class="section-header"><div class="section-num">VI</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/form.webp" alt="" loading="lazy"></span>Forms migration</div></div>
-  <p class="section-lede">Fishbowl has 67 approved Marketo forms. Apollo had a different scale but the same problem: forms accumulate, dedupe is inconsistent, embeds are scattered.</p>
+<h3>6.12 Export Marketo data</h3>
+<p>Two strategies depending on database size:</p>
+<ul>
+  <li><strong>Small database:</strong> export Contacts, Companies, and Opportunities with all columns, plus lists with just visible columns.</li>
+  <li><strong>Large database:</strong> export the database with visible columns only, plus lists with all columns. All-column exports on a large database can take hours.</li>
+</ul>
+<p>Navigate to <em>Database → System Smart Lists → All People</em>, then <em>List Actions → Export List</em>. Do not use the Marketo to HubSpot Sync App for migration; it only handles text-field properties on the Contact object.</p>
 
-  <div class="card">
-    <h3>Audit, kill, merge</h3>
-    <p>For each form: under 5 submissions in 90 days → propose deprecation; no live embed → deprecate; duplicates doing the same job → merge; field list bloated → cut to the routing minimum. Target: 67 forms down to 30 to 40 production forms before rebuilding.</p>
-
-    <h3>Dedupe</h3>
-    <p>Fishbowl's audit flagged an 8 percent contact duplicate rate from forms without dedupe. Configure HubSpot's email-based dedupe (default on submit), call RingLead's API on submit if it stays as the dedupe authority, decide hard-match behavior per form (update existing is the usual choice, except for contact-us forms which always create).</p>
-
-    <h3>Embed strategy during transition</h3>
-    <p>Fishbowl's website is also migrating (Unbounce to Webflow in July). Forms may need to live in two places during the window. Identify which forms stay on the current site until cutover, plan the dual-embed (HubSpot code on Webflow at switchover, parallel-run period where both write to HubSpot), confirm the HubSpot tracking code is on every page that hosts a HubSpot form or attribution breaks.</p>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Exporting%20Marketo%20Data%201.png" alt="Marketo System Smart Lists → All People" loading="lazy">
+  <div class="cap">Database → System Smart Lists → All People. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── VII. CAMPAIGNS ───────────────────────────── -->
-<div class="section" id="campaigns">
-  <div class="section-header"><div class="section-num">VII</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/smart-campaign.webp" alt="" loading="lazy"></span>Campaigns &amp; Salesforce sync <span class="badge fishbowl">The big one</span></div></div>
-  <p class="section-lede">This is the most expensive workstream in any Marketo migration. Fishbowl has 141 active campaigns out of 6,464 total. Apollo's numbers were smaller, the pattern is identical.</p>
+<h3>6.13 Configure suppression lists</h3>
+<p>This step prevents contacts who already ran through a Marketo flow from running through the HubSpot equivalent at cutover, which would cause duplicate sends.</p>
+<ol>
+  <li>For each migrated workflow, export its Marketo Members List (linked in the inventory).</li>
+  <li>Upload the Members List into HubSpot as a Static List, named to match the workflow it suppresses.</li>
+  <li>Open the matching HubSpot workflow, go to <em>Settings → Un-enrollment and Suppression</em>, and add the list under "Suppression Lists for this workflow."</li>
+  <li>Skip this step only for workflows explicitly designed to allow re-enrollment (typically form-submission triggers).</li>
+</ol>
 
-  <div class="card">
-    <h3>Kill before rebuild</h3>
-    <p>Before any HubSpot build, run a Kill/Keep on the 141 active campaigns. Deprecate anything that enrolled fewer than 10 contacts in 90 days, triggers a deprecated workflow, or was a one-off for a past event. Merge duplicates with minor variations. Migrate the rest. Target: 141 down to 60-70 production workflows, signed off by the marketing lead.</p>
-
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>Apollo's client had the same "we can't turn anything off" instinct. When we forced the audit, 60 percent of active campaigns had not enrolled a contact in 90 days. Push hard on this in week 3.</p>
-    </div>
-
-    <h3>Smart Campaign to Workflow mapping</h3>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th><span class="mkt">M</span>Marketo construct</th><th><span class="hs">H</span>HubSpot construct</th></tr></thead>
-        <tbody>
-          <tr><td><span class="mkt">M</span>Smart List (static)</td><td><span class="hs">H</span>Static List</td></tr>
-          <tr><td><span class="mkt">M</span>Smart List (dynamic)</td><td><span class="hs">H</span>Active List</td></tr>
-          <tr><td><span class="mkt">M</span>Smart Campaign (trigger)</td><td><span class="hs">H</span>Workflow (contact-based) with trigger criteria</td></tr>
-          <tr><td><span class="mkt">M</span>Smart Campaign (batch)</td><td><span class="hs">H</span>Workflow (contact-based) scheduled or recurring</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Change Data Value</td><td><span class="hs">H</span>Workflow action: Set property value</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Send Email</td><td><span class="hs">H</span>Workflow action: Send marketing email</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Add to List</td><td><span class="hs">H</span>Workflow action: Add to static list</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Webhook</td><td><span class="hs">H</span>Workflow action: Webhook (Operations Hub required)</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Sync to SFDC</td><td><span class="hs">H</span>Native HS-SF sync handles this; do not replicate per-campaign</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Change Score</td><td><span class="hs">H</span>Workflow action: Update score property (Section IX)</td></tr>
-          <tr><td><span class="mkt">M</span>Flow Step: Wait</td><td><span class="hs">H</span>Workflow action: Delay</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>Workflows that need SF visibility ride on the native HubSpot to Salesforce sync we configured in Section IV. No custom code in scope for Fishbowl (see below).</p>
-
-    <h3>Marketo flow actions with no direct HubSpot equivalent</h3>
-    <p>These are the patterns Aptitude8 documents and we have hit in practice. Memorize the workarounds; rebuilding workflows is faster when you stop searching for an equivalent that does not exist.</p>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th><span class="mkt">M</span>Marketo action</th><th><span class="hs">H</span>HubSpot approach</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="mkt">M</span><strong>Change Program Status</strong></td>
-            <td><span class="hs">H</span>No direct equivalent. Assign the workflow to the corresponding HubSpot Campaign. Campaign association is how you preserve "this contact participated in X."</td>
-          </tr>
-          <tr>
-            <td><span class="mkt">M</span><strong>Change Data Value (conditional)</strong></td>
-            <td><span class="hs">H</span>Marketo's "if X then set Y" inline action does not exist as one step. Use an If/Then branch followed by a Set Property Value action, then a Go-To action to rejoin the main flow.</td>
-          </tr>
-          <tr>
-            <td><span class="mkt">M</span><strong>Request Campaign</strong></td>
-            <td><span class="hs">H</span>Maps cleanly to <em>Enroll in another workflow</em>.</td>
-          </tr>
-          <tr>
-            <td><span class="mkt">M</span><strong>Campaign is Requested (trigger)</strong></td>
-            <td><span class="hs">H</span>Use HubSpot's Enrollment Triggers. Setup Triggers → Workflows → Enrolled in Workflow → Enrolled By Workflow → select the source workflow. For legacy trigger systems, enable manual enrollment and turn on re-enrollment.</td>
-          </tr>
-          <tr>
-            <td><span class="mkt">M</span><strong>Remove From Flow</strong></td>
-            <td><span class="hs">H</span>Use the Goals feature on the workflow. The Goal acts as an automatic un-enroll: any contact that meets the Goal criteria is removed. Infer the goal criteria from the same conditions that triggered the Marketo Remove From Flow.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>HubSpot to Salesforce sync (Fishbowl approach)</h3>
-    <p>HubSpot is the system of record for campaign attribution. We use only the native HubSpot to Salesforce integration that was configured in Section IV. No custom code, no Workflow Custom Code Actions, no per-campaign middleware.</p>
-    <p>Practically that means:</p>
-    <ul>
-      <li>Contacts, leads, accounts and opportunities sync via the native integration</li>
-      <li>Campaign membership lives on the HubSpot side; HubSpot Campaigns are the source of truth</li>
-      <li>If sales needs SFDC-side visibility into campaign engagement, expose it as a synced contact property (<code>last_campaign_engaged</code>, <code>campaign_count_30d</code>) rather than mirroring HubSpot Campaigns to Salesforce Campaign objects</li>
-    </ul>
-
-    <h3>Historical Marketo data</h3>
-    <p>Pre-cutover form fills do not move into HubSpot via the migration. After cutover, HubSpot's Forms tab shows only post-cutover submissions. If the client needs historical engagement inside HubSpot, the only path is a one-time CSV import of Marketo activity logs, which is a separate workstream and a change order by default. Set this expectation in week 1.</p>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Suppression%20List%20.png" alt="HubSpot suppression list settings" loading="lazy">
+  <div class="cap">HubSpot workflow → Settings → Un-enrollment and Suppression. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── VIII. EMAILS ───────────────────────────── -->
-<div class="section" id="emails">
-  <div class="section-header"><div class="section-num">VIII</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/email-template.webp" alt="" loading="lazy"></span>Email templates</div></div>
-  <p class="section-lede">200 approved templates in Marketo, almost all from 2021 to 2022. The clean-rebuild approach applies even harder here than for fields or campaigns.</p>
-
-  <div class="card">
-    <h3>Keep/Kill</h3>
-    <p>Kill anything not used in the last 12 months, anything with custom HTML/CSS that does not render cleanly in HubSpot's drag-and-drop, and any duplicates with minor variations. Target production set: under 30 templates.</p>
-
-    <h3>Rebuild approach</h3>
-    <p>Start from a HubSpot pre-built drag-and-drop template that matches the Marketo original (Aptitude8 makes this explicit, and we agree their stock templates cover almost every Marketo layout we have rebuilt). Replicate sender, personalization tokens, and dynamic content blocks. Save reusable pieces (header, footer, CTA) as saved sections. Test through Litmus or HubSpot's preview-by-recipient before approving.</p>
-
-    <h3>Subscription types &amp; sender strategy</h3>
-    <p>Define subscription types in Tools → Marketing → Email <strong>before</strong> any email work begins. Aptitude8's useful point: you do not have to mirror Marketo's. The migration is the cheapest moment to consolidate. Collapse to the smallest set that lets users choose per-channel intent (Newsletter, Product Updates, Events) plus one or two regional variants if consent law requires.</p>
-    <p>Sender strategy is its own decision (Fishbowl SOW flagged "30 sender personas" as a concern). Consolidate to one brand sender, regional senders, or per-CSM senders, configure HubSpot sending domains accordingly, document which template uses which sender.</p>
-  </div>
+<div class="protip">
+  <strong>Pro Tip:</strong> Skipping suppression lists is the single most common cause of duplicate sends at cutover. Treat this as mission-critical.
 </div>
 
-<!-- ───────────────────────────── IX. SCORING ───────────────────────────── -->
-<div class="section" id="scoring">
-  <div class="section-header"><div class="section-num">IX</div><div class="section-title">Lead scoring <span class="badge fishbowl">Fishbowl-specific</span></div></div>
-  <p class="section-lede">Apollo did not implement scoring during its migration. The Fishbowl audit produced a validated 3-axis model that needs deployment.</p>
+<h3>6.14 Time the cutover</h3>
+<p>If the Marketo license continues past go-live, let contacts already in a wait step of a Marketo smart campaign finish in Marketo. Check the campaign's Status tab for "People in Wait Step." If non-zero, remove the Smart List criteria so no new contacts enroll, but leave the campaign live until current members complete. If zero, deactivate via the Schedule tab.</p>
 
-  <div class="card">
-    <h3>Model summary (from the audit)</h3>
-    <div class="spec">
-      <div class="spec-k">Inbound</div><div class="spec-v">Lead Source (67 pts) + Accounting System (31 pts) + Industry (2 pts)</div>
-      <div class="spec-k">Outbound</div><div class="spec-v">Accounting System (94 pts) + Industry (6 pts)</div>
-    </div>
-
-    <h3>Tier thresholds</h3>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Tier</th><th>Score</th><th>Routing</th><th>Expected win rate</th></tr></thead>
-        <tbody>
-          <tr><td>Tier 1</td><td>100+ pts</td><td>Auto-route to AE, skip SDR</td><td>33.8 percent</td></tr>
-          <tr><td>Tier 2</td><td>60 to 99 pts</td><td>Standard SDR qualification</td><td>23 to 28 percent</td></tr>
-          <tr><td>Tier 3</td><td>30 to 59 pts</td><td>60-day nurture, SDR if capacity</td><td>18.2 percent</td></tr>
-          <tr><td>Tier 4</td><td>&lt;30 pts</td><td>Automated nurture only</td><td>1 to 5 percent</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Gates before deployment (strict order)</h3>
-    <p>Do not deploy scoring on dirty data. Execute the gates in order; each one is a precondition for the next. Risk R6 in Section XIV is what happens if you skip this sequence.</p>
-    <ol>
-      <li>Resolve the 14 Clay → SFDC writeback race conditions (one Clay table per SF field).</li>
-      <li>Activate Clay writeback in Phase 1 (777 accounts).</li>
-      <li>Normalize <code>Lead Source</code> across Marketo, HubSpot, and SF.</li>
-      <li>Configure the scoring property in HubSpot (formula, calculated tier property).</li>
-      <li>Backfill the score on all in-scope contacts and validate the distribution against the audit's predictions.</li>
-      <li>Activate tier-based routing in ChiliPiper (or SF lead-assignment).</li>
-    </ol>
-    <p><strong>Scoring does not turn on until gates 1-5 are green.</strong> This is a visible check, not a soft preference. Routing in step 6 is the last switch flipped.</p>
-
-    <h3>Deployment</h3>
-    <p>Build the formula in HubSpot's <code>Score</code> property (or <code>HubSpot Score</code> on Enterprise). Inbound and Outbound become two separate properties if the model differs. Tier is a calculated property based on the score, synced to SF for routing.</p>
-    <p class="muted"><strong>Scope note:</strong> the model below applies to NA and UK. The SOW flags that APAC requires separate development. APAC scoring is deferred to hypercare or a change order; do not attempt to fit one model across regions.</p>
-
-    <div class="important">
-      <div class="important-title">Two HubSpot caveats Aptitude8 calls out</div>
-      <p><strong>1. There is no "set score to X" or "reset to zero" in HubSpot.</strong> Marketo lets you set the score to a literal value (e.g., "Lead Score = 50 on form submit"). HubSpot only supports increments and decrements. Workaround: when the equivalent Marketo rule sets the score to N, configure HubSpot to <em>add N</em> on the same trigger. The math comes out the same as long as you start from a known baseline.</p>
-      <p><strong>2. Use date ranges to prevent runaway scores.</strong> Instead of "+10 every time a contact fills out a form" (which grows forever), configure "+10 only if the form submission happened in the last 30 days." The 30-day window means old engagement decays naturally without writing a separate decay workflow.</p>
-    </div>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/Making%20the%20Cutover%201.png" alt="Marketo Status tab showing People in Wait Step" loading="lazy">
+  <div class="cap">Marketo campaign Status tab. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── X. INTEGRATIONS ───────────────────────────── -->
-<div class="section" id="integrations">
-  <div class="section-header"><div class="section-num">X</div><div class="section-title">Integrations remapping</div></div>
-  <p class="section-lede">The single biggest source of timeline risk after campaigns. Fishbowl has 21 integrations, 8 marked TBC.</p>
+<h3>6.15 Update DNS and URL redirects</h3>
+<p>The following steps must happen close to simultaneously to prevent Marketo pages from staying live while HubSpot takes over.</p>
+<ol>
+  <li>Update DNS records for the subdomains chosen for HubSpot hosting.</li>
+  <li>If HubSpot uses a different subdomain than Marketo, add the old Marketo subdomain as a <strong>Redirected Domain</strong> in <em>Tools → Website → Domains &amp; URLs</em>.</li>
+  <li>Add URL redirects under the Redirects tab. Use Standard Redirects for most pages. Enter the full Marketo URL in Original URL and the full HubSpot URL in Redirect To.</li>
+</ol>
 
-  <div class="card">
-    <div class="important">
-      <div class="important-title">Do not use the Marketo to HubSpot Sync App for migration</div>
-      <p>Aptitude8 is unambiguous on this and matches what we saw. The official sync app only handles <strong>text-field properties on the Contact object</strong>. No companies, no deals, no picklists, no booleans, no dates, no custom objects. It is fine as a short-term coexistence bridge while both systems run, but it is not a migration tool. Move historical data via Marketo CSV exports or programmatic API transfer.</p>
-    </div>
-
-    <h3>Day-1 classification &amp; quick wins</h3>
-    <p>Every integration classified by end of week 1 using the table from Section III. If we cannot classify it (no access, no docs), that is itself a finding and escalates. Quick win for Fishbowl: reauthorize LinkedIn LaunchPoint (Lead Gen Forms expired 7/31/2025, Matched Audiences expired 1/23/2026) in Marketo as a week-1 task, then plan the HubSpot remap.</p>
-
-    <h3>TBC integrations triage</h3>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Integration</th><th>Approach</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Clay</strong></td><td>Full reconfiguration. 172 tables, only 5 active, 14 race conditions. Its own workstream.</td></tr>
-          <tr><td><strong>ChiliPiper</strong></td><td>Validate native HubSpot integration. Maintain A/B/Partner routing model.</td></tr>
-          <tr><td><strong>Warmly</strong></td><td>Architect Warmly to Clay to SFDC to Outreach to Nooks. Contingent on Warmly contract execution.</td></tr>
-          <tr><td><strong>Outreach</strong></td><td>Validate SFDC sync. Remove 14 orphaned Marketo fields.</td></tr>
-          <tr><td><strong>Nooks</strong></td><td>Validate integration with SFDC and the outbound stack.</td></tr>
-          <tr><td><strong>RingLead</strong></td><td>Activate real-time dedup on Contact creation. Evaluate enrichment dormancy.</td></tr>
-          <tr><td><strong>Webflow</strong></td><td>Configure native HubSpot integration for contact sync. Deploy tracking code. Configure server-side Conversion APIs (Meta CAPI, Google, LinkedIn). Webflow page builds are out of scope.</td></tr>
-          <tr><td><strong>LinkedIn LaunchPoint</strong></td><td>Reauthorize then remap to HubSpot.</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="apollo">
-      <div class="apollo-title">Apollo lesson</div>
-      <p>Apollo had only the SF integration as custom-middleware effort. Fishbowl has at least Clay + Warmly + Webflow Conversion API setup that could each easily reach custom-middleware effort. Budget accordingly.</p>
-    </div>
-
-    <h3>Out of scope (state it explicitly so nobody scopes it back in)</h3>
-    <ul>
-      <li><strong>Renewal pipeline visibility</strong> in HubSpot. Marketing does not need it. Defaults apply.</li>
-      <li><strong>Custom parent-child account hierarchy mapping.</strong> SF has it, HubSpot's parent/child Company model is not 1:1, default sync behavior is what we use.</li>
-      <li><strong>Opportunity / Deal sync.</strong> Covered in Section V. Sales is self-sourcing in SF.</li>
-    </ul>
-
-    <h3>Compliance: Outreach unsubscribe sync</h3>
-    <p>Cross-referenced from Section IV. Today <code>email_opt_out</code> is bidirectional SF ↔ Marketo ↔ Outreach. Post-cutover the chain becomes HubSpot (source of truth) → SF → Outreach. Test the round-trip in sandbox before go-live: unsubscribe in HubSpot must reflect in Outreach's exclude list within the documented sync window. If this breaks at production scale, SDRs will surface it within hours and we have a CAN-SPAM / GDPR exposure.</p>
-
-    <h3>Monitoring</h3>
-    <p>For every integration that goes live: failed-sync dashboard with an owner, alert rule for credential expiration, runbook entry for failure recovery, kill switch documented.</p>
-  </div>
+<div class="protip">
+  <strong>Pro Tip:</strong> HubSpot can only redirect URLs on domains it hosts. The old Marketo domain must be added to Domains &amp; URLs first, with DNS pointing at HubSpot, or the redirect will not fire.
 </div>
 
-<!-- ───────────────────────────── XI. LISTS ───────────────────────────── -->
-<div class="section" id="lists">
-  <div class="section-header"><div class="section-num">XI</div><div class="section-title"><span class="mi-sm"><img src="img/marketo-icons/static-list.webp" alt="" loading="lazy"></span>Lists &amp; segmentation</div></div>
-  <p class="section-lede">The SOW barely mentions this. Treat it as its own workstream or it will eat a week of unscoped time.</p>
-
-  <div class="card">
-    <h3>Audit &amp; rebuild</h3>
-    <p>Inventory all Marketo Smart Lists and Static Lists. Keep what is referenced by surviving campaigns (Section VII), deprecate the rest. Smart Lists become HubSpot Active Lists, Static Lists become HubSpot Static Lists. Re-validate membership after rebuild because the criteria can produce different results in HubSpot.</p>
-    <p>For Active Lists, check the Marketo source's Smart List tab for whether it uses "Use ALL Filters" or advanced rules: that tells you whether the HubSpot rebuild is a flat AND or needs explicit OR branches. Reuse the exact Marketo name on the HubSpot list so the QA pair is searchable.</p>
-
-    <h3>Exporting from Marketo</h3>
-    <p>Static lists move via export and re-import (the sync app does not cover them). Per Aptitude8: in Marketo, open the list and click <em>List Actions → Export List</em>; for a full DB dump use <em>Database → System Smart Lists → All People</em>. Pick columns deliberately because exports with every column on a large DB take many hours. Import to HubSpot only after the target properties exist (Section V).</p>
-
-    <h3>Subscriptions per region</h3>
-    <p>Fishbowl operates across NA, APAC, UK with potentially different consent flows. Map Marketo subscription types to HubSpot, configure unsubscribe pages per region if required, migrate consent state (subscribed vs unsubscribed) per region.</p>
-  </div>
+<div class="screenshot">
+  <img src="https://aptitude8.com/hs-fs/hubfs/Marketo%20Guide/FInal%20Steps%203.png" alt="HubSpot Add URL Redirect form" loading="lazy">
+  <div class="cap">Add URL Redirect form. Source: Aptitude8.</div>
 </div>
 
-<!-- ───────────────────────────── XII. CUTOVER ───────────────────────────── -->
-<div class="section" id="cutover">
-  <div class="section-header"><div class="section-num">XII</div><div class="section-title">Cutover plan</div></div>
-  <p class="section-lede">The transition from "Marketo is production" to "HubSpot is production." Fishbowl's accelerated timeline targets late June or early July. The Marketo contract runs through October, which gives a fallback buffer.</p>
+<h3>6.16 Post-launch monitoring</h3>
+<ul>
+  <li>Monitor the sync errors dashboard for the first 72 hours. Assign an owner for triage.</li>
+  <li>Confirm each redirect resolves correctly. Use a private/incognito window to bypass local cache.</li>
+  <li>Validate test sends through migrated workflows.</li>
+  <li>Capture issues in a shared tracker. Plan for tweaks to workflows, forms, and landing pages during the first weeks of real usage.</li>
+</ul>
 
-  <div class="card">
-    <h3>Sandbox testing before any live cutover</h3>
-    <p>If the client is on HubSpot Enterprise, sync all the rebuilt assets into a HubSpot Sandbox first and dry-run the workflows on test contacts. The Sandbox is the only safe place to QA without risking marketing sends to real contacts.</p>
-    <div class="important">
-      <div class="important-title">Sandbox caveat (Aptitude8)</div>
-      <p>HubSpot Sandboxes do <strong>not</strong> sync changes back up to Production. Any fix or tweak made in the Sandbox during QA has to be re-applied to Production by hand. Keep a running change log during the Sandbox QA and have someone responsible for replaying it in Production before go-live.</p>
-    </div>
+<h2>7. Revision History</h2>
+<table>
+  <thead>
+    <tr><th>Version</th><th>Date</th><th>Author</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1.0</td><td>2026-05-21</td><td>Refindable</td><td>Initial release. Procedure restructured around the Aptitude8 reference guide.</td></tr>
+  </tbody>
+</table>
 
-    <h3>Suppression Lists <span class="badge fishbowl">Mission critical</span></h3>
-    <p>Aptitude8 calls this step "mission critical" and we have seen the bill when it gets skipped: contacts who already completed a Marketo nurture get pulled into the same nurture in HubSpot at go-live, and the same person receives the same email twice. To prevent it:</p>
-    <ol>
-      <li>For every workflow you are migrating, export the corresponding Marketo Members List (you already linked these in the inventory spreadsheet during discovery).</li>
-      <li>Upload each Members List into HubSpot as a Static List. Name the list to match the workflow it suppresses.</li>
-      <li>Open the matching HubSpot workflow, go to <em>Settings → Un-enrollment and Suppression</em>, and add the static list under "Suppression Lists for this workflow."</li>
-      <li>Skip this step only for workflows that explicitly allow re-enrollment (e.g., form-submission triggers where multiple submissions per contact are by design).</li>
-    </ol>
-
-    <h3>Parallel-run &amp; letting Marketo finish</h3>
-    <p>Recommended window: mid-July to mid-August. HubSpot is system of record from cutover forward. Marketo stays active but launches nothing new. Website forms submit to BOTH systems during the parallel window. Lead routing comes from HubSpot only. End of parallel-run: Marketo forms removed from the site, Marketo campaigns archived but readable.</p>
-    <p>For Marketo campaigns with contacts in wait steps at cutover: do not deactivate (Aptitude8's recommendation, matches Apollo's experience). Remove the Smart List criteria so no new contacts enroll, but leave the campaign live until existing members complete. Deactivating mid-flow strands contacts between systems and the cleanup is worse than the wait.</p>
-
-    <h3>Decommission timeline</h3>
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>When</th><th>Action</th></tr></thead>
-        <tbody>
-          <tr><td><strong>T-2 weeks</strong></td><td>Freeze new Marketo work; only HubSpot from this point</td></tr>
-          <tr><td><strong>T-1 week</strong></td><td>Final data exports from Marketo (activity logs, members, list memberships)</td></tr>
-          <tr><td><strong>T-day</strong></td><td>Switch traffic. HubSpot becomes production. Marketo enters internal read-only mode.</td></tr>
-          <tr><td><strong>T+2 weeks</strong></td><td>First Hypercare review: data discrepancies surfaced</td></tr>
-          <tr><td><strong>T+4 weeks</strong></td><td>Marketo forms removed from website</td></tr>
-          <tr><td><strong>Pre-October</strong></td><td>Final Marketo data exports archived; contract ends</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>DNS &amp; URL redirects (T-day mechanics)</h3>
-    <p>These three steps must happen on cutover day, in this order, and the gap between them measured in minutes, not hours. If Marketo pages stay reachable while DNS points to HubSpot, you get half-broken forms in production.</p>
-    <ol>
-      <li><strong>Update DNS records</strong> for the subdomains you chose in Section IV (Foundation). Point them at HubSpot.</li>
-      <li><strong>Add a Redirected Domain</strong> in HubSpot's Domains &amp; URLs settings if the new HubSpot subdomain differs from the old Marketo one. This tells HubSpot to accept traffic on the old hostname.</li>
-      <li><strong>Add URL redirects</strong> one by one in the Redirects tab. Original URL is the full old Marketo URL; Redirect To is the full new HubSpot URL. Use Standard Redirects for most pages.</li>
-    </ol>
-    <div class="important">
-      <div class="important-title">HubSpot must host both domains</div>
-      <p>Aptitude8 spells this out and it bites every team that learns it the hard way: HubSpot can only redirect a URL <em>it hosts</em>. If the old Marketo subdomain has not been added to Domains &amp; URLs (and DNS does not point at HubSpot for it), the redirect rule will not fire. After adding each redirect, give it up to 5 minutes to propagate and verify in a private/incognito window to bypass local cache.</p>
-    </div>
-
-    <h3>Kill switches, rollback, comms</h3>
-    <p>Every HubSpot workflow has a documented kill switch. Lead routing rules have a fallback owner. Rollback: define what "going back to Marketo" means in the first 48 hours <em>before</em> cutover (realistically rollback is per-system, never full). Comms: pre-cutover briefings for marketing, sales, and IT/SF admin; cutover war-room channel active for 72 hours post-launch.</p>
-  </div>
-</div>
-
-<!-- ───────────────────────────── XIII. HYPERCARE ───────────────────────────── -->
-<div class="section" id="hypercare">
-  <div class="section-header"><div class="section-num">XIII</div><div class="section-title">Hypercare</div></div>
-  <p class="section-lede">30 hours/month for 6 months post-cutover.</p>
-
-  <div class="card">
-    <p><strong>Covers:</strong> triage of sync errors, workflow misfires, data discrepancies, small adjustments to workflows and mappings, reporting tweaks, training reinforcement.</p>
-    <p><strong>Does not cover:</strong> net-new features, new integrations, bulk data corrections beyond drift. Anything outside scope triggers a change order.</p>
-    <p><strong>Ops:</strong> weekly standup with client RevOps lead, shared issue tracker, monthly KPI review (sync error rate, MQL volume, attribution coverage). Month 6: formal handoff with documentation refresh and future roadmap conversation.</p>
-  </div>
-</div>
-
-<!-- ───────────────────────────── XIV. RISKS ───────────────────────────── -->
-<div class="section" id="risks">
-  <div class="section-header"><div class="section-num">XIV</div><div class="section-title">Risk register</div></div>
-  <p class="section-lede">Pre-identified from the Fishbowl IKT Prep doc. Add new ones during discovery.</p>
-
-  <div class="card">
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Risk</th><th>L</th><th>I</th><th>Mitigation</th></tr></thead>
-        <tbody>
-          <tr><td>Timeline structurally unrealistic (8 weeks vs industry 14-16)</td><td><span class="pill high">H</span></td><td><span class="pill high">H</span></td><td>Cutover contingency in writing; parallel-run cushion mid-July to mid-August</td></tr>
-          <tr><td>Integration scope is a black box (8 of 11 TBC)</td><td><span class="pill high">H</span></td><td><span class="pill high">H</span></td><td>Day-1 audit with mandatory classification; assume custom-middleware on TBC</td></tr>
-          <tr><td>Marketo migration largely manual</td><td><span class="pill high">H</span></td><td><span class="pill med">M</span></td><td>Cut active campaigns 50% before rebuilding; budget realistic per-campaign hours</td></tr>
-          <tr><td>Clay SFDC race conditions block scoring</td><td><span class="pill med">M</span></td><td><span class="pill high">H</span></td><td>Resolve writeback conflicts by end of week 3</td></tr>
-          <tr><td>Scoring model cascading dependencies (Clay + Warmly + HubSpot)</td><td><span class="pill high">H</span></td><td><span class="pill high">H</span></td><td>Sequence Clay → HubSpot scoring → Warmly. Scoring works on 3-axis without Warmly intent</td></tr>
-          <tr><td>Lists barely scoped in SOW</td><td><span class="pill high">H</span></td><td><span class="pill med">M</span></td><td>Surface in week 1; treat as its own workstream (Section XI)</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted">Secondary risks (contact scope, email template complexity, reporting ownership, change order threshold, Marketo single-point-of-failure) are tracked in the project register but not blockers if the six above are managed.</p>
-  </div>
-</div>
-
-<!-- ───────────────────────────── XV. LESSONS ───────────────────────────── -->
-<div class="section" id="lessons">
-  <div class="section-header"><div class="section-num">XV</div><div class="section-title">Apollo lessons cross-reference</div></div>
-  <p class="section-lede">The decisions that came out of the Apollo migration and where they live in this playbook. If you skim only one section, this is the one.</p>
-
-  <div class="card">
-    <div class="tbl-wrap">
-      <table class="data">
-        <thead><tr><th>Lesson</th><th>Section</th></tr></thead>
-        <tbody>
-          <tr><td>25 percent of inventory is the real migration scope</td><td>III, V</td></tr>
-          <tr><td>Force a Kill/Keep audit before any rebuild</td><td>V, VI, VII, VIII, XI</td></tr>
-          <tr><td>Define source of truth per field, not per system; lifecycle drift between HS and SF only fixes with explicit conflict rules</td><td>IV, V</td></tr>
-          <tr><td>Pre-cutover historical data does not move via forms; set the expectation early or marketing will keep asking</td><td>VII</td></tr>
-          <tr><td>Custom SF CampaignMember sync was Apollo-specific (60+ unscoped hours). Fishbowl uses native HS↔SF sync only. If we ever need the pattern again, it lives in <code>project_apollograph_sf_sync.md</code> + the <code>hubspot-sf-campaign-sync</code> repo.</td><td>VII</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+</main>
 
 <footer>
-  Built by Refindable for the Fishbowl engagement · v1.2 draft (Fishbowl decisions log + Lead↔Contact pivot + scoring gates ordered) · based on the Apollo migration and Aptitude8's <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">Marketo to HubSpot guide</a> · <a href="../index.html">Back to docs</a>
+  Refindable · SOP-MAR-001 · Visual reference and screenshots from <a href="https://aptitude8.com/how-to-migrate-from-marketo-to-hubspot" target="_blank" rel="noopener">Aptitude8's Marketo to HubSpot guide</a> · <a href="../index.html">Back to docs</a>
 </footer>
 
-<button class="btt" id="btt" aria-label="Back to top">
-  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
-</button>
-
-<script>
-// Progress bar
-window.addEventListener('scroll', () => {
-  const h = document.documentElement;
-  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-  document.getElementById('progress').style.width = pct + '%';
-});
-
-// Back to top
-const btt = document.getElementById('btt');
-window.addEventListener('scroll', () => {
-  btt.classList.toggle('visible', window.scrollY > 400);
-});
-btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-</script>
 </body>
 </html>
