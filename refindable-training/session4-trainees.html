@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sesión 5 · Pipelines de Ventas | Refindable Academy</title>
+<title>Sesión 4 · Pipelines de Ventas | Refindable Academy</title>
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -160,7 +160,7 @@ body.light .pipe-s{color:var(--t)}
 <div class="top-l">
 <div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--tm)">Academy</span></div>
 <div class="top-sep"></div>
-<div class="top-info">Sesión 5 · Trainees</div>
+<div class="top-info">Sesión 4 · Trainees</div>
 </div>
 <div class="top-r">
 <div class="theme-toggle" onclick="toggleLang()" id="langBtn" title="Switch language">🌐 EN</div>
@@ -175,7 +175,7 @@ body.light .pipe-s{color:var(--t)}
 <!-- S0: Cover -->
 <div class="sl active" data-s="0">
 <div class="cover"><div class="cover-glow"></div>
-<div class="badge">📘 Sesión 5 · Pipelines</div>
+<div class="badge">📘 Sesión 4 · Pipelines</div>
 <h1>Pipeline de Ventas: <span class="hl">diseñar uno desde cero</span></h1>
 <p>Un pipeline mal diseñado convierte el forecast en ficción. Hoy vemos qué es, cómo se arma, y por qué la mayoría de los equipos lo configuran mal el primer año.</p>
 <div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
@@ -186,22 +186,22 @@ body.light .pipe-s{color:var(--t)}
 </div></div>
 </div>
 
-<!-- S1: Recap S4 -->
+<!-- S1: Recap S3 -->
 <div class="sl" data-s="1">
-<div class="badge">00 · Recap Sesión 4</div>
+<div class="badge">00 · Recap Sesión 3</div>
 <h2>Lo que dejamos la última vez</h2>
 <div class="sn"><div class="sn-bar">
-<div class="sn-tab active" onclick="st(this,0)">Workflow</div>
-<div class="sn-tab" onclick="st(this,1)">Trigger</div>
-<div class="sn-tab" onclick="st(this,2)">Acción</div>
-<div class="sn-tab" onclick="st(this,3)">Tarea S4</div>
+<div class="sn-tab active" onclick="st(this,0)">Properties</div>
+<div class="sn-tab" onclick="st(this,1)">Listas</div>
+<div class="sn-tab" onclick="st(this,2)">Filtros</div>
+<div class="sn-tab" onclick="st(this,3)">Tarea S3</div>
 </div><div class="sn-c">
-<div class="sn-p active"><strong>Workflow:</strong> automatización que enrola registros (contactos, deals, companies) cuando cumplen un trigger y les aplica acciones en secuencia o en branches.</div>
-<div class="sn-p"><strong>Trigger:</strong> condición de entrada. Property value, list membership, form fill, fecha relativa. El re-enrollment se activa solo si lo prendés explícito.</div>
-<div class="sn-p"><strong>Acción:</strong> set property, send email, create task, branch if/else, delay, enroll en otro workflow. Las acciones que tocan deals/owners viajan al objeto correspondiente vía asociaciones.</div>
-<div class="sn-p"><strong>Tarea S4:</strong> armaste un workflow simple — lead viene por form → setea lifecycle MQL → crea task al owner → manda email de bienvenida. Eso era la entrada al funnel. Hoy vemos qué pasa DESPUÉS, cuando ese MQL empieza a moverse hacia un deal.</div>
+<div class="sn-p active"><strong>Properties:</strong> campos de datos sobre un objeto. Definen qué puede hacer el CRM. Elegir mal el tipo (text vs number, dropdown vs multi-checkbox) te jode para siempre. Una custom property es un compromiso, no un "por las dudas".</div>
+<div class="sn-p"><strong>Listas:</strong> grupos de contactos / companies / deals filtrados por criterios. <strong>Active</strong> se actualiza sola con la data. <strong>Static</strong> es una foto en el momento — para snapshots o cuando necesitás control manual.</div>
+<div class="sn-p"><strong>Filtros:</strong> property + operador + valor. Dentro de un grupo: AND. Entre grupos: OR. Operadores que confunden: <code>is unknown</code>, <code>has ever been</code>, <code>X days ago</code> vs <code>X days from now</code>. Siempre mirar el preview count antes de guardar.</div>
+<div class="sn-p"><strong>Tarea S3:</strong> auditaste properties, armaste una active list con AND/OR groups, probaste una static. Esa data agrupada va a ser el INPUT del pipeline de hoy: cuando un MQL califica para entrar a un deal, ahí arranca el pipeline.</div>
 </div></div>
-<div class="co tip"><div>💡</div><div><p>Workflows mueven <strong>data</strong> entre stages. Pero las <strong>stages</strong> en sí — qué son, cuántas, cómo se diseñan — son una decisión previa. Eso es lo de hoy.</p></div></div>
+<div class="co tip"><div>💡</div><div><p>Properties = qué datos tenés. Listas = cómo los agrupás. <strong>Pipeline = cómo medís el progreso hacia el cierre</strong>. Las tres piezas se conectan: sin properties bien armadas, no podés definir exit criteria de stages.</p></div></div>
 </div>
 
 <!-- S2: ¿Qué es un pipeline? -->
@@ -529,12 +529,12 @@ body.light .pipe-s{color:var(--t)}
 <div class="final-s" id="finalS">—</div>
 <p style="text-align:center;font-size:16px" id="finalM">Completá los ejercicios para ver tu score.</p>
 <div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;margin:24px 0">
-<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 12px">📌 Preview Sesión 6 · Reporting y Dashboards</h3>
-<p style="font-size:14px">Tenés data (properties), audiencia (listas), automatización (workflows) y motor de oportunidades (pipelines). La próxima vemos cómo <strong>medir todo eso</strong>: reportes de conversion, dashboards por rol, métricas que importan vs vanity metrics, y por qué la mayoría de los dashboards en HubSpot mienten.</p>
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 12px">📌 Preview Sesión 5 · Formularios y Landing Pages</h3>
+<p style="font-size:14px">Tenés data (properties), audiencia (listas) y motor de oportunidades (pipelines). La próxima vemos cómo <strong>CAPTURAR data desde afuera</strong>: forms inteligentes con progressive profiling, landing pages que convierten, validación server-side, integración con workflows, y el rol del lead capture en el funnel.</p>
 </div>
 <p style="text-align:center;color:var(--td);font-size:13px;margin-top:20px">
 <img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
-Academy 2026 · Track Trainees · Sesión 5 de 11</p>
+Academy 2026 · Track Trainees · Sesión 4 de 11</p>
 </div>
 
 </div><!-- end .sa -->
@@ -668,7 +668,7 @@ var currentLang='es';
 function toggleLang(){
 currentLang=currentLang==='es'?'en':'es';
 document.getElementById('langBtn').textContent=currentLang==='es'?'🌐 EN':'🌐 ES';
-document.querySelector('.top-info').textContent=currentLang==='es'?'Sesión 5 · Trainees':'Session 5 · Trainees';
+document.querySelector('.top-info').textContent=currentLang==='es'?'Sesión 4 · Trainees':'Session 4 · Trainees';
 }
 
 upd();
