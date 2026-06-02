@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 5 · Pipelines de Ventas | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}.brand span{color:var(--ac)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:600;background:var(--gs);padding:3px 10px;border-radius:100px}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--acl));transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both;text-align:left}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t)}
+.bn{background:var(--ac);color:#fff}.bn:hover:not(:disabled){background:var(--acl);transform:translateY(-1px)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.2);padding:5px 14px;border-radius:100px;font-size:13px;color:var(--acl);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.disc-b{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:#a855f7}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:700;line-height:1.15;margin-bottom:14px;letter-spacing:-.02em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;transition:all .3s}
+.cd:hover{border-color:var(--ac);transform:translateY(-2px)}
+.cd-i{font-size:26px;margin-bottom:8px;display:block}
+.cd h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 4px}
+.cd p{font-size:15px;line-height:1.4;margin:0}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:var(--rad);overflow:hidden;border:1px solid var(--bd)}
+.cmp-c{padding:18px}.cmp-c.bad{background:var(--rs)}.cmp-c.good{background:var(--gs)}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.cmp-c.bad .cmp-h{color:var(--r)}.cmp-c.good .cmp-h{color:var(--g)}
+.cmp-i{font-size:15px;color:var(--tm);padding:5px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.4}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.sr{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+.st{flex:1;min-width:130px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:18px;text-align:center}
+.st-n{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700}
+.st-l{font-size:14px;color:var(--tm);margin-top:2px}
+.ex{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);margin-bottom:8px;overflow:hidden}
+.ex-h{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s;user-select:none}
+.ex-h:hover{background:var(--s2)}
+.ex-h h4{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
+.ex-a{transition:transform .3s;color:var(--td);font-size:11px}
+.ex.open .ex-a{transform:rotate(180deg)}
+.ex-b{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.ex.open .ex-b{max-height:1200px}
+.ex-c{padding:0 18px 14px;font-size:15px;color:var(--tm);line-height:1.7}
+.ex-c strong{color:var(--t)}
+.ex-c ul{list-style:none;padding:0;margin:6px 0}
+.ex-c li{padding:3px 0 3px 16px;position:relative}
+.ex-c li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:11px}
+.pipe{display:flex;gap:6px;margin:20px 0;overflow-x:auto;padding-bottom:6px}
+.pipe-s{border-radius:10px;padding:12px 14px;min-width:108px;text-align:center;flex-shrink:0}
+.pipe-s .pipe-e{font-size:18px;margin-bottom:4px}
+.pipe-s .pipe-t{font-size:11px;font-weight:600}
+.pipe-s .pipe-p{font-size:10px;color:var(--td);margin-top:2px;font-family:'Space Grotesk',sans-serif}
+.pipe-arr{display:flex;align-items:center;color:var(--td);font-size:12px;flex-shrink:0}
+.sn{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;margin:16px 0}
+.sn-bar{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--bd)}
+.sn-tab{padding:10px 14px;font-size:12px;font-weight:500;color:var(--td);cursor:pointer;white-space:nowrap;transition:all .2s;border-bottom:2px solid transparent}
+.sn-tab:hover{color:var(--t);background:var(--s2)}
+.sn-tab.active{color:var(--ac);border-bottom-color:var(--ac);background:var(--acs)}
+.sn-c{padding:16px;min-height:70px}
+.sn-p{display:none;font-size:13px;color:var(--tm);line-height:1.6;animation:si .3s ease}
+.sn-p.active{display:block}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:border-color .3s}
+.qq.ok{border-color:var(--g)}.qq.bad{border-color:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;display:flex;align-items:center;gap:10px}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs)}
+.qopt .mk{width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.35}.qopt.dis.correct{opacity:1}
+.qfb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.match-area{margin:16px 0}
+.match-cols{display:grid;grid-template-columns:1fr 40px 1fr;gap:8px;align-items:start}
+.match-left,.match-right{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:14px 18px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);font-size:14px;cursor:pointer;transition:all .2s;text-align:left;user-select:none;line-height:1.4}
+.match-item:hover{border-color:var(--ac)}
+.match-item.selected{border-color:var(--ac);background:var(--acs);color:var(--ac)}
+.match-item.matched{border-color:var(--g);background:var(--gs);color:var(--g);pointer-events:none}
+.match-item.wrong-flash{border-color:var(--r);background:var(--rs);color:var(--r)}
+.match-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--td);font-size:18px}
+.match-score{text-align:center;margin-top:12px;font-size:14px;font-weight:600;color:var(--g);display:none}
+.scenario{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:16px 0}
+.scenario-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--o);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.scenario p{font-size:16px;color:var(--tm);margin-bottom:12px}
+.scenario-options{display:flex;flex-direction:column;gap:8px}
+.scenario-opt{padding:16px 20px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s}
+.scenario-opt:hover:not(.dis){border-color:var(--o);color:var(--t)}
+.scenario-opt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}
+.scenario-opt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}
+.scenario-opt.dis{pointer-events:none;opacity:.35}.scenario-opt.dis.correct{opacity:1}
+.scenario-fb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.scenario-fb.show{display:block}.scenario-fb.sfbok{background:var(--gs);color:var(--g)}.scenario-fb.sfbbad{background:var(--rs);color:var(--r)}
+.disc{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:var(--rad);padding:24px;margin:16px 0}
+.disc h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:#a855f7;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.disc p{font-size:16px;color:var(--tm);margin-bottom:8px}
+.disc ul{list-style:none;padding:0}.disc li{padding:4px 0 4px 16px;position:relative;font-size:15px;color:var(--tm)}.disc li::before{content:'\1F4AC';position:absolute;left:0;font-size:10px}
+.tt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.tt th{background:var(--s2);padding:10px 14px;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:.04em;color:var(--td);border-bottom:1px solid var(--bd)}
+.tt td{padding:10px 14px;border-bottom:1px solid var(--bd);color:var(--tm)}
+.tt tr:last-child td{border-bottom:none}.tt tr:hover td{background:var(--s1)}
+.gl{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px;margin:16px 0}
+.gl-i{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.gl-t{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--ac);min-width:130px;flex-shrink:0}
+.gl-d{font-size:14px;color:var(--tm);line-height:1.4}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:56px;font-weight:700;text-align:center;margin:16px 0}
+.final-s.great{color:var(--g)}.final-s.ok{color:var(--o)}.final-s.low{color:var(--r)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px;gap:4px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.code-snip{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);padding:14px 16px;font-family:'Space Grotesk',monospace;font-size:14px;color:var(--t);margin:10px 0;line-height:1.6}
+.code-snip .ck{color:var(--ac);font-weight:600}.code-snip .cv{color:var(--g)}.code-snip .co2{color:var(--td);font-style:italic}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.tag.t-r{background:var(--rs);border-color:rgba(239,68,68,.2);color:var(--r)}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+body.light .pipe-s{color:var(--t)}
+@media(max-width:640px){.cmp,.match-cols{grid-template-columns:1fr}.cg{grid-template-columns:1fr}.sr{flex-direction:column}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}.gl{grid-template-columns:1fr}.match-cols{grid-template-columns:1fr;gap:16px}.match-mid{flex-direction:row;gap:4px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--tm)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Sesión 5 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleLang()" id="langBtn" title="Switch language">🌐 EN</div>
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">✨ 0 pts</div>
+<div class="pg-text" id="pgText">1 / 20</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">📘 Sesión 5 · Pipelines</div>
+<h1>Pipeline de Ventas: <span class="hl">diseñar uno desde cero</span></h1>
+<p>Un pipeline mal diseñado convierte el forecast en ficción. Hoy vemos qué es, cómo se arma, y por qué la mayoría de los equipos lo configuran mal el primer año.</p>
+<div style="display:flex;gap:16px;margin-top:24px;flex-wrap:wrap">
+<span style="font-size:12px;color:var(--td)">⏱ 30 min</span>
+<span style="font-size:12px;color:var(--td)">🧩 20 slides</span>
+<span style="font-size:12px;color:var(--td)">🧠 1 quiz + 1 matching + 2 escenarios</span>
+<span style="font-size:12px;color:var(--td)">🔥 Dificultad alta</span>
+</div></div>
+</div>
+
+<!-- S1: Recap S4 -->
+<div class="sl" data-s="1">
+<div class="badge">00 · Recap Sesión 4</div>
+<h2>Lo que dejamos la última vez</h2>
+<div class="sn"><div class="sn-bar">
+<div class="sn-tab active" onclick="st(this,0)">Workflow</div>
+<div class="sn-tab" onclick="st(this,1)">Trigger</div>
+<div class="sn-tab" onclick="st(this,2)">Acción</div>
+<div class="sn-tab" onclick="st(this,3)">Tarea S4</div>
+</div><div class="sn-c">
+<div class="sn-p active"><strong>Workflow:</strong> automatización que enrola registros (contactos, deals, companies) cuando cumplen un trigger y les aplica acciones en secuencia o en branches.</div>
+<div class="sn-p"><strong>Trigger:</strong> condición de entrada. Property value, list membership, form fill, fecha relativa. El re-enrollment se activa solo si lo prendés explícito.</div>
+<div class="sn-p"><strong>Acción:</strong> set property, send email, create task, branch if/else, delay, enroll en otro workflow. Las acciones que tocan deals/owners viajan al objeto correspondiente vía asociaciones.</div>
+<div class="sn-p"><strong>Tarea S4:</strong> armaste un workflow simple — lead viene por form → setea lifecycle MQL → crea task al owner → manda email de bienvenida. Eso era la entrada al funnel. Hoy vemos qué pasa DESPUÉS, cuando ese MQL empieza a moverse hacia un deal.</div>
+</div></div>
+<div class="co tip"><div>💡</div><div><p>Workflows mueven <strong>data</strong> entre stages. Pero las <strong>stages</strong> en sí — qué son, cuántas, cómo se diseñan — son una decisión previa. Eso es lo de hoy.</p></div></div>
+</div>
+
+<!-- S2: ¿Qué es un pipeline? -->
+<div class="sl" data-s="2">
+<div class="badge">01 · Fundamentos</div>
+<h2>¿Qué es un pipeline?</h2>
+<p>Un <strong>pipeline</strong> es una secuencia de <strong>stages</strong> (etapas) que representan el progreso de un deal desde que se identifica una oportunidad hasta que se cierra (ganado o perdido).</p>
+<div class="pipe">
+<div class="pipe-s" style="background:var(--acs);color:var(--ac)"><div class="pipe-e">🔍</div><div class="pipe-t">Discovery</div><div class="pipe-p">15%</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--acs);color:var(--ac)"><div class="pipe-e">✅</div><div class="pipe-t">Qualified</div><div class="pipe-p">35%</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--os);color:var(--o)"><div class="pipe-e">🖥️</div><div class="pipe-t">Demo Attended</div><div class="pipe-p">60%</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--os);color:var(--o)"><div class="pipe-e">📄</div><div class="pipe-t">Proposal Reviewed</div><div class="pipe-p">75%</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--gs);color:var(--g)"><div class="pipe-e">🏆</div><div class="pipe-t">Closed Won</div><div class="pipe-p">100%</div></div>
+</div>
+<p>Cada stage representa <strong>un compromiso del buyer</strong> que aumenta la probabilidad de cierre. El deal entra por la izquierda, se mueve hacia la derecha cuando se cumple el criterio de avance, y termina en Closed Won o Closed Lost.</p>
+<div class="co warn"><div>⚠️</div><div><p>Pipeline ≠ proceso de ventas. El proceso describe <strong>qué hace el sales</strong>. El pipeline describe <strong>qué hizo el buyer</strong>. Confundir los dos es el error N°1.</p></div></div>
+</div>
+
+<!-- S3: Para qué sirve -->
+<div class="sl" data-s="3">
+<div class="badge">01 · Fundamentos</div>
+<h2>¿Para qué sirve realmente?</h2>
+<div class="cg">
+<div class="cd"><div class="cd-i">👁️</div><h3>Visibilidad</h3><p>Saber dónde está cada deal y cuántos hay en cada stage. Sin pipeline, todo es "tengo varios calientes".</p></div>
+<div class="cd"><div class="cd-i">💰</div><h3>Forecast</h3><p>Multiplicás monto × probability de stage → projection ponderada. Esa es la base del weighted forecast.</p></div>
+<div class="cd"><div class="cd-i">📐</div><h3>Conversion rates</h3><p>% que pasa de Discovery a Qualified, de Qualified a Demo, etc. Te dice dónde se rompe el funnel.</p></div>
+<div class="cd"><div class="cd-i">⏱</div><h3>Velocity</h3><p>Días promedio por stage. Identificás los stages donde los deals se mueren.</p></div>
+<div class="cd"><div class="cd-i">🎯</div><h3>Coaching</h3><p>El manager mira el pipeline del rep y entiende dónde necesita ayuda sin tener que preguntarle.</p></div>
+<div class="cd"><div class="cd-i">⚙️</div><h3>Automatización</h3><p>Cada stage dispara workflows: tareas, emails, notificaciones, asignaciones.</p></div>
+</div>
+<div class="co tip"><div>💡</div><div><p>La fórmula del <strong>weighted forecast</strong>: <code>Σ (deal_amount × stage_probability)</code>. Si la probability está inflada o el deal está en el stage equivocado, el forecast miente.</p></div></div>
+</div>
+
+<!-- S4: Anatomía de un stage -->
+<div class="sl" data-s="4">
+<div class="badge">01 · Fundamentos</div>
+<h2>Anatomía de un stage</h2>
+<p>Cada stage tiene 5 componentes que SIEMPRE hay que definir:</p>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>1️⃣ Nombre</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Debe describir <strong>una acción del buyer</strong>, no del seller. "Demo Attended" ✓ — "Demo Sent" ✗. El nombre se traduce solo en el coaching del rep.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>2️⃣ Probability (%)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Probabilidad de que un deal en este stage cierre. Alimenta el weighted forecast. NO se setea a dedo: se mide del histórico de conversión. Closed Won = 100%, Closed Lost = 0%.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>3️⃣ Entry criteria (qué dispara la entrada al stage)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Qué tuvo que pasar para que el deal llegue acá. Ej: "Buyer respondió a la discovery call". Si no podés enunciar el evento en una sola frase, el stage está mal definido.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>4️⃣ Exit criteria (qué necesita para avanzar)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>El evento verificable que mueve al siguiente stage. <strong>Verificable</strong> = lo podés probar con un email, un meeting agendado, un documento firmado. "El rep cree que está cerca" NO es exit criteria.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>5️⃣ Required properties</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Properties que HubSpot exige para mover el deal al siguiente stage. Mecanismo de gating: sin esa data, no se mueve. Usar con criterio — demasiados required = data basura cargada por compromiso.</p></div></div></div>
+<div class="co tip"><div>💡</div><div><p>Test mental: si abrís un deal random del pipeline, ¿podés decir en una frase POR QUÉ está en ese stage y NO en el siguiente? Si no, el exit criteria está mal definido.</p></div></div>
+</div>
+
+<!-- S5: Reglas de diseño -->
+<div class="sl" data-s="5">
+<div class="badge">01 · Fundamentos</div>
+<h2>5 reglas para diseñar un pipeline</h2>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🎯 Regla 1 · Buyer-centric, no seller-centric</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Cada stage describe lo que hizo el BUYER, no lo que hizo el rep. "Proposal Sent" depende del rep — "Proposal Reviewed" requiere que el buyer abrió, leyó, comentó. Solo la segunda predice el cierre.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>🧮 Regla 2 · 5 a 7 stages (sin contar Won/Lost)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Menos de 5: no medís nada útil. Más de 7: ruido y stages-vanity. Cada stage debe representar un salto de probability significativo (15-20 puntos).</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>➡️ Regla 3 · Avance lineal (con excepción)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Un deal avanza UN stage por vez. La única excepción: cualquier stage puede saltar a <strong>Closed Lost</strong> directamente. Si los reps "saltan" stages para arriba, los stages intermedios sobran.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📏 Regla 4 · Exit criteria verificable y único</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>El exit criteria es <strong>un</strong> evento, no una lista. "Buyer firmó NDA y mandó RFP y agendó kick-off" no es un criterio, son tres stages.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>📊 Regla 5 · Closed Lost SIEMPRE con razón</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Required property "Closed Lost Reason" con dropdown cerrado: Price, Timing, Competitor, No Decision, No Fit. Sin esto, no sabés <strong>por qué</strong> perdés y no podés mejorar.</p></div></div></div>
+<div class="co warn"><div>⚠️</div><div><p>La regla más violada es la 1. La mayoría de los pipelines son seller-centric porque los crea el sales head que piensa "qué hago yo en cada paso", no "qué hizo el buyer".</p></div></div>
+</div>
+
+<!-- S6: Stages típicos B2B -->
+<div class="sl" data-s="6">
+<div class="badge">01 · Fundamentos</div>
+<h2>Stages típicos en B2B SaaS</h2>
+<p>Esto NO es plantilla universal, es un punto de partida. Lo adaptás al ciclo de venta tuyo.</p>
+<table class="tt"><thead><tr><th>Stage</th><th>Probability</th><th>Exit criteria (acción del buyer)</th></tr></thead><tbody>
+<tr><td><strong>Discovery</strong></td><td>10-15%</td><td>Discovery call hecha, pain y current solution documentados</td></tr>
+<tr><td><strong>Qualified</strong></td><td>30-40%</td><td>Budget, autoridad, necesidad y timeline confirmados (BANT/MEDDIC)</td></tr>
+<tr><td><strong>Demo Attended</strong></td><td>50-65%</td><td>Demo realizada con stakeholders relevantes presentes</td></tr>
+<tr><td><strong>Proposal Reviewed</strong></td><td>70-80%</td><td>Buyer's team reviewed proposal y devolvió feedback (no solo "received")</td></tr>
+<tr><td><strong>Verbal Yes / Negotiation</strong></td><td>85-90%</td><td>Buyer confirmó intent verbalmente y/o legal/procurement empezó review</td></tr>
+<tr><td><strong>Closed Won</strong></td><td>100%</td><td>Contrato firmado, payment terms confirmados</td></tr>
+<tr><td><strong>Closed Lost</strong></td><td>0%</td><td>Buyer declinó O 30+ días sin actividad del buyer + razón documentada</td></tr>
+</tbody></table>
+<div class="co hs"><div>🟠</div><div><p>HubSpot trae stages default similares ("Appointment Scheduled", "Qualified to Buy", "Presentation Scheduled", "Decision Maker Bought-In", "Contract Sent"). Pueden servir como base pero casi siempre hay que renombrarlas para que sean buyer-centric.</p></div></div>
+</div>
+
+<!-- S7: Buyer vs Seller centric -->
+<div class="sl" data-s="7">
+<div class="badge">01 · Fundamentos</div>
+<h2>Buyer-centric vs Seller-centric</h2>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">✗ Seller-centric</div>
+<div class="cmp-i">⛔ "Demo Sent" → el rep mandó link de calendly</div>
+<div class="cmp-i">⛔ "Proposal Sent" → archivo subido al deal</div>
+<div class="cmp-i">⛔ "Following Up" → el rep está esperando respuesta</div>
+<div class="cmp-i">⛔ "Hot Lead" → el rep está optimista</div>
+<div class="cmp-i">⛔ "Decision Maker Contacted" → mandé email</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✓ Buyer-centric</div>
+<div class="cmp-i">✅ "Demo Attended" → el buyer entró al meeting</div>
+<div class="cmp-i">✅ "Proposal Reviewed" → el buyer comentó/preguntó/objetó</div>
+<div class="cmp-i">✅ "Verbal Yes" → el buyer dijo "vamos para adelante"</div>
+<div class="cmp-i">✅ "Contract in Legal" → procurement empezó review</div>
+<div class="cmp-i">✅ "Stakeholders Aligned" → buyer's champion confirmó equipo on-board</div>
+</div>
+</div>
+<div class="co tip"><div>💡</div><div><p>Test: leé el nombre del stage y preguntate "¿esto lo puede hacer el rep solo?". Si la respuesta es SÍ, es seller-centric. El buyer no aparece en la ecuación.</p></div></div>
+</div>
+
+<!-- S8: Errores comunes -->
+<div class="sl" data-s="8">
+<div class="badge">01 · Fundamentos</div>
+<h2>Errores que matan tu pipeline</h2>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">⛔ Errores frecuentes</div>
+<div class="cmp-i">🪤 <strong>Vanity stages:</strong> "Interested", "Hot", "Warm" sin criterio verificable</div>
+<div class="cmp-i">🪤 <strong>Probability inflada:</strong> sales head subió todo "para motivar al equipo" — el forecast queda inservible</div>
+<div class="cmp-i">🪤 <strong>"On Hold" / "Parked":</strong> stage para esconder deals muertos sin pasarlos a Closed Lost</div>
+<div class="cmp-i">🪤 <strong>10+ stages:</strong> granularidad excesiva, los reps no saben dónde mover el deal</div>
+<div class="cmp-i">🪤 <strong>Skipping:</strong> reps que saltan de Discovery directo a Proposal porque "el deal está caliente"</div>
+<div class="cmp-i">🪤 <strong>Sin Closed Lost reasons:</strong> 200 deals perdidos sin razón = no podés aprender</div>
+<div class="cmp-i">🪤 <strong>Required properties excesivos:</strong> 8 campos obligatorios para avanzar = data basura cargada por compromiso</div>
+</div>
+</div>
+<div class="co warn"><div>⚠️</div><div><p>El stage "On Hold" es el síntoma más claro de un pipeline en problemas. Es un parking lot para deals que el rep no quiere admitir que están muertos. Si tu pipeline tiene "On Hold", el problema no son los deals — es la cultura de honestidad del equipo.</p></div></div>
+</div>
+
+<!-- S9: Caso del día -->
+<div class="sl" data-s="9">
+<div class="badge act-b">🎯 Caso del día · Práctica</div>
+<h2>HRPyme — diseñá su primer pipeline</h2>
+<div class="scenario" style="border-color:var(--o)">
+<div class="scenario-title">📩 Contexto del negocio</div>
+<p><strong>HRPyme</strong> es un SaaS de gestión de RRHH para PyMEs de 50-200 empleados en LATAM. Acaban de cerrar seed, contrataron a 4 SDRs y 2 AEs, y te llaman para configurar HubSpot.</p>
+<p style="font-size:15px"><strong>Ciclo de venta típico (datos del founder):</strong></p>
+<ul style="font-size:14px;color:var(--tm);line-height:1.8;margin-left:20px">
+<li>~6 meses promedio de Discovery a Closed Won</li>
+<li>Ticket promedio: USD 8.000/año (planes de 50-100 empleados)</li>
+<li>5-7 stakeholders típicos: CEO o COO + Head of People + IT + Finance</li>
+<li>Trial gratis de 14 días como parte del proceso (lo piden el 70% antes del proposal)</li>
+<li>RFP/security review en empresas >100 empleados (60% de los deals)</li>
+<li>Razones de pérdida más comunes: precio, "vamos a esperar a Q4", competidor (BambooHR, Rippling)</li>
+</ul>
+<p style="font-size:15px"><strong>El sales head te propone:</strong></p>
+<div class="pipe">
+<div class="pipe-s" style="background:var(--rs);color:var(--r)"><div class="pipe-e">📞</div><div class="pipe-t">Lead<br>Contacted</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--rs);color:var(--r)"><div class="pipe-e">🖥️</div><div class="pipe-t">Demo<br>Sent</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--rs);color:var(--r)"><div class="pipe-e">📄</div><div class="pipe-t">Proposal<br>Sent</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--rs);color:var(--r)"><div class="pipe-e">🤝</div><div class="pipe-t">Negotiation</div></div>
+<div class="pipe-arr">→</div>
+<div class="pipe-s" style="background:var(--gs);color:var(--g)"><div class="pipe-e">🏆</div><div class="pipe-t">Closed Won<br>/ Lost</div></div>
+</div>
+<p style="font-size:14px;margin-top:10px"><strong>Te lo pasa con un "armálo así, después vemos".</strong> ¿Cuál es el problema principal y qué proponés?</p>
+<div class="scenario-options">
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">Faltan stages al inicio. Debería tener 7-8 stages para granularidad: agregaría "Discovery", "Qualified" y "POC/Trial" entre los primeros. Probability default de HubSpot está bien.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',1)">Los nombres son seller-centric — "Demo Sent", "Proposal Sent" miden lo que hace el rep, no lo que hace el buyer. Un "proposal sent" donde el buyer ni abrió el PDF no avanzó nada. Propongo reescribir buyer-centric: Discovery → Qualified → Demo Attended → Trial Active → Proposal Reviewed → Verbal Yes → Closed Won/Lost. Sumo "Trial Active" porque el 70% pasa por trial, es un milestone real. Y configuro Closed Lost Reason como required con las 3 razones del founder.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc1',0)">El pipeline está bien estructurado, solo le faltan probabilities. Asigno 20/40/60/80/100% y configuro forecast pondado. El nombre de los stages no es lo que más impacta — lo importante es que el equipo los use.</div>
+</div>
+<div class="scenario-fb" id="sc1-fb"></div>
+</div>
+</div>
+
+<!-- S10: Matching -->
+<div class="sl" data-s="10" data-quiz="1">
+<div class="badge act-b">🎯 Ejercicio · Stage ↔ Exit criteria</div>
+<h2>Conectá cada stage con SU criterio de avance</h2>
+<p style="font-size:14px">Click un stage de la izquierda, después el exit criteria correcto. <strong>Cuidado:</strong> varios suenan parecidos pero solo uno es verificable y único.</p>
+<div class="match-area"><div class="match-cols">
+<div class="match-left" id="ml">
+<div class="match-item" data-m="d" onclick="matchClick(this,'l')"><strong>Discovery</strong><br><span style="font-size:12px;color:var(--td)">Probability 15%</span></div>
+<div class="match-item" data-m="q" onclick="matchClick(this,'l')"><strong>Qualified</strong><br><span style="font-size:12px;color:var(--td)">Probability 35%</span></div>
+<div class="match-item" data-m="t" onclick="matchClick(this,'l')"><strong>Trial Active</strong><br><span style="font-size:12px;color:var(--td)">Probability 55%</span></div>
+<div class="match-item" data-m="p" onclick="matchClick(this,'l')"><strong>Proposal Reviewed</strong><br><span style="font-size:12px;color:var(--td)">Probability 75%</span></div>
+<div class="match-item" data-m="v" onclick="matchClick(this,'l')"><strong>Verbal Yes</strong><br><span style="font-size:12px;color:var(--td)">Probability 90%</span></div>
+</div>
+<div class="match-mid">
+<div>↔</div><div>↔</div><div>↔</div><div>↔</div><div>↔</div>
+</div>
+<div class="match-right" id="mr">
+<div class="match-item" data-m="p" onclick="matchClick(this,'r')">Buyer's economic buyer + champion devolvieron feedback escrito sobre términos y precio</div>
+<div class="match-item" data-m="d" onclick="matchClick(this,'r')">Discovery call de 30+ min con pain, current solution y trigger event documentados</div>
+<div class="match-item" data-m="v" onclick="matchClick(this,'r')">Buyer confirmó intención de avanzar y procurement/legal empezó review del contrato</div>
+<div class="match-item" data-m="q" onclick="matchClick(this,'r')">Budget, autoridad, necesidad y timeline confirmados con el champion (no asumidos por el rep)</div>
+<div class="match-item" data-m="t" onclick="matchClick(this,'r')">Buyer activó la cuenta del trial y el champion completó setup inicial dentro de los primeros 3 días</div>
+</div>
+</div>
+<div class="match-score" id="matchScore"></div>
+</div>
+<div class="co tip"><div>💡</div><div><p>Trampas comunes: "Discovery call agendada" NO es lo mismo que "Discovery call hecha y documentada". Y "Buyer recibió proposal" NO es lo mismo que "Buyer revisó y comentó". Lo verificable es siempre lo segundo.</p></div></div>
+</div>
+
+<!-- S11: Decisiones pre-build -->
+<div class="sl" data-s="11">
+<div class="badge act-b">🎯 Práctica · Decisiones de configuración</div>
+<h2>3 decisiones antes de tocar HubSpot</h2>
+<p>Una vez tenés los stages claros, hay 3 cosas que definir <strong>antes</strong> de crear el pipeline en el portal:</p>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>1️⃣ ¿Uno o varios pipelines?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Un solo pipeline si tu proceso de venta es uniforme. <strong>Pipelines separados</strong> cuando el ciclo, los stages o las personas son MUY distintas: New Business vs Renewals, Self-serve vs Enterprise, LATAM vs US.</p><p><strong>Anti-pattern:</strong> crear pipelines por equipo de ventas. Ahí no querés pipelines distintos, querés <strong>owners</strong> distintos en el mismo pipeline.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>2️⃣ ¿Qué probability le pongo a cada stage?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Si tenés histórico: <strong>medilo</strong>. % de deals que pasaron de stage X a Closed Won = probability real. Si no tenés histórico (pipeline nuevo): usás defaults de HubSpot y ajustás trimestralmente.</p><p><strong>Anti-pattern:</strong> el CEO o sales head define probabilities "para motivar". Forecast queda inflado y nadie lo cree.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>3️⃣ ¿Qué properties son required por stage?</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Regla de 3 para cada required:</p><ul><li><strong>Se carga una sola vez</strong> en ese stage (no se actualiza en cada uno)</li><li><strong>Solo se puede saber hablando con el buyer</strong> (no derivable de otra fuente)</li><li><strong>Se usa en reporting o segmentation</strong> (no es "para tener")</li></ul><p>Si falla 1 de las 3, no es required — o lo capturás por workflow, o no lo capturás.</p></div></div></div>
+<div class="co warn"><div>⚠️</div><div><p>Stage automation en HubSpot: cada stage puede disparar workflows automáticamente (crear tareas, mandar emails, notificar al manager). Configurar TODO desde el día 1 termina en spam interno. Sumá automation gradualmente.</p></div></div>
+</div>
+
+<!-- S12: Escenario 2 -->
+<div class="sl" data-s="12" data-quiz="1">
+<div class="badge act-b">🎯 Escenario 2 · El deal stuck de $250k</div>
+<h2>"No lo mováis"</h2>
+<div class="scenario" id="sc2">
+<div class="scenario-title">📩 Tu sales head te muestra un deal</div>
+<p>Deal de <strong>USD 250.000</strong> en stage "Demo Attended" hace <strong>45 días</strong>. Última activity registrada: hace <strong>38 días</strong> (un email del owner al buyer sin respuesta).</p>
+<p>El owner te dice: <em>"El buyer pidió esperar a Q3 por presupuesto, pero está re comprometido. Habla con el champion todas las semanas. No lo muevan, es el deal más grande del trimestre."</em></p>
+<p>Mirás el deal:</p>
+<ul style="font-size:15px;color:var(--tm);line-height:1.8;margin-left:20px">
+<li>Última actividad <strong>del buyer</strong> (no del rep): hace 52 días, mail confirmando que necesitan esperar</li>
+<li>El champion contestó por LinkedIn hace 12 días: "Sigo interesado, te aviso en julio"</li>
+<li>El owner manda email cada 2 semanas — sin respuesta del buyer</li>
+<li>Probability del stage "Demo Attended" en tu pipeline: 60% → weighted = $150k del forecast del Q2 dependen de este deal</li>
+</ul>
+<p>¿Qué hacés?</p>
+<div class="scenario-options">
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Lo dejo donde está. El sales owner conoce mejor su deal y el champion confirmó interés. Si lo cambio, distorsiono su forecast y rompo la confianza con el equipo de sales. La disciplina de pipeline es importante pero no podemos ignorar la realidad operativa.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',1)">Lo movés a Closed Lost con razón "Timing - Revisit Q3" y abriste una task de re-engagement para julio. El owner se va a enojar pero un deal sin actividad del BUYER en 52 días no es un deal activo, es un lead caliente. Lo que dice el rep sin evidencia del buyer no es input al pipeline. Si en Q3 vuelven interesados, abrís un deal nuevo con la fecha real. Disciplina: solo evidencia del buyer mueve stages — y la ausencia de evidencia los saca del pipeline.</div>
+<div class="scenario-opt" onclick="scAns(this,'sc2',0)">Creo un stage custom "On Hold - Future Quarter" entre Demo y Proposal. Lo movés ahí con probability 30%. Así el forecast del Q2 queda más realista pero el deal no se "pierde" en Closed Lost. Sales head queda contento y el reporte mejora.</div>
+</div>
+<div class="scenario-fb" id="sc2-fb"></div>
+</div>
+</div>
+
+<!-- S13: Quiz Q1 -->
+<div class="sl" data-s="13" data-quiz="1">
+<div class="badge quiz-b">🧠 Quiz · Pregunta 1 de 3</div>
+<h2>Probability inflada</h2>
+<div class="qq" id="q1"><div class="qq-n">Pregunta 1</div><p>Tu CEO te pide que cambies las probabilities default de todos los stages porque "están muy bajas y desincentivan al equipo de ventas". Te propone: Discovery 40%, Qualified 60%, Demo Attended 80%, Proposal Reviewed 90%, Verbal Yes 95%. ¿Qué hacés?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Las cambio. Las defaults son sugeridas, no obligatorias. Cada negocio tiene su realidad, el CEO conoce el suyo, y un equipo motivado vende más. El forecast se ajusta con coaching, no con probabilities bajas.</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>NO las cambio. Las probabilities alimentan el weighted forecast (<code>monto × probability</code>): si Discovery es 40%, un deal de USD 100k recién entrado proyecta $40k. Si todo el pipeline está inflado, el forecast deja de ser confiable — 100 deals en Discovery proyectan $4M cuando históricamente cierran 5%. Le ofrezco mirar los conversion rates reales del último año por stage y, si efectivamente cierran más alto, las ajustamos con data, no con sensación.</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Solución intermedia: cambio Discovery y Qualified (las más bajas) y dejo las últimas como están. El equipo se motiva al entrar deals al pipeline y el forecast del final del funnel queda confiable. Compromise sano.</div>
+</div><div class="qfb" id="q1-fb"></div></div>
+</div>
+
+<!-- S14: Quiz Q2 -->
+<div class="sl" data-s="14" data-quiz="1">
+<div class="badge quiz-b">🧠 Quiz · Pregunta 2 de 3</div>
+<h2>Deals atascados en Qualified</h2>
+<div class="qq" id="q2"><div class="qq-n">Pregunta 2</div><p>Mirás el reporte de "deals por stage age" y notás que el <strong>40% de los deals en "Qualified"</strong> están hace más de 90 días sin avanzar ni cerrar perdido. El sales head dice: <em>"Es que están en pausa, esperan presupuesto, no son perdidos."</em> ¿Cuál es la respuesta más sólida?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Creo un stage "On Hold" entre Qualified y Demo. Los reps mueven los deals pausados ahí. El reporte de Qualified queda limpio y los pausados quedan visibles separados para retomarlos.</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">B</div>Lo dejo como está. Si sales dice que están en pausa, conocen mejor su pipeline que yo. Lo importante es que el equipo siga trabajando los deals, no la prolijidad del reporte.</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">C</div>El número me dice que el <strong>exit criteria de "Qualified" está mal definido o no se aplica</strong>. Discutimos qué significa Qualified hoy — si requiere "BANT confirmado con el champion", revisar uno por uno: deals con BANT confirmado y buyer trackeando = quedan en Qualified; deals con BANT confirmado pero buyer sin actividad >30 días = Closed Lost con razón "Timing" (no es deal, es lead para nurturing); deals sin BANT confirmado = nunca debieron entrar a Qualified, vuelven a Discovery. Stages-vanity como "On Hold" enmascaran el problema en vez de resolverlo.</div>
+</div><div class="qfb" id="q2-fb"></div></div>
+</div>
+
+<!-- S15: Quiz Q3 -->
+<div class="sl" data-s="15" data-quiz="1">
+<div class="badge quiz-b">🧠 Quiz · Pregunta 3 de 3</div>
+<h2>Required properties</h2>
+<div class="qq" id="q3"><div class="qq-n">Pregunta 3</div><p>Marketing pide que para mover un deal de "Qualified" a "Demo Attended" sea obligatorio cargar 4 properties: <strong>Deal source channel</strong>, <strong>Pain points</strong>, <strong>Current solution</strong>, <strong>Decision criteria</strong>. Sales se queja: <em>"Son 4 campos por deal en cada cambio de stage, vamos a perder tiempo."</em> ¿Cómo lo manejás?</p><div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Apruebo lo que pide Marketing. La data es crítica para reportar conversión por source, pain dominante por industria, y competidores frecuentes. Sales tiene que adaptarse — 4 campos cada vez que cambiás stage son 2 minutos, no es excusa.</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">B</div>Rechazo el pedido completo. Sales tiene razón: el friction excesivo hace que carguen basura ("N/A", "TBD", copy-paste). Mejor capturar TODA esa data por workflow automático desde el form fill original y la timeline de la calls.</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">C</div>Cada required tiene que cumplir 3 reglas: (1) se carga UNA VEZ y no se actualiza por stage, (2) solo se sabe hablando con el buyer (no derivable de form o timeline), (3) se va a usar en reporting o segmentation (no es "para tener"). Reviso uno por uno: <strong>Deal source channel</strong> sale del form/contact, no es del deal — sobra, lo automatizo. <strong>Pain points</strong> cumple. <strong>Current solution</strong> cumple. <strong>Decision criteria</strong> cumple. Apruebo 3, rechazo 1 con justificación, y configuro stage automation que valide al cierre de stage. Sales y Marketing quedan en la misma página porque la regla es objetiva.</div>
+</div><div class="qfb" id="q3-fb"></div></div>
+</div>
+
+<!-- S16: Tarea -->
+<div class="sl" data-s="16">
+<div class="badge">📌 Tarea para la próxima</div>
+<h2>Diseñá un pipeline de 5 stages</h2>
+<div class="disc"><h3>🎯 Tu trabajo</h3>
+<p>Inventá un negocio ficticio (NO uses HRPyme — armá uno propio). Diseñá un pipeline de exactamente <strong>5 stages</strong> (sin contar Closed Won/Lost) y entregá un documento con:</p>
+<ul>
+<li><strong>Contexto del negocio:</strong> qué venden, ticket promedio, ciclo de venta, tipo de buyer</li>
+<li><strong>Tabla de los 5 stages:</strong> nombre, probability, entry criteria, exit criteria, required properties</li>
+<li><strong>Justificación de cada stage:</strong> 3-4 líneas explicando POR QUÉ ese stage existe, qué evidencia del buyer representa, y por qué no se podría fusionar con el anterior o el siguiente</li>
+<li><strong>Razones de Closed Lost:</strong> 4-6 opciones del dropdown, basadas en tu contexto</li>
+</ul>
+</div>
+<div class="co warn"><div>⚠️</div><div><p><strong>Criterios de corrección (alta exigencia):</strong></p><ul style="margin-top:6px;font-size:14px"><li>Stages buyer-centric, no seller-centric</li><li>Exit criteria verificable y único por stage</li><li>Probability con saltos coherentes (no 50% → 51%)</li><li>Required properties que cumplen la regla de 3 (slide 11)</li><li>Sin "On Hold" ni "Following Up" ni "Hot Lead"</li></ul></div></div>
+<div class="co tip"><div>💡</div><div><p>Trampa común: arrancar definiendo los <strong>nombres</strong> de los stages. Arrancá al revés — listá los <strong>eventos verificables del buyer</strong> que muestran progreso, y de ahí salen los stages.</p></div></div>
+</div>
+
+<!-- S17: Glosario -->
+<div class="sl" data-s="17">
+<div class="badge">📖 Referencia</div>
+<h2>Glosario de esta sesión</h2>
+<div class="gl">
+<div class="gl-i"><div class="gl-t">Pipeline</div><div class="gl-d">Secuencia de stages que representan el progreso de un deal hacia el cierre</div></div>
+<div class="gl-i"><div class="gl-t">Stage</div><div class="gl-d">Etapa del pipeline. Cada deal está en un solo stage a la vez</div></div>
+<div class="gl-i"><div class="gl-t">Probability</div><div class="gl-d">% de probabilidad de cierre asociado a un stage. Alimenta el weighted forecast</div></div>
+<div class="gl-i"><div class="gl-t">Weighted forecast</div><div class="gl-d">Σ (monto del deal × probability del stage). Proyección ponderada del pipeline</div></div>
+<div class="gl-i"><div class="gl-t">Entry criteria</div><div class="gl-d">Evento que hace entrar el deal a un stage</div></div>
+<div class="gl-i"><div class="gl-t">Exit criteria</div><div class="gl-d">Evento verificable y único que hace avanzar el deal al siguiente stage</div></div>
+<div class="gl-i"><div class="gl-t">Required property</div><div class="gl-d">Property que HubSpot exige completar para mover un deal al siguiente stage</div></div>
+<div class="gl-i"><div class="gl-t">Buyer-centric</div><div class="gl-d">Stage definido por una acción del buyer (verificable). Ej: "Demo Attended"</div></div>
+<div class="gl-i"><div class="gl-t">Seller-centric</div><div class="gl-d">Stage definido por una acción del rep. Ej: "Demo Sent". Anti-pattern</div></div>
+<div class="gl-i"><div class="gl-t">Closed Won</div><div class="gl-d">Stage terminal positivo. Probability 100%. Contrato firmado</div></div>
+<div class="gl-i"><div class="gl-t">Closed Lost</div><div class="gl-d">Stage terminal negativo. Probability 0%. Siempre con razón documentada</div></div>
+<div class="gl-i"><div class="gl-t">Closed Lost Reason</div><div class="gl-d">Dropdown cerrado con motivos de pérdida. Required al cerrar perdido</div></div>
+<div class="gl-i"><div class="gl-t">Stage automation</div><div class="gl-d">Workflows que HubSpot dispara automáticamente al cambiar de stage</div></div>
+<div class="gl-i"><div class="gl-t">Vanity stage</div><div class="gl-d">Stage sin exit criteria verificable ("Hot", "Interested", "On Hold")</div></div>
+<div class="gl-i"><div class="gl-t">Stage age</div><div class="gl-d">Días que un deal lleva en el stage actual. Métrica clave de pipeline health</div></div>
+<div class="gl-i"><div class="gl-t">Multi-pipeline</div><div class="gl-d">Varios pipelines paralelos para procesos de venta distintos (New / Renewal / Self-serve)</div></div>
+</div>
+</div>
+
+<!-- S18: Disco -->
+<div class="sl" data-s="18">
+<div class="badge disc-b">💭 Para llevar</div>
+<h2>Lo que NO se dice en HubSpot Academy</h2>
+<div class="disc"><h3>💬 Pipeline ≠ herramienta</h3>
+<p>HubSpot te da el lugar para poner stages. Pero el pipeline real lo construyen 3 cosas:</p>
+<ul>
+<li>El sales head que define qué constituye un buyer compromiso real (vs un "está caliente")</li>
+<li>La cultura del equipo de aceptar Closed Lost rápido en vez de aferrarse a deals zombies</li>
+<li>La operación (vos) que defiende la integridad de los stages cuando alguien quiere inflarlos</li>
+</ul>
+</div>
+<div class="disc"><h3>💬 La medición es retroactiva</h3>
+<p>Un pipeline bien diseñado se VE en 6 meses, no el día que lo configurás. Si el conversion rate stage-a-stage no es relativamente estable, los stages están mal definidos. Si la velocity por stage es errática, los reps no están usando los exit criteria consistentemente.</p>
+</div>
+<div class="disc"><h3>💬 El forecast es un instrumento de presión, no una predicción</h3>
+<p>El sales head va a presionar para que el pipeline luzca lleno. El CFO va a presionar para que el forecast sea conservador. Tu trabajo es que ambos lados vean LA MISMA data. Si tenés que tunear probabilities cada mes para que cierre el número, el pipeline no está funcionando.</p>
+</div>
+</div>
+
+<!-- S19: Final -->
+<div class="sl" data-s="19">
+<div class="badge">🎉 Fin de la sesión</div>
+<h2>Tu resultado</h2>
+<div class="final-s" id="finalS">—</div>
+<p style="text-align:center;font-size:16px" id="finalM">Completá los ejercicios para ver tu score.</p>
+<div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;margin:24px 0">
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 12px">📌 Preview Sesión 6 · Reporting y Dashboards</h3>
+<p style="font-size:14px">Tenés data (properties), audiencia (listas), automatización (workflows) y motor de oportunidades (pipelines). La próxima vemos cómo <strong>medir todo eso</strong>: reportes de conversion, dashboards por rol, métricas que importan vs vanity metrics, y por qué la mayoría de los dashboards en HubSpot mienten.</p>
+</div>
+<p style="text-align:center;color:var(--td);font-size:13px;margin-top:20px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Sesión 5 de 11</p>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 20</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=20;let cur=0,pts=0,ad={},mSel={l:null,r:null},mDone=0,mTotal=5;
+const qSlides={13:['q1'],14:['q2'],15:['q3']};
+const scSlides={9:'sc1',12:'sc2'};
+
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+document.getElementById('scoreBadge').textContent='✨ '+pts+' pts';
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.style.display='none';updFinal();return}
+b.style.display='flex';
+var sl=document.querySelector('[data-s="'+cur+'"]');
+var qz=sl.dataset.quiz;
+if(qz){
+var locked=false;
+if(qSlides[cur]){locked=!qSlides[cur].every(function(q){return ad[q]!==undefined})}
+if(scSlides[cur]){locked=ad[scSlides[cur]]===undefined}
+if(cur===10){locked=mDone<mTotal}
+if(locked){b.classList.add('locked');b.textContent='🔒 Completá para avanzar'}
+else{b.classList.remove('locked');b.textContent='Siguiente →'}
+}else{b.classList.remove('locked');b.textContent=cur===T-2?'Ver resultado →':'Siguiente →'}
+document.querySelector('.sa').scrollTop=0;
+}
+
+function goNext(){var b=document.getElementById('bN');if(b.classList.contains('locked'))return;if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+
+function ans(el,qId,c){
+if(ad[qId]!==undefined)return;
+ad[qId]=c;if(c)pts+=10;
+var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');
+if(qId==='q1')fb.textContent='✅ Exacto. Probabilities = forecast, no motivación. La motivación se gestiona con quotas y comp plans, no inflando el funnel. Y la única forma de defender los números frente al CEO es con conversion rates históricos: data vs sensación.';
+else if(qId==='q2')fb.textContent='✅ Correcto. Cuando el 40% se atasca, el problema es el EXIT CRITERIA, no los deals. "On Hold" es el síntoma. La cura: criterio claro de Qualified + revisión periódica + Closed Lost con razón "Timing" para los que no avanzan.';
+else fb.textContent='✅ Correcto. La regla de 3 te da un criterio objetivo para defender o rechazar cada pedido. Sin esa regla, Marketing pide infinitos campos y Sales mete basura. Con la regla, la conversación cambia: "este cumple, este no, y este lo automatizamos".';
+fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
+if(qId==='q1')fb.textContent='❌ Cambiar las probabilities por "motivación" rompe el forecast — si tu CEO usa después ese forecast para planear hiring/burn, las decisiones se toman sobre data falsa. La motivación se construye con coaching y resultados reales, no inflando los stages.';
+else if(qId==='q2')fb.textContent='❌ "On Hold" es un parking lot que esconde el problema. Y dejarlo "como está" tampoco resuelve nada — 40% atascado significa que el stage no está midiendo nada. La respuesta es trabajar el EXIT CRITERIA y aceptar Closed Lost donde corresponda.';
+else fb.textContent='❌ Aprobar todo lleva a data basura; rechazar todo lleva a falta de visibility; ambos extremos pierden la pelea política entre Sales y Marketing. La regla de 3 te da criterio objetivo para cada caso y te saca de la decisión binaria.';
+fb.className='qfb show fbbad';q.classList.add('bad')}
+upd();
+}
+
+function scAns(el,scId,c){
+if(ad[scId]!==undefined)return;
+ad[scId]=c;if(c)pts+=15;
+var sc=document.getElementById(scId),opts=sc.querySelectorAll('.scenario-opt'),fb=document.getElementById(scId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');
+if(scId==='sc1')fb.textContent='✅ Exacto. El problema NO es la cantidad de stages — es el lenguaje. "Demo Sent / Proposal Sent" miden al rep, no al buyer. Renombrar buyer-centric + sumar "Trial Active" (porque el 70% pasa por trial, es un milestone real del negocio) + definir Closed Lost Reasons con las 3 que el founder ya conoce (precio, timing, competidor) → ahora el pipeline refleja la realidad del ciclo y vas a poder reportar conversion real.';
+else fb.textContent='✅ Correcto. Disciplina de pipeline: solo evidencia del buyer mueve (o saca) deals. 52 días sin actividad del buyer ≠ deal activo. Pasar a Closed Lost con razón "Timing" + task de re-engagement es la jugada limpia. El forecast del Q2 deja de mentir, el rep no pierde el deal (vuelve a abrirse en Q3 si se reactivan), y el equipo aprende que pipeline ≠ wishlist.';
+fb.className='scenario-fb show sfbok'}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
+if(scId==='sc1')fb.textContent='❌ Sumar stages sin tocar el lenguaje seller-centric reproduce el problema en más granularidad. Probabilities solas tampoco arreglan nada — un deal en "Proposal Sent" al 80% sigue mintiendo si el buyer no abrió el PDF. El problema raíz es buyer- vs seller-centric.';
+else fb.textContent='❌ "Lo dejo como está" mantiene $150k de forecast inflado. "On Hold - Future Quarter" es el clásico vanity stage que esconde el problema y vuelve a aparecer en el siguiente Q. La opción dura pero correcta es Closed Lost con razón documentada y re-engagement programado.';
+fb.className='scenario-fb show sfbbad'}
+upd();
+}
+
+function matchClick(el,side){
+if(el.classList.contains('matched'))return;
+if(side==='l'){
+document.querySelectorAll('#ml .match-item').forEach(function(i){i.classList.remove('selected')});
+el.classList.add('selected');mSel.l=el;
+}else{
+document.querySelectorAll('#mr .match-item').forEach(function(i){i.classList.remove('selected')});
+el.classList.add('selected');mSel.r=el;
+}
+if(mSel.l&&mSel.r){
+if(mSel.l.dataset.m===mSel.r.dataset.m){
+mSel.l.classList.remove('selected');mSel.r.classList.remove('selected');
+mSel.l.classList.add('matched');mSel.r.classList.add('matched');
+mDone++;pts+=5;
+if(mDone===mTotal){document.getElementById('matchScore').style.display='block';document.getElementById('matchScore').textContent='✅ ¡Todo correcto! +'+mTotal*5+' pts'}
+}else{
+mSel.l.classList.add('wrong-flash');mSel.r.classList.add('wrong-flash');
+var a=mSel.l,b2=mSel.r;
+setTimeout(function(){a.classList.remove('selected','wrong-flash');b2.classList.remove('selected','wrong-flash')},600);
+}
+mSel={l:null,r:null};
+upd();
+}
+}
+
+function st(el,i){
+el.parentElement.querySelectorAll('.sn-tab').forEach(function(t){t.classList.remove('active')});
+el.classList.add('active');
+var p=el.closest('.sn').querySelectorAll('.sn-p');
+p.forEach(function(x){x.classList.remove('active')});p[i].classList.add('active');
+}
+
+function updFinal(){
+var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
+var maxPts=85;// 3 quiz*10 + 5 match*5 + 2 scenarios*15
+var pct=Math.round((pts/maxPts)*100);
+el.textContent=pts+' pts ('+pct+'%)';
+if(pct>=80){el.className='final-s great';msg.textContent='🔥 Excelente. Pipeline buyer-centric, disciplina de stages, defensa del forecast. Sos peligroso(a).'}
+else if(pct>=50){el.className='final-s ok';msg.textContent='👍 Bien. Repasá buyer-centric vs seller-centric y la regla de 3 de required properties antes de armar la tarea.'}
+else{el.className='final-s low';msg.textContent='📖 Volvé a las slides 5 (reglas de diseño) y 8 (errores). Sin esas dos, la tarea no va a pasar el criterio de corrección.'}
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+
+var currentLang='es';
+function toggleLang(){
+currentLang=currentLang==='es'?'en':'es';
+document.getElementById('langBtn').textContent=currentLang==='es'?'🌐 EN':'🌐 ES';
+document.querySelector('.top-info').textContent=currentLang==='es'?'Sesión 5 · Trainees':'Session 5 · Trainees';
+}
+
+upd();
+</script>
+</body>
+</html>
