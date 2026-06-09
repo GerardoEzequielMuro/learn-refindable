@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 5 · Forms y Landing Pages | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:4px 12px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s}
+.score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#a78bfa,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both;text-align:left}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
+.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.4)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none;box-shadow:none}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.disc-b{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:#a855f7}
+.badge.hs-b{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.sl ul{list-style:none;padding:0;margin:8px 0 14px}
+.sl ul li{padding:6px 0 6px 22px;position:relative;color:var(--tm);font-size:16px;line-height:1.55}
+.sl ul li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:13px;top:8px}
+.sl ul li strong{color:var(--t)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--acl));opacity:0;transition:opacity .3s}
+.cd:hover::before{opacity:1}
+.cd:hover{border-color:var(--ac);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.cd-i{font-size:26px;margin-bottom:8px;display:block}
+.cd h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 4px}
+.cd p{font-size:15px;line-height:1.4;margin:0}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:var(--rad);overflow:hidden;border:1px solid var(--bd)}
+.cmp-c{padding:18px}.cmp-c.bad{background:var(--rs)}.cmp-c.good{background:var(--gs)}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.cmp-c.bad .cmp-h{color:var(--r)}.cmp-c.good .cmp-h{color:var(--g)}
+.cmp-i{font-size:15px;color:var(--tm);padding:5px 0;line-height:1.5}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}
+.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
+.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.ex{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);margin-bottom:8px;overflow:hidden}
+.ex-h{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s;user-select:none}
+.ex-h:hover{background:var(--s2)}
+.ex-h h4{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;line-height:1.35}
+.ex-a{transition:transform .3s;color:var(--td);font-size:11px}
+.ex.open .ex-a{transform:rotate(180deg)}
+.ex-b{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.ex.open .ex-b{max-height:600px}
+.ex-c{padding:0 18px 14px;font-size:15px;color:var(--tm);line-height:1.7}
+.ex-c strong{color:var(--t)}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.tag.t-r{background:var(--rs);border-color:rgba(239,68,68,.2);color:var(--r)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:all .3s;position:relative;overflow:hidden}
+.qq.ok{border-color:var(--g)}.qq.ok::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--g)}
+.qq.bad{border-color:var(--r)}.qq.bad::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px 14px 52px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;line-height:1.55;position:relative}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs);transform:translateX(3px)}
+.qopt .mk{position:absolute;left:14px;top:14px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.35}.qopt.dis.correct{opacity:1}
+.qfb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.lp-mock{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;margin:14px 0}
+.lp-mock-hdr{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--bd);font-family:'Space Grotesk',monospace;font-size:11px;color:var(--td);display:flex;gap:6px;align-items:center}
+.lp-mock-hdr::before{content:'● ● ●';color:var(--td);font-size:9px;letter-spacing:2px;margin-right:8px}
+.lp-mock-body{padding:20px;position:relative}
+.lp-zone{border:1px dashed var(--bd);border-radius:var(--rads);padding:12px;margin-bottom:10px;font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif;position:relative}
+.lp-zone-l{position:absolute;top:-9px;left:10px;background:var(--bg);padding:0 6px;font-size:10px;color:var(--ac);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.lp-zone strong{color:var(--t);font-weight:600;font-size:13px}
+.lp-zone.fold{border-color:var(--ac);border-style:solid;background:var(--acs)}
+.lp-zone.fold .lp-zone-l{color:var(--acl)}
+.task{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:14px 0;position:relative;overflow:hidden}
+.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--ac),var(--acl))}
+.task-h{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.task h3{margin-top:0;font-size:19px}
+.task p{font-size:15px;line-height:1.6;color:var(--tm)}
+.task ul li{font-size:15px}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;text-align:center;margin:16px 0;letter-spacing:-.04em;animation:popIn .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.final-s.great{background:linear-gradient(135deg,var(--g),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.ok{background:linear-gradient(135deg,var(--o),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.low{background:linear-gradient(135deg,var(--r),#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+@media(max-width:640px){.cmp,.cg{grid-template-columns:1fr}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--ac)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Sesión 5 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">✨ 0 pts</div>
+<div class="pg-text" id="pgText">1 / 11</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">📘 Sesión 5</div>
+<h1>Forms y Landing Pages:<br><span class="hl">capturar sin espantar</span></h1>
+<p style="font-size:18px;max-width:640px">El form no es un campo de captura. Es el primer trigger del funnel. La landing page no es una página: es la decisión de un buyer en 8 segundos. Hoy vemos cómo se diseñan los dos para que conviertan sin romper la data.</p>
+<div class="tag-row" style="margin-top:24px">
+<span class="tag">⏱ 30 min</span>
+<span class="tag">🧩 11 slides</span>
+<span class="tag t-g">🧠 1 quiz + 1 escenario</span>
+<span class="tag t-o">🎯 Dificultad media</span>
+</div>
+</div>
+</div>
+
+<!-- S1: Recap S4 -->
+<div class="sl" data-s="1">
+<div class="badge">00 · Recap Sesión 4</div>
+<h2>De dónde venimos</h2>
+<p>En S4 vimos que el pipeline mide <strong>compromiso del buyer</strong>, no esfuerzo del rep. Stages buyer-centric, exit criteria verificable, probability basada en histórico, Closed Lost siempre con razón.</p>
+<div class="co tip"><div>💡</div><div><p>El pipeline arranca cuando un MQL califica para entrar a un deal. Pero antes del MQL, alguien tuvo que <strong>capturar</strong> a esa persona. Ahí entran forms y LPs: son el primer punto de contacto medible entre el visitante anónimo y el CRM.</p></div></div>
+<div class="co hs"><div>🟠</div><div><p>Pista para hoy: si los stages del pipeline son buyer-centric, los forms también deberían serlo. Capturar solo data que el buyer ya está dispuesto a dar en ese momento, no la que el equipo "querría tener".</p></div></div>
+</div>
+
+<!-- S2: ¿Qué es un form? -->
+<div class="sl" data-s="2">
+<div class="badge">01 · Forms</div>
+<h2>El form no es lo que parece</h2>
+<p>Casi todo el mundo describe un form como "una caja para que la gente deje los datos". Esa definición es la causa de la mitad de los problemas que vamos a ver.</p>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">✗ El form como caja</div>
+<div class="cmp-i">Sirve para capturar datos</div>
+<div class="cmp-i">Cuantos más campos, mejor data</div>
+<div class="cmp-i">Se mide por cantidad de submits</div>
+<div class="cmp-i">Lo arma marketing y se olvida</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✓ El form como trigger</div>
+<div class="cmp-i">Es el inicio de un workflow</div>
+<div class="cmp-i">Cada campo es un compromiso de UX</div>
+<div class="cmp-i">Se mide por submits útiles posteriores</div>
+<div class="cmp-i">Lo arma marketing, lo opera RevOps</div>
+</div>
+</div>
+<div class="co warn"><div>⚠️</div><div><p>Test mental: si todos los submits de un form quedaran sin assigment, sin workflow y sin nurturing, ¿el form sigue teniendo sentido? Si la respuesta es sí, el form está midiendo vanidad.</p></div></div>
+</div>
+
+<!-- S3: Anatomía -->
+<div class="sl" data-s="3">
+<div class="badge">01 · Forms</div>
+<h2>Anatomía de un form que funciona</h2>
+<p>5 piezas que SIEMPRE hay que definir antes de publicar un form. Sin estas 5, el form crea ruido.</p>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>1️⃣ Fields (qué pedís)</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Cada campo mapea a una <strong>property</strong> del contact, deal o ticket. La regla de los trainees: si no podés decir en una frase qué hace el equipo con ese campo en los próximos 30 días, no va.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>2️⃣ Lifecycle stage al submit</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>¿El que llena este form es un Subscriber, un Lead, un MQL? Esto se setea en el form, no después. Si el form de "request a demo" deja al contacto como Subscriber, perdiste contexto desde el segundo cero.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>3️⃣ Owner / queue assignment</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Quién recibe el lead. Por geo, por industry, por tamaño de empresa, round-robin. Sin esto, el SDR de turno se lleva todo o el lead se pierde en una bandeja compartida.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>4️⃣ Follow-up email</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Mail automático al submit. Confirma que recibiste, da next steps claros y abre la conversación. Si el buyer no recibe nada en 60 segundos, asume que el form se rompió.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>5️⃣ Workflow trigger</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>El workflow que arranca al submit: enrichment, scoring, notificación, creación de deal, sync con Slack. El form es el botón de start, el workflow es la máquina.</p></div></div></div>
+<div class="co tip"><div>💡</div><div><p>Las 5 piezas se configuran en una sola pasada cuando creás el form. No las dejes para "después" porque ese "después" no llega.</p></div></div>
+</div>
+
+<!-- S4: Progressive profiling + smart fields -->
+<div class="sl" data-s="4">
+<div class="badge">01 · Forms</div>
+<h2>Progressive profiling: pedí menos, capturá más</h2>
+<p>Si el primer form pide 12 campos, la tasa de conversión se desploma. La solución no es pedir menos data, es pedir <strong>data distinta en cada interacción</strong>.</p>
+<div class="cg">
+<div class="cd"><div class="cd-i">1️⃣</div><h3>Primera visita</h3><p>Email + nombre. Nada más. La fricción de 2 campos es mínima.</p></div>
+<div class="cd"><div class="cd-i">2️⃣</div><h3>Segunda descarga</h3><p>El form detecta que ya conoce email/nombre y pide empresa + cargo en su lugar.</p></div>
+<div class="cd"><div class="cd-i">3️⃣</div><h3>Tercera interacción</h3><p>Pide industry + tamaño de equipo. Datos que pesan para scoring y routing.</p></div>
+</div>
+<div class="co hs"><div>🟠</div><div><p>En HubSpot esto se llama <strong>queue fields</strong>: definís un orden de campos y el form muestra solo los que todavía no fueron completados para ese contacto. Si ya tenés email, pasa al siguiente campo de la fila automáticamente.</p></div></div>
+<div class="co tip"><div>💡</div><div><p>Smart fields son lo mismo a nivel campo individual: el campo se oculta si la property ya está completa. Combinás progressive profiling para forms enteros + smart fields para granularidad campo a campo.</p></div></div>
+</div>
+
+<!-- S5: Form -> Workflow -->
+<div class="sl" data-s="5">
+<div class="badge">01 · Forms</div>
+<h2>Del submit al CRM en 5 segundos</h2>
+<p>Esto es lo que <strong>tiene que pasar</strong> entre que el buyer hace click en submit y el SDR recibe la notificación. Si alguna pieza falta, el lead se enfría.</p>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>⚡ Paso 1 · Crea o actualiza el contact</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>HubSpot busca el email. Si existe, actualiza properties. Si no, crea contact nuevo. <strong>Nunca</strong> creás duplicados por form: el email es la clave única.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>⚡ Paso 2 · Setea lifecycle + lead status</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>El form aplica las properties que definiste: lifecycle stage (ej: MQL), lead status (ej: New), source (ej: Demo Form). Esto pasa antes del workflow, no después.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>⚡ Paso 3 · Dispara el workflow</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>El workflow se enciende con trigger "Form submission = X". Ahí adentro: enrichment (Clearbit/Apollo), scoring update, asignación de owner, creación de deal si aplica, notificación a Slack.</p></div></div></div>
+<div class="ex" onclick="this.classList.toggle('open')"><div class="ex-h"><h4>⚡ Paso 4 · Manda el follow-up email</h4><span class="ex-a">▼</span></div><div class="ex-b"><div class="ex-c"><p>Email automático al buyer en menos de 60 segundos. Confirma submit, anticipa next step, deja el contacto del owner asignado. Cierra el loop emocional.</p></div></div></div>
+<div class="co warn"><div>⚠️</div><div><p>Error frecuente: setear lifecycle stage <strong>dentro</strong> del workflow en vez de en el form. Si el workflow se cae o tiene delay, el reporting queda mal para esa hora. Lifecycle siempre en el form.</p></div></div>
+</div>
+
+<!-- S6: ¿Qué es una LP? -->
+<div class="sl" data-s="6">
+<div class="badge">02 · Landing Pages</div>
+<h2>¿Qué es una landing page?</h2>
+<p>Una LP <strong>no es una página de tu sitio</strong>. Es una página con UN solo objetivo, sin distracciones, donde la única acción posible es la que vos elegiste.</p>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">✗ Página de sitio</div>
+<div class="cmp-i">Navbar completo, footer, sidebar</div>
+<div class="cmp-i">Varios CTAs compitiendo</div>
+<div class="cmp-i">Enlaces a otras secciones</div>
+<div class="cmp-i">Objetivo: que conozcan la empresa</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✓ Landing page</div>
+<div class="cmp-i">Sin navbar o con navbar mínima</div>
+<div class="cmp-i">UN solo CTA, repetido si hace falta</div>
+<div class="cmp-i">Cero links externos al objetivo</div>
+<div class="cmp-i">Objetivo: una sola conversión</div>
+</div>
+</div>
+<div class="co tip"><div>💡</div><div><p>Regla de oro: si removés el navbar y el visitante se pierde, no era una LP. Era una página de sitio disfrazada.</p></div></div>
+</div>
+
+<!-- S7: Anatomía LP -->
+<div class="sl" data-s="7">
+<div class="badge">02 · Landing Pages</div>
+<h2>Anatomía de una LP que convierte</h2>
+<p>La estructura no es ornamental. Es el camino que el ojo del buyer recorre en los primeros 8 segundos. Si una zona falta, las que siguen no se leen.</p>
+<div class="lp-mock">
+<div class="lp-mock-hdr">demo.tucliente.com/whitepaper-onboarding</div>
+<div class="lp-mock-body">
+<div class="lp-zone fold"><div class="lp-zone-l">Above the fold · 8 seg</div><strong>1. Headline + subheadline</strong>: promesa concreta, no slogan. "Reducí 40% el onboarding de tu equipo con este playbook"</div>
+<div class="lp-zone fold"><div class="lp-zone-l">Above the fold</div><strong>2. CTA primario</strong>: botón visible sin scroll. "Descargar gratis", no "Saber más"</div>
+<div class="lp-zone"><div class="lp-zone-l">Mid</div><strong>3. Beneficios concretos</strong>: 3 bullets cortos. Qué se llevan, no qué hace el producto.</div>
+<div class="lp-zone"><div class="lp-zone-l">Mid</div><strong>4. Social proof</strong>: logos de clientes, testimonio con foto y nombre, número fuerte.</div>
+<div class="lp-zone"><div class="lp-zone-l">Bottom</div><strong>5. Form + CTA repetido</strong>: el form va acá. Si la LP es larga, el CTA del top también lleva acá con anchor.</div>
+</div>
+</div>
+<div class="co warn"><div>⚠️</div><div><p>Lo que <strong>NO</strong> va en una LP: navbar con 7 items, footer con sitemap, links a otras LPs, links a blog, video autoplay con sonido, chat widget abierto. Cada uno es una fuga de atención.</p></div></div>
+</div>
+
+<!-- S8: Errores comunes -->
+<div class="sl" data-s="8">
+<div class="badge">03 · Errores</div>
+<h2>Lo que rompe la conversión</h2>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">⛔ En forms</div>
+<div class="cmp-i">🪤 12 campos en el primer form</div>
+<div class="cmp-i">🪤 Required de cosas que no se usan</div>
+<div class="cmp-i">🪤 Email sin domain validation: capturan @gmail.com en form B2B</div>
+<div class="cmp-i">🪤 Sin lifecycle seteado al submit</div>
+<div class="cmp-i">🪤 Sin follow-up email, el buyer queda en el aire</div>
+<div class="cmp-i">🪤 Form en página de sitio sin LP dedicada</div>
+</div>
+<div class="cmp-c bad">
+<div class="cmp-h">⛔ En LPs</div>
+<div class="cmp-i">🪤 Navbar completa con 7 links de fuga</div>
+<div class="cmp-i">🪤 Headline genérico tipo "Bienvenido"</div>
+<div class="cmp-i">🪤 CTA debajo del fold en mobile</div>
+<div class="cmp-i">🪤 Cero social proof</div>
+<div class="cmp-i">🪤 Form gigante visible al entrar (asusta)</div>
+<div class="cmp-i">🪤 Misma LP para 5 fuentes distintas</div>
+</div>
+</div>
+<div class="co hs"><div>🟠</div><div><p>El que más se repite en clientes Refindable: <strong>un solo form genérico de "contacto"</strong> usado para demo, whitepaper, ayuda, partnership y postulaciones. Todo cae en la misma cola, sin contexto, sin scoring distinto. Romper ese form en 4 forms con triggers distintos suele subir conversion y baja tiempo de respuesta.</p></div></div>
+</div>
+
+<!-- S9: Escenario + Quiz -->
+<div class="sl" data-s="9" data-quiz="2">
+<div class="badge quiz-b">🧠 Aplicación</div>
+<h2>Caso del día</h2>
+<p>Cliente B2B SaaS. LP de "Solicitá una demo" con form de 9 campos required: nombre, email, empresa, cargo, teléfono, country, tamaño de equipo, presupuesto anual, mensaje libre. Conversion rate: 1.2%. Submits/día: 4. El sales head quiere más leads y propone subir budget de ads. Te preguntan a vos qué hacer primero.</p>
+
+<div class="qq" id="q1">
+<div class="qq-n">Pregunta 1</div>
+<p>¿Cuál es la primera acción que recomendás antes de tocar el budget de ads?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Sumar más campos al form para calificar mejor los pocos que llegan</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Reducir el form a 3 campos (email, empresa, cargo) y mover el resto a progressive profiling o discovery call</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Cambiar el headline de la LP a algo más "creativo"</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">D</div>Aprobar el budget de ads, los leads bajos son problema de tráfico</div>
+</div>
+<div class="qfb" id="q1-fb"></div>
+</div>
+
+<div class="qq" id="q2">
+<div class="qq-n">Pregunta 2</div>
+<p>El sales head insiste: necesita "presupuesto anual" sí o sí para no perder tiempo con leads chicos. ¿Cómo lo resolvés sin romper la conversion?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Lo dejás required en el form, total el sales head sabe lo que necesita</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">B</div>Lo sacás del form sin avisar y respondés cuando reclame</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">C</div>Lo movés a un workflow post-submit que enriquece automáticamente (Clearbit/Apollo) + lo confirma en la discovery call. El form pide solo 3 campos, el dato existe igual.</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">D</div>Lo movés a un form post-demo y bloqueás el contenido hasta que lo completen</div>
+</div>
+<div class="qfb" id="q2-fb"></div>
+</div>
+</div>
+
+<!-- S10: Tarea -->
+<div class="sl" data-s="10">
+<div class="badge">📌 Tarea para la próxima</div>
+<h2>Rediseñá UN form + LP del cliente</h2>
+<div class="task">
+<div class="task-h">🎯 Tu trabajo</div>
+<h3>Elegí un par form + LP existente y proponé la versión 2.0</h3>
+<p>Tomá el form que auditaste en la pre-tarea (el top-1 por submits del cliente). Buscá la LP donde está embebido. Entregá:</p>
+<ul>
+<li><strong>Estado actual:</strong> screenshot del form y de la LP, conversion rate si lo tenés, cantidad de campos required vs opcionales</li>
+<li><strong>Form rediseñado:</strong> lista de campos final (max 4 al inicio, el resto progressive profiling), con lifecycle stage, owner queue, follow-up email y workflow trigger definidos</li>
+<li><strong>LP rediseñada:</strong> wireframe simple (puede ser papel + foto) con las 5 zonas (headline, CTA primario, beneficios, social proof, form). Marcá qué removés del original y por qué</li>
+<li><strong>Hipótesis de impacto:</strong> 3-5 líneas: qué esperás que cambie en conversion y por qué</li>
+</ul>
+</div>
+<div class="co warn"><div>⚠️</div><div><p><strong>Criterios de corrección:</strong></p><ul style="margin-top:6px;font-size:14px"><li>Form de 4 campos máximo en el primer paso</li><li>Las 5 piezas del form definidas, no solo los campos</li><li>LP sin navbar de fuga ni links externos al objetivo</li><li>CTA primario visible above the fold (mobile incluido)</li><li>Hipótesis con número, no "va a mejorar"</li></ul></div></div>
+</div>
+
+<!-- S11: Final -->
+<div class="sl" data-s="11">
+<div class="cover" style="padding-top:24px;text-align:center"><div class="cover-glow" style="top:-100px"></div>
+<div class="badge">🎉 Fin de la sesión</div>
+<h2 style="font-size:32px">Tu resultado</h2>
+<div class="final-s" id="finalS">0</div>
+<p style="text-align:center;font-size:17px;max-width:560px;margin:0 auto" id="finalM">Completá los ejercicios para ver tu score.</p>
+<div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:28px 0;position:relative;overflow:hidden;text-align:left">
+<div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ac),var(--hs))"></div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+<span style="font-size:22px">📌</span>
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0">Preview Sesión 6 · Workflows y Automatización</h3>
+</div>
+<p style="font-size:14px;margin:0">Ya tenés properties, listas, pipelines, forms y LPs. Falta el motor que conecta todo: <strong>workflows</strong>. La próxima vemos triggers, branching, enrollment criteria, delays, internal vs marketing automation, y por qué un workflow mal armado puede mandar 4 mails iguales al mismo lead.</p>
+</div>
+<p style="color:var(--td);font-size:13px;margin-top:24px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Sesión 5 de 11</p>
+</div>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 12</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=12;let cur=0,pts=0,ad={};
+const qSlides={9:['q1','q2']};
+
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+var sb=document.getElementById('scoreBadge');sb.textContent='✨ '+pts+' pts';
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.style.display='none';updFinal();return}
+b.style.display='flex';
+var sl=document.querySelector('[data-s="'+cur+'"]');
+if(sl.dataset.quiz){
+var allDone=qSlides[cur].every(q=>ad[q]!==undefined);
+if(allDone){b.classList.remove('locked');b.textContent='Siguiente →'}
+else{b.classList.add('locked');b.textContent='🔒 Respondé primero'}
+}else{b.classList.remove('locked');b.textContent='Siguiente →'}
+document.querySelector('.sa').scrollTop=0;
+}
+function goNext(){var b=document.getElementById('bN');if(b.classList.contains('locked'))return;if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+function bumpScore(){var sb=document.getElementById('scoreBadge');sb.classList.remove('bump');void sb.offsetWidth;sb.classList.add('bump')}
+
+function ans(el,qId,c){
+if(ad[qId]!==undefined)return;
+ad[qId]=c;if(c){pts+=10;setTimeout(bumpScore,50)}
+var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');
+if(qId==='q1')fb.textContent='✅ Exacto. Antes de sumar tráfico, asegurate que el funnel actual no esté tirando leads por fricción. Un form de 9 required en un primer contacto es el caso clásico. Bajás a 3 campos, mantenés la calificación con enrichment + discovery, y la conversion sube SIN gastar un peso más en ads.';
+else fb.textContent='✅ Correcto. La regla: si el dato existe afuera (databases de enrichment) o se puede conseguir en la primera llamada, no lo pidas en el form. El sales head quiere el dato, no el campo. Se lo das por workflow.';
+fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});
+if(qId==='q1')fb.textContent='❌ Sumar campos o budget sin diagnosticar el form es atacar el síntoma. Cambiar el headline puede mejorar marginal, pero el problema raíz es la fricción de 9 campos required. Empezás por la fricción siempre.';
+else fb.textContent='❌ Dejarlo required mantiene el problema. Sacarlo a escondidas rompe la relación con sales. Bloquear contenido después suma fricción. La salida es separar el dato de cómo se captura.';
+fb.className='qfb show fbbad';q.classList.add('bad')}
+upd();
+}
+
+function updFinal(){
+var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
+var maxPts=20;
+var pct=Math.round((pts/maxPts)*100);
+el.textContent=pts+' pts ('+pct+'%)';
+if(pct>=80){el.className='final-s great';msg.textContent='🔥 Excelente. Forms como triggers, LPs sin fuga, fricción minimizada. Lista/o para la tarea.'}
+else if(pct>=50){el.className='final-s ok';msg.textContent='👍 Bien. Repasá el form de 5 piezas (S3) y los errores comunes (S8) antes de armar la tarea.'}
+else{el.className='final-s low';msg.textContent='📖 Volvé a las slides 3 (anatomía de form) y 7 (anatomía de LP). Esas dos son la base de la tarea.'}
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+upd();
+</script>
+</body>
+</html>

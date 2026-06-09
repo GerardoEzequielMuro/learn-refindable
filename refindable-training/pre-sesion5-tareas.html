@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tareas pre-Sesión 5 | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#a78bfa,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both;text-align:left}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
+.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.4)}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.del-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.disc-b{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:#a855f7}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.sl ul{list-style:none;padding:0;margin:8px 0 14px}
+.sl ul li{padding:6px 0 6px 22px;position:relative;color:var(--tm);font-size:16px;line-height:1.55}
+.sl ul li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:13px;top:8px}
+.sl ul li strong{color:var(--t)}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}
+.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
+.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none}
+.task{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:14px 0;position:relative;overflow:hidden}
+.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--ac),var(--acl))}
+.task.t-warn::before{background:linear-gradient(180deg,var(--o),var(--hs))}
+.task.t-deliv::before{background:linear-gradient(180deg,var(--g),#34d399)}
+.task-h{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.task.t-warn .task-h{color:var(--o)}
+.task.t-deliv .task-h{color:var(--g)}
+.task h3{margin-top:0;font-size:19px}
+.task p{font-size:15px;line-height:1.6;color:var(--tm)}
+.task ul li{font-size:15px}
+.checklist{background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);padding:16px 20px;margin:14px 0}
+.checklist-h{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--td);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.check-item{display:flex;gap:10px;padding:8px 0;align-items:flex-start;cursor:pointer;border-bottom:1px solid var(--bd)}
+.check-item:last-child{border-bottom:none}
+.check-item:hover .check-box{border-color:var(--ac)}
+.check-box{width:18px;height:18px;border-radius:4px;border:2px solid var(--bd);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.check-item.done .check-box{background:var(--ac);border-color:var(--ac)}
+.check-item.done .check-box::after{content:'\2713';color:#fff;font-size:12px;font-weight:700}
+.check-item.done .check-l{color:var(--td);text-decoration:line-through}
+.check-l{font-size:15px;color:var(--tm);line-height:1.5}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0}
+.step{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:18px;position:relative}
+.step-n{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.step h4{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:6px}
+.step p{font-size:14px;color:var(--tm);line-height:1.5;margin:0}
+.deliver-box{background:var(--gs);border:1px solid rgba(16,185,129,.3);border-radius:var(--rad);padding:24px;margin:18px 0}
+.deliver-box h3{color:var(--g);margin-top:0}
+.deliver-box p{font-size:15px}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+@media(max-width:640px){.steps{grid-template-columns:1fr}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--ac)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Tareas pre-Sesión 5 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="pg-text" id="pgText">1 / 5</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">📋 Pre-Sesión 5</div>
+<h1>Antes de la próxima:<br><span class="hl">2 tareas cortas</span></h1>
+<p style="font-size:18px;max-width:640px">Una mini-tarea para cerrar lo de pipelines y una de observación para llegar pensando a Forms y Landing Pages. Las dos juntas: <strong>45 minutos máximo</strong>.</p>
+<div class="tag-row" style="margin-top:24px">
+<span class="tag">⏱ 45 min total</span>
+<span class="tag t-g">📝 Tarea 1 · 15 min</span>
+<span class="tag t-o">👀 Tarea 2 · 30 min</span>
+</div>
+<div class="co tip" style="margin-top:24px"><div>💡</div><div><p>Esto es <strong>adicional</strong> a la tarea grande de Sesión 4 (diseñar pipeline de 5 stages para un negocio ficticio). Aquella va más despacio. Esta es para hoy y mañana.</p></div></div>
+</div>
+</div>
+
+<!-- S1: Mini-tarea Pipelines -->
+<div class="sl" data-s="1">
+<div class="badge act-b">📝 Tarea 1 · Pipelines en la realidad</div>
+<h2>Aplicá UN cambio a UN pipeline real</h2>
+<p>En lugar de inventar uno, abrí HubSpot de tu cliente actual y mirá UN pipeline existente con ojos de auditor. Encontrá UNA cosa para mejorar y proponé el cambio.</p>
+
+<div class="task t-warn">
+<div class="task-h">⚠️ Importante</div>
+<h3>NO toques nada en producción</h3>
+<p>Esta tarea es de <strong>análisis y propuesta</strong>, no de implementación. Screenshots y un texto corto. El cambio real se discute después con el cliente, nunca lo aplicás vos sola/o sin aprobación.</p>
+</div>
+
+<h3>Los 4 pasos</h3>
+<div class="steps">
+<div class="step"><div class="step-n">Paso 1</div><h4>Elegí el pipeline</h4><p>Si tu cliente tiene varios, elegí uno: el Sales pipeline default suele ser el más rico para auditar.</p></div>
+<div class="step"><div class="step-n">Paso 2</div><h4>Sacá screenshot del estado actual</h4><p>Settings → Objects → Deals → Pipelines & Stages. Capturá la pantalla con los nombres de stages visibles.</p></div>
+<div class="step"><div class="step-n">Paso 3</div><h4>Identificá UNA mejora</h4><p>Elegí UNA sola (lista abajo). No tres. UNA.</p></div>
+<div class="step"><div class="step-n">Paso 4</div><h4>Documentá la propuesta</h4><p>3-5 líneas: qué cambiarías, por qué, y qué riesgo tendría no cambiarlo.</p></div>
+</div>
+
+<h3>De qué tipo puede ser la mejora (elegí UNA)</h3>
+<ul>
+<li><strong>Renombrar un stage seller-centric → buyer-centric.</strong> Ej: "Demo Sent" pasa a "Demo Attended". El test: ¿el nombre describe algo que hizo el rep o algo que hizo el buyer?</li>
+<li><strong>Eliminar un vanity stage.</strong> "Hot Lead", "Interested", "On Hold", "Following Up". No tienen exit criteria verificable → son parking lots.</li>
+<li><strong>Agregar UN required property que falta.</strong> Pensá: cuando un deal pasa a Closed Lost, ¿se exige "Closed Lost Reason"? Si no, esa es la mejora.</li>
+<li><strong>Ajustar probability fuera de rango.</strong> Saltos de 5 puntos entre stages (50% → 55%) no tienen sentido estadístico. Los saltos coherentes son de 15-20.</li>
+</ul>
+
+<div class="co hs"><div>🟠</div><div><p><strong>Si tu cliente tiene el pipeline impecable:</strong> excelente, pero igual tenés que entregar. Documentalo: "Audité X pipeline, no encontré stages seller-centric, ni vanity stages, ni properties faltantes. La probability sigue [criterio]. Conclusión: el pipeline está alineado con buyer-centric design." Eso ya es entregable.</p></div></div>
+
+<div class="task t-deliv">
+<div class="task-h">📦 Qué entregás</div>
+<h3>Un documento corto con 3 cosas</h3>
+<ul>
+<li><strong>Screenshot del estado actual</strong> del pipeline (con nombres de stages visibles)</li>
+<li><strong>Propuesta de cambio</strong>: qué cambiarías exactamente (texto del nombre nuevo, nombre del stage a eliminar, nombre del property a sumar, o nueva probability)</li>
+<li><strong>Justificación de 3-5 líneas</strong>: por qué ese cambio, qué problema resuelve, y qué pasa si NO se hace</li>
+</ul>
+</div>
+</div>
+
+<!-- S2: Pre-tarea Forms & LP - Observación -->
+<div class="sl" data-s="2">
+<div class="badge act-b">👀 Tarea 2 · Parte A</div>
+<h2>Cazá 2 ejemplos en internet</h2>
+<p>Antes de aprender a armar forms y landing pages, ayuda mirar lo que ya existe con criterio. Vas a buscar dos cosas reales, en cualquier sitio web, durante tu navegación normal.</p>
+
+<div class="task">
+<div class="task-h">🔍 Caza 1 · El form frustrante</div>
+<h3>Un formulario que te hizo abandonar</h3>
+<p>Llenando algo (registro, contacto, pedir presupuesto) en cualquier sitio web, incluso ajeno al rubro de Refindable. Apenas sentís fricción, antes de cerrar la pestaña, tomá screenshot.</p>
+<p style="margin-top:10px;color:var(--t)"><strong>Anotá en 2 líneas:</strong> qué te frustró exactamente. ¿Demasiados campos? ¿Te pedían DNI sin explicar para qué? ¿No sabías cuántos pasos faltaban? ¿Required marcados con asterisco invisible? Sé específica/o.</p>
+</div>
+
+<div class="task">
+<div class="task-h">🤝 Caza 2 · La landing que te hizo confiar</div>
+<h3>Una landing page que te dieron ganas de probar el producto</h3>
+<p>Cualquier sitio. SaaS, e-commerce, infoproducto, lo que sea. La condición: que al verla, te haya bajado la guardia y te haya dado ganas de dejar tu email o hacer click en el CTA principal.</p>
+<p style="margin-top:10px;color:var(--t)"><strong>Anotá en 2 líneas:</strong> qué elemento concreto te transmitió confianza. ¿Testimonios con foto y nombre? ¿Un demo en video corto? ¿Pricing clarísimo? ¿Sin formulario gigante al inicio? Identificá UNA cosa, no diez.</p>
+</div>
+
+<div class="co tip"><div>💡</div><div><p>Trampa común: elegir un sitio "lindo" o "famoso" en vez de uno que realmente te hizo sentir algo. La caza vale por la <strong>reacción tuya</strong>, no por el prestigio del sitio. Una landing de un coach desconocido puede convertir mejor que la de una marca top.</p></div></div>
+</div>
+
+<!-- S3: Pre-tarea Forms & LP - Análisis interno -->
+<div class="sl" data-s="3">
+<div class="badge act-b">🔬 Tarea 2 · Parte B</div>
+<h2>Mirá UN form real de tu cliente</h2>
+<p>Después de la caza afuera, mirá adentro. Elegí UN form actualmente publicado en HubSpot del cliente que estés trabajando: el más usado, idealmente.</p>
+
+<div class="steps">
+<div class="step"><div class="step-n">Paso 1</div><h4>Encontrá el form</h4><p>Marketing → Lead Capture → Forms. Ordená por submissions descendente y elegí el top 1.</p></div>
+<div class="step"><div class="step-n">Paso 2</div><h4>Listá todos los campos</h4><p>Hacé una lista numerada. Marcá cuáles son required y cuáles son opcionales.</p></div>
+<div class="step"><div class="step-n">Paso 3</div><h4>Aplicá el filtro de 3</h4><p>3 que sobran. 3 que faltan. Ni más ni menos.</p></div>
+</div>
+
+<h3>Cómo decidir qué sobra y qué falta</h3>
+<ul>
+<li><strong>Sobra si:</strong> el equipo nunca lo usa para segmentar, scoring, ni personalización. O lo pide pero después nadie lo lee. O lo capturás en otro lado igual (ej: el país está en el lead source).</li>
+<li><strong>Falta si:</strong> después del form el equipo tiene que adivinar o investigar manualmente algo básico. Ej: si todos los leads van a una misma owner queue porque el form no captura "industry" para routing.</li>
+</ul>
+
+<div class="co warn"><div>⚠️</div><div><p>Si tu cliente es muy nuevo y todavía no tenés acceso a HubSpot para auditar forms, decímelo antes de la sesión y armamos una versión con un form de muestra. Pero <strong>intentalo</strong> primero. Pedile acceso de read-only al manager si no lo tenés.</p></div></div>
+
+<div class="task t-deliv">
+<div class="task-h">📦 Qué entregás de la Tarea 2 (las dos partes)</div>
+<h3>Un solo documento con todo</h3>
+<ul>
+<li><strong>Caza 1:</strong> screenshot del form frustrante + 2 líneas de por qué</li>
+<li><strong>Caza 2:</strong> screenshot de la landing confiable + 2 líneas del elemento concreto que funcionó</li>
+<li><strong>Análisis interno:</strong> nombre del form auditado, lista de campos actuales, 3 que sobran (con razón en una línea cada uno), 3 que faltan (con para qué los usarías)</li>
+</ul>
+</div>
+</div>
+
+<!-- S4: Entrega -->
+<div class="sl" data-s="4">
+<div class="cover" style="padding-top:24px;text-align:center"><div class="cover-glow" style="top:-100px"></div>
+<div class="badge del-b">📤 Entrega</div>
+<h2 style="font-size:32px">Cómo y cuándo</h2>
+
+<div class="deliver-box" style="text-align:left;margin-top:24px">
+<h3>📅 Plazo</h3>
+<p style="color:var(--tm);font-size:16px">Mandalas <strong>24 horas antes</strong> de la Sesión 5. Esto nos da tiempo de leerlas y armar parte de la clase con tus hallazgos reales (vamos a usar 2 o 3 ejemplos anónimos en la sesión, sin nombres).</p>
+</div>
+
+<div class="checklist" style="text-align:left">
+<div class="checklist-h">✅ Checklist antes de mandar</div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l"><strong>Tarea 1 ·</strong> screenshot del pipeline actual con nombres legibles</div></div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l"><strong>Tarea 1 ·</strong> propuesta de UN cambio específico (no varios)</div></div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l"><strong>Tarea 1 ·</strong> justificación de 3-5 líneas con el "qué pasa si no se hace"</div></div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l"><strong>Tarea 2 ·</strong> 2 screenshots de caza (form frustrante + landing confiable)</div></div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l"><strong>Tarea 2 ·</strong> análisis del form interno: campos actuales, 3 que sobran, 3 que faltan</div></div>
+<div class="check-item" onclick="this.classList.toggle('done')"><div class="check-box"></div><div class="check-l">Todo en <strong>un solo documento</strong> (Doc / PDF / Notion link). No mandes archivos sueltos.</div></div>
+</div>
+
+<div class="co tip" style="text-align:left;margin-top:18px"><div>💡</div><div><p><strong>Si te trabás:</strong> escribíme antes del plazo. Vale más mandar la Tarea 1 sin la 2 (o viceversa) y consultar lo otro, que entregar fuera de tiempo o no entregar.</p></div></div>
+
+<p style="color:var(--td);font-size:13px;margin-top:28px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Tareas pre-Sesión 5</p>
+</div>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 5</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=5;let cur=0;
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.textContent='✓ Listo';b.onclick=function(){alert('Buena. Manos a la obra ✊')}}
+else{b.textContent='Siguiente →';b.onclick=goNext}
+document.querySelector('.sa').scrollTop=0;
+}
+function goNext(){if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+upd();
+</script>
+</body>
+</html>
