@@ -71,13 +71,11 @@
         if (gate) gate.classList.add('hidden');
       }
       document.addEventListener('DOMContentLoaded', function() {
-        if (sessionStorage.getItem(KEY) === '1') { unlock(); return; }
         var gate = document.getElementById('pw-gate');
         var input = document.getElementById('pw-input');
         var errMsg = document.getElementById('pw-error');
         function attempt() {
           if (input.value === PASS) {
-            sessionStorage.setItem(KEY, '1');
             unlock();
           } else {
             input.classList.add('error');
