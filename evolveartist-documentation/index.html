@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EvolveArtist.com — SEO Audit Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-base: #0f1117;
+      --bg-card: #1a1d27;
+      --bg-card-hover: #1e2132;
+      --bg-stripe: #1d2030;
+      --border: #272b3d;
+      --accent: #6c63ff;
+      --accent-glow: rgba(108,99,255,0.15);
+      --accent-dim: rgba(108,99,255,0.6);
+      --text-primary: #e8eaf0;
+      --text-secondary: #9198b0;
+      --text-muted: #5d6480;
+      --text-accent: #9d97ff;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --danger: #f87171;
+      --info: #60a5fa;
+      --red-border: #ef4444;
+      --orange-border: #f97316;
+      --yellow-border: #eab308;
+      --blue-border: #3b82f6;
+      --chart-1: #6c63ff;
+      --chart-2: #34d399;
+      --chart-3: #fbbf24;
+      --chart-4: #f87171;
+      --chart-5: #60a5fa;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title .site-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .header-title .report-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .date-chip {
+      background: var(--accent-glow);
+      border: 1px solid rgba(108,99,255,0.3);
+      color: var(--text-accent);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 14px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      position: relative;
+      top: 1px;
+    }
+
+    .nav-btn:hover { color: var(--text-primary); }
+
+    .nav-btn.active {
+      color: var(--text-accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Main content ── */
+    .main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── Section header ── */
+    .section-header {
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* ── KPI Grid ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(108,99,255,0.4);
+      transform: translateY(-1px);
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums lining-nums;
+      line-height: 1.1;
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .kpi-delta {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .kpi-delta.down { color: var(--danger); }
+    .kpi-delta.neutral { color: var(--text-muted); }
+
+    /* ── Callout box ── */
+    .callout {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08) 0%, rgba(108,99,255,0.04) 100%);
+      border: 1px solid rgba(108,99,255,0.25);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .callout-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .callout p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .callout p strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ── Charts grid ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid { grid-template-columns: 1fr; }
+    }
+
+    .chart-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .chart-container canvas {
+      width: 100% !important;
+    }
+
+    /* ── Tables ── */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .table-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: rgba(255,255,255,0.02);
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    thead th:not(:first-child) { text-align: right; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,0.01); }
+    tbody tr:hover { background: var(--bg-card-hover); }
+
+    tbody tr.highlight-low-ctr {
+      background: rgba(251,191,36,0.05);
+    }
+
+    tbody tr.highlight-low-ctr:nth-child(odd) {
+      background: rgba(251,191,36,0.07);
+    }
+
+    tbody tr.highlight-low-ctr:hover {
+      background: rgba(251,191,36,0.1);
+    }
+
+    td {
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    td:not(:first-child) { text-align: right; }
+
+    td.page-url {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--text-accent);
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+
+    .ctr-warn {
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    .ctr-good { color: var(--success); }
+
+    .pos-badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pos-top { background: rgba(52,211,153,0.15); color: var(--success); }
+    .pos-mid { background: rgba(251,191,36,0.12); color: var(--warning); }
+    .pos-low { background: rgba(248,113,113,0.12); color: var(--danger); }
+
+    /* ── Country table ── */
+    .country-row td:first-child {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .country-flag {
+      font-size: 16px;
+    }
+
+    .bar-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inline-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--accent);
+      min-width: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── Brand callout ── */
+    .brand-callout {
+      background: rgba(248,113,113,0.06);
+      border: 1px solid rgba(248,113,113,0.2);
+      border-left: 3px solid var(--danger);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .warn-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(248,113,113,0.12);
+      border: 1px solid rgba(248,113,113,0.3);
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── Donut legend ── */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .donut-canvas-wrap {
+      flex: 0 0 200px;
+      max-width: 200px;
+    }
+
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .legend-label { font-size: 13px; color: var(--text-secondary); }
+    .legend-value { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-left: auto; padding-left: 16px; font-variant-numeric: tabular-nums; }
+
+    /* ── Opportunities ── */
+    .opp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opp-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      gap: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .opp-item:hover { border-color: rgba(108,99,255,0.3); }
+
+    .opp-item.red { border-left: 3px solid var(--red-border); }
+    .opp-item.orange { border-left: 3px solid var(--orange-border); }
+    .opp-item.yellow { border-left: 3px solid var(--yellow-border); }
+    .opp-item.blue { border-left: 3px solid var(--blue-border); }
+
+    .opp-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      width: 20px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .opp-body { flex: 1; min-width: 0; }
+
+    .opp-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .opp-emoji { font-size: 14px; }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .badge-high { background: rgba(248,113,113,0.15); color: #fca5a5; }
+    .badge-medium { background: rgba(251,191,36,0.15); color: #fde68a; }
+    .badge-low { background: rgba(96,165,250,0.15); color: #93c5fd; }
+    .badge-quick { background: rgba(52,211,153,0.12); color: #6ee7b7; }
+    .badge-medium-effort { background: rgba(251,191,36,0.1); color: var(--warning); }
+    .badge-complex { background: rgba(248,113,113,0.1); color: var(--danger); }
+
+    .opp-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .opp-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 48px;
+    }
+
+    footer a { color: var(--text-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Misc ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .two-col { grid-template-columns: 1fr; }
+      .main { padding: 20px 16px; }
+      .header { padding: 16px 20px; }
+      .nav { padding: 0 16px; }
+      .nav-btn { padding: 12px 14px; font-size: 12px; }
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-value { font-size: 22px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+    .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+    .overview-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-pct {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .brand-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .scroll-x { overflow-x: auto; }
+    .scroll-x::-webkit-scrollbar { height: 4px; }
+    .scroll-x::-webkit-scrollbar-track { background: transparent; }
+    .scroll-x::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section.active { animation: fadeIn 0.2s ease; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="header">
+  <div class="header-left">
+    <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Refindable">
+      <rect width="36" height="36" rx="8" fill="#6c63ff"/>
+      <path d="M10 11h10.5a5.5 5.5 0 0 1 0 11H10V11Z" fill="white" fill-opacity="0.95"/>
+      <circle cx="20.5" cy="16.5" r="2.5" fill="#6c63ff"/>
+      <path d="M18 22l6 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div class="header-title">
+      <span class="site-name">evolveartist.com</span>
+      <span class="report-label">SEO Audit Dashboard</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="date-chip">90-Day Window · June 2026</span>
+  </div>
+</header>
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <button class="nav-btn active" data-section="overview">Overview</button>
+  <button class="nav-btn" data-section="traffic">Traffic</button>
+  <button class="nav-btn" data-section="keywords">Keywords</button>
+  <button class="nav-btn" data-section="pages">Pages</button>
+  <button class="nav-btn" data-section="opportunities">Opportunities</button>
+</nav>
+
+<!-- ── Main ── -->
+<main class="main">
+
+  <!-- ═══════════════════════════════════════════ OVERVIEW ═ -->
+  <section id="overview" class="section active">
+    <div class="section-header">
+      <h2>Overview</h2>
+      <p>Google Search Console · 90-day snapshot · Last updated June 2026</p>
+    </div>
+
+    <!-- KPI cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Clicks (90d)</div>
+        <div class="kpi-value">7,237</div>
+        <div class="kpi-sub">Organic search clicks</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Impressions (90d)</div>
+        <div class="kpi-value">764K</div>
+        <div class="kpi-sub">764,608 total</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg. CTR</div>
+        <div class="kpi-value">0.95%</div>
+        <div class="kpi-sub kpi-delta down">↓ Well below ~3–5% benchmark</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg. Position</div>
+        <div class="kpi-value">8.4</div>
+        <div class="kpi-sub">Across all queries</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Indexed Pages</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-sub">Main sitemap (+ blog)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Traffic Trend</div>
+        <div class="kpi-value" style="color: var(--danger);">−61%</div>
+        <div class="kpi-sub">YoY · Peak Feb 2025</div>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="callout">
+      <span class="callout-icon">📊</span>
+      <p>
+        <strong>Traffic has declined 61% since peak (Feb 2025).</strong> The site has 764K impressions but a sub-1% CTR — the biggest opportunity is fixing titles and meta descriptions on high-impression blog posts. Peak was 6,232 clicks/mo in Feb 2025; May 2026 was 2,438 clicks/mo.
+      </p>
+    </div>
+
+    <!-- Mini stats -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Peak vs. Current</div>
+        <div style="display:flex; gap:32px; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Feb 2025 (Peak)</div>
+            <div style="font-size:26px;font-weight:700;color:var(--success);font-variant-numeric:tabular-nums">6,232</div>
+            <div style="font-size:11px;color:var(--text-muted)">clicks / month</div>
+          </div>
+          <div style="display:flex;align-items:center;font-size:20px;color:var(--text-muted)">→</div>
+          <div>
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">May 2026 (Current)</div>
+            <div style="font-size:26px;font-weight:700;color:var(--danger);font-variant-numeric:tabular-nums">2,438</div>
+            <div style="font-size:11px;color:var(--text-muted)">clicks / month</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Brand Dependency</div>
+        <div class="overview-brand">
+          <div>
+            <div class="brand-pct">~88%</div>
+            <div class="brand-label" style="max-width:180px">of top-clicked queries are branded — non-branded organic traffic is minimal</div>
+          </div>
+          <div style="margin-left:auto;">
+            <div style="font-size:26px;font-weight:700;color:var(--text-secondary);font-variant-numeric:tabular-nums">~12%</div>
+            <div style="font-size:11px;color:var(--text-muted)">non-brand</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ TRAFFIC ═ -->
+  <section id="traffic" class="section">
+    <div class="section-header">
+      <h2>Traffic</h2>
+      <p>Monthly trends, device breakdown, and geographic distribution</p>
+    </div>
+
+    <!-- Monthly clicks chart -->
+    <div class="chart-container" style="margin-bottom:16px;">
+      <div class="card-title">Monthly Clicks — Feb 2025 to May 2026</div>
+      <canvas id="clicksTrendChart" height="100"></canvas>
+    </div>
+
+    <div class="two-col" style="margin-bottom:24px;">
+      <!-- Device donut -->
+      <div class="chart-container">
+        <div class="card-title">Device Split (90 days)</div>
+        <div class="donut-wrap">
+          <div class="donut-canvas-wrap">
+            <canvas id="deviceChart"></canvas>
+          </div>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--chart-1)"></div>
+              <span class="legend-label">Mobile</span>
+              <span class="legend-value">4,155 (57%)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--chart-2)"></div>
+              <span class="legend-label">Desktop</span>
+              <span class="legend-value">2,853 (39%)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--chart-3)"></div>
+              <span class="legend-label">Tablet</span>
+              <span class="legend-value">229 (3%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Country mini card -->
+      <div class="card" style="display:flex;flex-direction:column;gap:0;padding:0;overflow:hidden;">
+        <div style="padding:16px 20px 12px;" class="card-title">Top Countries by Clicks</div>
+        <div class="scroll-x" style="flex:1;">
+          <table>
+            <thead>
+              <tr>
+                <th style="text-align:left;">Country</th>
+                <th>Clicks</th>
+                <th>Share</th>
+              </tr>
+            </thead>
+            <tbody id="countryTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ KEYWORDS ═ -->
+  <section id="keywords" class="section">
+    <div class="section-header">
+      <h2>Keywords</h2>
+      <p>Top 20 queries by clicks — 90-day window</p>
+    </div>
+
+    <div class="brand-callout">
+      <span class="warn-chip">⚠ Warning</span>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.65;">
+        <strong style="color:var(--text-primary)">Heavy brand dependency</strong> — approximately 88% of top clicks come from branded queries (evolve artist, evolve art, evolve artist login, etc.). Non-branded organic traffic accounts for only ~12%, leaving the site highly exposed to brand awareness fluctuations.
+      </p>
+    </div>
+
+    <div class="table-container">
+      <div class="table-header">
+        <span class="card-title" style="margin:0">Top Queries by Clicks</span>
+      </div>
+      <div class="scroll-x">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">#</th>
+              <th style="text-align:left;">Query</th>
+              <th>Clicks</th>
+              <th>Impressions</th>
+              <th>CTR</th>
+              <th>Avg. Position</th>
+            </tr>
+          </thead>
+          <tbody id="keywordsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ PAGES ═ -->
+  <section id="pages" class="section">
+    <div class="section-header">
+      <h2>Pages</h2>
+      <p>Top 20 landing pages by clicks · <span style="color:var(--warning)">Orange highlight</span> = CTR &lt; 1% with 10K+ impressions (high opportunity)</p>
+    </div>
+
+    <div class="table-container">
+      <div class="table-header">
+        <span class="card-title" style="margin:0">Landing Pages Performance</span>
+      </div>
+      <div class="scroll-x">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Page</th>
+              <th>Clicks</th>
+              <th>Impressions</th>
+              <th>CTR</th>
+              <th>Avg. Position</th>
+            </tr>
+          </thead>
+          <tbody id="pagesTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ OPPORTUNITIES ═ -->
+  <section id="opportunities" class="section">
+    <div class="section-header">
+      <h2>Opportunities</h2>
+      <p>Prioritized action list — ordered by impact / effort ratio</p>
+    </div>
+
+    <div class="opp-list" id="oppList"></div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  Prepared by <a href="mailto:santi@refindable.com">santi@refindable.com</a> &nbsp;·&nbsp; Data: Google Search Console &nbsp;·&nbsp; June 2026
+</footer>
+
+<script>
+// ── Tab navigation ──────────────────────────────────────────
+const navBtns = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('.section');
+let charts = {};
+
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.section;
+    navBtns.forEach(b => b.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(target).classList.add('active');
+    // Init charts lazily
+    if (target === 'traffic' && !charts.traffic) initTrafficCharts();
+    if (target === 'overview') {} // no charts
+  });
+});
+
+// ── Chart.js defaults ──────────────────────────────────────
+Chart.defaults.color = '#9198b0';
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.plugins.legend.display = false;
+
+// ── Traffic Charts ─────────────────────────────────────────
+function initTrafficCharts() {
+  charts.traffic = true;
+
+  // Monthly clicks trend
+  const months = ['Feb 25','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan 26','Feb','Mar','Apr','May'];
+  const clicks  = [6232,5420,4681,4882,4220,3980,3811,3614,3583,3430,2924,3144,2708,2508,2575,2438];
+
+  const gradient = (ctx, chartArea) => {
+    if (!chartArea) return 'rgba(108,99,255,0.5)';
+    const g = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+    g.addColorStop(0, 'rgba(108,99,255,0.8)');
+    g.addColorStop(1, 'rgba(108,99,255,0.2)');
+    return g;
+  };
+
+  const trendCtx = document.getElementById('clicksTrendChart').getContext('2d');
+  new Chart(trendCtx, {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [{
+        data: clicks,
+        backgroundColor: (ctx) => {
+          const chart = ctx.chart;
+          const { chartArea } = chart;
+          return gradient(chart.ctx, chartArea);
+        },
+        borderColor: 'rgba(108,99,255,0.9)',
+        borderWidth: 0,
+        borderRadius: 4,
+        borderSkipped: false,
+        hoverBackgroundColor: '#9d97ff'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ` ${ctx.parsed.y.toLocaleString()} clicks`
+          },
+          backgroundColor: '#1a1d27',
+          borderColor: '#272b3d',
+          borderWidth: 1,
+          titleColor: '#e8eaf0',
+          bodyColor: '#9d97ff',
+          padding: 10
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: { color: '#5d6480' }
+        },
+        y: {
+          grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+          border: { display: false },
+          ticks: {
+            color: '#5d6480',
+            callback: v => v.toLocaleString()
+          }
+        }
+      }
+    }
+  });
+
+  // Device donut
+  const deviceCtx = document.getElementById('deviceChart').getContext('2d');
+  new Chart(deviceCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Mobile','Desktop','Tablet'],
+      datasets: [{
+        data: [4155, 2853, 229],
+        backgroundColor: ['#6c63ff','#34d399','#fbbf24'],
+        borderColor: '#1a1d27',
+        borderWidth: 3,
+        hoverBorderWidth: 3
+      }]
+    },
+    options: {
+      cutout: '70%',
+      animation: { animateRotate: true, duration: 700 },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ` ${ctx.label}: ${ctx.parsed.toLocaleString()} clicks`
+          },
+          backgroundColor: '#1a1d27',
+          borderColor: '#272b3d',
+          borderWidth: 1,
+          titleColor: '#e8eaf0',
+          bodyColor: '#9d97ff',
+          padding: 10
+        }
+      }
+    }
+  });
+}
+
+// ── Country table ───────────────────────────────────────────
+const countries = [
+  { code:'🇺🇸', name:'United States', clicks:3669 },
+  { code:'🇬🇧', name:'United Kingdom', clicks:560 },
+  { code:'🇨🇦', name:'Canada', clicks:510 },
+  { code:'🇦🇺', name:'Australia', clicks:363 },
+  { code:'🇮🇳', name:'India', clicks:228 },
+  { code:'🇩🇪', name:'Germany', clicks:162 },
+  { code:'🇫🇷', name:'France', clicks:141 },
+  { code:'🇳🇿', name:'New Zealand', clicks:107 },
+  { code:'🇳🇱', name:'Netherlands', clicks:100 },
+  { code:'🇧🇷', name:'Brazil', clicks:88 },
+];
+const maxClicks = countries[0].clicks;
+const ctBody = document.getElementById('countryTable');
+countries.forEach((c, i) => {
+  const pct = ((c.clicks / maxClicks) * 100).toFixed(0);
+  const sharePct = ((c.clicks / 7237) * 100).toFixed(1);
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><span class="country-flag">${c.code}</span> ${c.name}</td>
+    <td style="text-align:right;font-variant-numeric:tabular-nums;">${c.clicks.toLocaleString()}</td>
+    <td style="text-align:right;">
+      <div class="bar-cell" style="justify-content:flex-end;">
+        <div class="inline-bar" style="width:${Math.max(pct * 0.5, 4)}px"></div>
+        <span style="font-size:12px;color:var(--text-muted);width:36px;">${sharePct}%</span>
+      </div>
+    </td>
+  `;
+  ctBody.appendChild(tr);
+});
+
+// ── Keywords table ──────────────────────────────────────────
+const keywords = [
+  { query:'evolve artist',             clicks:803, impr:1353,   ctr:59.3, pos:2.58 },
+  { query:'evolve art',                clicks:178, impr:513,    ctr:34.7, pos:3.44 },
+  { query:'evolve artist login',       clicks:159, impr:188,    ctr:84.6, pos:1.49 },
+  { query:'go.evolve artist',          clicks:132, impr:193,    ctr:68.4, pos:4.62 },
+  { query:'evolve artist academy',     clicks:131, impr:180,    ctr:72.8, pos:1.0  },
+  { query:'evolve artist program',     clicks:98,  impr:135,    ctr:72.6, pos:1.0  },
+  { query:'evolveartist',              clicks:90,  impr:154,    ctr:58.4, pos:1.92 },
+  { query:'evolve art program',        clicks:55,  impr:89,     ctr:61.8, pos:1.02 },
+  { query:'painting fundamentals',     clicks:33,  impr:247,    ctr:13.4, pos:2.37 },
+  { query:'fundamentals of painting',  clicks:25,  impr:246,    ctr:10.2, pos:2.36 },
+  { query:'glazing oil painting',      clicks:22,  impr:679,    ctr:3.2,  pos:5.45 },
+  { query:'still life box',            clicks:18,  impr:205,    ctr:8.8,  pos:2.12 },
+  { query:'evolve',                    clicks:17,  impr:18269,  ctr:0.1,  pos:9.27 },
+  { query:'oil painting glazing',      clicks:17,  impr:362,    ctr:4.7,  pos:3.77 },
+  { query:'evolve online course',      clicks:13,  impr:195,    ctr:6.7,  pos:9.55 },
+  { query:'abstract oil painting',     clicks:9,   impr:12487,  ctr:0.1,  pos:8.62 },
+  { query:'how to glaze oil painting', clicks:8,   impr:364,    ctr:2.2,  pos:4.59 },
+  { query:'values in drawing',         clicks:8,   impr:347,    ctr:2.3,  pos:3.93 },
+  { query:'best electric pencil sharpener', clicks:7, impr:442, ctr:1.6,  pos:12.62},
+  { query:'value drawing',             clicks:7,   impr:1835,   ctr:0.4,  pos:7.53 },
+];
+
+const brandQueries = new Set(['evolve artist','evolve art','evolve artist login','go.evolve artist','evolve artist academy','evolve artist program','evolveartist','evolve art program','evolve']);
+
+const kwBody = document.getElementById('keywordsTable');
+keywords.forEach((kw, i) => {
+  const isBrand = brandQueries.has(kw.query);
+  const posClass = kw.pos <= 3 ? 'pos-top' : kw.pos <= 7 ? 'pos-mid' : 'pos-low';
+  const ctrClass = kw.ctr >= 10 ? 'ctr-good' : kw.ctr < 2 ? 'ctr-warn' : '';
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="color:var(--text-muted);font-size:12px;">${i + 1}</td>
+    <td style="text-align:left;max-width:240px;overflow:hidden;text-overflow:ellipsis;">
+      ${kw.query}
+      ${isBrand ? '<span style="font-size:10px;background:rgba(108,99,255,0.12);color:var(--text-accent);padding:2px 6px;border-radius:3px;margin-left:6px;font-weight:600;">Brand</span>' : ''}
+    </td>
+    <td style="font-weight:600;font-variant-numeric:tabular-nums;">${kw.clicks.toLocaleString()}</td>
+    <td style="font-variant-numeric:tabular-nums;">${kw.impr.toLocaleString()}</td>
+    <td class="${ctrClass}" style="font-weight:600;">${kw.ctr}%</td>
+    <td><span class="pos-badge ${posClass}">${kw.pos.toFixed(2)}</span></td>
+  `;
+  kwBody.appendChild(tr);
+});
+
+// ── Pages table ─────────────────────────────────────────────
+const pages = [
+  { url:'/ (Homepage)',                                                            clicks:1866, impr:38897,  ctr:4.8,  pos:9.19  },
+  { url:'go.evolveartist.com',                                                    clicks:657,  impr:1992,   ctr:33.0, pos:4.75  },
+  { url:'/blog/how-to-glaze-an-oil-painting/',                                   clicks:319,  impr:25332,  ctr:1.3,  pos:7.78  },
+  { url:'/blog/how-to-build-a-shadow-box-for-oil-painting/',                     clicks:289,  impr:8171,   ctr:3.5,  pos:8.08  },
+  { url:'/blog/what-oil-painting-surfaces-are-best/',                            clicks:272,  impr:37018,  ctr:0.7,  pos:5.74  },
+  { url:'/blog/ergonomics-for-artists/',                                          clicks:225,  impr:19566,  ctr:1.1,  pos:4.67  },
+  { url:'/blog/how-to-make-realistic-paintings-fundamentals/',                   clicks:202,  impr:18209,  ctr:1.1,  pos:7.47  },
+  { url:'/blog/how-to-clean-oil-paint-brushes/',                                 clicks:201,  impr:39760,  ctr:0.5,  pos:8.34  },
+  { url:'/blog/how-to-create-an-artists-signature-and-sign-your-paintings/',     clicks:189,  impr:29000,  ctr:0.7,  pos:9.09  },
+  { url:'courses.evolveartist.com/users/sign_in',                                clicks:164,  impr:3903,   ctr:4.2,  pos:3.31  },
+  { url:'/the-curriculum/',                                                       clicks:155,  impr:3740,   ctr:4.1,  pos:3.02  },
+  { url:'/blog/value-drawing/',                                                   clicks:143,  impr:45282,  ctr:0.3,  pos:9.64  },
+  { url:'/blog/oil-painting-art-supplies/',                                      clicks:137,  impr:36801,  ctr:0.4,  pos:8.28  },
+  { url:'/blog/ultimate-guide-to-pencil-sharpeners-for-artists/',               clicks:132,  impr:13975,  ctr:0.9,  pos:8.34  },
+  { url:'lp.evolveartist.com/free-painting-course/',                             clicks:113,  impr:2981,   ctr:3.8,  pos:2.88  },
+  { url:'/blog/how-to-make-the-sun-glow-in-paintings/',                          clicks:93,   impr:13658,  ctr:0.7,  pos:8.55  },
+  { url:'/blog/oil-painting-for-beginners-made-easy/',                           clicks:90,   impr:8896,   ctr:1.0,  pos:15.45 },
+  { url:'/blog/how-to-photograph-oil-paintings/',                                clicks:86,   impr:10728,  ctr:0.8,  pos:6.47  },
+  { url:'/blog/what-makes-good-abstract-art/',                                   clicks:39,   impr:92451,  ctr:0.04, pos:6.39  },
+  { url:'/blog/do-artists-need-to-be-on-social-media/',                         clicks:83,   impr:21342,  ctr:0.4,  pos:6.70  },
+];
+
+const pgBody = document.getElementById('pagesTable');
+pages.forEach((pg) => {
+  const isLowCTR = pg.ctr < 1 && pg.impr > 10000;
+  const posClass = pg.pos <= 3 ? 'pos-top' : pg.pos <= 7 ? 'pos-mid' : 'pos-low';
+  const ctrClass = pg.ctr >= 3 ? 'ctr-good' : pg.ctr < 1 ? 'ctr-warn' : '';
+  const tr = document.createElement('tr');
+  if (isLowCTR) tr.classList.add('highlight-low-ctr');
+  tr.innerHTML = `
+    <td class="page-url">${pg.url}</td>
+    <td style="font-weight:600;font-variant-numeric:tabular-nums;">${pg.clicks.toLocaleString()}</td>
+    <td style="font-variant-numeric:tabular-nums;">${pg.impr.toLocaleString()}</td>
+    <td class="${ctrClass}" style="font-weight:600;">${pg.ctr}%</td>
+    <td><span class="pos-badge ${posClass}">${pg.pos.toFixed(2)}</span></td>
+  `;
+  pgBody.appendChild(tr);
+});
+
+// ── Opportunities ───────────────────────────────────────────
+const opps = [
+  {
+    color:'red', emoji:'🔴', impact:'HIGH', impactClass:'badge-high',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Fix meta titles & descriptions on /blog/what-makes-good-abstract-art/',
+    desc:'92,451 impressions at pos 6.4 but only 0.04% CTR. The title/meta likely isn\'t matching search intent for \'abstract oil painting\' and related queries. Rewriting these alone could add 2,700+ clicks/month.'
+  },
+  {
+    color:'red', emoji:'🔴', impact:'HIGH', impactClass:'badge-high',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Fix meta titles & descriptions on /blog/value-drawing/',
+    desc:'45,282 impressions, 0.3% CTR. Optimize for \'value drawing\', \'value in drawing\', \'values in art\'. Simple title/meta rewrite = +1,200 clicks potential.'
+  },
+  {
+    color:'red', emoji:'🔴', impact:'HIGH', impactClass:'badge-high',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Fix meta title & description on /blog/how-to-clean-oil-paint-brushes/',
+    desc:'39,760 impressions at 0.5% CTR. One of the highest-volume pages on the site with almost no click yield. Title/meta rewrite targeting \'how to clean oil paint brushes\' is a fast win.'
+  },
+  {
+    color:'red', emoji:'🔴', impact:'HIGH', impactClass:'badge-high',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Fix meta titles on /blog/oil-painting-art-supplies/ and /blog/what-oil-painting-surfaces-are-best/',
+    desc:'Combined 73,819 impressions with sub-1% CTR. Both rank in positions 5–8. Optimized titles + meta descriptions = potential +1,800 clicks combined.'
+  },
+  {
+    color:'orange', emoji:'🟠', impact:'HIGH', impactClass:'badge-high',
+    effort:'Medium', effortClass:'badge-medium-effort',
+    title:'Optimize homepage for non-brand keywords',
+    desc:'The homepage gets 38,897 impressions at position 9.2 — just off page 1. Adding structured H1/H2 content targeting \'online art education\', \'learn oil painting online\', and \'art fundamentals course\' could push it into the top 5.'
+  },
+  {
+    color:'orange', emoji:'🟠', impact:'HIGH', impactClass:'badge-high',
+    effort:'Medium', effortClass:'badge-medium-effort',
+    title:'Rewrite /blog/how-to-create-an-artists-signature/ for CTR',
+    desc:'29,000 impressions, 0.7% CTR at pos 9.1. Targeting \'how to sign a painting\', \'artist signature ideas\', and \'examples of signatures on paintings\' with a rewritten title/meta could yield +680 clicks.'
+  },
+  {
+    color:'orange', emoji:'🟠', impact:'MEDIUM', impactClass:'badge-medium',
+    effort:'Medium', effortClass:'badge-medium-effort',
+    title:'Target \'abstract oil painting\' with a dedicated blog post',
+    desc:'12,487 impressions but the current /blog/what-makes-good-abstract-art/ page doesn\'t convert. A dedicated, keyword-focused post on \'abstract oil painting techniques\' or \'abstract oil painting for beginners\' would better serve this query cluster.'
+  },
+  {
+    color:'orange', emoji:'🟠', impact:'MEDIUM', impactClass:'badge-medium',
+    effort:'Medium', effortClass:'badge-medium-effort',
+    title:'Add internal links from blog posts to /join-evolve/ and /the-curriculum/',
+    desc:'Blog posts drive 60%+ of impressions but most don\'t have CTAs or links to conversion pages. Adding relevant CTAs (e.g., \'Learn the fundamentals in our program →\') would improve the blog-to-program conversion funnel.'
+  },
+  {
+    color:'yellow', emoji:'🟡', impact:'MEDIUM', impactClass:'badge-medium',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Add FAQ schema markup to top blog posts',
+    desc:'Posts like glazing, shadow box, and cleaning brushes are informational how-tos. Adding FAQ schema would increase SERP real estate and could boost CTR by 20–30% on those pages.'
+  },
+  {
+    color:'yellow', emoji:'🟡', impact:'MEDIUM', impactClass:'badge-medium',
+    effort:'Medium', effortClass:'badge-medium-effort',
+    title:'Create comparison content (\'Evolve vs. competitors\')',
+    desc:'Queries like \'watts atelier vs evolve\', \'milan art institute vs evolve\', \'new masters academy vs evolve\' already rank but are under-optimized. Dedicated comparison pages with clearer positioning would capture higher-intent traffic.'
+  },
+  {
+    color:'yellow', emoji:'🟡', impact:'MEDIUM', impactClass:'badge-medium',
+    effort:'Complex', effortClass:'badge-complex',
+    title:'Address the 61% traffic decline with a full content audit',
+    desc:'Traffic has been declining since Feb 2025 consistently. A full content audit is needed to identify: pages that lost rankings, cannibalization issues, and whether Google\'s Helpful Content updates impacted the blog.'
+  },
+  {
+    color:'blue', emoji:'🔵', impact:'LOW', impactClass:'badge-low',
+    effort:'Quick Win', effortClass:'badge-quick',
+    title:'Remove or noindex the Sega logo page',
+    desc:'lp.evolveartist.com/sega-logo-png-transparent/ is getting 1,860 impressions from off-topic queries. This dilutes the site\'s topical authority and should be noindexed or removed.'
+  },
+];
+
+const oppList = document.getElementById('oppList');
+opps.forEach((opp, i) => {
+  const div = document.createElement('div');
+  div.className = `opp-item ${opp.color}`;
+  div.innerHTML = `
+    <div class="opp-number">${String(i + 1).padStart(2, '0')}</div>
+    <div class="opp-body">
+      <div class="opp-meta">
+        <span class="opp-emoji">${opp.emoji}</span>
+        <span class="badge ${opp.impactClass}">${opp.impact}</span>
+        <span class="badge ${opp.effortClass}">${opp.effort}</span>
+      </div>
+      <div class="opp-title">${opp.title}</div>
+      <div class="opp-desc">${opp.desc}</div>
+    </div>
+  `;
+  oppList.appendChild(div);
+});
+</script>
+</body>
+</html>
