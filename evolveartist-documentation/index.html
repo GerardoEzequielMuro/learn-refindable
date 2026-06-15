@@ -4,6 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EvolveArtist.com — SEO Audit Dashboard</title>
+  <style>
+    #pw-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0f1117;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+    #pw-gate.hidden { display: none; }
+    .pw-box {
+      background: #1a1d27;
+      border: 1px solid #272b3d;
+      border-radius: 12px;
+      padding: 40px 48px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .pw-logo {
+      width: 44px; height: 44px;
+      background: #6c63ff;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 20px; font-weight: 700; color: #fff;
+    }
+    .pw-box h2 { color: #e8eaf0; font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+    .pw-box p { color: #9198b0; font-size: 13px; margin-bottom: 28px; }
+    .pw-input {
+      width: 100%;
+      background: #0f1117;
+      border: 1px solid #272b3d;
+      border-radius: 8px;
+      color: #e8eaf0;
+      font-size: 15px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    .pw-input:focus { border-color: #6c63ff; }
+    .pw-input.error { border-color: #f87171; }
+    .pw-btn {
+      margin-top: 12px;
+      width: 100%;
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .pw-btn:hover { background: #7c74ff; }
+    .pw-error { color: #f87171; font-size: 12px; margin-top: 8px; min-height: 16px; }
+  </style>
+  <script>
+    (function() {
+      const PASS = 'Mitch2026';
+      const KEY = 'ea_seo_auth';
+      function unlock() {
+        var gate = document.getElementById('pw-gate');
+        if (gate) gate.classList.add('hidden');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        if (sessionStorage.getItem(KEY) === '1') { unlock(); return; }
+        var gate = document.getElementById('pw-gate');
+        var input = document.getElementById('pw-input');
+        var errMsg = document.getElementById('pw-error');
+        function attempt() {
+          if (input.value === PASS) {
+            sessionStorage.setItem(KEY, '1');
+            unlock();
+          } else {
+            input.classList.add('error');
+            errMsg.textContent = 'Incorrect password. Try again.';
+            input.value = '';
+            input.focus();
+          }
+        }
+        document.getElementById('pw-btn').addEventListener('click', attempt);
+        input.addEventListener('keydown', function(e) { if (e.key === 'Enter') attempt(); });
+        input.addEventListener('input', function() {
+          input.classList.remove('error');
+          errMsg.textContent = '';
+        });
+      });
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -654,6 +745,18 @@
   </style>
 </head>
 <body>
+
+  <!-- Password Gate -->
+  <div id="pw-gate">
+    <div class="pw-box">
+      <div class="pw-logo">R</div>
+      <h2>SEO Audit Report</h2>
+      <p>evolveartist.com &mdash; Prepared by Refindable</p>
+      <input id="pw-input" class="pw-input" type="password" placeholder="Enter password" autofocus />
+      <button id="pw-btn" class="pw-btn">Access Report</button>
+      <div id="pw-error" class="pw-error"></div>
+    </div>
+  </div>
 
 <!-- ── Header ── -->
 <header class="header">
