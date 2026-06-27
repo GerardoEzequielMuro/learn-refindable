@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Examen Final · Certificación CRM | Refindable Academy</title>
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#e3a85a;--acl:#f0bd7a;--acs:rgba(227,168,90,.12);--acg:rgba(227,168,90,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+:root{--bg:#f3f1ea;--s1:#ffffff;--s2:#fbfaf6;--s3:#efece3;--bd:#e3e0d6;--t:#181712;--tm:#6f6c60;--td:#9d9a8c;--ac:#2138e0;--acl:#1a2cb4;--acs:#e7e9fd;--acg:rgba(33,56,224,.2);--g:#1f7a4d;--gs:#e4f3ea;--o:#2138e0;--os:#e7e9fd;--r:#c23b32;--rs:#fae9e7;--hs:#2138e0;--hss:#e7e9fd;--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}a{color:var(--ac)}::selection{background:var(--ac);color:#fff}:focus-visible{outline:2.5px solid var(--ac);outline-offset:2px;border-radius:4px}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
 .app{height:100vh;display:flex;flex-direction:column}
 .top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
 .top-l{display:flex;align-items:center;gap:10px}
@@ -17,12 +17,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);height:
 .top-sep{width:1px;height:18px;background:var(--bd)}
 .top-info{font-size:12px;color:var(--td)}
 .top-r{display:flex;align-items:center;gap:14px}
-.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:4px 12px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s}
+.score-badge{font-size:12px;color:var(--ac);font-weight:700;background:var(--acs);padding:4px 12px;border-radius:100px;border:1px solid var(--acg);transition:all .3s}
 .score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
 .pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
 .pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
-.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#f0bd7a,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.pg-fill{height:100%;background:var(--ac);background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
 .sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
 .sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 .wrap{max-width:780px;width:100%;text-align:left;animation:si .4s ease both}
@@ -30,28 +30,28 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);height:
 .btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
 .btn:disabled{opacity:.3;cursor:not-allowed}
 .bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
-.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(227,168,90,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(227,168,90,.4)}
+.bn{background:var(--ac);color:#fff}.bn:hover:not(:disabled){transform:translateY(-2px);background:var(--acl)}
 .bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none;box-shadow:none}
 .badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(227,168,90,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
-.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.quiz-b{background:var(--acs);border-color:var(--acg);color:var(--ac)}
 .badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
 .badge.hs-b{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
-.wrap h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
-.wrap h1 .hl{background:linear-gradient(135deg,var(--ac),#f0bd7a,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.wrap h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
-.wrap h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.wrap h1{font-family:'Fraunces',serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.wrap h1 .hl{background:var(--ac);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.wrap h2{font-family:'Fraunces',serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.wrap h3{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:20px 0 10px}
 .wrap p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.wrap p strong{color:var(--t)}
 .co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
 .co p{margin:0;font-size:16px}
-.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.tip{background:var(--acs);border:1px solid var(--acg)}
 .co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
 .co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
 .cover{position:relative;padding-top:48px}
-.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+.cover-glow{display:none}
 @keyframes pulse{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(227,168,90,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
-.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-g{background:var(--acs);border-color:var(--acg);color:var(--ac)}
 .tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
 .theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
 .theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
@@ -74,23 +74,23 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);height:
 .qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
 .final-s{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;text-align:center;margin:16px 0;letter-spacing:-.04em;animation:popIn .6s cubic-bezier(.34,1.56,.64,1)}
 @keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
-.final-s.great{background:linear-gradient(135deg,var(--g),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.final-s.ok{background:linear-gradient(135deg,var(--o),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.final-s.low{background:linear-gradient(135deg,var(--r),#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.great{background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.ok{background:var(--o);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.low{background:var(--r);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .fin-wrap{margin:26px 0 8px;text-align:center}
 .fin-btn{display:inline-flex;justify-content:center;font-size:15px;padding:15px 40px}
 .result{display:none;margin-bottom:28px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:28px;position:relative;overflow:hidden;text-align:center;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
 .result.show{display:block}
-.result::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ac),var(--hs))}
-.verdict{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.01em}
+.result::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--ac)}
+.verdict{font-family:'Fraunces',serif;font-size:24px;font-weight:700;letter-spacing:-.01em}
 .verdict.pass{color:var(--g)}.verdict.fail{color:var(--r)}
 .result-sub{color:var(--tm);font-size:16px;max-width:520px;margin:10px auto 0;line-height:1.6}
-.cert{margin-top:24px;border:2px solid var(--g);border-radius:var(--rad);padding:34px 28px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--gs),transparent 60%)}
-.cert::after{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:480px;height:480px;background:radial-gradient(circle,rgba(16,185,129,.18) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+.cert{margin-top:24px;border:2px solid var(--g);border-radius:var(--rad);padding:34px 28px;position:relative;overflow:hidden;background:var(--gs)}
+.cert::after{content:none}
 .cert-inner{position:relative;z-index:1}
 .cert-logo{height:26px;margin-bottom:14px;opacity:.95}
 .cert-kick{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--g);margin-bottom:6px}
-.cert-title{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;margin-bottom:18px;background:linear-gradient(135deg,var(--g),#34d399,var(--acl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-title{font-family:'Fraunces',serif;font-size:30px;font-weight:700;letter-spacing:-.02em;margin-bottom:18px;background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .cert-grant{font-size:14px;color:var(--td);text-transform:uppercase;letter-spacing:.1em;font-family:'Space Grotesk',sans-serif;margin-bottom:8px}
 .cert-blank{display:inline-block;min-width:280px;max-width:100%;border-bottom:2px dashed var(--ac);padding:6px 16px 10px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:var(--t)}
 .cert-blank .ph{color:var(--td);font-weight:400;font-style:italic;font-size:16px}
@@ -101,10 +101,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);height:
 .cert-seal{margin-top:22px;font-size:12px;color:var(--td);font-style:italic}
 .footer{text-align:center;color:var(--td);font-size:13px;margin:30px 0 10px}
 .footer-logo{height:16px;vertical-align:middle;margin-right:4px;opacity:.5}
-body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#b97324;--acl:#e3a85a;--acs:rgba(185,115,36,.1);--acg:rgba(185,115,36,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light{--bg:#1b1a15;--s1:#23221c;--s2:#2b2a23;--s3:#34322a;--bd:#3a382f;--t:#f3f1ea;--tm:#b8b4a6;--td:#86826f;--ac:#9aabff;--acl:#bcc7ff;--acs:rgba(154,171,255,.14);--acg:rgba(154,171,255,.28);--g:#4ec98a;--gs:rgba(78,201,138,.16);--o:#9aabff;--os:rgba(154,171,255,.14);--r:#e8837b;--rs:rgba(232,131,123,.16);--hs:#9aabff;--hss:rgba(154,171,255,.14)}
 body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(22deg)}
 body.light .footer-logo,body.light .cert-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(22deg)}
-body.light .cover-glow{background:radial-gradient(circle,rgba(185,115,36,.1) 0%,transparent 70%)}
+body.light .cover-glow{background:none}
 @media(max-width:640px){.wrap h1{font-size:24px}.btn{padding:9px 14px;font-size:12px}.qopt{padding-left:48px;font-size:14px}.cert-blank{min-width:0;width:100%}.cert-title{font-size:23px}.top-info{display:none}}
 </style>
 </head>
@@ -117,7 +117,7 @@ body.light .cover-glow{background:radial-gradient(circle,rgba(185,115,36,.1) 0%,
 <div class="top-info">Certificación · Examen Final</div>
 </div>
 <div class="top-r">
-<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Oscuro</div>
 <div class="score-badge" id="scoreBadge">0 / 15 respondidas</div>
 <div class="pg-text" id="pgText">0%</div>
 </div>
@@ -131,14 +131,14 @@ body.light .cover-glow{background:radial-gradient(circle,rgba(185,115,36,.1) 0%,
 
 <!-- COVER / INTRO -->
 <div class="cover" id="intro"><div class="cover-glow"></div>
-<div class="badge">🎓 Examen Final</div>
+<div class="badge">Examen Final</div>
 <h1>Examen Final · <span class="hl">Certificación CRM</span></h1>
 <p style="font-size:18px;max-width:640px">Llegaste al final del programa. 15 preguntas de escenario que cubren todo: fundamentos, operación, marketing y RevOps. Una sola respuesta correcta por pregunta. Podés cambiar tus respuestas antes de finalizar.</p>
-<div class="co tip" style="max-width:640px"><div>🎯</div><div><p><strong>Umbral de aprobación: 80%</strong> (12 de 15). Si aprobás, se genera tu Certificado de Dominio de CRM. Si no, vas a poder repasar y reintentar las veces que quieras.</p></div></div>
+<div class="co tip" style="max-width:640px"><div><p><strong>Umbral de aprobación: 80%</strong> (12 de 15). Si aprobás, se genera tu Certificado de Dominio de CRM. Si no, vas a poder repasar y reintentar las veces que quieras.</p></div></div>
 <div class="tag-row" style="margin-top:18px">
-<span class="tag">🧩 15 preguntas</span>
-<span class="tag t-o">🎯 Umbral 80%</span>
-<span class="tag t-g">📜 Certificado al aprobar</span>
+<span class="tag">15 preguntas</span>
+<span class="tag t-o">Umbral 80%</span>
+<span class="tag t-g">Certificado al aprobar</span>
 </div>
 </div>
 
@@ -341,7 +341,7 @@ body.light .cover-glow{background:radial-gradient(circle,rgba(185,115,36,.1) 0%,
 
 <!-- FINALIZE -->
 <div class="fin-wrap">
-<button class="btn bn fin-btn locked" id="finBtn" onclick="finalize()" disabled>🔒 Respondé las 15 para finalizar</button>
+<button class="btn bn fin-btn locked" id="finBtn" onclick="finalize()" disabled>Respondé las 15 para finalizar</button>
 </div>
 
 <div class="footer">
@@ -376,8 +376,8 @@ function updProgress(){
   const sb=document.getElementById('scoreBadge');
   sb.classList.remove('bump');void sb.offsetWidth;sb.classList.add('bump');
   const b=document.getElementById('finBtn');
-  if(done===N){b.disabled=false;b.classList.remove('locked');b.textContent='🎓 Finalizar certificación';}
-  else{b.disabled=true;b.classList.add('locked');b.textContent='🔒 Respondé las 15 para finalizar';}
+  if(done===N){b.disabled=false;b.classList.remove('locked');b.textContent='Finalizar certificación';}
+  else{b.disabled=true;b.classList.add('locked');b.textContent='Respondé las 15 para finalizar';}
 }
 
 function finalize(){
@@ -397,8 +397,8 @@ function finalize(){
       else if(oi===chosen)o.classList.add('wrong');
     });
     const fb=q.querySelector('.qfb');
-    if(chosen===right){correct++;q.classList.add('ok');fb.className='qfb show fbok';fb.textContent='✅ '+fb.dataset.fb;}
-    else{q.classList.add('bad');fb.className='qfb show fbbad';fb.textContent='❌ '+fb.dataset.fb;}
+    if(chosen===right){correct++;q.classList.add('ok');fb.className='qfb show fbok';fb.textContent='Correcto. '+fb.dataset.fb;}
+    else{q.classList.add('bad');fb.className='qfb show fbbad';fb.textContent='Incorrecto. '+fb.dataset.fb;}
   }
   const pct=Math.round((correct/N)*100);
   const pass=pct>=PASS;
@@ -415,7 +415,7 @@ function renderResult(correct,pct,pass){
   let html='';
   html+='<div class="badge '+(pass?'quiz-b':'act-b')+'">Resultado · Examen Final</div>';
   html+='<div class="final-s '+cls+'">'+pct+'%</div>';
-  html+='<div class="verdict '+(pass?'pass':'fail')+'">'+(pass?'¡APROBADO! 🎉':'NO APROBADO')+'</div>';
+  html+='<div class="verdict '+(pass?'pass':'fail')+'">'+(pass?'¡APROBADO!':'NO APROBADO')+'</div>';
   html+='<p class="result-sub">Respondiste <strong style="color:var(--t)">'+correct+' de '+N+'</strong> correctas · Umbral de aprobación: '+PASS+'%</p>';
   if(pass){
     html+='<div class="cert"><div class="cert-inner">';
@@ -429,11 +429,11 @@ function renderResult(correct,pct,pass){
     html+='<div><div class="m-k">Resultado</div><div class="m-v">'+correct+' / '+N+'</div></div>';
     html+='<div><div class="m-k">Fecha</div><div class="m-v">'+fecha+'</div></div>';
     html+='</div>';
-    html+='<div class="cert-seal">📸 Sacale una captura a tu certificado · Refindable Academy 2026</div>';
+    html+='<div class="cert-seal">Sacale una captura a tu certificado · Refindable Academy 2026</div>';
     html+='</div></div>';
   }else{
-    html+='<div class="co warn" style="text-align:left;margin-top:22px"><div>📖</div><div><p><strong>Te faltó poco — repasá y volvé a intentar.</strong> Mirá abajo las explicaciones de cada pregunta, repasá los temas donde fallaste y reintentá el examen. Necesitás llegar al '+PASS+'%.</p></div></div>';
-    html+='<div style="margin-top:18px"><button class="btn bn fin-btn" onclick="reset()">🔄 Reintentar examen</button></div>';
+    html+='<div class="co warn" style="text-align:left;margin-top:22px"><div><p><strong>Te faltó poco — repasá y volvé a intentar.</strong> Mirá abajo las explicaciones de cada pregunta, repasá los temas donde fallaste y reintentá el examen. Necesitás llegar al '+PASS+'%.</p></div></div>';
+    html+='<div style="margin-top:18px"><button class="btn bn fin-btn" onclick="reset()">Reintentar examen</button></div>';
   }
   p.innerHTML=html;
   p.classList.add('show');
@@ -449,7 +449,7 @@ function reset(){
     const fb=q.querySelector('.qfb');fb.className='qfb';fb.textContent='';
   }
   const p=document.getElementById('resultPanel');p.classList.remove('show');p.innerHTML='';
-  const b=document.getElementById('finBtn');b.style.display='';b.disabled=true;b.classList.add('locked');b.textContent='🔒 Respondé las 15 para finalizar';
+  const b=document.getElementById('finBtn');b.style.display='';b.disabled=true;b.classList.add('locked');b.textContent='Respondé las 15 para finalizar';
   updProgress();
   document.querySelector('.sa').scrollTop=0;
 }
@@ -457,10 +457,10 @@ function reset(){
 function toggleTheme(){
   document.body.classList.toggle('light');
   const btn=document.getElementById('themeBtn');
-  btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+  btn.textContent=document.body.classList.contains('light')?'Claro':'Oscuro';
   localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
 }
-if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️';}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='Claro';}
 updProgress();
 </script>
 </body>

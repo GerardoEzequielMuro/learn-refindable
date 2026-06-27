@@ -5,53 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workbook práctico | Refindable Academy</title>
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0b0b0e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#e3a85a;--acl:#f0bd7a;--acs:rgba(227,168,90,.12);--acg:rgba(227,168,90,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
-*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f3f1ea;--s1:#ffffff;--s2:#fbfaf6;--s3:#efece3;--bd:#e3e0d6;--t:#181712;--tm:#6f6c60;--td:#9d9a8c;--ac:#2138e0;--acl:#1a2cb4;--acs:#e7e9fd;--acg:rgba(33,56,224,.2);--g:#1f7a4d;--gs:#e4f3ea;--o:#2138e0;--os:#e7e9fd;--r:#c23b32;--rs:#fae9e7;--hs:#2138e0;--hss:#e7e9fd;--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}a{color:var(--ac)}::selection{background:var(--ac);color:#fff}:focus-visible{outline:2.5px solid var(--ac);outline-offset:2px;border-radius:4px}
 html{scroll-behavior:smooth}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--t);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
 /* TOP BAR */
-.top{height:52px;background:rgba(17,17,25,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:50}
+.top{height:52px;background:rgba(251,250,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:50}
 .top-l{display:flex;align-items:center;gap:10px}
 .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm);display:flex;align-items:center}
 .top-sep{width:1px;height:18px;background:var(--bd)}
 .top-info{font-size:12px;color:var(--td)}
 .top-r{display:flex;align-items:center;gap:12px}
-.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:5px 13px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s;font-family:'Space Grotesk',sans-serif;white-space:nowrap}
+.score-badge{font-size:12px;color:var(--ac);font-weight:700;background:var(--acs);padding:5px 13px;border-radius:100px;border:1px solid var(--acg);transition:all .3s;font-family:'Space Grotesk',sans-serif;white-space:nowrap}
 .score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.16)}100%{transform:scale(1)}}
 .theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
 .theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
 
 /* STICKY PROGRESS */
-.pg-sticky{position:sticky;top:52px;z-index:40;background:rgba(8,8,14,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
-body.light .pg-sticky{background:rgba(245,245,250,.92)}
-body.light .top{background:rgba(255,255,255,.85)}
+.pg-sticky{position:sticky;top:52px;z-index:40;background:rgba(243,241,234,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+body.light .pg-sticky{background:rgba(27,26,21,.92)}
+body.light .top{background:rgba(35,34,28,.85)}
 .pg-row{max-width:860px;margin:0 auto;padding:9px 20px 4px;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .pg-label{font-size:12px;color:var(--tm);font-family:'Space Grotesk',sans-serif;font-weight:600;white-space:nowrap}
 .pg-label b{color:var(--t)}
 .pg-pct{font-size:12px;color:var(--acl);font-family:'Space Grotesk',sans-serif;font-weight:700}
 .pg-track{height:6px;background:var(--s2);position:relative;overflow:hidden;border-radius:0}
-.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#f0bd7a,var(--acl));background-size:200% 100%;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.pg-fill{height:100%;background:var(--ac);background-size:200% 100%;transition:width .6s cubic-bezier(.4,0,.2,1);width:0%}
 
 /* WRAP */
 .wrap{max-width:860px;margin:0 auto;padding:0 20px 80px}
 
 /* HERO */
 .hero{position:relative;padding:54px 0 30px;text-align:left}
-.hero-glow{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:620px;height:620px;max-width:120vw;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 5s ease-in-out infinite;z-index:-1}
-body.light .hero-glow{background:radial-gradient(circle,rgba(185,115,36,.12) 0%,transparent 70%)}
+.hero-glow{display:none}
+body.light .hero-glow{background:none}
 @keyframes pulse{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.08)}}
 .badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(227,168,90,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}
-.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(30px,6vw,52px);font-weight:700;line-height:1.05;margin-bottom:18px;letter-spacing:-.03em}
-.hero h1 .hl{background:linear-gradient(135deg,var(--ac),#f0bd7a,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(30px,6vw,52px);font-weight:700;line-height:1.05;margin-bottom:18px;letter-spacing:-.03em}
+.hero h1 .hl{background:var(--ac);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{color:var(--tm);line-height:1.65;font-size:18px;max-width:660px;margin-bottom:14px}
 .hero p strong{color:var(--t)}
 .tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0 4px}
 .tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(227,168,90,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
-.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-g{background:var(--acs);border-color:var(--acg);color:var(--ac)}
 .tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
 .tag.t-h{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
 
@@ -59,7 +59,7 @@ body.light .hero-glow{background:radial-gradient(circle,rgba(185,115,36,.12) 0%,
 .co{border-radius:var(--rad);padding:15px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;font-size:15.5px;line-height:1.6}
 .co p{margin:0;font-size:15.5px;color:var(--tm)}.co p strong{color:var(--t)}
 .co .ico{font-size:18px;line-height:1.4;flex-shrink:0}
-.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.tip{background:var(--acs);border:1px solid var(--acg)}
 .co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
 .co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
 .co.acc{background:var(--acs);border:1px solid rgba(227,168,90,.22)}
@@ -68,20 +68,20 @@ body.light .hero-glow{background:radial-gradient(circle,rgba(185,115,36,.12) 0%,
 .mod{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);margin:14px 0;overflow:hidden;transition:border-color .25s,box-shadow .25s}
 .mod.done-mod{border-color:rgba(16,185,129,.45)}
 .mod:hover{border-color:var(--td)}
-.mod.open{border-color:var(--acg);box-shadow:0 8px 28px rgba(0,0,0,.25)}
+.mod.open{border-color:var(--acg);box-shadow:0 10px 30px rgba(24,23,18,.1)}
 .mod-h{display:flex;align-items:center;gap:14px;padding:18px 18px;cursor:pointer;user-select:none}
 .mod-num{width:38px;height:38px;flex-shrink:0;border-radius:11px;background:var(--acs);border:1px solid rgba(227,168,90,.3);color:var(--acl);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;transition:all .25s}
 .mod.done-mod .mod-num{background:var(--gs);border-color:var(--g);color:var(--g)}
 .mod.special .mod-num{background:var(--hss);border-color:rgba(255,122,89,.4);color:var(--hs)}
 .mod-titles{flex:1;min-width:0}
-.mod-t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;line-height:1.2;letter-spacing:-.01em}
+.mod-t{font-family:'Fraunces',serif;font-weight:600;font-size:17px;line-height:1.2;letter-spacing:-.01em}
 .mod-sub{font-size:12.5px;color:var(--td);margin-top:3px}
 .mod-prog{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
 .mod-count{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--tm)}
 .mod.done-mod .mod-count{color:var(--g)}
 .mini-track{width:64px;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
-.mini-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--ac),var(--acl));border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.mod.done-mod .mini-fill{background:linear-gradient(90deg,var(--g),#34d399)}
+.mini-fill{height:100%;width:0%;background:var(--ac);border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.mod.done-mod .mini-fill{background:var(--g)}
 .chev{font-size:20px;color:var(--td);transition:transform .3s;flex-shrink:0;font-family:'Space Grotesk',sans-serif;line-height:1}
 .mod.open .chev{transform:rotate(180deg);color:var(--acl)}
 .mod-b{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
@@ -90,12 +90,12 @@ body.light .hero-glow{background:radial-gradient(circle,rgba(185,115,36,.12) 0%,
 /* TASK CARD */
 .task{background:var(--bg);border:1px solid var(--bd);border-radius:var(--rad);padding:22px;margin:12px 0;position:relative;overflow:hidden;transition:border-color .25s,transform .2s}
 body.light .task{background:var(--s2)}
-.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--ac),var(--acl));transition:background .3s}
+.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--ac);transition:background .3s}
 .task.done-task{border-color:rgba(16,185,129,.4)}
-.task.done-task::before{background:linear-gradient(180deg,var(--g),#34d399)}
+.task.done-task::before{background:var(--g)}
 .task-h{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--ac);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
 .task.done-task .task-h{color:var(--g)}
-.task h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin:0 0 12px;line-height:1.25}
+.task h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin:0 0 12px;line-height:1.25}
 .obj{font-size:15px;line-height:1.55;color:var(--tm);margin-bottom:14px}
 .obj .lbl{color:var(--acl);font-weight:700;font-family:'Space Grotesk',sans-serif}
 .task.done-task .obj .lbl{color:var(--g)}
@@ -129,7 +129,7 @@ body.light .chk{background:var(--s1)}
 .footer p{color:var(--td);font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
 .footer-logo{height:15px;vertical-align:middle;opacity:.5}
 
-body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#b97324;--acl:#e3a85a;--acs:rgba(185,115,36,.1);--acg:rgba(185,115,36,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light{--bg:#1b1a15;--s1:#23221c;--s2:#2b2a23;--s3:#34322a;--bd:#3a382f;--t:#f3f1ea;--tm:#b8b4a6;--td:#86826f;--ac:#9aabff;--acl:#bcc7ff;--acs:rgba(154,171,255,.14);--acg:rgba(154,171,255,.28);--g:#4ec98a;--gs:rgba(78,201,138,.16);--o:#9aabff;--os:rgba(154,171,255,.14);--r:#e8837b;--rs:rgba(232,131,123,.16);--hs:#9aabff;--hss:rgba(154,171,255,.14)}
 body.light .brand img,body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(22deg)}
 
 @media(max-width:640px){
@@ -157,7 +157,7 @@ body.light .brand img,body.light .footer-logo{filter:brightness(0) saturate(100%
 <div class="top-info">Workbook práctico</div>
 </div>
 <div class="top-r">
-<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Oscuro</div>
 <div class="score-badge" id="scoreBadge">0 / 0 tareas</div>
 </div>
 </div>
@@ -174,16 +174,16 @@ body.light .brand img,body.light .footer-logo{filter:brightness(0) saturate(100%
 
 <div class="hero">
 <div class="hero-glow"></div>
-<div class="badge">🛠️ Manos en HubSpot</div>
+<div class="badge">Manos en HubSpot</div>
 <h1>Workbook <span class="hl">práctico</span></h1>
 <p>Esto no es teoría ni slides. Son <strong>ejercicios reales</strong> que hacés adentro de un portal de HubSpot, paso a paso, hasta tener un CRM funcionando de verdad. Cada tarea tiene un objetivo, los clicks exactos y un criterio de "listo".</p>
-<div class="co acc"><div class="ico">🔑</div><div><p>Necesitás una <strong>cuenta gratis de HubSpot</strong> (entrá a hubspot.com y creala) o el <strong>portal del cliente</strong>. Si usás el del cliente, nunca toques producción sin permiso: practicá con datos de prueba.</p></div></div>
-<div class="co tip"><div class="ico">📈</div><div><p>Tu progreso se <strong>guarda solo</strong> en este navegador. Tildá cada tarea cuando la termines y la barra de arriba avanza. Podés cerrar y volver: queda donde lo dejaste.</p></div></div>
+<div class="co acc"><div><p>Necesitás una <strong>cuenta gratis de HubSpot</strong> (entrá a hubspot.com y creala) o el <strong>portal del cliente</strong>. Si usás el del cliente, nunca toques producción sin permiso: practicá con datos de prueba.</p></div></div>
+<div class="co tip"><div><p>Tu progreso se <strong>guarda solo</strong> en este navegador. Tildá cada tarea cuando la termines y la barra de arriba avanza. Podés cerrar y volver: queda donde lo dejaste.</p></div></div>
 <div class="tag-row">
-<span class="tag">🧩 9 módulos</span>
-<span class="tag t-g">✅ <span id="tagTotal">28</span> tareas</span>
-<span class="tag t-o">🖱️ click-paths reales</span>
-<span class="tag t-h">🏗️ proyecto integrador</span>
+<span class="tag">9 módulos</span>
+<span class="tag t-g"><span id="tagTotal">28</span> tareas</span>
+<span class="tag t-o">click-paths reales</span>
+<span class="tag t-h">proyecto integrador</span>
 </div>
 </div>
 
@@ -192,7 +192,7 @@ body.light .brand img,body.light .footer-logo{filter:brightness(0) saturate(100%
 <div id="modules"></div>
 
 <div class="reset-wrap">
-<button class="reset-link" onclick="resetProgress()">↺ Reiniciar progreso</button>
+<button class="reset-link" onclick="resetProgress()">Reiniciar progreso</button>
 </div>
 
 <div class="footer">
@@ -207,7 +207,7 @@ const STORE_KEY='refindable_workbook_v1';
 const P=s=>'<span class="path">'+s+'</span>'; // helper for click-paths
 
 const MODULES=[
-{n:1,icon:'🧭',title:'Fundamentos y Navegación',tasks:[
+{n:1,icon:'',title:'Fundamentos y Navegación',tasks:[
  {h:'Creá tu cuenta de HubSpot',obj:'Tener un portal propio y gratis donde practicar todo el workbook sin tocar nada del cliente.',
   steps:['Entrá a '+P('hubspot.com')+' y tocá <strong>Comenzá gratis / Get started free</strong>.',
   'Registrate con tu email (o con Google) y confirmá el mail de verificación.',
@@ -227,7 +227,7 @@ const MODULES=[
   'Abrí el contacto: a la izquierda las properties, al centro la <strong>timeline</strong> de actividad.'],
   listo:'El contacto aparece en la tabla de Contacts y podés abrir su ficha completa.'}
 ]},
-{n:2,icon:'🤝',title:'Contactos, Companies y Deals',tasks:[
+{n:2,icon:'',title:'Contactos, Companies y Deals',tasks:[
  {h:'Creá una company y asociá 2 contactos',obj:'Entender la relación contacto ↔ empresa, base de todo el CRM.',
   steps:['Andá a '+P('CRM → Companies → Create company')+'. Cargá <strong>Name</strong> y <strong>Domain</strong> (ej: rio.com).',
   'Abrí la company → panel derecho <strong>Contacts</strong> → <strong>Add</strong> → asociá el contacto que ya creaste.',
@@ -247,7 +247,7 @@ const MODULES=[
   'Mirá cómo todo queda ordenado por fecha en la timeline.'],
   listo:'El contacto tiene en su timeline 1 nota, 1 llamada y 1 tarea.'}
 ]},
-{n:3,icon:'🏷️',title:'Properties, Listas y Segmentación',tasks:[
+{n:3,icon:'',title:'Properties, Listas y Segmentación',tasks:[
  {h:'Creá una custom property (dropdown)',obj:'Capturar un dato propio del negocio que HubSpot no trae de fábrica.',
   steps:['Andá a '+P('Settings → Properties → Object: Contact → Create property')+'.',
   'Group: <strong>Contact information</strong>. Label: ej <strong>Tipo de propiedad buscada</strong>.',
@@ -267,7 +267,7 @@ const MODULES=[
   'Comprobá: sale de la <strong>activa</strong>, pero <strong>no</strong> de la estática.'],
   listo:'Tenés una lista estática y podés explicar por qué difiere de la activa.'}
 ]},
-{n:4,icon:'📊',title:'Pipelines de Ventas',tasks:[
+{n:4,icon:'',title:'Pipelines de Ventas',tasks:[
  {h:'Revisá / creá las etapas de un pipeline',obj:'Tener un pipeline con etapas claras y centradas en el comprador.',
   steps:['Andá a '+P('Settings → Objects → Deals → Pipelines & Stages')+'.',
   'Mirá el <strong>Sales Pipeline</strong> default y sus stages.',
@@ -285,7 +285,7 @@ const MODULES=[
   'Fijate cómo HubSpot calcula el <strong>weighted amount</strong> (amount × probability).'],
   listo:'Las etapas tienen probabilidades crecientes y tu deal tiene monto cargado.'}
 ]},
-{n:5,icon:'📝',title:'Forms y Landing Pages',tasks:[
+{n:5,icon:'',title:'Forms y Landing Pages',tasks:[
  {h:'Creá un form de captación con 3 campos',obj:'Capturar leads pidiendo lo justo: menos fricción, más envíos.',
   steps:['Andá a '+P('Marketing → Lead Capture → Forms → Create form')+'.',
   'Dejá solo 3 campos: <strong>First name</strong>, <strong>Email</strong> y tu custom property (Tipo de propiedad buscada).',
@@ -305,7 +305,7 @@ const MODULES=[
   'Abrí el contacto y confirmá que la custom property quedó cargada.'],
   listo:'El envío creó (o actualizó) un contacto con los datos del form.'}
 ]},
-{n:6,icon:'⚙️',title:'Workflows y Automatización',tasks:[
+{n:6,icon:'',title:'Workflows y Automatización',tasks:[
  {h:'Creá un workflow simple (form → email + tarea)',obj:'Automatizar la reacción a un lead nuevo sin intervención manual.',
   steps:['Andá a '+P('Automation → Workflows → Create workflow')+' → <strong>From scratch</strong> → <strong>Contact-based</strong>.',
   'Trigger: <strong>Form submission</strong> → elegí tu form.',
@@ -323,7 +323,7 @@ const MODULES=[
   'Completá el form con un contacto nuevo y revisá su pestaña de <strong>workflow enrollment</strong>.'],
   listo:'Un contacto de prueba entró al workflow y disparó las acciones.'}
 ]},
-{n:7,icon:'📧',title:'Email Marketing',tasks:[
+{n:7,icon:'',title:'Email Marketing',tasks:[
  {h:'Creá una lista de prueba',obj:'Tener un destino seguro para testear envíos sin molestar a nadie real.',
   steps:['Andá a '+P('CRM → Lists → Create list')+' → <strong>Static list</strong> → nombre <strong>Test email</strong>.',
   'Agregá tu propio email y 1-2 alias tuyos.',
@@ -341,7 +341,7 @@ const MODULES=[
   'Verificá que el token muestra tu nombre (o "equipo" si falta) y que el <strong>unsubscribe</strong> está.'],
   listo:'Recibiste el test y lo revisaste en mobile sin nada roto.'}
 ]},
-{n:8,icon:'📈',title:'Reportes y Dashboards',tasks:[
+{n:8,icon:'',title:'Reportes y Dashboards',tasks:[
  {h:'Creá un reporte de deals por etapa',obj:'Ver de un vistazo cómo está repartido el pipeline.',
   steps:['Andá a '+P('Reporting → Reports → Create report')+' → <strong>Custom report</strong> → single object <strong>Deals</strong>.',
   'Visual: <strong>bar / column</strong>. Eje X: <strong>Deal stage</strong>. Medida: <strong>count of deals</strong> (o sum of amount).',
@@ -359,7 +359,7 @@ const MODULES=[
   'Mirá la opción de <strong>compartir</strong> o enviarlo por email recurrente.'],
   listo:'El dashboard tiene 3-4 widgets útiles para una mirada de negocio.'}
 ]},
-{n:9,icon:'🔌',title:'Integraciones y RevOps',tasks:[
+{n:9,icon:'',title:'Integraciones y RevOps',tasks:[
  {h:'Explorá el App Marketplace y una integración nativa',obj:'Conocer cómo HubSpot se conecta con otras herramientas.',
   steps:['Arriba a la derecha tocá el ícono <strong>Marketplace</strong> → '+P('App Marketplace')+'.',
   'Buscá una integración nativa (ej: Gmail, Outlook, WhatsApp, Zoom o Slack).',
@@ -379,7 +379,7 @@ const MODULES=[
   'Por cada regla definí quién la hace cumplir y cómo se monitorea.'],
   listo:'Tenés 3 reglas de gobierno escritas, concretas y accionables.'}
 ]},
-{n:'★',icon:'🏗️',title:'Proyecto integrador',special:true,tasks:[
+{n:'P',icon:'',title:'Proyecto integrador',special:true,tasks:[
  {h:'Montá un mini-CRM funcional de punta a punta',obj:'Combinar TODO lo anterior en un CRM real para un negocio ficticio (ej: Inmobiliaria Río).',
   steps:['<strong>Base:</strong> creá 1 company, 3 contactos y 2 deals en tu pipeline con monto y etapa.',
   '<strong>Datos:</strong> sumá 1 custom property + 1 lista activa que segmente esos contactos.',
@@ -402,8 +402,8 @@ function taskHTML(mi,ti,t){
  +'<h3>'+t.h+'</h3>'
  +'<p class="obj"><span class="lbl">Objetivo:</span> '+t.obj+'</p>'
  +'<ol class="steps-ol">'+steps+'</ol>'
- +'<div class="listo"><b>✅ Listo cuando</b><span>'+t.listo+'</span></div>'
- +'<div class="chk"><div class="chk-item'+(done?' done':'')+'" data-id="'+id+'" onclick="toggleTask(this)"><div class="chk-box">✓</div>'+(done?'Tarea completada':'Marcar esta tarea como completada')+'</div></div>'
+ +'<div class="listo"><b>Listo cuando</b><span>'+t.listo+'</span></div>'
+ +'<div class="chk"><div class="chk-item'+(done?' done':'')+'" data-id="'+id+'" onclick="toggleTask(this)"><div class="chk-box"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>'+(done?'Tarea completada':'Marcar esta tarea como completada')+'</div></div>'
  +'</div>';
 }
 
@@ -415,7 +415,7 @@ function render(){
   let tasks='';m.tasks.forEach((t,ti)=>{tasks+=taskHTML(mi,ti,t)});
   html+='<section class="mod'+(m.special?' special':'')+'" id="mod'+mi+'">'
   +'<div class="mod-h" onclick="toggleMod('+mi+')">'
-  +'<div class="mod-num">'+m.icon+'</div>'
+  +'<div class="mod-num">'+m.n+'</div>'
   +'<div class="mod-titles"><div class="mod-t">'+(m.special?'':('Sesión '+m.n+' · '))+m.title+'</div><div class="mod-sub">'+m.tasks.length+(m.tasks.length===1?' tarea':' tareas')+'</div></div>'
   +'<div class="mod-prog"><span class="mod-count" id="mc'+mi+'">0/'+m.tasks.length+'</span><div class="mini-track"><div class="mini-fill" id="mf'+mi+'"></div></div></div>'
   +'<div class="chev">⌄</div></div>'
@@ -481,7 +481,7 @@ function toggleTheme(){
  document.body.classList.toggle('light');
  const btn=document.getElementById('themeBtn');
  const light=document.body.classList.contains('light');
- btn.textContent=light?'☀️':'🌙';
+ btn.textContent=light?'Claro':'Oscuro';
  localStorage.setItem('theme',light?'light':'dark');
  // recompute heights of open modules (no layout change, but safe)
  MODULES.forEach((m,mi)=>{const mod=document.getElementById('mod'+mi);if(mod&&mod.classList.contains('open')){const b=document.getElementById('mb'+mi);b.style.maxHeight=(b.scrollHeight+40)+'px'}});
@@ -491,7 +491,7 @@ if(localStorage.getItem('theme')==='light'){document.body.classList.add('light')
 load();
 render();
 updateProgress();
-if(localStorage.getItem('theme')==='light'){document.getElementById('themeBtn').textContent='☀️'}
+if(localStorage.getItem('theme')==='light'){document.getElementById('themeBtn').textContent='Claro'}
 toggleMod(0); // abrir el primer módulo por defecto
 </script>
 </body>
