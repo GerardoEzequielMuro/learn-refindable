@@ -5,126 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Refindable Academy — Aprendé CRM, de junior a senior</title>
 <meta name="description" content="Un curso de CRM en clases cortas. De los fundamentos a la práctica, a tu ritmo.">
-<meta name="theme-color" content="#f6f5f1">
+<meta name="theme-color" content="#f3f1ea">
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f6f5f1; --paper2:#fbfaf7; --ink:#1b1b18; --ink2:#3c3c36; --muted:#7c7a70; --faint:#a3a199;
-    --line:#e4e2d9; --line2:#d8d5ca; --accent:#1f5c3d;
-    --maxw:1080px; --ease:cubic-bezier(.4,0,.2,1);
+    --paper:#f3f1ea; --paper2:#fbfaf6; --card:#ffffff;
+    --ink:#181712; --ink2:#3a382f; --muted:#6f6c60; --faint:#9d9a8c;
+    --line:#e3e0d6; --line2:#d6d2c5;
+    --acc:#2138e0; --acc-d:#1a2cb4; --acc-soft:#e7e9fd; --acc-ink:#0f1b6b;
+    --maxw:1140px; --ease:cubic-bezier(.4,0,.2,1);
+    --shadow:0 10px 30px rgba(24,23,18,.10);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;font-weight:400;-webkit-tap-highlight-color:transparent}
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
-  ::selection{background:var(--ink);color:var(--paper)}
-  :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-  ::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:5px;border:3px solid var(--paper)}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
-  .mono{font-family:'Space Mono',monospace}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;-webkit-tap-highlight-color:transparent}
+  a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+  ::selection{background:var(--acc);color:#fff}
+  :focus-visible{outline:2.5px solid var(--acc);outline-offset:3px;border-radius:3px}
+  ::-webkit-scrollbar{width:11px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px;border:3px solid var(--paper)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  .mono{font-family:'Space Grotesk',sans-serif}
   .serif{font-family:'Fraunces',serif}
-  .skip{position:fixed;top:12px;left:12px;z-index:200;background:var(--ink);color:var(--paper);padding:10px 16px;transform:translateY(-160%);transition:transform .2s}
-  .skip:focus{transform:none}
+  .skip{position:fixed;top:12px;left:12px;z-index:200;background:var(--ink);color:#fff;padding:10px 16px;transform:translateY(-160%);transition:transform .2s}.skip:focus{transform:none}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .arrow{display:inline-block;transition:transform .25s var(--ease)}
-  .lnk{position:relative;font-weight:600}
-  .lnk::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
-  .lnk:hover::after{transform:scaleX(1)}
-  .lnk:hover .arrow{transform:translateX(4px)}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:14px 24px;border-radius:11px;cursor:pointer;border:1px solid transparent;transition:transform .15s var(--ease),background .2s,box-shadow .2s}
+  .btn-pri{background:var(--acc);color:#fff;box-shadow:0 6px 18px rgba(33,56,224,.26)}
+  .btn-pri:hover{background:var(--acc-d);transform:translateY(-2px)}
+  .btn-pri:hover .arrow{transform:translateX(4px)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .lnk{font-weight:600;position:relative}
+  .lnk::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+  .lnk:hover::after{transform:scaleX(1)}.lnk:hover .arrow{transform:translateX(4px)}
 
   /* nav */
-  header{position:sticky;top:0;z-index:100;background:rgba(246,245,241,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
-  .brand{font-family:'Fraunces',serif;font-weight:500;font-size:20px;letter-spacing:-.01em}
-  .brand b{font-weight:600}
-  .nav-links{display:flex;gap:30px}
-  .nav-links a{font-size:14px;color:var(--muted);transition:color .2s}
-  .nav-links a:hover{color:var(--ink)}
-  .nav .go{font-size:14px;font-weight:600}
-  .menu-btn{display:none;font-size:14px;font-weight:600;background:none;border:none;cursor:pointer;font-family:inherit}
+  header{position:sticky;top:0;z-index:100;background:rgba(243,241,234,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-family:'Fraunces',serif;font-weight:500;font-size:21px;letter-spacing:-.01em}.brand b{font-weight:600}
+  .nav-mid{display:flex;gap:28px}.nav-mid a{font-size:14px;color:var(--muted);transition:color .2s}.nav-mid a:hover{color:var(--ink)}
+  .nav .cta{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;background:var(--acc);color:#fff;padding:9px 16px;border-radius:9px;display:inline-flex;align-items:center;gap:7px;transition:background .2s,transform .15s}
+  .nav .cta:hover{background:var(--acc-d);transform:translateY(-1px)}
+  .menu-btn{display:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;background:none;border:none;cursor:pointer}
 
   /* hero */
-  .hero{padding:84px 0 56px}
-  .eyebrow{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:30px}
-  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(44px,8vw,92px);line-height:1.0;letter-spacing:-.03em;margin-bottom:28px;max-width:15ch}
+  .hero{padding:64px 0 50px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+  .hero .ed{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .hero .ed::after{content:'';flex:1;height:1px;background:var(--line)}
+  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(42px,6.4vw,82px);line-height:.98;letter-spacing:-.03em;margin-bottom:24px}
   .hero h1 em{font-style:italic;font-weight:400}
-  .hero .sub{font-size:clamp(17px,2vw,20px);color:var(--ink2);max-width:48ch;margin-bottom:34px;line-height:1.55}
-  .hero-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap;font-size:16px}
-  .hero-actions .muted{color:var(--muted);font-size:14px}
-  .hero-fig{margin-top:64px;border-top:1px solid var(--line);padding-top:0}
-  .hero-fig figure{position:relative;aspect-ratio:16/7;overflow:hidden;background:#e9e7df}
-  .hero-fig img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:filter .6s var(--ease)}
-  .hero-fig:hover img{filter:grayscale(0) contrast(1)}
-  .hero-fig figcaption{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--faint);margin-top:10px;display:flex;justify-content:space-between;letter-spacing:.04em}
+  .hero h1 .ul{box-shadow:inset 0 -.09em 0 var(--acc)}
+  .hero .sub{font-size:clamp(16px,1.9vw,19px);color:var(--ink2);max-width:44ch;margin-bottom:30px;line-height:1.55}
+  .hero-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  /* hero figure + resume card */
+  .hfig{position:relative}
+  .hfig .ph{aspect-ratio:4/3.2;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);background:#e9e7df}
+  .hfig .ph img{width:100%;height:100%;object-fit:cover}
+  .resume{position:absolute;left:-22px;bottom:26px;width:280px;max-width:80%;background:var(--ink);color:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 18px 40px rgba(24,23,18,.3);text-decoration:none}
+  .resume .l{font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#b9c0ff;margin-bottom:8px}
+  .resume .t{font-family:'Fraunces',serif;font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px}
+  .resume .bar{height:4px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden}
+  .resume .bar i{display:block;height:100%;background:var(--acc);border-radius:3px}
+  .resume .pc{font-family:'Space Grotesk',sans-serif;font-size:11.5px;color:#cfd2e8;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+  .resume .pc .go{color:#fff}
 
-  /* section frame */
-  section{scroll-margin-top:90px}
-  .sec{padding:72px 0;border-top:1px solid var(--line)}
-  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
-  .sec-head .no{font-family:'Space Mono',monospace;font-size:13px;color:var(--accent)}
-  .sec-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em}
-  .sec-sub{color:var(--muted);font-size:15.5px;margin:0 0 36px 44px;max-width:54ch}
+  /* stats band */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:54px}
+  .stat .n{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,5vw,52px);letter-spacing:-.03em;line-height:1;color:var(--acc)}
+  .stat .k{font-size:13.5px;color:var(--muted);margin-top:8px;font-weight:500}
 
-  /* curriculum as an index/syllabus */
-  .level-label{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 4px 44px}
-  .level-label:first-child{margin-top:0}
-  .row{display:grid;grid-template-columns:44px 1fr auto;align-items:baseline;gap:18px;padding:22px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
-  .row:hover{background:var(--paper2)}
-  .row:last-child{border-bottom:1px solid var(--line)}
-  .row.locked{cursor:default;opacity:.5}
-  .row .rn{font-family:'Space Mono',monospace;font-size:14px;color:var(--faint)}
-  .row.done .rn{color:var(--accent)}
-  .row .rmid h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(20px,2.4vw,27px);letter-spacing:-.01em;line-height:1.15;transition:transform .25s var(--ease);display:inline-block}
-  .row:hover .rmid h3{transform:translateX(6px)}
-  .row .rmid p{color:var(--muted);font-size:14.5px;margin-top:5px;max-width:60ch}
-  .row .rt{text-align:right;font-family:'Space Mono',monospace;font-size:12.5px;color:var(--muted);white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-  .row .rt .st{display:inline-flex;align-items:center;gap:6px}
-  .row.done .rt .st{color:var(--accent)}
-  .row .rt .st svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
-  .row .rt .soon{color:var(--faint)}
-  .row .ar{font-family:'Space Mono',monospace}
+  /* section heads */
+  section{scroll-margin-top:86px}
+  .sec{padding:74px 0}
+  .sec+.sec{border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:6px}
+  .sec-head .no{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--acc)}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,3.8vw,44px);letter-spacing:-.02em}
+  .sec-sub{color:var(--muted);font-size:15.5px;margin:0 0 30px 42px;max-width:56ch}
 
-  /* continue line */
-  .cont{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:8px}
-  .cont .ct .l{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .cont .ct .t{font-family:'Fraunces',serif;font-size:22px;font-weight:400}
-  .cont .meter{flex:1;min-width:160px;max-width:260px;height:1px;background:var(--line2);position:relative}
-  .cont .meter i{position:absolute;left:0;top:-1px;height:3px;background:var(--accent);transition:width .6s var(--ease)}
-  .cont .pc{font-family:'Space Mono',monospace;font-size:13px;color:var(--muted)}
+  /* curriculum index (numerals + thumb + serif title) */
+  .lvl{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:32px 0 2px 42px}
+  .lvl:first-child{margin-top:0}
+  .row{display:grid;grid-template-columns:96px 76px 1fr auto;align-items:center;gap:22px;padding:20px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
+  .row:hover{background:var(--paper2)}.row:last-of-type{border-bottom:1px solid var(--line)}
+  .row.locked{cursor:default;opacity:.55}
+  .row .rn{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:46px;letter-spacing:-.03em;line-height:1;color:transparent;-webkit-text-stroke:1.4px var(--line2);transition:all .3s var(--ease)}
+  .row:hover .rn{-webkit-text-stroke:1.4px var(--acc);color:var(--acc-soft)}
+  .row.done .rn{-webkit-text-stroke:1.4px var(--acc);color:var(--acc)}
+  .row .th{width:76px;height:60px;border-radius:9px;overflow:hidden;background:#e9e7df}
+  .row .th img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+  .row:hover .th img{transform:scale(1.06)}
+  .row .rmid h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(19px,2.2vw,25px);letter-spacing:-.01em;line-height:1.15;transition:transform .25s var(--ease);display:inline-block}
+  .row:hover .rmid h3{transform:translateX(4px)}
+  .row .rmid p{color:var(--muted);font-size:14px;margin-top:4px}
+  .row .rt{font-family:'Space Grotesk',sans-serif;font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+  .row .rt .st{display:inline-flex;align-items:center;gap:6px}.row.done .rt .st{color:var(--acc)}
+  .row .rt .st svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4}
+  .row .rt .soon{color:var(--faint)}.row .rt .ar{color:var(--ink)}
 
-  /* generic list (exams, resources) */
-  .list .row2{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
-  .list .row2:last-child{border-bottom:1px solid var(--line)}
-  .list .row2:hover{background:var(--paper2)}
-  .list .row2 .t{font-family:'Fraunces',serif;font-size:21px;font-weight:400;transition:transform .25s var(--ease);display:inline-block}
-  .list .row2:hover .t{transform:translateX(6px)}
-  .list .row2 .d{color:var(--muted);font-size:14px;margin-top:4px}
-  .list .row2 .meta{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--muted);white-space:nowrap;text-align:right}
+  /* practica banner */
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+  .feature .fph{position:relative;min-height:280px}.feature .fph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .feature .ftx{padding:40px 42px;display:flex;flex-direction:column;justify-content:center}
+  .feature .ftx .e{margin-bottom:14px}
+  .feature .ftx h3{font-family:'Fraunces',serif;font-weight:400;font-size:30px;letter-spacing:-.02em;margin-bottom:12px}
+  .feature .ftx p{color:var(--muted);font-size:15.5px;margin-bottom:24px}
 
-  footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:8px}
+  /* generic list */
+  .list .r2{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:20px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
+  .list .r2:last-child{border-bottom:1px solid var(--line)}.list .r2:hover{background:var(--paper2)}
+  .list .r2 .ri{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--acc);width:30px}
+  .list .r2 .t{font-family:'Fraunces',serif;font-size:21px;font-weight:400;transition:transform .25s var(--ease);display:inline-block}
+  .list .r2:hover .t{transform:translateX(5px)}
+  .list .r2 .d{color:var(--muted);font-size:14px;margin-top:3px}
+  .list .r2 .meta{font-family:'Space Grotesk',sans-serif;font-size:12.5px;color:var(--muted);white-space:nowrap;text-align:right}
+
+  footer{border-top:1px solid var(--line);padding:54px 0 38px}
   .foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
-  .foot .brand{font-size:18px}
-  .foot p{color:var(--muted);font-size:14px;margin-top:10px;max-width:34ch}
-  .foot .cols{display:flex;gap:56px;flex-wrap:wrap}
-  .foot h5{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
-  .foot a{display:block;color:var(--muted);font-size:14px;margin-bottom:10px}
-  .foot a:hover{color:var(--ink)}
-  .foot-bot{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--faint);margin-top:44px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .foot .brand{font-size:19px}.foot p{color:var(--muted);font-size:14px;margin-top:10px;max-width:32ch}
+  .foot .cols{display:flex;gap:54px;flex-wrap:wrap}
+  .foot h5{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:13px}
+  .foot a{display:block;color:var(--muted);font-size:14px;margin-bottom:10px}.foot a:hover{color:var(--ink)}
+  .foot-bot{font-family:'Space Grotesk',sans-serif;font-size:11.5px;color:var(--faint);margin-top:42px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
-  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
   .reveal.in{opacity:1;transform:none}
 
-  @media(max-width:720px){
-    .wrap{padding:0 22px}
-    .nav-links,.nav .go{display:none}.menu-btn{display:block}
-    .sec-sub,.level-label{margin-left:0}
-    .row{grid-template-columns:32px 1fr;gap:14px}
-    .row .rt{grid-column:2;text-align:left;align-items:flex-start;margin-top:8px;flex-direction:row;gap:14px}
-    .list .row2{grid-template-columns:1fr}.list .row2 .meta{text-align:left;margin-top:8px}
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}.hfig{max-width:520px}
+    .stats{grid-template-columns:1fr 1fr;gap:24px 20px}
   }
-  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}.reveal{opacity:1!important;transform:none!important}.hero-fig img{filter:grayscale(1)}}
+  @media(max-width:680px){
+    .wrap{padding:0 22px}
+    .nav-mid,.nav .cta{display:none}.menu-btn{display:block}
+    .sec-sub,.lvl{margin-left:0}
+    .row{grid-template-columns:54px 1fr;gap:14px}
+    .row .th{display:none}.row .rn{font-size:34px}
+    .row .rt{grid-column:2;text-align:left;align-items:flex-start;flex-direction:row;gap:14px;margin-top:6px}
+    .feature{grid-template-columns:1fr}.feature .fph{min-height:200px}
+    .resume{left:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}.reveal{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -133,36 +157,60 @@
 <header>
   <nav class="nav wrap">
     <a class="brand" href="#top">Refindable <b>Academy</b></a>
-    <div class="nav-links">
-      <a href="#programa">Temario</a>
-      <a href="#examenes">Exámenes</a>
-      <a href="#recursos">Recursos</a>
+    <div class="nav-mid">
+      <a href="#programa">Temario</a><a href="#practica">Práctica</a><a href="#examenes">Exámenes</a><a href="#recursos">Recursos</a>
     </div>
-    <a class="go lnk" href="#" id="navGo">Empezar <span class="arrow">→</span></a>
+    <a class="cta" href="#" id="navGo">Empezar <span class="arrow">→</span></a>
     <button class="menu-btn" id="menuBtn">Temario</button>
   </nav>
 </header>
 
 <main id="top">
   <section class="hero wrap">
-    <div class="eyebrow reveal">Curso de CRM · 9 clases · a tu ritmo</div>
-    <h1 class="reveal">Aprendé CRM, de junior a <em>senior</em></h1>
-    <p class="sub reveal">Un curso en clases cortas. Empezás por los fundamentos y terminás listo para trabajar en ventas, marketing o atención. Sin vueltas, a tu ritmo.</p>
-    <div class="hero-actions reveal">
-      <a class="lnk" href="#" id="heroGo" style="font-weight:600">Empezar la ruta <span class="arrow">→</span></a>
-      <a class="lnk" href="#programa" style="color:var(--muted)">Ver el temario</a>
+    <div class="hero-grid">
+      <div>
+        <div class="ed reveal"><span class="eyebrow">Edición Nº 01 · Curso de CRM</span></div>
+        <h1 class="reveal">Aprendé CRM,<br>de junior a <em class="ul">senior</em></h1>
+        <p class="sub reveal">Un curso en clases cortas. Empezás por los fundamentos y terminás listo para trabajar en ventas, marketing o atención. A tu ritmo, sin vueltas.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-pri" href="#" id="heroGo">Empezar la ruta <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#programa">Ver el temario</a>
+        </div>
+      </div>
+      <div class="hfig reveal">
+        <div class="ph"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1100&q=72" alt="Un equipo trabajando junto sobre la información de sus clientes."></div>
+        <a class="resume" href="#" id="resumeCard">
+          <div class="l" id="resL">Tu próxima clase</div>
+          <div class="t" id="resT">Sesión 1 · ¿Qué es un CRM?</div>
+          <div class="bar"><i id="resBar"></i></div>
+          <div class="pc"><span id="resPc">0 / 9</span><span class="go">Continuar →</span></div>
+        </a>
+      </div>
     </div>
-    <div class="hero-fig reveal">
-      <figure><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=70" alt="Un equipo de trabajo colaborando."></figure>
-      <figcaption><span>Refindable Academy</span><span>Fundamentos · Intermedio · Avanzado</span></figcaption>
+    <div class="stats reveal">
+      <div class="stat"><div class="n">09</div><div class="k">Clases cortas</div></div>
+      <div class="stat"><div class="n">28</div><div class="k">Tareas prácticas</div></div>
+      <div class="stat"><div class="n">04</div><div class="k">Exámenes</div></div>
+      <div class="stat"><div class="n">100%</div><div class="k">A tu ritmo</div></div>
     </div>
   </section>
 
   <section class="sec wrap" id="programa">
     <div class="sec-head"><span class="no">01</span><h2 class="serif">El temario</h2></div>
-    <p class="sec-sub">Nueve clases, de lo más simple a lo más completo. Cada una se puede hacer suelta, pero juntas te llevan de cero a un nivel sólido.</p>
-    <div class="cont reveal" id="cont"></div>
+    <p class="sec-sub">Nueve clases, de lo más simple a lo más completo. Cada una se puede hacer suelta, pero juntas te llevan de los cimientos al RevOps.</p>
     <div id="curriculum"></div>
+  </section>
+
+  <section class="sec wrap" id="practica">
+    <div class="feature reveal">
+      <div class="fph"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1100&q=72" alt="Practicando con datos y reportes en una laptop."></div>
+      <div class="ftx">
+        <span class="eyebrow e">Práctica guiada</span>
+        <h3 class="serif">Aprendé haciendo, en un portal real</h3>
+        <p>28 tareas paso a paso para aplicar lo que ves en cada clase. La teoría se fija practicando, y tu avance queda guardado.</p>
+        <a class="btn btn-pri" href="tareas-practicas.html" style="align-self:flex-start">Abrir el workbook <span class="arrow">→</span></a>
+      </div>
+    </div>
   </section>
 
   <section class="sec wrap" id="examenes">
@@ -181,12 +229,9 @@
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div>
-        <div class="brand serif">Refindable <b>Academy</b></div>
-        <p>Un curso de CRM claro y corto, para aprender a tu ritmo.</p>
-      </div>
+      <div><div class="brand serif">Refindable <b>Academy</b></div><p>Un curso de CRM claro y corto, para aprender a tu ritmo.</p></div>
       <div class="cols">
-        <div><h5>Curso</h5><a href="#programa">Temario</a><a href="#examenes">Exámenes</a><a href="#recursos">Recursos</a></div>
+        <div><h5>Curso</h5><a href="#programa">Temario</a><a href="#practica">Práctica</a><a href="#examenes">Exámenes</a><a href="#recursos">Recursos</a></div>
         <div><h5>Refindable</h5><a href="https://refindable.com" target="_blank" rel="noopener">refindable.com</a><a href="../">Documentación</a><a href="mailto:hello@refindable.com">Contacto</a></div>
       </div>
     </div>
@@ -195,6 +240,8 @@
 </footer>
 
 <script>
+const IMG=['1522071820081-009f0129c71c','1551434678-e076c223a692','1556761175-5973dc0f32e7','1460925895917-afdab827c52f','1517245386807-bb43f82c33c4','1552664730-d307ca884978'];
+const thumb=i=>`https://images.unsplash.com/photo-${IMG[i%IMG.length]}?auto=format&fit=crop&w=240&h=180&q=65`;
 const TRACKS=[{key:'beginner',label:'Fundamentos'},{key:'intermediate',label:'Intermedio'},{key:'advanced',label:'Avanzado'}];
 const COURSES=[
   {id:'s1',track:'beginner',n:1,title:'¿Qué es un CRM?',desc:'Qué es, de dónde viene y cómo se navega.',file:'sesion-1.html',steps:25},
@@ -208,16 +255,16 @@ const COURSES=[
   {id:'s9',track:'advanced',n:9,title:'Integraciones y RevOps',desc:'Conectar el CRM con el resto del stack.',file:'session9-trainees.html',steps:8},
 ];
 const EXAMS=[
-  {title:'Examen — Fundamentos',desc:'Clases 1 a 3.',file:'examen-fundamentos.html',meta:'10 preguntas · 70%'},
-  {title:'Examen — Intermedio',desc:'Clases 4 a 6.',file:'examen-intermedio.html',meta:'10 preguntas · 70%'},
-  {title:'Examen — Avanzado',desc:'Clases 7 a 9.',file:'examen-avanzado.html',meta:'10 preguntas · 70%'},
-  {title:'Certificación final',desc:'Todo el programa.',file:'examen-final.html',meta:'15 preguntas · 80%'},
+  {n:'I',title:'Examen — Fundamentos',d:'Clases 1 a 3.',u:'examen-fundamentos.html',meta:'10 preguntas · 70%'},
+  {n:'II',title:'Examen — Intermedio',d:'Clases 4 a 6.',u:'examen-intermedio.html',meta:'10 preguntas · 70%'},
+  {n:'III',title:'Examen — Avanzado',d:'Clases 7 a 9.',u:'examen-avanzado.html',meta:'10 preguntas · 70%'},
+  {n:'★',title:'Certificación final',d:'Todo el programa.',u:'examen-final.html',meta:'15 preguntas · 80%'},
 ];
 const RES=[
-  {t:'HubSpot Academy',d:'Cursos y certificaciones oficiales.',u:'https://academy.hubspot.com',src:'HubSpot'},
-  {t:'HubSpot Knowledge Base',d:'Documentación de producto.',u:'https://knowledge.hubspot.com',src:'HubSpot'},
-  {t:'Salesforce Trailhead',d:'Aprendizaje de CRM enterprise.',u:'https://trailhead.salesforce.com',src:'Salesforce'},
-  {t:'Documentación interna',d:'SOPs y proyectos de Refindable.',u:'../',src:'Refindable'},
+  {n:'↗',title:'HubSpot Academy',d:'Cursos y certificaciones oficiales.',u:'https://academy.hubspot.com',meta:'HubSpot'},
+  {n:'↗',title:'HubSpot Knowledge Base',d:'Documentación de producto.',u:'https://knowledge.hubspot.com',meta:'HubSpot'},
+  {n:'↗',title:'Salesforce Trailhead',d:'Aprendizaje de CRM enterprise.',u:'https://trailhead.salesforce.com',meta:'Salesforce'},
+  {n:'→',title:'Documentación interna',d:'SOPs y proyectos de Refindable.',u:'../',meta:'Refindable'},
 ];
 
 const LS='refindable_academy_progress_v1';
@@ -231,14 +278,14 @@ const check='<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
 function renderCurriculum(){
   const host=document.getElementById('curriculum');host.innerHTML='';
   TRACKS.forEach(tr=>{
-    host.appendChild(el('div','level-label',esc(tr.label)));
-    COURSES.filter(c=>c.track===tr.key).forEach(c=>{
+    host.appendChild(el('div','lvl',esc(tr.label)));
+    COURSES.filter(c=>c.track===tr.key).forEach((c,idx)=>{
       const d=!!done[c.id],st=started(c.id);
-      const row=el('a','row'+(d?' done':'')+(c.file?'':' locked'));
-      if(c.file)row.href=c.file;
+      const row=el('a','row'+(d?' done':'')+(c.file?'':' locked'));if(c.file)row.href=c.file;
       const mins=`${Math.max(8,Math.round(c.steps*1.5))} min`;
-      let status = d?`<span class="st">${check} Completada</span>` : (st?`<span class="st">En curso</span>`:(c.file?`<span style="color:var(--faint)">${mins}</span>`:`<span class="soon">Próximamente</span>`));
+      const status=d?`<span class="st">${check} Completada</span>`:(st?`<span class="st">En curso</span>`:(c.file?`<span style="color:var(--faint)">${mins}</span>`:`<span class="soon">Próximamente</span>`));
       row.innerHTML=`<span class="rn">${String(c.n).padStart(2,'0')}</span>
+        <span class="th"><img src="${thumb(c.n-1)}" alt="" loading="lazy"></span>
         <div class="rmid"><h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p></div>
         <span class="rt">${status}<span class="ar">→</span></span>`;
       if(c.file)row.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',c.id)}catch(_){}});
@@ -249,25 +296,26 @@ function renderCurriculum(){
 function renderList(host,items){
   host.innerHTML='';
   items.forEach(it=>{
-    const a=el('a','row2');a.href=it.u||it.file;if(it.u&&!it.u.startsWith('..'))a.target='_blank',a.rel='noopener';
-    a.innerHTML=`<div><div class="t">${esc(it.title||it.t)}</div><div class="d">${esc(it.desc||it.d)}</div></div>
-      <div class="meta">${esc(it.meta||it.src||'')}${it.u&&!it.u.startsWith('..')?' ↗':' →'}</div>`;
+    const a=el('a','r2');a.href=it.u;if(it.u.startsWith('http'))a.target='_blank',a.rel='noopener';
+    a.innerHTML=`<span class="ri">${esc(it.n)}</span><div><div class="t">${esc(it.title)}</div><div class="d">${esc(it.d)}</div></div><span class="meta">${esc(it.meta)} ${it.u.startsWith('http')?'↗':'→'}</span>`;
     host.appendChild(a);
   });
 }
-function renderCont(){
+function renderResume(){
   const comp=real.filter(c=>done[c.id]).length,pct=Math.round(comp/real.length*100);
   const last=(()=>{try{return localStorage.getItem('refindable_academy_last')}catch(e){return null}})();
   let next=real.find(c=>c.id===last&&!done[c.id])||real.find(c=>!done[c.id])||real[0];
+  document.getElementById('resL').textContent=comp===0?'Tu próxima clase':(comp===real.length?'Curso completo':'Seguí donde dejaste');
+  document.getElementById('resT').textContent=next?('Sesión '+next.n+' · '+next.title):'¡Completaste todo!';
+  document.getElementById('resBar').style.width=pct+'%';
+  document.getElementById('resPc').textContent=comp+' / '+real.length;
+  const nf=next?next.file:real[0].file;
+  ['resumeCard','navGo','heroGo'].forEach(id=>{const a=document.getElementById(id);if(!a)return;a.setAttribute('href',nf);a.addEventListener('click',()=>{if(next){try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}}});});
   const verb=comp===0?'Empezar':(comp===real.length?'Repasar':'Continuar');
-  document.getElementById('cont').innerHTML=`
-    <div class="ct"><div class="l">${comp===0?'Tu próxima clase':(comp===real.length?'Curso completo':'Seguí donde dejaste')}</div><div class="t serif">${esc(next?(String(next.n).padStart(2,'0')+' · '+next.title):'¡Listo!')}</div></div>
-    <div class="meter"><i style="width:${pct}%"></i></div>
-    <div class="pc">${comp}/${real.length} · ${pct}%</div>`;
-  [['navGo',verb],['heroGo',comp===0?'Empezar la ruta':verb+' la ruta']].forEach(([id,lab])=>{const a=document.getElementById(id);if(!a)return;a.firstChild.textContent=lab+' ';a.href=next?next.file:'#';if(next)a.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}});});
+  document.getElementById('navGo').firstChild.textContent=verb+' ';
+  document.getElementById('heroGo').firstChild.textContent=(comp===0?'Empezar la ruta':verb+' la ruta')+' ';
 }
-
-renderCurriculum();renderList(document.getElementById('exams'),EXAMS);renderList(document.getElementById('res'),RES);renderCont();
+renderCurriculum();renderList(document.getElementById('exams'),EXAMS);renderList(document.getElementById('res'),RES);renderResume();
 document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('programa').scrollIntoView());
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
