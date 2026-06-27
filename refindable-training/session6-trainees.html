@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 6 · Workflows y Automatización | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:4px 12px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s}
+.score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#a78bfa,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both;text-align:left}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
+.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.4)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none;box-shadow:none}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.hs-b{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.sl ul{list-style:none;padding:0;margin:8px 0 14px}
+.sl ul li{padding:6px 0 6px 22px;position:relative;color:var(--tm);font-size:16px;line-height:1.55}
+.sl ul li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:13px;top:8px}
+.sl ul li strong{color:var(--t)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--acl));opacity:0;transition:opacity .3s}
+.cd:hover::before{opacity:1}
+.cd:hover{border-color:var(--ac);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.cd-i{font-size:26px;margin-bottom:8px;display:block}
+.cd h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 4px}
+.cd p{font-size:15px;line-height:1.4;margin:0}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.stat-l{font-size:13px;color:var(--td);margin-top:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:var(--rad);overflow:hidden;border:1px solid var(--bd)}
+.cmp-c{padding:18px}.cmp-c.bad{background:var(--rs)}.cmp-c.good{background:var(--gs)}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.cmp-c.bad .cmp-h{color:var(--r)}.cmp-c.good .cmp-h{color:var(--g)}
+.cmp-i{font-size:15px;color:var(--tm);padding:5px 0;line-height:1.5}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}
+.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
+.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:all .3s;position:relative;overflow:hidden}
+.qq.ok{border-color:var(--g)}.qq.ok::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--g)}
+.qq.bad{border-color:var(--r)}.qq.bad::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px 14px 52px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;line-height:1.55;position:relative}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs);transform:translateX(3px)}
+.qopt .mk{position:absolute;left:14px;top:14px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.35}.qopt.dis.correct{opacity:1}
+.qfb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.mail{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;margin:14px 0}
+.mail-hdr{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--bd);font-family:'Space Grotesk',monospace;font-size:11px;color:var(--td);display:flex;gap:6px;align-items:center}
+.mail-hdr::before{content:'\25CF \25CF \25CF';color:var(--td);font-size:9px;letter-spacing:2px;margin-right:8px}
+.mail-meta{padding:14px 18px;border-bottom:1px solid var(--bd);font-size:14px;line-height:1.8}
+.mail-meta .k{color:var(--td);font-family:'Space Grotesk',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:inline-block;width:64px}
+.mail-meta .v{color:var(--t);font-weight:500}
+.mail-body{padding:18px;font-size:14px;color:var(--tm);line-height:1.6}
+.mail-cta{display:inline-block;margin-top:12px;padding:10px 20px;background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px}
+.flow{margin:18px 0;display:flex;flex-direction:column;gap:0}
+.flow-node{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:14px 18px;display:flex;align-items:center;gap:12px;position:relative}
+.flow-node .fn-i{font-size:22px;flex-shrink:0}
+.flow-node .fn-t{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;color:var(--t)}
+.flow-node .fn-d{font-size:13px;color:var(--td);margin-top:2px}
+.flow-node.trig{border-color:var(--ac)}.flow-node.trig .fn-i{color:var(--ac)}
+.flow-node.act{border-color:rgba(245,158,11,.4)}
+.flow-node.dly{border-color:rgba(99,102,241,.35);border-style:dashed}
+.flow-node.brn{border-color:rgba(255,122,89,.4)}
+.flow-node.goal{border-color:var(--g)}.flow-node.goal .fn-i{color:var(--g)}
+.flow-arr{align-self:center;color:var(--td);font-size:16px;padding:4px 0;line-height:1}
+.match-area{margin:16px 0}
+.match-cols{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-mid{display:flex;flex-direction:column;justify-content:space-around;color:var(--td);font-size:13px;padding-top:14px;text-align:center}
+.match-item{padding:12px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:14px;color:var(--tm);transition:all .2s;line-height:1.4}
+.match-item:hover:not(.matched){border-color:var(--ac);color:var(--t)}
+.match-item.sel{border-color:var(--ac);background:var(--acs);color:var(--t)}
+.match-item.matched{border-color:var(--g);background:var(--gs);color:var(--g);pointer-events:none}
+.match-item.flash-bad{border-color:var(--r);background:var(--rs);color:var(--r)}
+.match-score{margin-top:12px;font-size:14px;font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--td)}
+.chk{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:8px;margin:14px 0}
+.chk-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--rads);cursor:pointer;transition:all .2s;font-size:15px;color:var(--tm);user-select:none}
+.chk-item:hover{background:var(--s2)}
+.chk-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;transition:all .2s}
+.chk-item.done{color:var(--t)}
+.chk-item.done .chk-box{background:var(--g);border-color:var(--g);color:#fff}
+.task{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:14px 0;position:relative;overflow:hidden}
+.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--ac),var(--acl))}
+.task-h{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.task h3{margin-top:0;font-size:19px}
+.task p{font-size:15px;line-height:1.6;color:var(--tm)}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;text-align:center;margin:16px 0;letter-spacing:-.04em;animation:popIn .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.final-s.great{background:linear-gradient(135deg,var(--g),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.ok{background:linear-gradient(135deg,var(--o),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.low{background:linear-gradient(135deg,var(--r),#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+@media(max-width:640px){.cmp,.cg,.match-cols{grid-template-columns:1fr}.match-mid{display:none}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--ac)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Sesión 6 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">✨ 0 pts</div>
+<div class="pg-text" id="pgText">1 / 9</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover + misión -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">⚙️ Sesión 6 · Intermedio</div>
+<h1>Workflows:<br><span class="hl">automatizá lo repetitivo</span></h1>
+<p style="font-size:18px;max-width:640px">Un cliente recibe leads nuevos desde un form de su web. El equipo está a full y, sin querer, varios leads se quedan sin respuesta. Cada lead perdido es plata que se va. Hoy lo arreglamos de raíz: armás un workflow para que <strong>ningún lead vuelva a caerse</strong>.</p>
+<div class="co tip" style="max-width:640px"><div>📌</div><div><p>La idea base: un <strong>workflow</strong> es un "si pasa esto → hacé esto" que HubSpot ejecuta solo, 24/7, sin que nadie se acuerde de hacerlo. Vos lo diseñás una vez; corre para siempre.</p></div></div>
+<div class="task" style="max-width:640px;margin-top:18px">
+<div class="task-h">🎯 Tu misión</div>
+<h3 style="margin-bottom:6px">Diseñar un workflow de bienvenida y follow-up, de cero</h3>
+<p>Cada slide es una decisión real de armado: qué dispara el workflow, qué acciones hace, cuándo espera, cómo se bifurca y cuándo termina. Sumás puntos cuando elegís bien.</p>
+</div>
+<div class="tag-row" style="margin-top:18px">
+<span class="tag">⏱ 18 min</span>
+<span class="tag">🧩 9 slides</span>
+<span class="tag t-g">🎯 Hands-on en HubSpot</span>
+<span class="tag t-o">🧠 8 quizzes + matching</span>
+</div>
+</div>
+</div>
+
+<!-- S1: Qué es un workflow + automatizar vs a mano -->
+<div class="sl" data-s="1" data-quiz="1">
+<div class="badge act-b">Decisión 1 · ¿Esto se automatiza?</div>
+<h2>No automatices el caos</h2>
+<p>Antes de tocar un workflow, una regla de oro: <strong>solo se automatiza lo que ya funciona a mano</strong>. Si el proceso es confuso, cambia cada semana o está lleno de excepciones, automatizarlo no lo arregla: lo rompe más rápido y a mayor escala.</p>
+<div class="cmp">
+<div class="cmp-c bad"><div class="cmp-h">✗ No lo automatices todavía</div>
+<div class="cmp-i">Procesos sin definir o que cambian seguido</div>
+<div class="cmp-i">Tareas con muchísimas excepciones manuales</div>
+<div class="cmp-i">Algo que hacés una vez cada tanto</div>
+</div>
+<div class="cmp-c good"><div class="cmp-h">✓ Buen candidato</div>
+<div class="cmp-i">Pasos claros y siempre iguales</div>
+<div class="cmp-i">Alto volumen y repetitivo</div>
+<div class="cmp-i">Algo que el equipo se olvida de hacer</div>
+</div>
+</div>
+
+<div class="qq" id="q1">
+<div class="qq-n">Pregunta 1 · Qué automatizar primero</div>
+<p>Tenés tiempo para armar UN workflow esta semana. ¿Cuál elegís?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>El proceso de ventas entero, incluido lo que el equipo todavía está definiendo</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>El follow-up de leads del form: pasos claros, repetitivos y hoy se les escapan</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>El caso más raro y lleno de excepciones, porque es el que más tiempo manual lleva</div>
+</div>
+<div class="qfb" id="q1-fb"></div>
+</div>
+</div>
+
+<!-- S2: Triggers / enrollment criteria -->
+<div class="sl" data-s="2" data-quiz="1">
+<div class="badge act-b">Decisión 2 · El trigger (criterio de inscripción)</div>
+<h2>¿Qué dispara el workflow?</h2>
+<p>Todo workflow arranca con un <strong>trigger</strong> o <strong>enrollment criteria</strong>: la condición que inscribe a un contacto. Es la puerta de entrada. Si la definís mal, entra gente que no debería (y le mandás cosas que no le corresponden) o no entra nadie.</p>
+<div class="flow">
+<div class="flow-node trig"><span class="fn-i">⚡</span><div><div class="fn-t">Trigger: Form submission = "Contacto web"</div><div class="fn-d">cada vez que alguien completa ese form, entra al workflow</div></div></div>
+</div>
+
+<div class="qq" id="q2">
+<div class="qq-n">Pregunta 2 · Elegí el trigger</div>
+<p>Querés que entren los leads nuevos que llegan por el form de la web. ¿Cuál es el criterio de inscripción correcto?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Lifecycle stage = Customer (ya son clientes)</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>Form submission = "Formulario de contacto web" (o Lifecycle stage = Lead)</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Sin trigger: voy a inscribir a cada contacto a mano, uno por uno</div>
+</div>
+<div class="qfb" id="q2-fb"></div>
+</div>
+
+<div class="qq" id="q3">
+<div class="qq-n">Pregunta 3 · Criterio demasiado amplio</div>
+<p>Un compañero propone poner como trigger "todos los contactos del CRM". ¿Qué problema tiene?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Ninguno: cuanta más gente entre, mejor el alcance</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>Entra gente sin contexto (clientes, contactos viejos) y los sobre-comunicás con un mail que no les corresponde</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>Ninguno: HubSpot filtra solo a quién tiene sentido mandarle</div>
+</div>
+<div class="qfb" id="q3-fb"></div>
+</div>
+</div>
+
+<!-- S3: Acciones -->
+<div class="sl" data-s="3" data-quiz="1">
+<div class="badge act-b">Decisión 3 · Las acciones</div>
+<h2>¿Qué hace el workflow?</h2>
+<p>Ya entró el lead. Ahora el workflow ejecuta <strong>acciones</strong>. Estas son las que más vas a usar:</p>
+<div class="cg">
+<div class="cd"><span class="cd-i">📧</span><h3>Send email</h3><p>Manda un email automático (ej: bienvenida)</p></div>
+<div class="cd"><span class="cd-i">🏷️</span><h3>Set property</h3><p>Cambia el valor de una propiedad (ej: lifecycle = Lead)</p></div>
+<div class="cd"><span class="cd-i">✅</span><h3>Create task</h3><p>Crea una tarea asignada al owner del contacto</p></div>
+<div class="cd"><span class="cd-i">📋</span><h3>Add to list</h3><p>Suma el contacto a una lista</p></div>
+<div class="cd"><span class="cd-i">🔔</span><h3>Internal notification</h3><p>Avisa al equipo (ej: a Slack o por email interno)</p></div>
+</div>
+
+<div class="qq" id="q4">
+<div class="qq-n">Pregunta 4 · La acción que arregla el problema</div>
+<p>El problema original era que <strong>el equipo se olvida de seguir a los leads</strong>. ¿Qué acción asegura que una persona real se haga cargo de cada lead?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Add to list y listo: que la lista quede ahí guardada</div>
+<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">B</div>Create task asignada al owner del contacto, con fecha de vencimiento</div>
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">C</div>Set property "interesado = sí" y nada más</div>
+</div>
+<div class="qfb" id="q4-fb"></div>
+</div>
+</div>
+
+<!-- S4: Delays y branches -->
+<div class="sl" data-s="4" data-quiz="1">
+<div class="badge act-b">Decisión 4 · Delays y branches</div>
+<h2>Esperar y bifurcar</h2>
+<p>Un workflow no es solo una lista de acciones de corrido. Dos piezas le dan inteligencia:</p>
+<ul>
+<li><strong>Delay:</strong> pausa el flujo un tiempo (ej: esperar 2 días) antes del próximo paso. Evita atosigar al contacto.</li>
+<li><strong>Branch (if/then):</strong> bifurca el camino en sí/no según una propiedad o un comportamiento (ej: ¿abrió el email?).</li>
+</ul>
+<div class="flow">
+<div class="flow-node act"><span class="fn-i">📧</span><div><div class="fn-t">Send email de bienvenida</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node dly"><span class="fn-i">⏳</span><div><div class="fn-t">Delay: esperar 2 días</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node brn"><span class="fn-i">🔀</span><div><div class="fn-t">Branch: ¿abrió el email?</div><div class="fn-d">sí → tarea "llamar"  ·  no → reenviar con otro asunto</div></div></div>
+</div>
+
+<div class="qq" id="q5">
+<div class="qq-n">Pregunta 5 · El delay</div>
+<p>Después del email de bienvenida querés esperar antes del próximo paso, así no parecés un robot insistente. ¿Qué usás?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>Nada: encadeno todas las acciones para que salgan en el mismo minuto</div>
+<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>Un delay de 2 días entre el email y la siguiente acción</div>
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>Pauso el workflow entero a mano cada vez que entra un lead</div>
+</div>
+<div class="qfb" id="q5-fb"></div>
+</div>
+
+<div class="qq" id="q6">
+<div class="qq-n">Pregunta 6 · El branch</div>
+<p>Querés tratar distinto a quien abrió el email que a quien no lo abrió. ¿Qué pieza del workflow te lo permite?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Le mando lo mismo a todos, da igual si abrieron o no</div>
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">B</div>Un branch if/then según la propiedad "abrió el email": sí va por un camino, no por otro</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Borro del CRM a los que no abrieron</div>
+</div>
+<div class="qfb" id="q6-fb"></div>
+</div>
+</div>
+
+<!-- S5: Goals + re-enrollment / loops -->
+<div class="sl" data-s="5" data-quiz="1">
+<div class="badge act-b">Decisión 5 · Goals y re-enrollment</div>
+<h2>Cuándo termina (y cuándo NO repetir)</h2>
+<p>Dos conceptos que separan un workflow prolijo de uno que molesta:</p>
+<ul>
+<li><strong>Goal:</strong> el objetivo del workflow. Cuando el contacto lo cumple (ej: agendó una demo), <strong>sale automáticamente</strong> y deja de recibir los pasos siguientes. Sin goal, le seguís insistiendo a alguien que ya convirtió.</li>
+<li><strong>Re-enrollment:</strong> permite que un contacto vuelva a entrar si cumple el trigger de nuevo. Útil, pero peligroso: mal configurado genera <strong>loops infinitos</strong> y sobre-comunicación.</li>
+</ul>
+<div class="co warn"><div>⚠️</div><div><p><strong>El clásico error:</strong> un workflow se setea como acción a sí mismo (o el trigger se vuelve a cumplir con cada paso) y el contacto entra, sale, entra, sale... recibiendo 20 emails en una tarde. Por eso re-enrollment se activa con criterio.</p></div></div>
+
+<div class="qq" id="q7">
+<div class="qq-n">Pregunta 7 · El goal</div>
+<p>El objetivo del workflow es que el lead <strong>agende una demo</strong>. Juan agenda la demo el día 1. ¿Qué querés que pase?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">A</div>Que Juan siga recibiendo los recordatorios de "agendá tu demo" igual</div>
+<div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">B</div>Que el goal "demo agendada" lo saque del workflow y deje de recibir esos pasos</div>
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">C</div>Que se borre el registro de Juan del CRM</div>
+</div>
+<div class="qfb" id="q7-fb"></div>
+</div>
+
+<div class="qq" id="q8">
+<div class="qq-n">Pregunta 8 · El peligro del loop</div>
+<p>Notás que algunos contactos recibieron el email de bienvenida 6 veces en dos días. ¿Cuál es la causa más probable?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">A</div>HubSpot tuvo un bug y reenvió solo, no hay nada que revisar</div>
+<div class="qopt" onclick="ans(this,'q8',1)"><div class="mk">B</div>El re-enrollment está mal configurado: el contacto se reinscribe en loop y se sobre-comunica</div>
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">C</div>Está perfecto: cuantos más emails reciba, más rápido convierte</div>
+</div>
+<div class="qfb" id="q8-fb"></div>
+</div>
+</div>
+
+<!-- S6: Matching -->
+<div class="sl" data-s="6" data-match="1">
+<div class="badge quiz-b">Repaso · Emparejá los conceptos</div>
+<h2>Las 5 piezas de un workflow</h2>
+<p>Ya viste trigger, acción, delay, branch y goal en acción. Emparejá cada pieza con su definición. Tocá una de la izquierda y su par de la derecha. Cada acierto suma <strong>5 puntos</strong>.</p>
+<div class="match-area">
+<div class="match-cols">
+<div class="match-col" id="ml">
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">Trigger</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'l')">Acción</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'l')">Delay</div>
+<div class="match-item" data-m="d" onclick="matchClick(this,'l')">Branch (if/then)</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'l')">Goal</div>
+</div>
+<div class="match-mid">↔<br>↔<br>↔<br>↔<br>↔</div>
+<div class="match-col" id="mr">
+<div class="match-item" data-m="d" onclick="matchClick(this,'r')">Bifurca el flujo en sí/no según una propiedad o comportamiento</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'r')">La condición que inscribe a un contacto al workflow</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'r')">Objetivo que, al cumplirse, saca al contacto del workflow</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'r')">Lo que el workflow hace: mandar email, crear tarea, setear propiedad</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'r')">Pausa el flujo un tiempo antes del próximo paso</div>
+</div>
+</div>
+<div class="match-score" id="matchScore">0 / 5 emparejados</div>
+</div>
+</div>
+
+<!-- S7: Hands-on task + cross-CRM callout -->
+<div class="sl" data-s="7">
+<div class="badge hs-b">Práctica · Manos en HubSpot</div>
+<h2>Armalo de verdad</h2>
+<p>Entrá al portal de HubSpot de práctica (<strong>Automations → Workflows → Create workflow → Contact-based</strong>) y armá el workflow de bienvenida completo. Seguí el plano:</p>
+<div class="flow">
+<div class="flow-node trig"><span class="fn-i">⚡</span><div><div class="fn-t">Trigger</div><div class="fn-d">Form submission = form de la web (lead nuevo)</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node act"><span class="fn-i">📧</span><div><div class="fn-t">Acción 1</div><div class="fn-d">Send email de bienvenida</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node act"><span class="fn-i">✅</span><div><div class="fn-t">Acción 2</div><div class="fn-d">Create task al owner: "Contactar al nuevo lead"</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node dly"><span class="fn-i">⏳</span><div><div class="fn-t">Delay</div><div class="fn-d">Esperar 2 días</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node brn"><span class="fn-i">🔀</span><div><div class="fn-t">Branch if/then</div><div class="fn-d">¿abrió el email? sí → tarea "llamar"  ·  no → reenviar con otro asunto</div></div></div>
+<div class="flow-arr">↓</div>
+<div class="flow-node goal"><span class="fn-i">🎯</span><div><div class="fn-t">Goal</div><div class="fn-d">"Demo agendada" → el contacto sale del workflow</div></div></div>
+</div>
+<div class="task">
+<div class="task-h">📝 Tu entregable</div>
+<h3>Workflow de bienvenida funcionando</h3>
+<p>Verificá estos puntos antes de activar (tocá cada uno):</p>
+<div class="chk">
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>El <strong style="color:inherit">trigger</strong> es el form correcto, no "todos los contactos"</div>
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>El email de bienvenida y la <strong style="color:inherit">tarea al owner</strong> están en el flujo</div>
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>Hay un <strong style="color:inherit">delay de 2 días</strong> antes del branch</div>
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>El <strong style="color:inherit">branch if/then</strong> separa "abrió" de "no abrió"</div>
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>Configuraste un <strong style="color:inherit">goal</strong> y revisaste re-enrollment para evitar loops</div>
+<div class="chk-item" onclick="chkToggle(this)"><div class="chk-box">✓</div>Lo probaste con un contacto de prueba antes de activarlo</div>
+</div>
+</div>
+<div class="co hs"><div>🔁</div><div><p><strong>Esto generaliza a otros CRMs.</strong> El patrón "trigger → acciones → delay → branch → goal" es universal. En <strong>Salesforce</strong> lo armás con <strong>Flow</strong> (Flow Builder); otras plataformas lo llaman "automations", "sequences" o "journeys". Cambian los nombres y la pantalla, no la lógica: aprendiste a pensar en automatización, no solo a clickear en HubSpot.</p></div></div>
+</div>
+
+<!-- S8: Final score + preview -->
+<div class="sl" data-s="8">
+<div class="cover" style="padding-top:8px;text-align:center"><div class="cover-glow" style="top:-60px"></div>
+<div class="badge">🎉 Fin de la sesión</div>
+<h2 style="font-size:30px">Tu resultado</h2>
+<div class="final-s" id="finalS">0</div>
+<p style="text-align:center;font-size:17px;max-width:560px;margin:0 auto" id="finalM">Completá los ejercicios para ver tu score.</p>
+<div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:28px 0;position:relative;overflow:hidden;text-align:left">
+<div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ac),var(--hs))"></div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+<span style="font-size:22px">📧</span>
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0">Preview Sesión 7 · Email Marketing</h3>
+</div>
+<p style="font-size:14px;margin:0">Ya sabés automatizar el seguimiento. La próxima armás y mandás tu primer email a una lista: a quién, con qué asunto, qué dice y cómo leer las métricas. ¿Te sentís firme con todo lo intermedio? También podés rendir el <strong>Examen Intermedio</strong> para validar el track.</p>
+</div>
+<p style="color:var(--td);font-size:13px;margin-top:24px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Sesión 6 de 12</p>
+</div>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 9</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=9;let cur=0,pts=0,ad={};
+const qSlides={1:['q1'],2:['q2','q3'],3:['q4'],4:['q5','q6'],5:['q7','q8']};
+let mSel={l:null,r:null},mDone=0,mTotal=5;
+
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+var sb=document.getElementById('scoreBadge');sb.textContent='✨ '+pts+' pts';
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.style.display='none';updFinal();return}
+b.style.display='flex';
+var sl=document.querySelector('[data-s="'+cur+'"]');
+if(sl.dataset.quiz){
+var allDone=qSlides[cur].every(q=>ad[q]!==undefined);
+if(allDone){b.classList.remove('locked');b.textContent='Siguiente →'}
+else{b.classList.add('locked');b.textContent='🔒 Respondé primero'}
+}else if(sl.dataset.match){
+if(mDone===mTotal){b.classList.remove('locked');b.textContent='Siguiente →'}
+else{b.classList.add('locked');b.textContent='🔒 Emparejá los 5'}
+}else{b.classList.remove('locked');b.textContent='Siguiente →'}
+document.querySelector('.sa').scrollTop=0;
+}
+function goNext(){var b=document.getElementById('bN');if(b.classList.contains('locked'))return;if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+function bumpScore(){var sb=document.getElementById('scoreBadge');sb.classList.remove('bump');void sb.offsetWidth;sb.classList.add('bump')}
+
+function ans(el,qId,c){
+if(ad[qId]!==undefined)return;
+ad[qId]=c;if(c){pts+=10;setTimeout(bumpScore,50)}
+var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');fb.textContent=FB[qId].ok;fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});fb.textContent=FB[qId].bad;fb.className='qfb show fbbad';q.classList.add('bad')}
+upd();
+}
+
+var FB={
+q1:{ok:'✅ Tal cual. Pasos claros, repetitivos y que hoy se escapan: es el candidato perfecto. Automatizás algo que ya funciona y le sacás el factor "me olvidé".',
+bad:'❌ Automatizar lo que todavía no está definido o lo lleno de excepciones solo escala el caos. Empezá por lo claro, repetitivo y de alto volumen: el follow-up de leads del form.'},
+q2:{ok:'✅ Un trigger específico (form submission o lifecycle = Lead) inscribe exactamente a quien querés, justo cuando llega. Inscribir a mano no escala y se te van a escapar igual.',
+bad:'❌ "Customer" ya convirtió, no es un lead nuevo; y a mano no escala (el problema era justamente que se olvidan). El trigger correcto es el form submission o lifecycle stage = Lead.'},
+q3:{ok:'✅ Un criterio demasiado amplio mete clientes y contactos viejos que no esperan ese mail. Eso es sobre-comunicar: más unsubscribes, más spam reports y peor reputación. El trigger tiene que ser específico.',
+bad:'❌ Más alcance no es mejor cuando es la gente equivocada. HubSpot no adivina a quién le sirve: inscribe a todo el que cumpla el criterio. Por eso el trigger tiene que ser específico.'},
+q4:{ok:'✅ Una tarea asignada al owner con fecha de vencimiento pone a una persona real a cargo de cada lead. Eso ataca el problema de raíz: ya nadie depende de "acordarse".',
+bad:'❌ Sumar a una lista o setear una propiedad no hace que nadie actúe. El equipo se olvidaba: necesitás create task al owner para que alguien concreto tenga que hacerse cargo.'},
+q5:{ok:'✅ Un delay de 2 días espacia el contacto y evita el bombardeo. Lo definís una vez y el workflow lo respeta para cada lead, sin que pauses nada a mano.',
+bad:'❌ Mandar todo junto en un minuto parece un robot insistente y quema al contacto; pausar a mano no escala. La pieza correcta es el delay: lo configurás una vez y corre solo.'},
+q6:{ok:'✅ El branch if/then lee la propiedad "abrió el email" y manda a cada contacto por el camino que corresponde. Así personalizás el seguimiento sin armar dos workflows.',
+bad:'❌ Mandar lo mismo a todos desaprovecha la info, y borrar contactos es destruir data. Para tratar distinto según comportamiento usás un branch if/then.'},
+q7:{ok:'✅ Para eso existe el goal: cuando el contacto cumple el objetivo (demo agendada) sale del workflow y deja de recibir los recordatorios. Sin goal, le seguís insistiendo a alguien que ya convirtió.',
+bad:'❌ Seguir mandándole "agendá tu demo" a quien ya la agendó es molesto y poco profesional; borrarlo es perder data. El goal lo saca limpio del workflow cuando convierte.'},
+q8:{ok:'✅ Recibir el mismo email 6 veces es la firma de un re-enrollment mal configurado: el contacto se reinscribe en loop. Se arregla revisando el trigger de re-enrollment y los criterios.',
+bad:'❌ No es un bug de HubSpot ni algo bueno: sobre-comunicar quema contactos y dispara unsubscribes. Es re-enrollment mal seteado generando un loop; hay que revisar los criterios.'}
+};
+
+function chkToggle(el){el.classList.toggle('done')}
+
+function matchClick(el,side){
+if(el.classList.contains('matched'))return;
+var col=el.parentElement;
+col.querySelectorAll('.match-item').forEach(function(i){if(i!==el)i.classList.remove('sel')});
+if(mSel[side]===el){el.classList.remove('sel');mSel[side]=null;return}
+el.classList.add('sel');mSel[side]=el;
+if(mSel.l&&mSel.r){
+var a=mSel.l,b=mSel.r;
+if(a.dataset.m===b.dataset.m){
+a.classList.add('matched');b.classList.add('matched');a.classList.remove('sel');b.classList.remove('sel');
+mSel={l:null,r:null};mDone++;pts+=5;setTimeout(bumpScore,50);
+var ms=document.getElementById('matchScore');
+ms.textContent=(mDone===mTotal)?('✅ '+mTotal+' / '+mTotal+' completo'):(mDone+' / '+mTotal+' emparejados');
+upd();
+}else{
+a.classList.add('flash-bad');b.classList.add('flash-bad');
+var x=a,y=b;mSel={l:null,r:null};
+setTimeout(function(){x.classList.remove('flash-bad','sel');y.classList.remove('flash-bad','sel')},500);
+}
+}
+}
+
+function updFinal(){
+var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
+if(ad.q7===undefined||ad.q8===undefined||mDone<mTotal){
+el.textContent='—';el.className='final-s';
+msg.textContent='Completá las preguntas y el matching para ver tu resultado.';
+return;
+}
+var maxPts=105;
+var pct=Math.round((pts/maxPts)*100);
+el.textContent=pts+' pts ('+pct+'%)';
+if(pct>=80){el.className='final-s great';msg.textContent='🔥 Crack. Sabés cuándo automatizar, definir el trigger justo, encadenar acciones, esperar y bifurcar, y cerrar con un goal sin caer en loops. Listo/a para armar workflows reales.'}
+else if(pct>=50){el.className='final-s ok';msg.textContent='👍 Bien encaminado/a. Repasá los goals y el re-enrollment (Decisión 5): son los que evitan sobre-comunicar y los que más se olvidan al armar un workflow.'}
+else{el.className='final-s low';msg.textContent='📖 Volvé a la Decisión 1 (no automatices el caos) y a la 2 (el trigger). Si el disparador está mal, todo lo de abajo se rompe.'}
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+upd();
+</script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Final · Certificación CRM | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:4px 12px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s}
+.score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#a78bfa,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.wrap{max-width:780px;width:100%;text-align:left;animation:si .4s ease both}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
+.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.4)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none;box-shadow:none}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.hs-b{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
+.wrap h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.wrap h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.wrap h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.wrap h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.wrap p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.wrap p strong{color:var(--t)}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}
+.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
+.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:all .3s;position:relative;overflow:hidden;scroll-margin-top:20px}
+.qq.ok{border-color:var(--g)}.qq.ok::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--g)}
+.qq.bad{border-color:var(--r)}.qq.bad::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px;line-height:1.5}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px 14px 52px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;line-height:1.55;position:relative}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs);transform:translateX(3px)}
+.qopt .mk{position:absolute;left:14px;top:14px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.sel{background:var(--acs);border-color:var(--ac);color:var(--t);transform:translateX(3px)}
+.qopt.sel .mk{background:var(--ac);border-color:var(--ac);color:#fff}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.4}.qopt.dis.correct,.qopt.dis.wrong{opacity:1}
+.qfb{margin-top:12px;font-size:14px;padding:10px 14px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;text-align:center;margin:16px 0;letter-spacing:-.04em;animation:popIn .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.final-s.great{background:linear-gradient(135deg,var(--g),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.ok{background:linear-gradient(135deg,var(--o),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.low{background:linear-gradient(135deg,var(--r),#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.fin-wrap{margin:26px 0 8px;text-align:center}
+.fin-btn{display:inline-flex;justify-content:center;font-size:15px;padding:15px 40px}
+.result{display:none;margin-bottom:28px;background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:28px;position:relative;overflow:hidden;text-align:center;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+.result.show{display:block}
+.result::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ac),var(--hs))}
+.verdict{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.01em}
+.verdict.pass{color:var(--g)}.verdict.fail{color:var(--r)}
+.result-sub{color:var(--tm);font-size:16px;max-width:520px;margin:10px auto 0;line-height:1.6}
+.cert{margin-top:24px;border:2px solid var(--g);border-radius:var(--rad);padding:34px 28px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--gs),transparent 60%)}
+.cert::after{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:480px;height:480px;background:radial-gradient(circle,rgba(16,185,129,.18) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+.cert-inner{position:relative;z-index:1}
+.cert-logo{height:26px;margin-bottom:14px;opacity:.95}
+.cert-kick{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.cert-title{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;margin-bottom:18px;background:linear-gradient(135deg,var(--g),#34d399,var(--acl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-grant{font-size:14px;color:var(--td);text-transform:uppercase;letter-spacing:.1em;font-family:'Space Grotesk',sans-serif;margin-bottom:8px}
+.cert-blank{display:inline-block;min-width:280px;max-width:100%;border-bottom:2px dashed var(--ac);padding:6px 16px 10px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:var(--t)}
+.cert-blank .ph{color:var(--td);font-weight:400;font-style:italic;font-size:16px}
+.cert-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 36px;margin-top:24px;padding-top:20px;border-top:1px solid var(--bd)}
+.cert-meta .m-k{font-size:11px;color:var(--td);text-transform:uppercase;letter-spacing:.08em;font-family:'Space Grotesk',sans-serif}
+.cert-meta .m-v{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--t);margin-top:3px}
+.cert-meta .m-v.sc{color:var(--g)}
+.cert-seal{margin-top:22px;font-size:12px;color:var(--td);font-style:italic}
+.footer{text-align:center;color:var(--td);font-size:13px;margin:30px 0 10px}
+.footer-logo{height:16px;vertical-align:middle;margin-right:4px;opacity:.5}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo,body.light .cert-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+@media(max-width:640px){.wrap h1{font-size:24px}.btn{padding:9px 14px;font-size:12px}.qopt{padding-left:48px;font-size:14px}.cert-blank{min-width:0;width:100%}.cert-title{font-size:23px}.top-info{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--ac)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Certificación · Examen Final</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">0 / 15 respondidas</div>
+<div class="pg-text" id="pgText">0%</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+<div class="wrap">
+
+<!-- RESULT PANEL -->
+<div class="result" id="resultPanel"></div>
+
+<!-- COVER / INTRO -->
+<div class="cover" id="intro"><div class="cover-glow"></div>
+<div class="badge">🎓 Examen Final</div>
+<h1>Examen Final · <span class="hl">Certificación CRM</span></h1>
+<p style="font-size:18px;max-width:640px">Llegaste al final del programa. 15 preguntas de escenario que cubren todo: fundamentos, operación, marketing y RevOps. Una sola respuesta correcta por pregunta. Podés cambiar tus respuestas antes de finalizar.</p>
+<div class="co tip" style="max-width:640px"><div>🎯</div><div><p><strong>Umbral de aprobación: 80%</strong> (12 de 15). Si aprobás, se genera tu Certificado de Dominio de CRM. Si no, vas a poder repasar y reintentar las veces que quieras.</p></div></div>
+<div class="tag-row" style="margin-top:18px">
+<span class="tag">🧩 15 preguntas</span>
+<span class="tag t-o">🎯 Umbral 80%</span>
+<span class="tag t-g">📜 Certificado al aprobar</span>
+</div>
+</div>
+
+<div style="height:28px"></div>
+
+<!-- Q1 -->
+<div class="qq" id="q1" data-correct="1">
+<div class="qq-n">Pregunta 1 · Fundamentos</div>
+<p>Un equipo comercial maneja sus prospectos en planillas de Excel personales y mails sueltos. Cada vez que alguien se va, se pierde el seguimiento. ¿Cuál es el problema central que un CRM viene a resolver?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q1',0,this)"><div class="mk">A</div>Reemplaza al equipo de ventas con automatización total</div>
+<div class="qopt" onclick="pick('q1',1,this)"><div class="mk">B</div>Centraliza el historial y el estado de cada cuenta/contacto en un solo lugar, eliminando los silos y la pérdida de información</div>
+<div class="qopt" onclick="pick('q1',2,this)"><div class="mk">C</div>Garantiza que se cierren más ventas sin tocar el proceso</div>
+<div class="qopt" onclick="pick('q1',3,this)"><div class="mk">D</div>Sirve sobre todo para archivar facturas y documentos legales</div>
+</div>
+<div class="qfb" data-fb="Un CRM resuelve los silos: una única fuente del historial y estado de cada relación, accesible para todo el equipo aunque alguien se vaya."></div>
+</div>
+
+<!-- Q2 -->
+<div class="qq" id="q2" data-correct="1">
+<div class="qq-n">Pregunta 2 · Objetos y asociaciones</div>
+<p>En HubSpot, la empresa "ACME" tiene 3 personas con las que hablás y una oportunidad de venta abierta. ¿Cómo lo modelás correctamente?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q2',0,this)"><div class="mk">A</div>Todo dentro de un único registro de Contacto con notas largas</div>
+<div class="qopt" onclick="pick('q2',1,this)"><div class="mk">B</div>Una Company "ACME" asociada a 3 Contactos y a un Deal, con las asociaciones que los vinculan</div>
+<div class="qopt" onclick="pick('q2',2,this)"><div class="mk">C</div>3 Deals, uno por cada persona de contacto</div>
+<div class="qopt" onclick="pick('q2',3,this)"><div class="mk">D</div>Solo una Company; los contactos los cargás como propiedades de texto</div>
+</div>
+<div class="qfb" data-fb="Company, Contact y Deal son objetos distintos; las asociaciones los vinculan y reflejan la relación real cuenta-personas-oportunidad."></div>
+</div>
+
+<!-- Q3 -->
+<div class="qq" id="q3" data-correct="1">
+<div class="qq-n">Pregunta 3 · Properties</div>
+<p>Querés guardar el "tamaño de empresa por cantidad de empleados" para después poder segmentar y reportar. ¿Qué hacés?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q3',0,this)"><div class="mk">A</div>Lo escribís dentro del nombre de la empresa</div>
+<div class="qopt" onclick="pick('q3',1,this)"><div class="mk">B</div>Creás una property (dropdown o numérica) en el objeto Company, para que sea consistente y filtrable</div>
+<div class="qopt" onclick="pick('q3',2,this)"><div class="mk">C</div>Lo dejás en una nota de texto libre por cada contacto</div>
+<div class="qopt" onclick="pick('q3',3,this)"><div class="mk">D</div>Creás un Deal por cada rango de tamaño</div>
+</div>
+<div class="qfb" data-fb="Los datos estructurados van en properties del objeto correcto; un campo consistente se filtra, segmenta y reporta. El texto libre no."></div>
+</div>
+
+<!-- Q4 -->
+<div class="qq" id="q4" data-correct="2">
+<div class="qq-n">Pregunta 4 · Listas activas vs estáticas</div>
+<p>Necesitás una lista que SIEMPRE contenga a los contactos cuyo lifecycle stage sea "Customer", y que se actualice sola cuando alguien entra o sale de ese estado. ¿Qué usás?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q4',0,this)"><div class="mk">A</div>Una lista estática que actualizás a mano cada semana</div>
+<div class="qopt" onclick="pick('q4',1,this)"><div class="mk">B</div>Una exportación a Excel filtrada por lifecycle</div>
+<div class="qopt" onclick="pick('q4',2,this)"><div class="mk">C</div>Una active list con el criterio lifecycle stage = Customer</div>
+<div class="qopt" onclick="pick('q4',3,this)"><div class="mk">D</div>Una property nueva llamada "es cliente"</div>
+</div>
+<div class="qfb" data-fb="La active list se recalcula sola según sus criterios; la estática es una foto fija que no se actualiza. Para membresía dinámica, activa."></div>
+</div>
+
+<!-- Q5 -->
+<div class="qq" id="q5" data-correct="1">
+<div class="qq-n">Pregunta 5 · Segmentación</div>
+<p>Tenés que mandar contenido distinto a PyMEs y a Enterprise, pero la base mezcla a todos. ¿Cuál es el mejor enfoque de segmentación?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q5',0,this)"><div class="mk">A</div>Mandar el mismo email a todos para no complicarse</div>
+<div class="qopt" onclick="pick('q5',1,this)"><div class="mk">B</div>Segmentar por una property firmográfica (tamaño, industria) y armar una lista por segmento</div>
+<div class="qopt" onclick="pick('q5',2,this)"><div class="mk">C</div>Segmentar por orden alfabético del nombre del contacto</div>
+<div class="qopt" onclick="pick('q5',3,this)"><div class="mk">D</div>Crear un Deal por cada segmento</div>
+</div>
+<div class="qfb" data-fb="Segmentar es agrupar por atributos relevantes (firmográficos o de comportamiento) para mensajes pertinentes; el orden alfabético no aporta relevancia."></div>
+</div>
+
+<!-- Q6 -->
+<div class="qq" id="q6" data-correct="1">
+<div class="qq-n">Pregunta 6 · Diseño de pipeline</div>
+<p>Estás diseñando el pipeline de ventas de un cliente. ¿Cuál es el mejor criterio para definir las etapas?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q6',0,this)"><div class="mk">A</div>Una etapa por cada mes del año</div>
+<div class="qopt" onclick="pick('q6',1,this)"><div class="mk">B</div>Etapas que representen hitos objetivos y verificables del proceso de compra (ej. Demo agendada, Propuesta enviada)</div>
+<div class="qopt" onclick="pick('q6',2,this)"><div class="mk">C</div>Cuantas más etapas mejor: una por cada email enviado</div>
+<div class="qopt" onclick="pick('q6',3,this)"><div class="mk">D</div>Etapas según la sensación del vendedor sobre cada deal</div>
+</div>
+<div class="qfb" data-fb="Las etapas deben mapear hitos objetivos y accionables del proceso de compra, no tiempos ni actividades sueltas, para que el forecast sea confiable."></div>
+</div>
+
+<!-- Q7 -->
+<div class="qq" id="q7" data-correct="2">
+<div class="qq-n">Pregunta 7 · Forms y conversión</div>
+<p>Tu landing de descarga de un ebook convierte muy poco. El form pide 11 campos obligatorios. ¿Qué probás primero?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q7',0,this)"><div class="mk">A</div>Agregar más campos para calificar mejor a los que sí completan</div>
+<div class="qopt" onclick="pick('q7',1,this)"><div class="mk">B</div>Sacar el form y dejar solo un número de teléfono</div>
+<div class="qopt" onclick="pick('q7',2,this)"><div class="mk">C</div>Reducir el form a los campos imprescindibles y alinear el CTA con la oferta</div>
+<div class="qopt" onclick="pick('q7',3,this)"><div class="mk">D</div>Cambiar el color de fondo de toda la web</div>
+</div>
+<div class="qfb" data-fb="Menos fricción en el form (solo lo necesario) y un CTA claro alineado a la oferta suben la conversión; pedir de más espanta."></div>
+</div>
+
+<!-- Q8 -->
+<div class="qq" id="q8" data-correct="1">
+<div class="qq-n">Pregunta 8 · Workflows</div>
+<p>Armaste un workflow donde, al cambiar una property, una acción vuelve a modificar esa misma property. ¿Qué riesgo hay y cómo lo evitás?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q8',0,this)"><div class="mk">A</div>Ninguno: HubSpot lo resuelve solo</div>
+<div class="qopt" onclick="pick('q8',1,this)"><div class="mk">B</div>Un loop infinito; lo evitás con criterios de enrolamiento acotados, un goal, y no modificando la property que dispara el trigger</div>
+<div class="qopt" onclick="pick('q8',2,this)"><div class="mk">C</div>Que el workflow vaya lento; lo acelero quitando los delays</div>
+<div class="qopt" onclick="pick('q8',3,this)"><div class="mk">D</div>Que se borren contactos; hago un backup antes</div>
+</div>
+<div class="qfb" data-fb="Un trigger que se auto-re-dispara genera un loop; se evita con enrolment criteria precisos, un goal y no tocar la property que lo activa."></div>
+</div>
+
+<!-- Q9 -->
+<div class="qq" id="q9" data-correct="3">
+<div class="qq-n">Pregunta 9 · Email · A quién</div>
+<p>Vas a mandar un marketing email anunciando una feature nueva. ¿A qué audiencia le conviene salir?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q9',0,this)"><div class="mk">A</div>A una lista comprada de 5.000 emails, para máximo alcance</div>
+<div class="qopt" onclick="pick('q9',1,this)"><div class="mk">B</div>A todos los contactos del CRM sin filtrar</div>
+<div class="qopt" onclick="pick('q9',2,this)"><div class="mk">C</div>A tu propio equipo interno para que lo vean</div>
+<div class="qopt" onclick="pick('q9',3,this)"><div class="mk">D</div>A una active list de contactos con consentimiento y contexto relevante (ej. clientes activos)</div>
+</div>
+<div class="qfb" data-fb="Mandar solo a quien dio opt-in y tiene contexto protege la deliverability; listas compradas o 'a todos' generan bounces, spam y dañan tu reputación."></div>
+</div>
+
+<!-- Q10 -->
+<div class="qq" id="q10" data-correct="1">
+<div class="qq-n">Pregunta 10 · Email · Subject y CTA</div>
+<p>Estás por redactar ese email. ¿Qué combinación de subject y cuerpo es la que mejor rinde?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q10',0,this)"><div class="mk">A</div>Subject en MAYÚSCULAS con emojis y 4 CTAs distintos en el cuerpo</div>
+<div class="qopt" onclick="pick('q10',1,this)"><div class="mk">B</div>Subject específico con un beneficio claro y un único CTA, repetido arriba y abajo</div>
+<div class="qopt" onclick="pick('q10',2,this)"><div class="mk">C</div>Subject "Novedades" y un cuerpo sin botón, solo texto</div>
+<div class="qopt" onclick="pick('q10',3,this)"><div class="mk">D</div>Un subject larguísimo que ya cuente todo el contenido del email</div>
+</div>
+<div class="qfb" data-fb="Subject concreto con beneficio + un solo CTA enfocan la acción; mayúsculas y emojis disparan filtros de spam y varios CTAs dispersan la atención."></div>
+</div>
+
+<!-- Q11 -->
+<div class="qq" id="q11" data-correct="2">
+<div class="qq-n">Pregunta 11 · Leer métricas de email</div>
+<p>El reporte del envío muestra: Open 38%, CTR 4%, Bounce 0,6%, Unsubscribe 0,1%. El promedio del sector ronda 22% de apertura. ¿Cómo lo leés?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q11',0,this)"><div class="mk">A</div>Mal envío: abrió muy poca gente, hay que rehacerlo</div>
+<div class="qopt" onclick="pick('q11',1,this)"><div class="mk">B</div>El CTR de 4% indica que algo está roto</div>
+<div class="qopt" onclick="pick('q11',2,this)"><div class="mk">C</div>Buen envío: open muy por encima del promedio, CTR sano y bounce/unsub bajos</div>
+<div class="qopt" onclick="pick('q11',3,this)"><div class="mk">D</div>No se puede saber nada sin más información</div>
+</div>
+<div class="qfb" data-fb="Open por encima del benchmark, CTR sano y bounce/unsub bajos describen un envío limpio y efectivo: se replica, no se rehace."></div>
+</div>
+
+<!-- Q12 -->
+<div class="qq" id="q12" data-correct="1">
+<div class="qq-n">Pregunta 12 · Reportes accionables vs vanity</div>
+<p>Tu jefe pide un reporte "que sirva para tomar decisiones". ¿Cuál de estas métricas NO es vanity y permite actuar sobre el embudo?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q12',0,this)"><div class="mk">A</div>El total de seguidores en redes sociales</div>
+<div class="qopt" onclick="pick('q12',1,this)"><div class="mk">B</div>La tasa de conversión etapa por etapa del embudo, que muestra dónde se cae la gente</div>
+<div class="qopt" onclick="pick('q12',2,this)"><div class="mk">C</div>La cantidad total de emails enviados en el año</div>
+<div class="qopt" onclick="pick('q12',3,this)"><div class="mk">D</div>Las páginas vistas acumuladas históricas</div>
+</div>
+<div class="qfb" data-fb="La conversión por etapa muestra dónde se pierde el embudo y qué corregir; seguidores, envíos y pageviews son vanity: lucen bien pero no guían acción."></div>
+</div>
+
+<!-- Q13 -->
+<div class="qq" id="q13" data-correct="0">
+<div class="qq-n">Pregunta 13 · Dashboards por audiencia</div>
+<p>Tenés que armar dashboards para el CEO y para un rep de ventas. ¿Cuál es el criterio correcto?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q13',0,this)"><div class="mk">A</div>Dashboards distintos por audiencia: el CEO ve KPIs y forecast agregados, el rep ve su pipeline y tareas del día</div>
+<div class="qopt" onclick="pick('q13',1,this)"><div class="mk">B</div>Un único dashboard gigante con todas las métricas para todos</div>
+<div class="qopt" onclick="pick('q13',2,this)"><div class="mk">C</div>Mandarles a ambos el reporte crudo en Excel</div>
+<div class="qopt" onclick="pick('q13',3,this)"><div class="mk">D</div>Solo métricas de vanity, porque quedan más lindas en pantalla</div>
+</div>
+<div class="qfb" data-fb="Cada audiencia necesita su nivel de detalle: ejecutivo = agregados y forecast; rep = su pipeline accionable. Un dashboard único no le sirve a ninguno bien."></div>
+</div>
+
+<!-- Q14 -->
+<div class="qq" id="q14" data-correct="2">
+<div class="qq-n">Pregunta 14 · Integración HubSpot ↔ Salesforce</div>
+<p>Integrás HubSpot y Salesforce. Marketing vive en HubSpot; ventas opera en Salesforce, que es el sistema de registro de los deals. ¿Cómo configurás el sync?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q14',0,this)"><div class="mk">A</div>Sync bidireccional sin reglas: que gane siempre el último que escribe</div>
+<div class="qopt" onclick="pick('q14',1,this)"><div class="mk">B</div>Solo de HubSpot hacia Salesforce, en todos los objetos y campos</div>
+<div class="qopt" onclick="pick('q14',2,this)"><div class="mk">C</div>Defino source of truth por objeto/campo, con field mapping explícito y la dirección de sync acorde (ej. Salesforce manda en deals)</div>
+<div class="qopt" onclick="pick('q14',3,this)"><div class="mk">D</div>Copio los datos a mano una vez por mes para tener control</div>
+</div>
+<div class="qfb" data-fb="Una integración sana define source of truth por campo, un field mapping explícito y la dirección de sync por objeto; sin reglas hay sobrescritura y conflictos."></div>
+</div>
+
+<!-- Q15 -->
+<div class="qq" id="q15" data-correct="1">
+<div class="qq-n">Pregunta 15 · Gobierno de datos y MQL → SQL</div>
+<p>Marketing le pasa "MQLs" a ventas, pero ventas se queja de que no califican y los ignora. ¿Qué acordás para gobernar bien el handoff MQL → SQL?</p>
+<div class="qo">
+<div class="qopt" onclick="pick('q15',0,this)"><div class="mk">A</div>Que marketing mande todos los leads sin filtrar, para que ventas elija</div>
+<div class="qopt" onclick="pick('q15',1,this)"><div class="mk">B</div>Una definición compartida con criterios objetivos de MQL/SQL, un SLA y un feedback loop entre marketing y ventas</div>
+<div class="qopt" onclick="pick('q15',2,this)"><div class="mk">C</div>Que ventas simplemente ignore los MQL que no le gusten</div>
+<div class="qopt" onclick="pick('q15',3,this)"><div class="mk">D</div>Eliminar la etapa MQL del CRM para evitar el conflicto</div>
+</div>
+<div class="qfb" data-fb="El handoff MQL→SQL funciona con definiciones compartidas, criterios objetivos, SLAs y un feedback loop; sin gobierno de datos, ventas recibe ruido."></div>
+</div>
+
+<!-- FINALIZE -->
+<div class="fin-wrap">
+<button class="btn bn fin-btn locked" id="finBtn" onclick="finalize()" disabled>🔒 Respondé las 15 para finalizar</button>
+</div>
+
+<div class="footer">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo">
+Academy 2026 · Certificación CRM
+</div>
+
+</div><!-- end .wrap -->
+</div><!-- end .sa -->
+</div>
+
+<script>
+const N=15,PASS=80;
+let submitted=false;
+const answers={};
+
+function pick(qid,idx,el){
+  if(submitted)return;
+  answers[qid]=idx;
+  const q=document.getElementById(qid);
+  q.querySelectorAll('.qopt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  updProgress();
+}
+
+function updProgress(){
+  const done=Object.keys(answers).length;
+  document.getElementById('scoreBadge').textContent=done+' / '+N+' respondidas';
+  const pct=Math.round((done/N)*100);
+  document.getElementById('pgFill').style.width=pct+'%';
+  document.getElementById('pgText').textContent=pct+'%';
+  const sb=document.getElementById('scoreBadge');
+  sb.classList.remove('bump');void sb.offsetWidth;sb.classList.add('bump');
+  const b=document.getElementById('finBtn');
+  if(done===N){b.disabled=false;b.classList.remove('locked');b.textContent='🎓 Finalizar certificación';}
+  else{b.disabled=true;b.classList.add('locked');b.textContent='🔒 Respondé las 15 para finalizar';}
+}
+
+function finalize(){
+  if(submitted)return;
+  if(Object.keys(answers).length<N)return;
+  submitted=true;
+  let correct=0;
+  for(let i=1;i<=N;i++){
+    const qid='q'+i,q=document.getElementById(qid);
+    const right=parseInt(q.dataset.correct,10);
+    const chosen=answers[qid];
+    const opts=q.querySelectorAll('.qopt');
+    opts.forEach((o,oi)=>{
+      o.classList.remove('sel');
+      o.classList.add('dis');
+      if(oi===right)o.classList.add('correct');
+      else if(oi===chosen)o.classList.add('wrong');
+    });
+    const fb=q.querySelector('.qfb');
+    if(chosen===right){correct++;q.classList.add('ok');fb.className='qfb show fbok';fb.textContent='✅ '+fb.dataset.fb;}
+    else{q.classList.add('bad');fb.className='qfb show fbbad';fb.textContent='❌ '+fb.dataset.fb;}
+  }
+  const pct=Math.round((correct/N)*100);
+  const pass=pct>=PASS;
+  const b=document.getElementById('finBtn');
+  b.disabled=true;b.classList.add('locked');b.style.display='none';
+  renderResult(correct,pct,pass);
+  document.querySelector('.sa').scrollTop=0;
+}
+
+function renderResult(correct,pct,pass){
+  const p=document.getElementById('resultPanel');
+  const cls=pass?'great':(pct>=60?'ok':'low');
+  const fecha=new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
+  let html='';
+  html+='<div class="badge '+(pass?'quiz-b':'act-b')+'">Resultado · Examen Final</div>';
+  html+='<div class="final-s '+cls+'">'+pct+'%</div>';
+  html+='<div class="verdict '+(pass?'pass':'fail')+'">'+(pass?'¡APROBADO! 🎉':'NO APROBADO')+'</div>';
+  html+='<p class="result-sub">Respondiste <strong style="color:var(--t)">'+correct+' de '+N+'</strong> correctas · Umbral de aprobación: '+PASS+'%</p>';
+  if(pass){
+    html+='<div class="cert"><div class="cert-inner">';
+    html+='<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="cert-logo">';
+    html+='<div class="cert-kick">Refindable Academy</div>';
+    html+='<div class="cert-title">Certificado de Dominio de CRM</div>';
+    html+='<div class="cert-grant">Otorgado a</div>';
+    html+='<div class="cert-blank"><span class="ph">escribí o pegá tu nombre acá</span></div>';
+    html+='<div class="cert-meta">';
+    html+='<div><div class="m-k">Calificación</div><div class="m-v sc">'+pct+'%</div></div>';
+    html+='<div><div class="m-k">Resultado</div><div class="m-v">'+correct+' / '+N+'</div></div>';
+    html+='<div><div class="m-k">Fecha</div><div class="m-v">'+fecha+'</div></div>';
+    html+='</div>';
+    html+='<div class="cert-seal">📸 Sacale una captura a tu certificado · Refindable Academy 2026</div>';
+    html+='</div></div>';
+  }else{
+    html+='<div class="co warn" style="text-align:left;margin-top:22px"><div>📖</div><div><p><strong>Te faltó poco — repasá y volvé a intentar.</strong> Mirá abajo las explicaciones de cada pregunta, repasá los temas donde fallaste y reintentá el examen. Necesitás llegar al '+PASS+'%.</p></div></div>';
+    html+='<div style="margin-top:18px"><button class="btn bn fin-btn" onclick="reset()">🔄 Reintentar examen</button></div>';
+  }
+  p.innerHTML=html;
+  p.classList.add('show');
+}
+
+function reset(){
+  submitted=false;
+  for(const k in answers)delete answers[k];
+  for(let i=1;i<=N;i++){
+    const q=document.getElementById('q'+i);
+    q.classList.remove('ok','bad');
+    q.querySelectorAll('.qopt').forEach(o=>o.classList.remove('sel','dis','correct','wrong'));
+    const fb=q.querySelector('.qfb');fb.className='qfb';fb.textContent='';
+  }
+  const p=document.getElementById('resultPanel');p.classList.remove('show');p.innerHTML='';
+  const b=document.getElementById('finBtn');b.style.display='';b.disabled=true;b.classList.add('locked');b.textContent='🔒 Respondé las 15 para finalizar';
+  updProgress();
+  document.querySelector('.sa').scrollTop=0;
+}
+
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const btn=document.getElementById('themeBtn');
+  btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+  localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️';}
+updProgress();
+</script>
+</body>
+</html>

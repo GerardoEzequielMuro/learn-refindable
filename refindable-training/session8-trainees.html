@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 8 · Reportes y Dashboards | Refindable Academy</title>
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/03/cropped-Favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08080e;--s1:#111119;--s2:#1a1a26;--s3:#22222f;--bd:#2a2a3a;--t:#eeeef5;--tm:#9999b0;--td:#55556a;--ac:#6366f1;--acl:#818cf8;--acs:rgba(99,102,241,.12);--acg:rgba(99,102,241,.3);--g:#10b981;--gs:rgba(16,185,129,.15);--o:#f59e0b;--os:rgba(245,158,11,.12);--r:#ef4444;--rs:rgba(239,68,68,.12);--hs:#ff7a59;--hss:rgba(255,122,89,.12);--rad:14px;--rads:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.app{height:100vh;display:flex;flex-direction:column}
+.top{height:52px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:10}
+.top-l{display:flex;align-items:center;gap:10px}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--tm)}
+.top-sep{width:1px;height:18px;background:var(--bd)}
+.top-info{font-size:12px;color:var(--td)}
+.top-r{display:flex;align-items:center;gap:14px}
+.score-badge{font-size:12px;color:var(--g);font-weight:700;background:var(--gs);padding:4px 12px;border-radius:100px;border:1px solid rgba(16,185,129,.25);transition:all .3s}
+.score-badge.bump{animation:scoreBump .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes scoreBump{0%{transform:scale(1)}50%{transform:scale(1.18)}100%{transform:scale(1)}}
+.pg-text{font-size:11px;color:var(--td);font-family:'Space Grotesk',sans-serif;font-weight:600}
+.pg-track{height:3px;background:var(--s2);flex-shrink:0;position:relative;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--ac),#a78bfa,var(--acl));background-size:200% 100%;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;box-shadow:0 0 8px var(--acg)}
+.sa{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:32px 20px}
+.sa::-webkit-scrollbar{width:5px}.sa::-webkit-scrollbar-track{background:transparent}.sa::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.sl{display:none;max-width:780px;width:100%;animation:si .4s ease both;text-align:left}
+.sl.active{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bot{height:68px;background:var(--s1);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+.btn{padding:10px 22px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:7px}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.bp{background:var(--s2);color:var(--tm);border:1px solid var(--bd)}.bp:hover:not(:disabled){background:var(--s3);color:var(--t);border-color:var(--td)}
+.bn{background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;box-shadow:0 4px 12px rgba(99,102,241,.25)}.bn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.4)}
+.bn.locked{background:var(--s3);color:var(--td);cursor:not-allowed;pointer-events:none;box-shadow:none}
+.sc{font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--acs);border:1px solid rgba(99,102,241,.25);padding:6px 14px;border-radius:100px;font-size:12px;color:var(--acl);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.badge.quiz-b{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.badge.act-b{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.badge.hs-b{background:var(--hss);border-color:rgba(255,122,89,.25);color:var(--hs)}
+.sl h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(28px,4.5vw,46px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.03em}
+.sl h1 .hl{background:linear-gradient(135deg,var(--ac),#a78bfa,var(--hs));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl h2{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;margin-bottom:14px;letter-spacing:-.01em}
+.sl h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:20px 0 10px}
+.sl p{color:var(--tm);line-height:1.7;margin-bottom:12px;font-size:17px}.sl p strong{color:var(--t)}
+.sl ul{list-style:none;padding:0;margin:8px 0 14px}
+.sl ul li{padding:6px 0 6px 22px;position:relative;color:var(--tm);font-size:16px;line-height:1.55}
+.sl ul li::before{content:'\2192';position:absolute;left:0;color:var(--ac);font-size:13px;top:8px}
+.sl ul li strong{color:var(--t)}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.cd{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.cd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--acl));opacity:0;transition:opacity .3s}
+.cd:hover::before{opacity:1}
+.cd:hover{border-color:var(--ac);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.cd-i{font-size:26px;margin-bottom:8px;display:block}
+.cd h3{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 4px}
+.cd p{font-size:15px;line-height:1.4;margin:0}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.stat-l{font-size:13px;color:var(--td);margin-top:4px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:var(--rad);overflow:hidden;border:1px solid var(--bd)}
+.cmp-c{padding:18px}.cmp-c.bad{background:var(--rs)}.cmp-c.good{background:var(--gs)}
+.cmp-h{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:12px}
+.cmp-c.bad .cmp-h{color:var(--r)}.cmp-c.good .cmp-h{color:var(--g)}
+.cmp-i{font-size:15px;color:var(--tm);padding:5px 0;line-height:1.5}
+.co{border-radius:var(--rad);padding:16px 20px;margin:16px 0;display:flex;gap:10px;align-items:flex-start;font-size:16px;line-height:1.6}
+.co p{margin:0;font-size:16px}
+.co.tip{background:var(--gs);border:1px solid rgba(16,185,129,.2)}
+.co.warn{background:var(--os);border:1px solid rgba(245,158,11,.2)}
+.co.hs{background:var(--hss);border:1px solid rgba(255,122,89,.2)}
+.cover{position:relative;padding-top:48px}
+.cover-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);pointer-events:none;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.8;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{padding:5px 12px;background:var(--acs);border:1px solid rgba(99,102,241,.2);color:var(--acl);border-radius:100px;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.tag.t-g{background:var(--gs);border-color:rgba(16,185,129,.2);color:var(--g)}
+.tag.t-o{background:var(--os);border-color:rgba(245,158,11,.2);color:var(--o)}
+.theme-toggle{min-width:36px;height:36px;border-radius:18px;border:1px solid var(--bd);background:var(--s2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;transition:all .2s;flex-shrink:0;padding:0 10px}
+.theme-toggle:hover{border-color:var(--ac);background:var(--acs)}
+.qq{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin-bottom:14px;transition:all .3s;position:relative;overflow:hidden}
+.qq.ok{border-color:var(--g)}.qq.ok::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--g)}
+.qq.bad{border-color:var(--r)}.qq.bad::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--r)}
+.qq-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.qq>p{font-size:17px;font-weight:500;color:var(--t);margin-bottom:14px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qopt{padding:14px 18px 14px 52px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:15px;color:var(--tm);transition:all .2s;line-height:1.55;position:relative}
+.qopt:hover:not(.dis){border-color:var(--ac);color:var(--t);background:var(--acs);transform:translateX(3px)}
+.qopt .mk{position:absolute;left:14px;top:14px;width:22px;height:22px;border-radius:50%;border:2px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Space Grotesk',sans-serif;transition:all .2s}
+.qopt:hover:not(.dis) .mk{border-color:var(--ac);color:var(--ac)}
+.qopt.correct{background:var(--gs);border-color:var(--g);color:var(--g)}.qopt.correct .mk{background:var(--g);border-color:var(--g);color:#fff}
+.qopt.wrong{background:var(--rs);border-color:var(--r);color:var(--r)}.qopt.wrong .mk{background:var(--r);border-color:var(--r);color:#fff}
+.qopt.dis{pointer-events:none;opacity:.35}.qopt.dis.correct{opacity:1}
+.qfb{margin-top:10px;font-size:14px;padding:8px 12px;border-radius:var(--rads);display:none;line-height:1.5}
+.qfb.show{display:block}.qfb.fbok{background:var(--gs);color:var(--g)}.qfb.fbbad{background:var(--rs);color:var(--r)}
+.mail{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);overflow:hidden;margin:14px 0}
+.mail-hdr{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--bd);font-family:'Space Grotesk',monospace;font-size:11px;color:var(--td);display:flex;gap:6px;align-items:center}
+.mail-hdr::before{content:'\25CF \25CF \25CF';color:var(--td);font-size:9px;letter-spacing:2px;margin-right:8px}
+.mail-meta{padding:14px 18px;border-bottom:1px solid var(--bd);font-size:14px;line-height:1.8}
+.mail-meta .k{color:var(--td);font-family:'Space Grotesk',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:inline-block;width:64px}
+.mail-meta .v{color:var(--t);font-weight:500}
+.mail-body{padding:18px;font-size:14px;color:var(--tm);line-height:1.6}
+.mail-cta{display:inline-block;margin-top:12px;padding:10px 20px;background:linear-gradient(135deg,var(--ac),var(--acl));color:#fff;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px}
+.funnel{margin:18px 0;display:flex;flex-direction:column;gap:6px}
+.fstage{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rads);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;margin:0 auto;transition:all .2s}
+.fstage:hover{border-color:var(--ac)}
+.fstage .fname{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;color:var(--t)}
+.fstage .fnum{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--acl)}
+.fdrop{text-align:center;font-size:12px;color:var(--td);font-family:'Space Grotesk',sans-serif}
+.fdrop.big{color:var(--r);font-weight:700}
+.match-area{margin:16px 0}
+.match-cols{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-mid{display:flex;flex-direction:column;justify-content:space-around;color:var(--td);font-size:13px;padding-top:14px;text-align:center}
+.match-item{padding:12px 14px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--rads);cursor:pointer;font-size:14px;color:var(--tm);transition:all .2s;line-height:1.4}
+.match-item:hover:not(.matched){border-color:var(--ac);color:var(--t)}
+.match-item.sel{border-color:var(--ac);background:var(--acs);color:var(--t)}
+.match-item.matched{border-color:var(--g);background:var(--gs);color:var(--g);pointer-events:none}
+.match-item.flash-bad{border-color:var(--r);background:var(--rs);color:var(--r)}
+.match-score{margin-top:12px;font-size:14px;font-family:'Space Grotesk',sans-serif;font-weight:600;color:var(--td)}
+.chk{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:8px;margin:14px 0}
+.chk-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--rads);cursor:pointer;transition:all .2s;font-size:15px;color:var(--tm);user-select:none}
+.chk-item:hover{background:var(--s2)}
+.chk-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--bd);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;transition:all .2s}
+.chk-item.done{color:var(--t)}
+.chk-item.done .chk-box{background:var(--g);border-color:var(--g);color:#fff}
+.task{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:14px 0;position:relative;overflow:hidden}
+.task::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--ac),var(--acl))}
+.task-h{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--ac);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.task h3{margin-top:0;font-size:19px}
+.task p{font-size:15px;line-height:1.6;color:var(--tm)}
+.final-s{font-family:'Space Grotesk',sans-serif;font-size:72px;font-weight:700;text-align:center;margin:16px 0;letter-spacing:-.04em;animation:popIn .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.final-s.great{background:linear-gradient(135deg,var(--g),#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.ok{background:linear-gradient(135deg,var(--o),#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.final-s.low{background:linear-gradient(135deg,var(--r),#f87171);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+body.light{--bg:#f5f5fa;--s1:#ffffff;--s2:#eeeef5;--s3:#e4e4ee;--bd:#d0d0dd;--t:#1a1a2e;--tm:#555570;--td:#8888a0;--ac:#4f46e5;--acl:#6366f1;--acs:rgba(79,70,229,.1);--acg:rgba(79,70,229,.15);--g:#059669;--gs:rgba(5,150,105,.1);--o:#d97706;--os:rgba(217,119,6,.1);--r:#dc2626;--rs:rgba(220,38,38,.1);--hs:#ff5c35;--hss:rgba(255,92,53,.1)}
+body.light .brand img{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .footer-logo{filter:brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(220deg)}
+body.light .cover-glow{background:radial-gradient(circle,rgba(79,70,229,.1) 0%,transparent 70%)}
+@media(max-width:640px){.cmp,.cg,.match-cols{grid-template-columns:1fr}.match-mid{display:none}.sl h1{font-size:24px}.bot{padding:0 12px}.btn{padding:9px 14px;font-size:12px}.fstage{width:100%!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top">
+<div class="top-l">
+<div class="brand"><img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" style="height:20px;vertical-align:middle;margin-right:6px"><span style="color:var(--ac)">Academy</span></div>
+<div class="top-sep"></div>
+<div class="top-info">Sesión 8 · Trainees</div>
+</div>
+<div class="top-r">
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+<div class="score-badge" id="scoreBadge">✨ 0 pts</div>
+<div class="pg-text" id="pgText">1 / 7</div>
+</div>
+</div>
+<div class="pg-track"><div class="pg-fill" id="pgFill"></div></div>
+<div class="sa">
+
+<!-- S0: Cover -->
+<div class="sl active" data-s="0">
+<div class="cover"><div class="cover-glow"></div>
+<div class="badge">📊 Sesión 8 · Avanzado</div>
+<h1>Reportes que<br><span class="hl">cuentan la verdad</span></h1>
+<p style="font-size:18px;max-width:640px">El cliente te escribe: "necesito un dashboard". Una frase, cero contexto. El trabajo no es apretar botones: es decidir <strong>qué mostrar</strong>. Cada número que ponés es una afirmación sobre cómo va el negocio, y cada número que dejás afuera también dice algo.</p>
+<div class="co tip" style="max-width:640px"><div>📌</div><div><p>La regla madre de toda la sesión: <strong>un buen reporte responde una pregunta de negocio</strong>. Si no podés decir qué decisión cambia ese número, no va. Hoy entrenás ese filtro.</p></div></div>
+<div class="task" style="max-width:640px;margin-top:18px">
+<div class="task-h">🎯 Tu misión</div>
+<h3 style="margin-bottom:6px">Decidir qué medir, slide por slide</h3>
+<p>Vas a separar métricas que mueven decisiones de las que solo inflan el ego, elegir el tipo de reporte correcto, leer un embudo y armar un dashboard real para el dueño del negocio. Cada decisión bien tomada suma puntos.</p>
+</div>
+<div class="tag-row" style="margin-top:18px">
+<span class="tag">⏱ 18 min</span>
+<span class="tag">🧩 7 slides</span>
+<span class="tag t-g">📊 Decisiones reales</span>
+<span class="tag t-o">🧠 8 quizzes + matching</span>
+</div>
+</div>
+</div>
+
+<!-- S1: Métricas accionables vs vanity -->
+<div class="sl" data-s="1" data-quiz="1">
+<div class="badge act-b">Decisión 1 · Qué métricas valen</div>
+<h2>Accionable vs vanity</h2>
+<p>Una <strong>vanity metric</strong> sube, se ve linda en una slide y no te dice qué hacer mañana. Una <strong>métrica accionable</strong> cambia una decisión: si baja, sabés dónde meter mano.</p>
+<div class="cmp">
+<div class="cmp-c bad">
+<div class="cmp-h">❌ Vanity</div>
+<div class="cmp-i"><strong>Total de contactos en el CRM</strong></div>
+<div class="cmp-i">"Tenemos 48.000 contactos" → ¿y eso qué decisión cambia? Ninguna. Sube siempre, nunca baja, no distingue un comprador de un email muerto.</div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">✅ Accionable</div>
+<div class="cmp-i"><strong>Tasa de conversión lead → cliente</strong></div>
+<div class="cmp-i">"Convertimos 4% de los leads" → si cae a 2%, sabés que hay un problema en el proceso comercial y lo vas a buscar. Mueve decisiones.</div>
+</div>
+</div>
+
+<div class="qq" id="q1">
+<div class="qq-n">Pregunta 1 · El filtro</div>
+<p>¿Cuál de estas es una métrica accionable de verdad?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">A</div>Cantidad total de contactos en la base</div>
+<div class="qopt" onclick="ans(this,'q1',1)"><div class="mk">B</div>Tasa de conversión de lead a cliente este trimestre</div>
+<div class="qopt" onclick="ans(this,'q1',0)"><div class="mk">C</div>Seguidores acumulados en LinkedIn de la empresa</div>
+</div>
+<div class="qfb" id="q1-fb"></div>
+</div>
+
+<div class="qq" id="q2">
+<div class="qq-n">Pregunta 2 · La prueba del algodón</div>
+<p>El cliente quiere poner "total de emails enviados" en el dashboard. ¿Cuál es la mejor respuesta?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">A</div>Perfecto, lo agrego, cuantos más números mejor</div>
+<div class="qopt" onclick="ans(this,'q2',1)"><div class="mk">B</div>"¿Qué decisión vas a tomar con ese número?" Si no hay respuesta, mejor medir tasa de respuesta o reuniones generadas</div>
+<div class="qopt" onclick="ans(this,'q2',0)"><div class="mk">C</div>Le digo que los emails no se miden nunca</div>
+</div>
+<div class="qfb" id="q2-fb"></div>
+</div>
+</div>
+
+<!-- S2: Tipos de reporte en HubSpot -->
+<div class="sl" data-s="2" data-quiz="2">
+<div class="badge act-b">Decisión 2 · Qué tipo de reporte</div>
+<h2>El catálogo de reportes</h2>
+<p>Antes de elegir métricas, elegís la <strong>forma</strong> del reporte. En HubSpot tenés varias familias, y cada una responde un tipo de pregunta distinto.</p>
+<div class="cg">
+<div class="cd"><span class="cd-i">🧩</span><h3>Single-object</h3><p>Una sola entidad: solo deals, o solo contactos. "¿Cuántos deals abiertos hay?"</p></div>
+<div class="cd"><span class="cd-i">🔗</span><h3>Cross-object</h3><p>Cruza objetos: contactos + deals + empresas. "¿Qué industria genera más revenue?"</p></div>
+<div class="cd"><span class="cd-i">🪜</span><h3>Funnel / embudo</h3><p>Conversión etapa por etapa. "¿Dónde se cae la gente?"</p></div>
+<div class="cd"><span class="cd-i">🔮</span><h3>Deal forecast</h3><p>Proyección de cierre ponderada por probabilidad. "¿Cuánto vamos a facturar?"</p></div>
+<div class="cd"><span class="cd-i">📞</span><h3>Sales activity</h3><p>Llamadas, emails, reuniones del equipo. "¿Están laburando lo suficiente?"</p></div>
+<div class="cd"><span class="cd-i">🎯</span><h3>Attribution</h3><p>Qué canal/touchpoint originó el negocio. "¿De dónde vienen los buenos deals?"</p></div>
+</div>
+
+<div class="qq" id="q3">
+<div class="qq-n">Pregunta 3 · Single vs cross-object</div>
+<p>El dueño pregunta: "¿qué <strong>industria</strong> de mis empresas genera más <strong>revenue cerrado</strong>?". ¿Qué reporte armás?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">A</div>Single-object de deals, alcanza con eso</div>
+<div class="qopt" onclick="ans(this,'q3',1)"><div class="mk">B</div>Cross-object: necesito cruzar la propiedad "industria" de Empresas con el "amount" de Deals</div>
+<div class="qopt" onclick="ans(this,'q3',0)"><div class="mk">C</div>Single-object de empresas, los montos están ahí</div>
+</div>
+<div class="qfb" id="q3-fb"></div>
+</div>
+
+<div class="qq" id="q4">
+<div class="qq-n">Pregunta 4 · La pregunta correcta</div>
+<p>El CEO quiere saber "¿<strong>cuánto vamos a cerrar</strong> este trimestre?" para planear contrataciones. ¿Qué reporte responde eso?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">A</div>Un sales activity report con las llamadas del mes</div>
+<div class="qopt" onclick="ans(this,'q4',1)"><div class="mk">B</div>Un deal forecast: proyecta el cierre esperado ponderando cada deal por su probabilidad de etapa</div>
+<div class="qopt" onclick="ans(this,'q4',0)"><div class="mk">C</div>El total histórico de deals ganados desde siempre</div>
+</div>
+<div class="qfb" id="q4-fb"></div>
+</div>
+</div>
+
+<!-- S3: Leer un embudo -->
+<div class="sl" data-s="3" data-quiz="3">
+<div class="badge act-b">Decisión 3 · Leer el embudo</div>
+<h2>Dónde se cae la gente</h2>
+<p>Un embudo no se lee por el total: se lee por <strong>la conversión entre etapas</strong>. La etapa donde más gente se cae es donde está tu problema (y tu mayor oportunidad). Mirá este embudo del último trimestre:</p>
+<div class="funnel">
+<div class="fstage" style="width:100%"><span class="fname">Leads nuevos</span><span class="fnum">1.000</span></div>
+<div class="fdrop">↓ 40% pasa</div>
+<div class="fstage" style="width:80%"><span class="fname">MQL (calificados)</span><span class="fnum">400</span></div>
+<div class="fdrop">↓ 75% pasa</div>
+<div class="fstage" style="width:62%"><span class="fname">Reunión agendada</span><span class="fnum">300</span></div>
+<div class="fdrop big">↓ solo 20% pasa ⚠️</div>
+<div class="fstage" style="width:44%"><span class="fname">Propuesta enviada</span><span class="fnum">60</span></div>
+<div class="fdrop">↓ 50% pasa</div>
+<div class="fstage" style="width:28%"><span class="fname">Cliente ganado</span><span class="fnum">30</span></div>
+</div>
+
+<div class="qq" id="q5">
+<div class="qq-n">Pregunta 5 · El cuello de botella</div>
+<p>Mirando las conversiones entre etapas, ¿dónde está el mayor problema?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">A</div>De Leads a MQL: arranca con 1.000 y baja a 400, perdés 600</div>
+<div class="qopt" onclick="ans(this,'q5',1)"><div class="mk">B</div>De Reunión a Propuesta: solo el 20% avanza, ahí se cae el negocio después de la reunión</div>
+<div class="qopt" onclick="ans(this,'q5',0)"><div class="mk">C</div>De Propuesta a Ganado: pasa la mitad, es lo peor del embudo</div>
+</div>
+<div class="qfb" id="q5-fb"></div>
+</div>
+
+<div class="qq" id="q6">
+<div class="qq-n">Pregunta 6 · Qué hacés con eso</div>
+<p>Identificaste que el cuello está entre <strong>Reunión → Propuesta</strong>. ¿Cuál es la lectura accionable?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">A</div>Generar muchos más leads arriba para que lleguen más abajo</div>
+<div class="qopt" onclick="ans(this,'q6',1)"><div class="mk">B</div>Investigar qué pasa post-reunión: ¿se manda propuesta tarde? ¿mal calificados? Arreglar ahí rinde más que sumar leads</div>
+<div class="qopt" onclick="ans(this,'q6',0)"><div class="mk">C</div>Bajar el precio de la propuesta, seguro es eso</div>
+</div>
+<div class="qfb" id="q6-fb"></div>
+</div>
+</div>
+
+<!-- S4: Dashboards -->
+<div class="sl" data-s="4" data-quiz="4">
+<div class="badge act-b">Decisión 4 · Armar el dashboard</div>
+<h2>Un dashboard, una audiencia</h2>
+<p>Un dashboard no es "todos los reportes juntos". Es un conjunto de reportes pensado para <strong>una persona</strong> y <strong>una pregunta</strong>. El mismo dato sirve distinto según quién lo mira.</p>
+<div class="cmp">
+<div class="cmp-c good">
+<div class="cmp-h">👤 Dashboard del rep</div>
+<div class="cmp-i">Mis deals abiertos, mis tareas de hoy, mi pipeline. <strong>Operativo, día a día.</strong></div>
+</div>
+<div class="cmp-c good">
+<div class="cmp-h">👔 Dashboard del dueño/CEO</div>
+<div class="cmp-i">Forecast, conversión global, revenue por origen. <strong>Estratégico, ¿hacia dónde va el negocio?</strong></div>
+</div>
+</div>
+<div class="co warn"><div>🧹</div><div><p><strong>No saturar.</strong> Un dashboard con 14 widgets no lo lee nadie. Usá <strong>filtros y date ranges</strong> (este mes, este trimestre) para que cada widget sea comparable, y dejá 4-6 widgets que apunten a la misma pregunta.</p></div></div>
+
+<div class="qq" id="q7">
+<div class="qq-n">Pregunta 7 · A quién le hablás</div>
+<p>Estás armando el dashboard del <strong>dueño del negocio</strong>. ¿Qué widget NO debería ir ahí?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">A</div>Forecast de cierre del trimestre</div>
+<div class="qopt" onclick="ans(this,'q7',1)"><div class="mk">B</div>La lista de tareas pendientes de hoy de un rep puntual</div>
+<div class="qopt" onclick="ans(this,'q7',0)"><div class="mk">C</div>Revenue cerrado este mes por origen del lead</div>
+</div>
+<div class="qfb" id="q7-fb"></div>
+</div>
+
+<div class="qq" id="q8">
+<div class="qq-n">Pregunta 8 · La pregunta de negocio</div>
+<p>Un buen dashboard responde UNA pregunta. ¿Cuál de estos enfoques es el correcto?</p>
+<div class="qo">
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">A</div>Meter todos los reportes disponibles, así el cliente elige qué mirar</div>
+<div class="qopt" onclick="ans(this,'q8',1)"><div class="mk">B</div>Definir primero la pregunta ("¿vamos a llegar a la meta del trimestre?") y elegir solo los widgets que la responden</div>
+<div class="qopt" onclick="ans(this,'q8',0)"><div class="mk">C</div>Copiar el dashboard de otro cliente y cambiarle el nombre</div>
+</div>
+<div class="qfb" id="q8-fb"></div>
+</div>
+</div>
+
+<!-- S5: Matching -->
+<div class="sl" data-s="5" data-match="1">
+<div class="badge act-b">Decisión 5 · Reporte ↔ pregunta</div>
+<h2>Cada reporte, su pregunta</h2>
+<p>Elegir el reporte correcto es saber qué pregunta de negocio responde cada uno. Emparejá cada tipo de reporte o métrica con la pregunta que contesta.</p>
+<div class="co hs"><div>🔁</div><div><p><strong>Generaliza a otros CRMs.</strong> En Salesforce esto son los <em>Reports & Dashboards</em>: report types (single vs joined), funnel reports y dashboards por perfil. Cambian los nombres, no la lógica: elegí la forma del reporte según la pregunta, no al revés.</p></div></div>
+
+<h3>Tocá uno de la izquierda y su par de la derecha</h3>
+<p style="font-size:15px">Cada acierto suma 5 puntos.</p>
+<div class="match-area">
+<div class="match-cols">
+<div class="match-col" id="ml">
+<div class="match-item" data-m="a" onclick="matchClick(this,'l')">Funnel / embudo</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'l')">Deal forecast</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'l')">Sales activity report</div>
+<div class="match-item" data-m="d" onclick="matchClick(this,'l')">Attribution report</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'l')">Conversión lead → cliente</div>
+</div>
+<div class="match-mid">↔<br>↔<br>↔<br>↔<br>↔</div>
+<div class="match-col" id="mr">
+<div class="match-item" data-m="d" onclick="matchClick(this,'r')">¿Qué canal originó los deals ganados?</div>
+<div class="match-item" data-m="a" onclick="matchClick(this,'r')">¿En qué etapa perdemos más deals?</div>
+<div class="match-item" data-m="e" onclick="matchClick(this,'r')">¿Qué tan eficiente es nuestro proceso comercial?</div>
+<div class="match-item" data-m="c" onclick="matchClick(this,'r')">¿El equipo hace suficientes llamadas y reuniones?</div>
+<div class="match-item" data-m="b" onclick="matchClick(this,'r')">¿Cuánto vamos a facturar este trimestre?</div>
+</div>
+</div>
+<div class="match-score" id="matchScore">0 / 5 emparejados</div>
+</div>
+</div>
+
+<!-- S6: Práctica + Final score + preview -->
+<div class="sl" data-s="6">
+<div class="badge quiz-b">Cierre · Tu entregable + resultado</div>
+<h2>Ahora armalo de verdad</h2>
+<p>Juntaste el criterio. El último paso es aplicarlo a un encargo real del cliente.</p>
+<div class="task">
+<div class="task-h">🛠️ Tarea práctica</div>
+<h3>Armá el dashboard del dueño del negocio</h3>
+<p>Construí un dashboard con exactamente <strong>4 widgets</strong>, pensado para que el dueño responda "¿cómo va el negocio este mes?":</p>
+<ul style="margin-top:6px">
+<li><strong>Pipeline por etapa</strong> — cuánto valor hay vivo y dónde está parado</li>
+<li><strong>Deals cerrados este mes</strong> — con date range fijado al mes en curso</li>
+<li><strong>Tasa de conversión lead → cliente</strong> — la eficiencia del proceso</li>
+<li><strong>Origen de los mejores deals</strong> — de dónde vienen los que más facturan</li>
+</ul>
+<p style="margin-top:8px">Y lo más importante: <strong>justificá por qué dejaste afuera las vanity metrics</strong> (total de contactos, emails enviados, seguidores). Para cada widget que pusiste, escribí en una línea qué decisión habilita. Si un número no cambia ninguna decisión del dueño, no entra.</p>
+</div>
+
+<div class="cover" style="padding-top:8px;text-align:center"><div class="cover-glow" style="top:-60px"></div>
+<div class="badge">🎉 Fin de la sesión</div>
+<h2 style="font-size:30px">Tu resultado</h2>
+<div class="final-s" id="finalS">0</div>
+<p style="text-align:center;font-size:17px;max-width:560px;margin:0 auto" id="finalM">Completá los ejercicios para ver tu score.</p>
+<div style="background:var(--s1);border:1px solid var(--bd);border-radius:var(--rad);padding:24px;margin:28px 0;position:relative;overflow:hidden;text-align:left">
+<div style="position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--ac),var(--hs))"></div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+<span style="font-size:22px">📌</span>
+<h3 style="font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0">Preview Sesión 9 · Integraciones y RevOps</h3>
+</div>
+<p style="font-size:14px;margin:0">Ya sabés capturar, comunicar y medir. La próxima conectás el CRM con el resto del stack: <strong>integraciones</strong> (HubSpot ↔ Salesforce, Slack, facturación) y la mirada <strong>RevOps</strong> que alinea marketing, ventas y soporte sobre un solo dato confiable.</p>
+</div>
+<p style="color:var(--td);font-size:13px;margin-top:24px">
+<img src="https://refindable.com/wp-content/uploads/2022/05/Refindable-white.png" alt="Refindable" class="footer-logo" style="height:16px;vertical-align:middle;margin-right:4px;opacity:.5">
+Academy 2026 · Track Trainees · Sesión 8 de 12</p>
+</div>
+</div>
+
+</div><!-- end .sa -->
+
+<div class="bot">
+<button class="btn bp" id="bP" onclick="goPrev()" disabled>← Anterior</button>
+<div class="sc" id="sCt">1 / 7</div>
+<button class="btn bn" id="bN" onclick="goNext()">Siguiente →</button>
+</div>
+</div>
+
+<script>
+const T=7;let cur=0,pts=0,ad={};
+const qSlides={1:['q1','q2'],2:['q3','q4'],3:['q5','q6'],4:['q7','q8']};
+let mSel={l:null,r:null},mDone=0,mTotal=5;
+
+function upd(){
+document.querySelectorAll('.sl').forEach(s=>s.classList.remove('active'));
+document.querySelector('[data-s="'+cur+'"]').classList.add('active');
+document.getElementById('pgFill').style.width=((cur/(T-1))*100)+'%';
+document.getElementById('pgText').textContent=(cur+1)+' / '+T;
+document.getElementById('sCt').textContent=(cur+1)+' / '+T;
+var sb=document.getElementById('scoreBadge');sb.textContent='✨ '+pts+' pts';
+document.getElementById('bP').disabled=cur===0;
+var b=document.getElementById('bN');
+if(cur===T-1){b.style.display='none';updFinal();return}
+b.style.display='flex';
+var sl=document.querySelector('[data-s="'+cur+'"]');
+if(sl.dataset.quiz){
+var allDone=qSlides[cur].every(q=>ad[q]!==undefined);
+if(allDone){b.classList.remove('locked');b.textContent='Siguiente →'}
+else{b.classList.add('locked');b.textContent='🔒 Respondé primero'}
+}else if(sl.dataset.match){
+if(mDone===mTotal){b.classList.remove('locked');b.textContent='Siguiente →'}
+else{b.classList.add('locked');b.textContent='🔒 Emparejá los 5'}
+}else{b.classList.remove('locked');b.textContent='Siguiente →'}
+document.querySelector('.sa').scrollTop=0;
+}
+function goNext(){var b=document.getElementById('bN');if(b.classList.contains('locked'))return;if(cur<T-1){cur++;upd()}}
+function goPrev(){if(cur>0){cur--;upd()}}
+function bumpScore(){var sb=document.getElementById('scoreBadge');sb.classList.remove('bump');void sb.offsetWidth;sb.classList.add('bump')}
+
+function ans(el,qId,c){
+if(ad[qId]!==undefined)return;
+ad[qId]=c;if(c){pts+=10;setTimeout(bumpScore,50)}
+var q=document.getElementById(qId),opts=q.querySelectorAll('.qopt'),fb=document.getElementById(qId+'-fb');
+opts.forEach(function(o){o.classList.add('dis')});
+if(c){el.classList.add('correct');fb.textContent=FB[qId].ok;fb.className='qfb show fbok';q.classList.add('ok')}
+else{el.classList.add('wrong');opts.forEach(function(o){if(o.getAttribute('onclick')&&o.getAttribute('onclick').indexOf(',1)')!==-1){o.classList.remove('dis');o.classList.add('correct')}});fb.textContent=FB[qId].bad;fb.className='qfb show fbbad';q.classList.add('bad')}
+upd();
+}
+
+var FB={
+q1:{ok:'✅ La conversión lead→cliente cambia decisiones: si cae, vas a buscar el problema en el proceso comercial. El total de contactos y los seguidores solo suben y no te dicen qué hacer.',
+bad:'❌ El total de contactos y los seguidores son vanity: suben siempre y no cambian ninguna decisión. La que mueve la aguja es la conversión lead→cliente.'},
+q2:{ok:'✅ La prueba del algodón es siempre la misma: "¿qué decisión tomás con ese número?". Emails enviados no responde nada; tasa de respuesta o reuniones generadas sí.',
+bad:'❌ Más números no es mejor dashboard. "Emails enviados" no habilita ninguna decisión. Preguntá qué va a hacer con el dato y reemplazalo por tasa de respuesta o reuniones.'},
+q3:{ok:'✅ La pregunta cruza dos objetos: "industria" vive en Empresas y "amount" en Deals. Eso es un cross-object report sí o sí.',
+bad:'❌ Un single-object no alcanza: necesitás la propiedad "industria" (Empresas) junto al "amount" (Deals). Eso obliga a un reporte cross-object.'},
+q4:{ok:'✅ "¿Cuánto vamos a cerrar?" es futuro y ponderado: eso es un deal forecast, que proyecta el cierre esperado según la probabilidad de cada etapa.',
+bad:'❌ Actividad y montos históricos no proyectan el futuro. Para "¿cuánto vamos a cerrar?" usás un deal forecast, que pondera cada deal por su probabilidad.'},
+q5:{ok:'✅ Bien leído: no mirás el número absoluto sino la conversión entre etapas. Reunión→Propuesta convierte solo 20%, muy por debajo del resto. Ahí está el cuello.',
+bad:'❌ El embudo se lee por conversión, no por cantidad perdida. Reunión→Propuesta pasa solo 20% (vs 40%, 75%, 50% en las otras): ese es el cuello de botella real.'},
+q6:{ok:'✅ El embudo te dice DÓNDE mirar, no qué generar más. Si el problema es post-reunión, sumar leads no arregla nada: hay que investigar qué falla después de la reunión.',
+bad:'❌ Sumar leads arriba o bajar el precio a ciegas no ataca el cuello. El embudo apunta a Reunión→Propuesta: hay que investigar y arreglar ESE paso.'},
+q7:{ok:'✅ Exacto. Las tareas de hoy de un rep son operativas: van en el dashboard del rep, no en el del dueño, que mira lo estratégico (forecast, revenue, conversión).',
+bad:'❌ Forecast y revenue por origen sí le importan al dueño. Lo que NO va es la lista de tareas de un rep: eso es operativo y pertenece al dashboard del rep.'},
+q8:{ok:'✅ Primero la pregunta, después los widgets. Un dashboard responde una pregunta de negocio; todo lo que no la responde es ruido que se saca.',
+bad:'❌ Meter todo o copiar de otro cliente no es diseñar un dashboard. Definís la pregunta de negocio primero y elegís solo los widgets que la contestan.'}
+};
+
+function chkToggle(el){el.classList.toggle('done')}
+
+function matchClick(el,side){
+if(el.classList.contains('matched'))return;
+var col=el.parentElement;
+col.querySelectorAll('.match-item').forEach(function(i){if(i!==el)i.classList.remove('sel')});
+if(mSel[side]===el){el.classList.remove('sel');mSel[side]=null;return}
+el.classList.add('sel');mSel[side]=el;
+if(mSel.l&&mSel.r){
+var a=mSel.l,b=mSel.r;
+if(a.dataset.m===b.dataset.m){
+a.classList.add('matched');b.classList.add('matched');a.classList.remove('sel');b.classList.remove('sel');
+mSel={l:null,r:null};mDone++;pts+=5;setTimeout(bumpScore,50);
+var ms=document.getElementById('matchScore');
+ms.textContent=(mDone===mTotal)?('✅ '+mTotal+' / '+mTotal+' completo'):(mDone+' / '+mTotal+' emparejados');
+upd();
+}else{
+a.classList.add('flash-bad');b.classList.add('flash-bad');
+var x=a,y=b;mSel={l:null,r:null};
+setTimeout(function(){x.classList.remove('flash-bad','sel');y.classList.remove('flash-bad','sel')},500);
+}
+}
+}
+
+function updFinal(){
+var el=document.getElementById('finalS'),msg=document.getElementById('finalM');
+if(ad.q7===undefined||ad.q8===undefined){
+el.textContent='—';el.className='final-s';
+msg.textContent='Volvé y completá las preguntas y el matching para ver tu resultado.';
+return;
+}
+var maxPts=105;
+var pct=Math.round((pts/maxPts)*100);
+el.textContent=pts+' pts ('+pct+'%)';
+if(pct>=80){el.className='final-s great';msg.textContent='🔥 Crack. Distinguís vanity de accionable, elegís el reporte por la pregunta, leés un embudo por conversión y armás dashboards por audiencia. Listo/a para diseñar reportes que cuentan la verdad.'}
+else if(pct>=50){el.className='final-s ok';msg.textContent='👍 Vas bien. Repasá la diferencia single vs cross-object y cómo se lee un embudo (por conversión entre etapas, no por totales).'}
+else{el.className='final-s low';msg.textContent='📖 Volvé a la Decisión 1 (vanity vs accionable) y a la Decisión 3 (leer el embudo). Ese criterio es la base de todo dashboard útil.'}
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();goNext()}if(e.key==='ArrowLeft'){e.preventDefault();goPrev()}});
+
+function toggleTheme(){
+document.body.classList.toggle('light');
+var btn=document.getElementById('themeBtn');
+btn.textContent=document.body.classList.contains('light')?'☀️':'🌙';
+localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.getElementById('themeBtn').textContent='☀️'}
+upd();
+</script>
+</body>
+</html>
