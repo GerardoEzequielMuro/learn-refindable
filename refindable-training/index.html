@@ -4,511 +4,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Refindable Academy — Aprendé CRM, de junior a senior</title>
-<meta name="description" content="Plataforma de aprendizaje de CRM: cursos con clases interactivas, documentación de HubSpot, práctica real, exámenes y certificación. De junior a senior.">
-<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Un curso de CRM en clases cortas. De los fundamentos a la práctica, a tu ritmo.">
+<meta name="theme-color" content="#f6f5f1">
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f4f5f1; --surface:#ffffff; --surface2:#fbfbf8; --tint:#eef3fb;
-    --ink:#1c2230; --muted:#5b6474; --faint:#929aa8; --line:#e7e8e3; --line2:#dcdfd9;
-    --pri:#2563eb; --pri-d:#1d4ed8; --pri-soft:#e8eefe;
-    --shadow-sm:0 1px 2px rgba(28,34,48,.05),0 2px 6px rgba(28,34,48,.04);
-    --shadow:0 6px 16px rgba(28,34,48,.07),0 2px 6px rgba(28,34,48,.05);
-    --shadow-lg:0 18px 40px rgba(28,34,48,.12);
-    --r:18px; --r-s:12px;
-    --maxw:1180px; --ease:cubic-bezier(.4,0,.2,1);
-    /* category palette */
-    --c-blue:#2563eb;--c-blue-s:#e7eefe; --c-emer:#0d9f6e;--c-emer-s:#e2f6ee;
-    --c-amber:#e08a1e;--c-amber-s:#fbeed7; --c-violet:#7c3aed;--c-violet-s:#efe7fd;
-    --c-rose:#e11d6b;--c-rose-s:#fde4ee; --c-teal:#0e9488;--c-teal-s:#dcf3f0;
-    --c-orange:#ea580c;--c-orange-s:#fce8dc; --c-cyan:#0891b2;--c-cyan-s:#dcf1f7;
-    --c-indigo:#4f46e5;--c-indigo-s:#e8e7fc;
+    --paper:#f6f5f1; --paper2:#fbfaf7; --ink:#1b1b18; --ink2:#3c3c36; --muted:#7c7a70; --faint:#a3a199;
+    --line:#e4e2d9; --line2:#d8d5ca; --accent:#1f5c3d;
+    --maxw:1080px; --ease:cubic-bezier(.4,0,.2,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;font-weight:400;-webkit-tap-highlight-color:transparent}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
-  ::selection{background:var(--pri-soft)}
-  :focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:6px}
-  ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-thumb{background:#cfd2cb;border-radius:6px;border:3px solid var(--bg)}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  main{position:relative;z-index:1}
-  /* soft glow that trails the cursor — GPU transform only, light & performant */
-  .cglow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity .8s var(--ease);will-change:transform;
-    background:radial-gradient(circle,rgba(37,99,235,.13),rgba(124,58,237,.06) 42%,transparent 68%)}
-  .skip{position:fixed;top:12px;left:12px;z-index:300;background:var(--pri);color:#fff;padding:11px 18px;border-radius:10px;font-weight:600;transform:translateY(-160%);transition:transform .2s}
+  ::selection{background:var(--ink);color:var(--paper)}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  ::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:5px;border:3px solid var(--paper)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  .mono{font-family:'Space Mono',monospace}
+  .serif{font-family:'Fraunces',serif}
+  .skip{position:fixed;top:12px;left:12px;z-index:200;background:var(--ink);color:var(--paper);padding:10px 16px;transform:translateY(-160%);transition:transform .2s}
   .skip:focus{transform:none}
-  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:600;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;border:none;transition:transform .15s var(--ease),box-shadow .2s,background .2s}
-  .btn svg{width:18px;height:18px}
-  .btn-pri{background:var(--pri);color:#fff;box-shadow:0 6px 16px rgba(37,99,235,.28)}
-  .btn-pri:hover{background:var(--pri-d);transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.36)}
-  .btn-ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line2);box-shadow:var(--shadow-sm)}
-  .btn-ghost:hover{border-color:var(--pri);color:var(--pri)}
-  .ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  .arrow{display:inline-block;transition:transform .25s var(--ease)}
+  .lnk{position:relative;font-weight:600}
+  .lnk::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+  .lnk:hover::after{transform:scaleX(1)}
+  .lnk:hover .arrow{transform:translateX(4px)}
 
-  /* ── nav ── */
-  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;gap:24px;height:68px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.02em}
-  .logo .m{width:34px;height:34px;border-radius:9px;background:var(--pri);display:grid;place-items:center;box-shadow:0 4px 10px rgba(37,99,235,.3)}
-  .logo .m svg{width:19px;height:19px;fill:#fff}
-  .logo span{color:var(--pri)}
-  .nav-links{display:flex;gap:6px;margin-left:8px}
-  .nav-links a{padding:8px 14px;border-radius:9px;font-size:14.5px;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
-  .nav-links a:hover{background:var(--surface2);color:var(--ink)}
-  .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
-  .search{display:flex;align-items:center;gap:9px;background:var(--surface2);border:1px solid var(--line);border-radius:11px;padding:9px 14px;width:230px;transition:border-color .2s,box-shadow .2s}
-  .search:focus-within{border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-soft);background:#fff}
-  .search svg{width:17px;height:17px;stroke:var(--faint);fill:none;stroke-width:2}
-  .search input{border:none;background:none;outline:none;font-family:inherit;font-size:14px;color:var(--ink);width:100%}
-  .menu-btn{display:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line2);background:var(--surface);align-items:center;justify-content:center;cursor:pointer}
+  /* nav */
+  header{position:sticky;top:0;z-index:100;background:rgba(246,245,241,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{font-family:'Fraunces',serif;font-weight:500;font-size:20px;letter-spacing:-.01em}
+  .brand b{font-weight:600}
+  .nav-links{display:flex;gap:30px}
+  .nav-links a{font-size:14px;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .nav .go{font-size:14px;font-weight:600}
+  .menu-btn{display:none;font-size:14px;font-weight:600;background:none;border:none;cursor:pointer;font-family:inherit}
 
-  /* ── hero ── */
-  .hero{padding:56px 0 40px}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
-  .badge-pill{display:inline-flex;align-items:center;gap:8px;background:var(--pri-soft);color:var(--pri-d);font-weight:700;font-size:13px;padding:7px 14px;border-radius:100px;margin-bottom:22px}
-  .badge-pill svg{width:15px;height:15px;fill:var(--pri-d)}
-  .hero h1{font-size:clamp(36px,4.6vw,56px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
-  .hero h1 .u{color:var(--pri);position:relative;white-space:nowrap}
-  .hero h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:2px;height:10px;background:var(--pri-soft);z-index:-1;border-radius:4px}
-  .hero p.sub{font-size:18.5px;color:var(--muted);max-width:46ch;margin-bottom:28px}
-  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-  .hero-trust{display:flex;gap:22px;margin-top:30px;flex-wrap:wrap}
-  .hero-trust .t{display:flex;align-items:center;gap:10px}
-  .hero-trust .t b{font-size:22px;font-weight:800;letter-spacing:-.02em}
-  .hero-trust .t span{font-size:13px;color:var(--muted);line-height:1.25}
-  .hero-trust .t .ti{width:38px;height:38px;border-radius:10px;display:grid;place-items:center}
-  .hero-art{position:relative}
-  .hero-art .ph{border-radius:24px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/3;background:var(--surface2)}
-  .hero-art .ph img{width:100%;height:100%;object-fit:cover}
-  .hero-art .fcard{position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:13px 16px;display:flex;align-items:center;gap:12px}
-  .hero-art .fcard.a{left:-22px;top:30px}
-  .hero-art .fcard.b{right:-18px;bottom:28px}
-  .fcard .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:19px;flex-shrink:0}
-  .fcard b{font-size:14px;font-weight:700;display:block}
-  .fcard span{font-size:12px;color:var(--muted)}
+  /* hero */
+  .hero{padding:84px 0 56px}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:30px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(44px,8vw,92px);line-height:1.0;letter-spacing:-.03em;margin-bottom:28px;max-width:15ch}
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero .sub{font-size:clamp(17px,2vw,20px);color:var(--ink2);max-width:48ch;margin-bottom:34px;line-height:1.55}
+  .hero-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap;font-size:16px}
+  .hero-actions .muted{color:var(--muted);font-size:14px}
+  .hero-fig{margin-top:64px;border-top:1px solid var(--line);padding-top:0}
+  .hero-fig figure{position:relative;aspect-ratio:16/7;overflow:hidden;background:#e9e7df}
+  .hero-fig img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.04);transition:filter .6s var(--ease)}
+  .hero-fig:hover img{filter:grayscale(0) contrast(1)}
+  .hero-fig figcaption{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--faint);margin-top:10px;display:flex;justify-content:space-between;letter-spacing:.04em}
 
-  /* ── resume / gamification strip ── */
-  .dash{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:8px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:8px;margin-top:8px}
-  .dash .resume{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;background:linear-gradient(120deg,var(--pri),#4f80f5);color:#fff;cursor:pointer;transition:transform .15s}
-  .dash .resume:hover{transform:translateY(-2px)}
-  .dash .resume .ico{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.2);display:grid;place-items:center;flex-shrink:0}
-  .dash .resume .ico svg{width:22px;height:22px;fill:#fff}
-  .dash .resume .rt{flex:1;min-width:0}
-  .dash .resume .rt span{font-size:12px;opacity:.85;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-  .dash .resume .rt b{display:block;font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dash .resume .rbar{height:5px;background:rgba(255,255,255,.3);border-radius:3px;margin-top:7px;overflow:hidden}
-  .dash .resume .rbar i{display:block;height:100%;background:#fff;border-radius:3px}
-  .stat{padding:16px 18px;border-radius:14px;background:var(--surface2);display:flex;flex-direction:column;justify-content:center;gap:3px}
-  .stat .v{font-size:26px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
-  .stat .v .e{font-size:20px}
-  .stat .l{font-size:12.5px;color:var(--muted);font-weight:600}
+  /* section frame */
+  section{scroll-margin-top:90px}
+  .sec{padding:72px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
+  .sec-head .no{font-family:'Space Mono',monospace;font-size:13px;color:var(--accent)}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em}
+  .sec-sub{color:var(--muted);font-size:15.5px;margin:0 0 36px 44px;max-width:54ch}
 
-  /* ── section heads ── */
-  section{scroll-margin-top:84px}
-  .sec{padding:54px 0 10px}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
-  .sec-head h2{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-.02em}
-  .sec-head p{color:var(--muted);font-size:15px;margin-top:5px}
-  .sec-head .eye{font-size:13px;font-weight:700;color:var(--pri);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  /* curriculum as an index/syllabus */
+  .level-label{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 4px 44px}
+  .level-label:first-child{margin-top:0}
+  .row{display:grid;grid-template-columns:44px 1fr auto;align-items:baseline;gap:18px;padding:22px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
+  .row:hover{background:var(--paper2)}
+  .row:last-child{border-bottom:1px solid var(--line)}
+  .row.locked{cursor:default;opacity:.5}
+  .row .rn{font-family:'Space Mono',monospace;font-size:14px;color:var(--faint)}
+  .row.done .rn{color:var(--accent)}
+  .row .rmid h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(20px,2.4vw,27px);letter-spacing:-.01em;line-height:1.15;transition:transform .25s var(--ease);display:inline-block}
+  .row:hover .rmid h3{transform:translateX(6px)}
+  .row .rmid p{color:var(--muted);font-size:14.5px;margin-top:5px;max-width:60ch}
+  .row .rt{text-align:right;font-family:'Space Mono',monospace;font-size:12.5px;color:var(--muted);white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .row .rt .st{display:inline-flex;align-items:center;gap:6px}
+  .row.done .rt .st{color:var(--accent)}
+  .row .rt .st svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+  .row .rt .soon{color:var(--faint)}
+  .row .ar{font-family:'Space Mono',monospace}
 
-  /* ── filter chips ── */
-  .chips{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:26px}
-  .chip{border:1px solid var(--line2);background:var(--surface);color:var(--muted);font-family:inherit;font-weight:600;font-size:14px;padding:9px 16px;border-radius:100px;cursor:pointer;transition:all .15s}
-  .chip:hover{border-color:var(--pri);color:var(--pri)}
-  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  /* continue line */
+  .cont{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:8px}
+  .cont .ct .l{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .cont .ct .t{font-family:'Fraunces',serif;font-size:22px;font-weight:400}
+  .cont .meter{flex:1;min-width:160px;max-width:260px;height:1px;background:var(--line2);position:relative}
+  .cont .meter i{position:absolute;left:0;top:-1px;height:3px;background:var(--accent);transition:width .6s var(--ease)}
+  .cont .pc{font-family:'Space Mono',monospace;font-size:13px;color:var(--muted)}
 
-  /* ── track group ── */
-  .track-tag{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:700;padding:6px 13px;border-radius:100px;margin-bottom:18px}
+  /* generic list (exams, resources) */
+  .list .row2{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line);cursor:pointer;transition:background .2s}
+  .list .row2:last-child{border-bottom:1px solid var(--line)}
+  .list .row2:hover{background:var(--paper2)}
+  .list .row2 .t{font-family:'Fraunces',serif;font-size:21px;font-weight:400;transition:transform .25s var(--ease);display:inline-block}
+  .list .row2:hover .t{transform:translateX(6px)}
+  .list .row2 .d{color:var(--muted);font-size:14px;margin-top:4px}
+  .list .row2 .meta{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--muted);white-space:nowrap;text-align:right}
 
-  /* ── course cards ── */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:14px}
-  .course{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s var(--ease),box-shadow .2s,border-color .2s;cursor:pointer}
-  .course:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--line2)}
-  .course.locked{opacity:.72;cursor:default}
-  .course.locked:hover{transform:none;box-shadow:var(--shadow-sm)}
-  .thumb{height:128px;position:relative;display:grid;place-items:center;overflow:hidden}
-  .thumb .emoji{font-size:46px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
-  .thumb .lvl{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:var(--ink);font-size:11px;font-weight:700;padding:5px 11px;border-radius:100px;backdrop-filter:blur(4px)}
-  .thumb .doneflag{position:absolute;top:12px;left:12px;background:var(--c-emer);color:#fff;font-size:11px;font-weight:700;padding:5px 10px;border-radius:100px;display:none;align-items:center;gap:5px}
-  .course.done .thumb .doneflag{display:inline-flex}
-  .c-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
-  .c-cat{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
-  .c-body h3{font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.25;margin-bottom:7px}
-  .c-body p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:auto}
-  .c-meta{display:flex;gap:15px;margin:15px 0;font-size:12.5px;color:var(--faint);font-weight:600}
-  .c-meta .m{display:flex;align-items:center;gap:6px}
-  .c-meta .ic{width:15px;height:15px}
-  .c-prog{margin-bottom:14px;display:none}
-  .course.started .c-prog,.course.done .c-prog{display:block}
-  .c-prog .pb{height:6px;background:var(--line);border-radius:4px;overflow:hidden}
-  .c-prog .pb i{display:block;height:100%;border-radius:4px}
-  .c-prog .pl{font-size:11.5px;color:var(--faint);font-weight:600;margin-top:6px}
-  .c-foot{display:flex;align-items:center;gap:10px;margin-top:auto}
-  .c-cta{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:14px;padding:11px;border-radius:11px;background:var(--tint);color:var(--pri-d);transition:background .15s}
-  .course:hover .c-cta{background:var(--pri);color:#fff}
-  .course.done .c-cta{background:var(--c-emer-s);color:var(--c-emer)}
-  .course:hover.done .c-cta{background:var(--c-emer);color:#fff}
-  .c-check{width:42px;height:42px;flex-shrink:0;border-radius:11px;border:1.5px solid var(--line2);background:var(--surface);display:grid;place-items:center;cursor:pointer;transition:all .15s}
-  .c-check:hover{border-color:var(--c-emer)}
-  .c-check svg{width:18px;height:18px;stroke:var(--faint);fill:none;stroke-width:2.5}
-  .course.done .c-check{background:var(--c-emer);border-color:var(--c-emer)}
-  .course.done .c-check svg{stroke:#fff}
-  .empty{display:none;text-align:center;padding:50px;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:8px}
+  .foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+  .foot .brand{font-size:18px}
+  .foot p{color:var(--muted);font-size:14px;margin-top:10px;max-width:34ch}
+  .foot .cols{display:flex;gap:56px;flex-wrap:wrap}
+  .foot h5{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+  .foot a{display:block;color:var(--muted);font-size:14px;margin-bottom:10px}
+  .foot a:hover{color:var(--ink)}
+  .foot-bot{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--faint);margin-top:44px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
-  /* ── feature (workbook) banner ── */
-  .feature{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
-  .feature .fph{position:relative;min-height:260px}
-  .feature .fph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .feature .ftx{padding:38px 40px;display:flex;flex-direction:column;justify-content:center}
-  .feature .ftx .tag{align-self:flex-start;background:var(--c-amber-s);color:var(--c-amber);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:100px;margin-bottom:14px}
-  .feature .ftx h3{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
-  .feature .ftx p{color:var(--muted);font-size:15.5px;margin-bottom:22px}
-
-  /* ── exams ── */
-  .exams{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  .exam{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:24px 22px;cursor:pointer;transition:transform .18s,box-shadow .2s;display:flex;flex-direction:column}
-  .exam:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-  .exam .medal{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:27px;margin-bottom:16px}
-  .exam h3{font-size:17px;font-weight:700;margin-bottom:6px}
-  .exam p{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:auto}
-  .exam .meta{margin-top:16px;font-size:12.5px;font-weight:700;color:var(--faint);display:flex;gap:12px}
-
-  /* ── resources ── */
-  .res{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .rcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:20px;cursor:pointer;transition:transform .15s,box-shadow .2s,border-color .2s}
-  .rcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--pri)}
-  .rcard .ri{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:21px;margin-bottom:13px;background:var(--surface2)}
-  .rcard h4{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
-  .rcard h4 .ar{color:var(--faint);font-weight:600}
-  .rcard p{font-size:13px;color:var(--muted);line-height:1.45}
-  .rcard .src{font-size:11.5px;font-weight:700;color:var(--pri);margin-top:10px;text-transform:uppercase;letter-spacing:.03em}
-
-  footer{margin-top:70px;background:var(--surface);border-top:1px solid var(--line)}
-  .foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding:48px 0 24px}
-  .foot .l{max-width:32ch}.foot .l p{color:var(--muted);font-size:14px;margin-top:12px;line-height:1.6}
-  .foot .col h5{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:13px}
-  .foot .col a{display:block;color:var(--muted);font-size:14px;margin-bottom:9px;font-weight:500}
-  .foot .col a:hover{color:var(--pri)}
-  .foot-bot{border-top:1px solid var(--line);padding:18px 0;font-size:13px;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:300;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow-lg);display:flex;gap:10px;align-items:center}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .toast .e{font-size:17px}
-
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
   .reveal.in{opacity:1;transform:none}
 
-  @media(max-width:980px){
-    .hero-grid{grid-template-columns:1fr;gap:34px}
-    .hero-art{max-width:520px}
-    .dash{grid-template-columns:1fr 1fr}
-    .grid{grid-template-columns:repeat(2,1fr)}
-    .exams{grid-template-columns:repeat(2,1fr)}
-    .res{grid-template-columns:repeat(2,1fr)}
-    .feature{grid-template-columns:1fr}.feature .fph{min-height:200px}
+  @media(max-width:720px){
+    .wrap{padding:0 22px}
+    .nav-links,.nav .go{display:none}.menu-btn{display:block}
+    .sec-sub,.level-label{margin-left:0}
+    .row{grid-template-columns:32px 1fr;gap:14px}
+    .row .rt{grid-column:2;text-align:left;align-items:flex-start;margin-top:8px;flex-direction:row;gap:14px}
+    .list .row2{grid-template-columns:1fr}.list .row2 .meta{text-align:left;margin-top:8px}
   }
-  @media(max-width:620px){
-    .nav-links,.search{display:none}.menu-btn{display:flex}
-    .grid{grid-template-columns:1fr}.dash{grid-template-columns:1fr}
-    .exams,.res{grid-template-columns:1fr}
-    .hero-art .fcard.a{left:8px}.hero-art .fcard.b{right:8px}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1!important;transform:none!important}}
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}.reveal{opacity:1!important;transform:none!important}.hero-fig img{filter:grayscale(1)}}
 </style>
 </head>
 <body>
-<a class="skip" href="#cursos">Saltar a los cursos</a>
-<div class="cglow" id="cglow" aria-hidden="true"></div>
+<a class="skip" href="#programa">Saltar al temario</a>
 
 <header>
   <nav class="nav wrap">
-    <a class="logo" href="#top"><span class="m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>Refindable <span>Academy</span></a>
+    <a class="brand" href="#top">Refindable <b>Academy</b></a>
     <div class="nav-links">
-      <a href="#cursos">Cursos</a>
-      <a href="#practica">Práctica</a>
+      <a href="#programa">Temario</a>
       <a href="#examenes">Exámenes</a>
       <a href="#recursos">Recursos</a>
     </div>
-    <div class="nav-right">
-      <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="search" type="search" placeholder="Buscar un tema…" aria-label="Buscar"></label>
-      <button class="menu-btn" id="menuBtn" aria-label="Menú"><svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    </div>
+    <a class="go lnk" href="#" id="navGo">Empezar <span class="arrow">→</span></a>
+    <button class="menu-btn" id="menuBtn">Temario</button>
   </nav>
 </header>
 
 <main id="top">
-  <!-- HERO -->
   <section class="hero wrap">
-    <div class="hero-grid">
-      <div>
-        <div class="badge-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2L12 16.8 5.7 21l2.3-7.2-6-4.4h7.6z"/></svg> La academia de CRM de Refindable</div>
-        <h1>Aprendé CRM,<br>de <span class="u">junior a senior</span></h1>
-        <p class="sub">Cursos cortos con clases interactivas, documentación oficial de HubSpot, práctica en un portal real y exámenes con certificación. A tu ritmo.</p>
-        <div class="hero-cta">
-          <a class="btn btn-pri" href="#" id="heroStart"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><span id="heroStartLbl">Empezar a aprender</span></a>
-          <a class="btn btn-ghost" href="#cursos">Ver todos los cursos</a>
-        </div>
-        <div class="hero-trust">
-          <div class="t"><span class="ti" style="background:var(--c-blue-s)"><svg class="ic" style="stroke:var(--c-blue)" viewBox="0 0 24 24"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M8 12h8M8 16h5"/></svg></span><div><b>9</b><span>cursos</span></div></div>
-          <div class="t"><span class="ti" style="background:var(--c-emer-s)"><svg class="ic" style="stroke:var(--c-emer)" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12a9 9 0 11-6.2-8.6"/></svg></span><div><b>4</b><span>exámenes</span></div></div>
-          <div class="t"><span class="ti" style="background:var(--c-amber-s)"><svg class="ic" style="stroke:var(--c-amber)" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></svg></span><div><b>28</b><span>tareas prácticas</span></div></div>
-        </div>
-      </div>
-      <div class="hero-art reveal">
-        <div class="ph"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=70" alt="Equipo aprendiendo y trabajando con datos en una reunión" loading="lazy"></div>
-        <div class="fcard a"><span class="ico" style="background:var(--c-emer-s)">✅</span><div><b id="fcDone">0 de 9</b><span>cursos completados</span></div></div>
-        <div class="fcard b"><span class="ico" style="background:var(--c-amber-s)">🔥</span><div><b id="fcStreak">Empezá hoy</b><span>tu racha de aprendizaje</span></div></div>
-      </div>
+    <div class="eyebrow reveal">Curso de CRM · 9 clases · a tu ritmo</div>
+    <h1 class="reveal">Aprendé CRM, de junior a <em>senior</em></h1>
+    <p class="sub reveal">Un curso en clases cortas. Empezás por los fundamentos y terminás listo para trabajar en ventas, marketing o atención. Sin vueltas, a tu ritmo.</p>
+    <div class="hero-actions reveal">
+      <a class="lnk" href="#" id="heroGo" style="font-weight:600">Empezar la ruta <span class="arrow">→</span></a>
+      <a class="lnk" href="#programa" style="color:var(--muted)">Ver el temario</a>
     </div>
-
-    <!-- dashboard / gamification -->
-    <div class="dash reveal" id="dash"></div>
-  </section>
-
-  <!-- COURSES -->
-  <section class="sec wrap" id="cursos">
-    <div class="sec-head">
-      <div><div class="eye">El programa</div><h2>Catálogo de cursos</h2><p>9 cursos en 3 niveles. Cada uno con clase, documentación, práctica y quiz.</p></div>
-    </div>
-    <div class="chips" id="chips">
-      <button class="chip on" data-f="all">Todos</button>
-      <button class="chip" data-f="beginner">Fundamentos</button>
-      <button class="chip" data-f="intermediate">Intermedio</button>
-      <button class="chip" data-f="advanced">Avanzado</button>
-      <button class="chip" data-f="started">En curso</button>
-    </div>
-    <div id="catalog"></div>
-    <div class="empty" id="empty">No encontramos cursos para tu búsqueda.</div>
-  </section>
-
-  <!-- PRACTICE -->
-  <section class="sec wrap" id="practica">
-    <div class="feature reveal">
-      <div class="fph"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=70" alt="Persona practicando con dashboards y datos en una laptop" loading="lazy"></div>
-      <div class="ftx">
-        <span class="tag">🛠️ Práctica guiada</span>
-        <h3>Aprendé haciendo, en un portal real</h3>
-        <p>28 tareas hands-on en HubSpot, módulo por módulo, con los pasos exactos (click por click) y tu progreso guardado. La teoría se fija practicando.</p>
-        <a class="btn btn-pri" href="tareas-practicas.html" style="align-self:flex-start"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Abrir el workbook</a>
-      </div>
+    <div class="hero-fig reveal">
+      <figure><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=70" alt="Un equipo de trabajo colaborando."></figure>
+      <figcaption><span>Refindable Academy</span><span>Fundamentos · Intermedio · Avanzado</span></figcaption>
     </div>
   </section>
 
-  <!-- EXAMS -->
+  <section class="sec wrap" id="programa">
+    <div class="sec-head"><span class="no">01</span><h2 class="serif">El temario</h2></div>
+    <p class="sec-sub">Nueve clases, de lo más simple a lo más completo. Cada una se puede hacer suelta, pero juntas te llevan de cero a un nivel sólido.</p>
+    <div class="cont reveal" id="cont"></div>
+    <div id="curriculum"></div>
+  </section>
+
   <section class="sec wrap" id="examenes">
-    <div class="sec-head"><div><div class="eye">Evaluación</div><h2>Exámenes y certificación</h2><p>Validá cada nivel y llevate tu certificado con el examen final.</p></div></div>
-    <div class="exams" id="exams"></div>
+    <div class="sec-head"><span class="no">02</span><h2 class="serif">Exámenes y certificación</h2></div>
+    <p class="sec-sub">Validá cada nivel cuando te sientas listo. El examen final te deja la certificación.</p>
+    <div class="list" id="exams"></div>
   </section>
 
-  <!-- RESOURCES -->
   <section class="sec wrap" id="recursos">
-    <div class="sec-head"><div><div class="eye">Para profundizar</div><h2>Documentación y recursos</h2><p>HubSpot como base, con lo mejor de cada plataforma de la industria.</p></div></div>
-    <div class="res" id="res"></div>
+    <div class="sec-head"><span class="no">03</span><h2 class="serif">Recursos</h2></div>
+    <p class="sec-sub">Documentación oficial y academias para profundizar más allá del curso.</p>
+    <div class="list" id="res"></div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap foot">
-    <div class="l">
-      <a class="logo" href="#top"><span class="m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>Refindable <span>Academy</span></a>
-      <p>La forma más clara de aprender CRM: de los fundamentos al dominio de HubSpot, paso a paso.</p>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="brand serif">Refindable <b>Academy</b></div>
+        <p>Un curso de CRM claro y corto, para aprender a tu ritmo.</p>
+      </div>
+      <div class="cols">
+        <div><h5>Curso</h5><a href="#programa">Temario</a><a href="#examenes">Exámenes</a><a href="#recursos">Recursos</a></div>
+        <div><h5>Refindable</h5><a href="https://refindable.com" target="_blank" rel="noopener">refindable.com</a><a href="../">Documentación</a><a href="mailto:hello@refindable.com">Contacto</a></div>
+      </div>
     </div>
-    <div class="col"><h5>Aprender</h5><a href="#cursos">Cursos</a><a href="#practica">Práctica</a><a href="#examenes">Exámenes</a><a href="#recursos">Recursos</a></div>
-    <div class="col"><h5>Plataformas</h5><a href="https://academy.hubspot.com" target="_blank" rel="noopener">HubSpot Academy</a><a href="https://knowledge.hubspot.com" target="_blank" rel="noopener">HubSpot Knowledge Base</a><a href="https://trailhead.salesforce.com" target="_blank" rel="noopener">Salesforce Trailhead</a></div>
-    <div class="col"><h5>Refindable</h5><a href="https://refindable.com" target="_blank" rel="noopener">refindable.com</a><a href="../">Documentación interna</a><a href="mailto:hello@refindable.com">hello@refindable.com</a></div>
+    <div class="foot-bot"><span>© 2026 Refindable · Academy</span><span>De junior a senior</span></div>
   </div>
-  <div class="wrap foot-bot"><span>© 2026 Refindable · Academy</span><span>Hecho para aprender CRM de verdad</span></div>
 </footer>
 
-<div class="toast" id="toast"><span class="e">🎉</span><span id="toastMsg"></span></div>
-
 <script>
-const TRACKS=[
-  {key:'beginner', label:'Fundamentos', color:'emer'},
-  {key:'intermediate', label:'Intermedio', color:'amber'},
-  {key:'advanced', label:'Avanzado', color:'violet'},
-];
+const TRACKS=[{key:'beginner',label:'Fundamentos'},{key:'intermediate',label:'Intermedio'},{key:'advanced',label:'Avanzado'}];
 const COURSES=[
-  {id:'s1', track:'beginner', n:1, title:'¿Qué es un CRM? + Navegación HubSpot', desc:'El concepto, por qué importa y un tour completo por la interfaz.', file:'sesion-1.html', steps:25, emoji:'🧭', color:'blue'},
-  {id:'s2', track:'beginner', n:2, title:'Contactos, Companies y Deals', desc:'Los tres objetos base, cómo se relacionan y cómo cargar bien la info.', file:'session2-trainees.html', steps:23, emoji:'👥', color:'emer'},
-  {id:'s3', track:'beginner', n:3, title:'Properties, Listas y Segmentación', desc:'Propiedades, listas activas vs estáticas y segmentación accionable.', file:'session3-trainees.html', steps:26, emoji:'🏷️', color:'violet'},
-  {id:'s4', track:'intermediate', n:4, title:'Pipelines de Ventas', desc:'Diseñar un pipeline desde cero: etapas, probabilidades y disciplina.', file:'session4-trainees.html', steps:20, emoji:'📊', color:'amber'},
-  {id:'s5', track:'intermediate', n:5, title:'Forms y Landing Pages', desc:'Capturar leads sin espantar: formularios, landings y conversión.', file:'session5-trainees.html', steps:12, emoji:'📝', color:'rose'},
-  {id:'s6', track:'intermediate', n:6, title:'Workflows y Automatización', desc:'Automatizar lo repetitivo: triggers, acciones, delays y branches.', file:'session6-trainees.html', steps:9, emoji:'⚙️', color:'teal'},
-  {id:'s7', track:'advanced', n:7, title:'Email Marketing', desc:'Armá y mandá tu primer email: segmentación, contenido y métricas.', file:'session7-trainees.html', steps:5, emoji:'✉️', color:'orange'},
-  {id:'s8', track:'advanced', n:8, title:'Reportes y Dashboards', desc:'Dashboards que responden preguntas de negocio, sin vanity metrics.', file:'session8-trainees.html', steps:7, emoji:'📈', color:'cyan'},
-  {id:'s9', track:'advanced', n:9, title:'Integraciones y RevOps', desc:'HubSpot ↔ Salesforce, sincronización y gobierno de datos.', file:'session9-trainees.html', steps:8, emoji:'🔗', color:'indigo'},
+  {id:'s1',track:'beginner',n:1,title:'¿Qué es un CRM?',desc:'Qué es, de dónde viene y cómo se navega.',file:'sesion-1.html',steps:25},
+  {id:'s2',track:'beginner',n:2,title:'Contactos, empresas y negocios',desc:'Los objetos base y cómo se relacionan.',file:'session2-trainees.html',steps:23},
+  {id:'s3',track:'beginner',n:3,title:'Propiedades, listas y segmentación',desc:'Ordenar la información para encontrarla.',file:'session3-trainees.html',steps:26},
+  {id:'s4',track:'intermediate',n:4,title:'Pipelines de ventas',desc:'Del primer contacto al cierre, por etapas.',file:'session4-trainees.html',steps:20},
+  {id:'s5',track:'intermediate',n:5,title:'Formularios y landing pages',desc:'Captar interesados sin fricción.',file:'session5-trainees.html',steps:12},
+  {id:'s6',track:'intermediate',n:6,title:'Workflows y automatización',desc:'Que el sistema haga lo repetitivo.',file:'session6-trainees.html',steps:9},
+  {id:'s7',track:'advanced',n:7,title:'Email marketing',desc:'Comunicar y leer las métricas.',file:'session7-trainees.html',steps:5},
+  {id:'s8',track:'advanced',n:8,title:'Reportes y dashboards',desc:'Medir lo que importa, sin ruido.',file:'session8-trainees.html',steps:7},
+  {id:'s9',track:'advanced',n:9,title:'Integraciones y RevOps',desc:'Conectar el CRM con el resto del stack.',file:'session9-trainees.html',steps:8},
 ];
 const EXAMS=[
-  {title:'Fundamentos', desc:'Sesiones 1–3: CRM, objetos, properties y listas.', file:'examen-fundamentos.html', emoji:'🟢', color:'emer', q:'10 preguntas', pass:'70%'},
-  {title:'Intermedio', desc:'Sesiones 4–6: pipelines, forms y workflows.', file:'examen-intermedio.html', emoji:'🟡', color:'amber', q:'10 preguntas', pass:'70%'},
-  {title:'Avanzado', desc:'Sesiones 7–9: email, reportes e integraciones.', file:'examen-avanzado.html', emoji:'🔵', color:'blue', q:'10 preguntas', pass:'70%'},
-  {title:'Certificación final', desc:'Todo el programa. Aprobás y obtenés tu certificado.', file:'examen-final.html', emoji:'🏆', color:'violet', q:'15 preguntas', pass:'80%'},
+  {title:'Examen — Fundamentos',desc:'Clases 1 a 3.',file:'examen-fundamentos.html',meta:'10 preguntas · 70%'},
+  {title:'Examen — Intermedio',desc:'Clases 4 a 6.',file:'examen-intermedio.html',meta:'10 preguntas · 70%'},
+  {title:'Examen — Avanzado',desc:'Clases 7 a 9.',file:'examen-avanzado.html',meta:'10 preguntas · 70%'},
+  {title:'Certificación final',desc:'Todo el programa.',file:'examen-final.html',meta:'15 preguntas · 80%'},
 ];
 const RES=[
-  {t:'HubSpot Academy', d:'Cursos y certificaciones oficiales gratuitas.', u:'https://academy.hubspot.com', e:'🎓', src:'HubSpot'},
-  {t:'HubSpot Knowledge Base', d:'Documentación de producto, herramienta por herramienta.', u:'https://knowledge.hubspot.com', e:'📚', src:'HubSpot'},
-  {t:'HubSpot for Developers', d:'APIs, integraciones y referencia técnica.', u:'https://developers.hubspot.com', e:'⌨️', src:'HubSpot'},
-  {t:'Salesforce Trailhead', d:'Aprendizaje gamificado de CRM enterprise.', u:'https://trailhead.salesforce.com', e:'🧗', src:'Salesforce'},
-  {t:'Salesforce Help', d:'Configuración y administración oficial.', u:'https://help.salesforce.com', e:'🛟', src:'Salesforce'},
-  {t:'Pipedrive Academy', d:'Foco en pipeline y proceso de ventas.', u:'https://www.pipedrive.com/en/academy', e:'🚀', src:'Pipedrive'},
-  {t:'Zoho CRM Resources', d:'Guías de una suite de CRM muy completa.', u:'https://www.zoho.com/crm/resources/', e:'🧩', src:'Zoho'},
-  {t:'Documentación interna', d:'Integraciones, SOPs y proyectos de Refindable.', u:'../', e:'🗂️', src:'Refindable'},
+  {t:'HubSpot Academy',d:'Cursos y certificaciones oficiales.',u:'https://academy.hubspot.com',src:'HubSpot'},
+  {t:'HubSpot Knowledge Base',d:'Documentación de producto.',u:'https://knowledge.hubspot.com',src:'HubSpot'},
+  {t:'Salesforce Trailhead',d:'Aprendizaje de CRM enterprise.',u:'https://trailhead.salesforce.com',src:'Salesforce'},
+  {t:'Documentación interna',d:'SOPs y proyectos de Refindable.',u:'../',src:'Refindable'},
 ];
 
 const LS='refindable_academy_progress_v1';
-let done={}; try{done=JSON.parse(localStorage.getItem(LS)||'{}')}catch(e){done={}}
-const save=()=>{try{localStorage.setItem(LS,JSON.stringify(done))}catch(e){}};
-const realCourses=COURSES.filter(c=>c.file);
+let done={};try{done=JSON.parse(localStorage.getItem(LS)||'{}')}catch(e){}
+const real=COURSES.filter(c=>c.file);
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const CV=c=>`var(--c-${c})`, CS=c=>`var(--c-${c}-s)`;
-const LVL={beginner:'Fundamentos',intermediate:'Intermedio',advanced:'Avanzado'};
 const started=id=>localStorage.getItem('refindable_academy_last')===id&&!done[id];
+const check='<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
 
-const clock=`<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>`;
-const layers=`<svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>`;
-const quizI=`<svg class="ic" viewBox="0 0 24 24"><path d="M9 9a3 3 0 114 2.8c-.9.4-1 .9-1 1.7"/><path d="M12 17h.01"/></svg>`;
-
-/* ── catalog ── */
-function renderCatalog(){
-  const host=document.getElementById('catalog');host.innerHTML='';
+function renderCurriculum(){
+  const host=document.getElementById('curriculum');host.innerHTML='';
   TRACKS.forEach(tr=>{
-    const cs=COURSES.filter(c=>c.track===tr.key);
-    const group=el('div','track-group');group.dataset.track=tr.key;
-    group.innerHTML=`<div class="track-tag" style="background:${CS(tr.color)};color:${CV(tr.color)}">${esc(tr.label)} · ${cs.length} cursos</div>`;
-    const grid=el('div','grid');
-    cs.forEach(c=>{
-      const d=!!done[c.id], st=started(c.id);
-      const card=el('a','course reveal'+(d?' done':'')+(st?' started':''));
-      card.href=c.file; card.dataset.track=c.track;
-      card.dataset.search=(c.title+' '+c.desc).toLowerCase();
-      const mins=`~${Math.max(8,Math.round(c.steps*1.5))} min`;
-      card.innerHTML=`
-        <div class="thumb" style="background:linear-gradient(135deg,${CS(c.color)},#fff)">
-          <span class="emoji">${c.emoji}</span>
-          <span class="lvl">${LVL[c.track]}</span>
-          <span class="doneflag">✓ Completado</span>
-        </div>
-        <div class="c-body">
-          <div class="c-cat" style="color:${CV(c.color)}">Sesión ${c.n}</div>
-          <h3>${esc(c.title)}</h3>
-          <p>${esc(c.desc)}</p>
-          <div class="c-meta">
-            <span class="m">${layers}${c.steps} pasos</span>
-            <span class="m">${clock}${mins}</span>
-            <span class="m">${quizI}Quiz</span>
-          </div>
-          <div class="c-prog"><div class="pb"><i style="width:${d?100:(st?35:0)}%;background:${CV(c.color)}"></i></div><div class="pl">${d?'Completado':(st?'En curso':'')}</div></div>
-          <div class="c-foot">
-            <span class="c-cta">${d?'Repasar':(st?'Continuar':'Empezar')} <svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            <button class="c-check" type="button" aria-label="Marcar como completado" data-id="${c.id}"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></button>
-          </div>
-        </div>`;
-      card.addEventListener('click',e=>{if(e.target.closest('.c-check')){return;}try{localStorage.setItem('refindable_academy_last',c.id)}catch(_){}});
-      card.querySelector('.c-check').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();done[c.id]=!done[c.id];save();toast(done[c.id]?`¡"${c.title}" completado! 🎉`:'Marcado como pendiente');refreshAll();});
-      grid.appendChild(card);
+    host.appendChild(el('div','level-label',esc(tr.label)));
+    COURSES.filter(c=>c.track===tr.key).forEach(c=>{
+      const d=!!done[c.id],st=started(c.id);
+      const row=el('a','row'+(d?' done':'')+(c.file?'':' locked'));
+      if(c.file)row.href=c.file;
+      const mins=`${Math.max(8,Math.round(c.steps*1.5))} min`;
+      let status = d?`<span class="st">${check} Completada</span>` : (st?`<span class="st">En curso</span>`:(c.file?`<span style="color:var(--faint)">${mins}</span>`:`<span class="soon">Próximamente</span>`));
+      row.innerHTML=`<span class="rn">${String(c.n).padStart(2,'0')}</span>
+        <div class="rmid"><h3>${esc(c.title)}</h3><p>${esc(c.desc)}</p></div>
+        <span class="rt">${status}<span class="ar">→</span></span>`;
+      if(c.file)row.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',c.id)}catch(_){}});
+      host.appendChild(row);
     });
-    group.appendChild(grid);
-    host.appendChild(group);
   });
-  io.observe&&document.querySelectorAll('.reveal:not(.in)').forEach(e=>io.observe(e));
 }
-
-/* ── exams ── */
-function renderExams(){
-  const host=document.getElementById('exams');host.innerHTML='';
-  EXAMS.forEach(x=>{
-    const a=el('a','exam reveal');a.href=x.file;
-    a.innerHTML=`<div class="medal" style="background:${CS(x.color)}">${x.emoji}</div>
-      <h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p>
-      <div class="meta"><span>${esc(x.q)}</span><span style="color:${CV(x.color)}">Aprobás ${x.pass}</span></div>`;
+function renderList(host,items){
+  host.innerHTML='';
+  items.forEach(it=>{
+    const a=el('a','row2');a.href=it.u||it.file;if(it.u&&!it.u.startsWith('..'))a.target='_blank',a.rel='noopener';
+    a.innerHTML=`<div><div class="t">${esc(it.title||it.t)}</div><div class="d">${esc(it.desc||it.d)}</div></div>
+      <div class="meta">${esc(it.meta||it.src||'')}${it.u&&!it.u.startsWith('..')?' ↗':' →'}</div>`;
     host.appendChild(a);
   });
 }
-/* ── resources ── */
-function renderRes(){
-  const host=document.getElementById('res');host.innerHTML='';
-  RES.forEach(r=>{
-    const a=el('a','rcard reveal');a.href=r.u;if(!r.u.startsWith('..'))a.target='_blank',a.rel='noopener';
-    a.innerHTML=`<div class="ri">${r.e}</div><h4>${esc(r.t)} <span class="ar">→</span></h4><p>${esc(r.d)}</p><div class="src">${esc(r.src)}</div>`;
-    host.appendChild(a);
-  });
-}
-
-/* ── dashboard / resume / gamification ── */
-function renderDash(){
-  const comp=realCourses.filter(c=>done[c.id]).length, total=realCourses.length, pct=Math.round(comp/total*100);
+function renderCont(){
+  const comp=real.filter(c=>done[c.id]).length,pct=Math.round(comp/real.length*100);
   const last=(()=>{try{return localStorage.getItem('refindable_academy_last')}catch(e){return null}})();
-  let next=realCourses.find(c=>c.id===last&&!done[c.id])||realCourses.find(c=>!done[c.id])||realCourses[0];
-  const nf=next?next.file:realCourses[0].file;
-  const verb=comp===0?'Empezá':(comp===total?'Repasá':'Continuá');
-  document.getElementById('dash').innerHTML=`
-    <a class="resume" href="${nf}" id="resumeCard">
-      <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
-      <span class="rt"><span>${verb} aprendiendo</span><b>${esc(next?('Sesión '+next.n+' · '+next.title):'¡Completaste todo!')}</b>
-      <span class="rbar"><i style="width:${pct}%"></i></span></span>
-    </a>
-    <div class="stat"><div class="v"><span class="e">📘</span>${comp}<span style="color:var(--faint);font-size:18px">/${total}</span></div><div class="l">Cursos completados</div></div>
-    <div class="stat"><div class="v"><span class="e">📊</span>${pct}%</div><div class="l">Avance del programa</div></div>
-    <div class="stat"><div class="v"><span class="e">🏅</span>${comp>=total?4:Math.floor(comp/ (total/3))}</div><div class="l">Insignias ganadas</div></div>`;
-  document.getElementById('fcDone').textContent=`${comp} de ${total}`;
-  document.getElementById('fcStreak').textContent=comp===0?'Empezá hoy':(comp===total?'¡Programa completo!':`${comp} en marcha`);
-  const hb=document.getElementById('heroStart');hb.href=nf;
-  document.getElementById('heroStartLbl').textContent=comp===0?'Empezar a aprender':(comp===total?'Repasar cursos':'Seguir aprendiendo');
+  let next=real.find(c=>c.id===last&&!done[c.id])||real.find(c=>!done[c.id])||real[0];
+  const verb=comp===0?'Empezar':(comp===real.length?'Repasar':'Continuar');
+  document.getElementById('cont').innerHTML=`
+    <div class="ct"><div class="l">${comp===0?'Tu próxima clase':(comp===real.length?'Curso completo':'Seguí donde dejaste')}</div><div class="t serif">${esc(next?(String(next.n).padStart(2,'0')+' · '+next.title):'¡Listo!')}</div></div>
+    <div class="meter"><i style="width:${pct}%"></i></div>
+    <div class="pc">${comp}/${real.length} · ${pct}%</div>`;
+  [['navGo',verb],['heroGo',comp===0?'Empezar la ruta':verb+' la ruta']].forEach(([id,lab])=>{const a=document.getElementById(id);if(!a)return;a.firstChild.textContent=lab+' ';a.href=next?next.file:'#';if(next)a.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}});});
 }
 
-function refreshAll(){
-  document.querySelectorAll('.course').forEach(card=>{
-    const btn=card.querySelector('.c-check');if(!btn)return;const id=btn.dataset.id;const d=!!done[id];
-    card.classList.toggle('done',d);
-    const cta=card.querySelector('.c-cta');if(cta)cta.firstChild.textContent=(d?'Repasar ':(started(id)?'Continuar ':'Empezar '));
-    const prog=card.querySelector('.c-prog');const bar=card.querySelector('.c-prog .pb i');const pl=card.querySelector('.c-prog .pl');
-    if(d){card.classList.add('started');bar.style.width='100%';pl.textContent='Completado';}
-  });
-  renderDash();
-}
-
-/* filter + search */
-let filter='all';
-function applyFilter(){
-  const q=document.getElementById('search').value.trim().toLowerCase();let any=false;
-  document.querySelectorAll('.track-group').forEach(g=>{
-    let vis=0;
-    g.querySelectorAll('.course').forEach(card=>{
-      const mq=!q||card.dataset.search.includes(q);
-      let mf=true;
-      if(filter==='started')mf=card.classList.contains('started')||card.classList.contains('done');
-      else if(filter!=='all')mf=card.dataset.track===filter;
-      const show=mq&&mf;card.style.display=show?'':'none';if(show){vis++;any=true;}
-    });
-    g.style.display=vis?'':'none';
-  });
-  document.getElementById('empty').style.display=any?'none':'block';
-}
-
-let tT;function toast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2400);}
-
-const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -5% 0px'});
-
-renderCatalog();renderExams();renderRes();renderDash();
+renderCurriculum();renderList(document.getElementById('exams'),EXAMS);renderList(document.getElementById('res'),RES);renderCont();
+document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('programa').scrollIntoView());
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
-document.getElementById('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));b.classList.add('on');filter=b.dataset.f;applyFilter();});
-document.getElementById('search').addEventListener('input',applyFilter);
-document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('cursos').scrollIntoView());
-
-/* cursor-trailing glow (only fine pointers, respects reduced motion) */
-(function(){
-  const cg=document.getElementById('cglow');if(!cg)return;
-  if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-  let cx=innerWidth/2,cy=innerHeight*0.32,tx=cx,ty=cy,on=false;
-  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;if(!on){on=true;cg.style.opacity='1';}},{passive:true});
-  (function loop(){cx+=(tx-cx)*0.085;cy+=(ty-cy)*0.085;cg.style.transform='translate('+cx+'px,'+cy+'px)';requestAnimationFrame(loop);})();
-})();
 </script>
 </body>
 </html>
