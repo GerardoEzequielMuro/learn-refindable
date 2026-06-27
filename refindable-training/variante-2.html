@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refindable Academy — Aprendé CRM, de junior a senior</title>
+<meta name="description" content="Ruta de aprendizaje de CRM, autoguiada y a tu ritmo. De los fundamentos a RevOps, con prácticas y exámenes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3EDE3; --bg2:#EDE5D8; --surface:#FBF8F2; --surface2:#FFFFFF;
+  --ink:#22201B; --muted:#6E665A; --faint:#9A8F7D;
+  --line:#E4DACA; --line2:#D8CCB7;
+  --green:#1E3D2C; --green2:#295339; --green-tint:#E7EDE5;
+  --sand:#E9DFCB;
+  --sh-1:0 1px 2px rgba(50,38,18,.05);
+  --sh-2:0 2px 6px rgba(50,38,18,.05), 0 18px 34px -18px rgba(50,38,18,.22);
+  --sh-3:0 4px 10px rgba(50,38,18,.06), 0 30px 60px -22px rgba(50,38,18,.30);
+  --r:20px; --r-lg:28px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease2:cubic-bezier(.32,.72,0,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Hanken Grotesk",system-ui,sans-serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility; overflow-x:hidden;
+}
+h1,h2,h3,.disp{font-family:"Schibsted Grotesk",system-ui,sans-serif;letter-spacing:-.02em;line-height:1.04}
+.ser{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:500;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 28px}
+:focus-visible{outline:2.5px solid var(--green);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--green);color:#fff;padding:10px 16px;border-radius:10px;z-index:200}
+.skip:focus{left:16px}
+
+/* eyebrow */
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.22em;color:var(--green);
+  background:var(--green-tint);border:1px solid #D6E0D2;padding:7px 13px;border-radius:999px}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:100;padding-top:16px;background:linear-gradient(var(--bg),rgba(243,237,227,0) )}
+.navin{max-width:1200px;margin:0 auto;padding:11px 12px 11px 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  background:rgba(251,248,242,.82);backdrop-filter:saturate(140%) blur(14px);
+  border:1px solid var(--line);border-radius:999px;box-shadow:var(--sh-1)}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Schibsted Grotesk";font-weight:800;font-size:17.5px;letter-spacing:-.02em}
+.brand .mk{width:30px;height:30px;border-radius:9px;background:var(--green);display:grid;place-items:center;flex:none}
+.brand .mk svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.1}
+.brand small{display:block;font-family:"Hanken Grotesk";font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-top:-1px}
+.navlinks{display:flex;align-items:center;gap:30px}
+.navlinks a{font-size:14.5px;font-weight:500;color:var(--muted);transition:color .25s var(--ease)}
+.navlinks a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:"Schibsted Grotesk";font-weight:600;font-size:15px;
+  cursor:pointer;border:none;border-radius:999px;transition:transform .4s var(--ease2),background .3s var(--ease),box-shadow .3s var(--ease)}
+.btn .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;
+  transition:transform .4s var(--ease2),background .3s var(--ease)}
+.btn .ic svg{width:15px;height:15px;stroke-width:2;fill:none}
+.btn-pri{background:var(--green);color:#F3EDE3;padding:8px 8px 8px 20px}
+.btn-pri .ic{background:rgba(255,255,255,.14)}.btn-pri .ic svg{stroke:#F3EDE3}
+.btn-pri:hover{background:var(--green2)}
+.btn-pri:active{transform:scale(.975)}
+.navbtn{display:none}
+@media (hover:hover){.btn-pri:hover .ic{transform:translate(2px,-1px)}}
+.hamb{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;align-items:center;justify-content:center}
+.hamb svg{width:20px;height:20px;stroke:var(--ink);stroke-width:1.8}
+
+/* ---------- HERO ---------- */
+.hero{padding:54px 0 40px}
+.herogrid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-weight:800;font-size:clamp(2.7rem,5.7vw,4.5rem);margin:22px 0 0}
+.hero h1 .ser{color:var(--green);font-size:.96em;display:inline-block}
+.hero .sub{font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--muted);max-width:30ch;margin-top:22px}
+.hero .acts{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:34px}
+.btn-pri.lg{font-size:16.5px;padding:11px 11px 11px 26px}.btn-pri.lg .ic{width:36px;height:36px}.btn-pri.lg .ic svg{width:16px;height:16px}
+.txtlink{font-weight:600;font-size:15.5px;color:var(--ink);display:inline-flex;align-items:center;gap:8px;
+  padding-bottom:3px;border-bottom:1.5px solid var(--line2);transition:border-color .3s var(--ease),gap .3s var(--ease)}
+.txtlink svg{width:15px;height:15px;stroke:var(--green);stroke-width:2;fill:none;transition:transform .35s var(--ease2)}
+.txtlink:hover{border-color:var(--green)}
+@media (hover:hover){.txtlink:hover svg{transform:translateX(3px)}}
+.herostats{display:flex;gap:30px;margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
+.herostats .s b{font-family:"Schibsted Grotesk";font-weight:800;font-size:1.55rem;display:block;letter-spacing:-.03em}
+.herostats .s span{font-size:13px;color:var(--muted)}
+
+/* hero image — double bezel + overlapping resume card */
+.heroart{position:relative}
+.frame{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-lg);padding:9px;box-shadow:var(--sh-3)}
+.frame .ph{border-radius:calc(var(--r-lg) - 9px);overflow:hidden;aspect-ratio:5/6}
+.frame .ph img{width:100%;height:100%;object-fit:cover}
+.heroart .tagfloat{position:absolute;top:24px;left:-14px;background:var(--surface2);border:1px solid var(--line);
+  box-shadow:var(--sh-2);border-radius:14px;padding:11px 16px;display:flex;align-items:center;gap:11px}
+.heroart .tagfloat .av{width:34px;height:34px;border-radius:50%;background:var(--green-tint);display:grid;place-items:center}
+.heroart .tagfloat .av svg{width:17px;height:17px;stroke:var(--green);stroke-width:1.9;fill:none}
+.heroart .tagfloat b{font-family:"Schibsted Grotesk";font-weight:700;font-size:14px;display:block;line-height:1.2}
+.heroart .tagfloat span{font-size:12px;color:var(--muted)}
+
+/* resume card */
+.resume{position:absolute;right:-20px;bottom:-26px;width:312px;max-width:78%;
+  background:var(--green);color:#EFEADF;border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh-3)}
+.resume .rtag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:#BFD3C2}
+.resume .rtag .dot{width:5px;height:5px;border-radius:50%;background:#7FB591;box-shadow:0 0 0 4px rgba(127,181,145,.2)}
+.resume .rtitle{font-family:"Schibsted Grotesk";font-weight:700;font-size:1.2rem;margin:12px 0 16px;color:#fff;line-height:1.15}
+.resume .meter{height:6px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
+.resume .meter i{display:block;height:100%;border-radius:99px;background:#9DC6A8;transition:width .9s var(--ease)}
+.resume .rmeta{display:flex;justify-content:space-between;align-items:center;margin-top:13px}
+.resume .rmeta span{font-size:12.5px;color:#BFD3C2}
+.resume .rgo{display:inline-flex;align-items:center;gap:7px;font-family:"Schibsted Grotesk";font-weight:600;font-size:13.5px;color:#fff}
+.resume .rgo svg{width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none;transition:transform .35s var(--ease2)}
+@media (hover:hover){.resume:hover .rgo svg{transform:translateX(3px)}}
+
+/* ---------- SECTION HEADERS ---------- */
+.section{padding:74px 0}
+.shead{max-width:600px;margin-bottom:42px}
+.shead h2{font-weight:800;font-size:clamp(1.9rem,3.6vw,2.9rem);margin:18px 0 0}
+.shead p{color:var(--muted);margin-top:14px;font-size:1.05rem}
+
+/* track group */
+.track{margin-bottom:54px}
+.track:last-child{margin-bottom:0}
+.trackhead{display:flex;align-items:baseline;gap:18px;margin-bottom:24px}
+.trackhead h3{font-weight:700;font-size:1.45rem}
+.trackhead .cnt{font-size:13px;font-weight:600;color:var(--green);background:var(--green-tint);padding:4px 11px;border-radius:99px}
+.trackhead .rule{flex:1;height:1px;background:var(--line)}
+
+/* ---------- COURSE CARDS ---------- */
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.ccard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;box-shadow:var(--sh-1);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
+.cthumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--bg2)}
+.cthumb img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.cthumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,18,.42) 0%,rgba(20,26,18,0) 38%,rgba(20,26,18,0) 62%,rgba(20,26,18,.28) 100%)}
+.clevel{position:absolute;top:13px;left:13px;z-index:2;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;background:rgba(30,40,28,.42);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:99px}
+.cdone{position:absolute;top:11px;right:11px;z-index:2;display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;color:var(--green);background:rgba(251,248,242,.94);padding:5px 10px 5px 8px;border-radius:99px;box-shadow:var(--sh-1)}
+.cdone svg{width:13px;height:13px;stroke:var(--green);stroke-width:2.4;fill:none}
+.cbody{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
+.cnum{font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.cbody h3{font-weight:700;font-size:1.16rem;margin:9px 0 0;line-height:1.22}
+.cbody p{font-size:14.5px;color:var(--muted);margin-top:8px;flex:1}
+.cfoot{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.cdur{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:var(--muted)}
+.cdur svg{width:14px;height:14px;stroke:var(--muted);stroke-width:1.8;fill:none}
+.car{width:32px;height:32px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;transition:background .35s var(--ease),transform .4s var(--ease2)}
+.car svg{width:15px;height:15px;stroke:var(--ink);stroke-width:2;fill:none;transition:stroke .3s var(--ease)}
+@media (hover:hover){
+  .ccard:hover{transform:translateY(-5px);box-shadow:var(--sh-3);border-color:var(--line2)}
+  .ccard:hover .cthumb img{transform:scale(1.05)}
+  .ccard:hover .car{background:var(--green);transform:translateX(2px)}
+  .ccard:hover .car svg{stroke:#fff}
+}
+
+/* ---------- PRÁCTICA BAND ---------- */
+.practica{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-3);
+  display:grid;grid-template-columns:1.1fr 1fr;background:var(--green)}
+.practica .pimg{position:relative;min-height:300px}
+.practica .pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.practica .pimg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,40,28,0) 40%,var(--green) 100%)}
+.practica .pbody{padding:48px 52px;color:#EFEADF;display:flex;flex-direction:column;justify-content:center}
+.practica .eyebrow{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#BFD3C2}
+.practica .eyebrow .dot{background:#9DC6A8}
+.practica h2{color:#fff;font-weight:800;font-size:clamp(1.7rem,3vw,2.5rem);margin:20px 0 0}
+.practica p{color:#C8D6C8;margin-top:16px;max-width:42ch}
+.practica .pcta{margin-top:30px}
+.practica .btn-light{background:#F3EDE3;color:var(--green);padding:11px 11px 11px 24px;font-size:16px}
+.practica .btn-light .ic{background:rgba(30,61,44,.1)}.practica .btn-light .ic svg{stroke:var(--green)}
+.practica .btn-light:hover{background:#fff}
+@media (hover:hover){.practica .btn-light:hover .ic{transform:translate(2px,-1px)}}
+
+/* ---------- EXÁMENES ---------- */
+.exgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.excard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;
+  display:flex;flex-direction:column;box-shadow:var(--sh-1);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease)}
+.excard.final{background:var(--green);border-color:var(--green)}
+.exicon{width:46px;height:46px;border-radius:13px;background:var(--green-tint);display:grid;place-items:center;margin-bottom:18px}
+.exicon svg{width:23px;height:23px;stroke:var(--green);stroke-width:1.7;fill:none}
+.excard.final .exicon{background:rgba(255,255,255,.12)}.excard.final .exicon svg{stroke:#fff}
+.excard h3{font-weight:700;font-size:1.12rem}
+.excard.final h3{color:#fff}
+.excard .exd{font-size:13.5px;color:var(--muted);margin-top:7px;flex:1}
+.excard.final .exd{color:#C8D6C8}
+.excard .exm{font-size:12.5px;font-weight:600;color:var(--green);margin-top:18px;display:inline-flex;align-items:center;gap:8px}
+.excard.final .exm{color:#BFD3C2}
+.excard .exm svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;transition:transform .35s var(--ease2)}
+@media (hover:hover){
+  .excard:hover{transform:translateY(-4px);box-shadow:var(--sh-2);border-color:var(--line2)}
+  .excard.final:hover{border-color:var(--green)}
+  .excard:hover .exm svg{transform:translateX(3px)}
+}
+
+/* ---------- RECURSOS ---------- */
+.recwrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-1)}
+.rec{display:flex;align-items:center;gap:18px;padding:22px 26px;border-bottom:1px solid var(--line);transition:background .3s var(--ease)}
+.rec:last-child{border-bottom:none}
+.rec .rl{width:42px;height:42px;border-radius:11px;background:var(--bg2);display:grid;place-items:center;flex:none}
+.rec .rl svg{width:20px;height:20px;stroke:var(--ink);stroke-width:1.7;fill:none}
+.rec .rt{flex:1}
+.rec .rt b{font-family:"Schibsted Grotesk";font-weight:700;font-size:1.05rem}
+.rec .rt span{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
+.rec .rsrc{font-size:12px;font-weight:600;color:var(--faint);letter-spacing:.04em;flex:none}
+.rec .rext{width:34px;height:34px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;flex:none;transition:background .3s var(--ease),transform .4s var(--ease2)}
+.rec .rext svg{width:15px;height:15px;stroke:var(--ink);stroke-width:1.9;fill:none;transition:stroke .3s var(--ease)}
+@media (hover:hover){
+  .rec:hover{background:var(--bg2)}
+  .rec:hover .rext{background:var(--green);transform:translate(2px,-2px)}
+  .rec:hover .rext svg{stroke:#fff}
+}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);margin-top:30px;padding:56px 0 44px;background:var(--bg2)}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap}
+.foot .fbrand{max-width:34ch}
+.foot .fbrand p{font-size:13.5px;color:var(--muted);margin-top:14px}
+.foot .flinks{display:flex;gap:48px;flex-wrap:wrap}
+.foot .flinks .col b{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:14px;font-weight:600}
+.foot .flinks .col a{display:block;font-size:14.5px;color:var(--muted);padding:5px 0;transition:color .25s var(--ease)}
+.foot .flinks .col a:hover{color:var(--ink)}
+.footbar{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1!important;transform:none!important;transition:none}
+  *{transition-duration:.001ms!important;animation-duration:.001ms!important}
+  .cthumb img,.car,.rext,.btn .ic{transition:none}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:980px){
+  .herogrid{grid-template-columns:1fr;gap:80px}
+  .heroart{max-width:460px;margin:0 auto}
+  .resume{right:0}
+  .cgrid{grid-template-columns:repeat(2,1fr)}
+  .exgrid{grid-template-columns:repeat(2,1fr)}
+  .practica{grid-template-columns:1fr}
+  .practica .pimg{min-height:220px}
+  .practica .pimg::after{background:linear-gradient(180deg,rgba(20,40,28,0) 50%,var(--green) 100%)}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  .navlinks{display:none}
+  .navbtn.btn-pri{display:none}
+  .hamb{display:inline-flex}
+  .hero{padding:34px 0 28px}
+  .section{padding:54px 0}
+  .cgrid{grid-template-columns:1fr;gap:20px}
+  .exgrid{grid-template-columns:1fr}
+  .practica .pbody{padding:34px 26px}
+  .herostats{gap:22px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#programa">Saltar al programa</a>
+
+<header class="nav">
+  <div class="navin">
+    <a class="brand" href="#" aria-label="Refindable Academy, inicio">
+      <span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg></span>
+      <span>Refindable <small>Academy</small></span>
+    </a>
+    <nav class="navlinks" aria-label="Principal">
+      <a href="#programa">El programa</a>
+      <a href="#practica">Práctica</a>
+      <a href="#examenes">Exámenes</a>
+      <a href="#recursos">Recursos</a>
+    </nav>
+    <a class="btn btn-pri navbtn" id="navGo" href="#programa">Empezar la ruta <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <button class="hamb" id="hamb" aria-label="Abrir menú"><svg viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero wrap">
+  <div class="herogrid">
+    <div class="herotext reveal">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Ruta de CRM · autoguiada</span>
+      <h1>Aprendé CRM,<br><span class="ser">de junior a senior</span></h1>
+      <p class="sub">Un programa corto y a tu ritmo. Empezás por los fundamentos y llegás hasta RevOps, sin apuro y con la práctica al lado.</p>
+      <div class="acts">
+        <a class="btn btn-pri lg" id="heroGo" href="#programa">Empezar la ruta <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="txtlink" href="#programa">Ver el temario completo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="herostats">
+        <div class="s"><b>9</b><span>clases en video</span></div>
+        <div class="s"><b>28</b><span>tareas prácticas</span></div>
+        <div class="s"><b>4</b><span>exámenes y certificación</span></div>
+      </div>
+    </div>
+    <div class="heroart reveal">
+      <div class="frame">
+        <div class="ph"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1100&h=1320&q=70" alt="Equipo trabajando con laptops y datos de CRM en una oficina luminosa"></div>
+      </div>
+      <div class="tagfloat" aria-hidden="true">
+        <span class="av"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <span><b>A tu ritmo</b><span>Pausá y retomá cuando quieras</span></span>
+      </div>
+      <div class="resume" id="resume" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="programa">
+  <div class="shead reveal">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>El programa</span>
+    <h2>Nueve clases, tres niveles</h2>
+    <p>Cada clase es un video con su práctica. Tu progreso se guarda solo en este navegador, así sabés siempre dónde dejaste.</p>
+  </div>
+  <div id="curriculum"></div>
+</section>
+
+<section class="section wrap" id="practica" style="padding-top:0">
+  <div class="practica reveal">
+    <div class="pimg"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&h=1000&q=70" alt="Equipo charlando y trabajando en conjunto en un espacio luminoso"></div>
+    <div class="pbody">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Práctica</span>
+      <h2>Se aprende haciendo</h2>
+      <p>28 tareas prácticas para aplicar cada concepto en un CRM real: crear contactos, armar un pipeline, automatizar un workflow y medir resultados.</p>
+      <div class="pcta">
+        <a class="btn btn-light" href="tareas-practicas.html">Ir a las prácticas <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="examenes">
+  <div class="shead reveal">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Exámenes</span>
+    <h2>Validá lo que sabés</h2>
+    <p>Un examen por nivel y una certificación final. Cada uno tiene su nota mínima para aprobar.</p>
+  </div>
+  <div class="exgrid" id="exams"></div>
+</section>
+
+<section class="section wrap" id="recursos" style="padding-top:0">
+  <div class="shead reveal">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Recursos</span>
+    <h2>Para seguir profundizando</h2>
+    <p>Material externo de referencia y la documentación interna de Refindable. Se abren en una pestaña nueva.</p>
+  </div>
+  <div class="recwrap reveal" id="recursos-list"></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="fbrand">
+        <a class="brand" href="#">
+          <span class="mk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg></span>
+          <span>Refindable <small>Academy</small></span>
+        </a>
+        <p>Formación interna de CRM para el equipo de Refindable. Aprendé a tu ritmo, practicá y certificate.</p>
+      </div>
+      <div class="flinks">
+        <div class="col">
+          <b>Programa</b>
+          <a href="#programa">Las 9 clases</a>
+          <a href="#practica">Prácticas</a>
+          <a href="#examenes">Exámenes</a>
+        </div>
+        <div class="col">
+          <b>Recursos</b>
+          <a href="https://academy.hubspot.com" target="_blank" rel="noopener">HubSpot Academy</a>
+          <a href="https://knowledge.hubspot.com" target="_blank" rel="noopener">Knowledge Base</a>
+          <a href="../">Documentación interna</a>
+        </div>
+      </div>
+    </div>
+    <div class="footbar">
+      <span>Refindable Academy</span>
+      <span>Hecho para el equipo · 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const TRACKS=[{key:'beginner',label:'Fundamentos'},{key:'intermediate',label:'Intermedio'},{key:'advanced',label:'Avanzado'}];
+const IMG={
+  A:{u:'photo-1552664730-d307ca884978',a:'Personas colaborando frente a un pizarrón'},
+  B:{u:'photo-1551434678-e076c223a692',a:'Equipo trabajando con laptops en una oficina'},
+  C:{u:'photo-1460925895917-afdab827c52f',a:'Pantalla con gráficos y métricas de negocio'},
+  D:{u:'photo-1556761175-5973dc0f32e7',a:'Reunión de equipo alrededor de una mesa'},
+  E:{u:'photo-1517245386807-bb43f82c33c4',a:'Persona tomando notas frente a una laptop'},
+  F:{u:'photo-1522071820081-009f0129c71c',a:'Equipo charlando en un espacio de trabajo luminoso'},
+};
+const thumb=k=>`https://images.unsplash.com/${IMG[k].u}?auto=format&fit=crop&w=720&h=460&q=70`;
+const COURSES=[
+  {id:'s1',track:'beginner',n:1,title:'¿Qué es un CRM?',desc:'Qué es, de dónde viene y cómo se navega.',file:'sesion-1.html',steps:25,img:'B'},
+  {id:'s2',track:'beginner',n:2,title:'Contactos, empresas y negocios',desc:'Los objetos base y cómo se relacionan.',file:'session2-trainees.html',steps:23,img:'F'},
+  {id:'s3',track:'beginner',n:3,title:'Propiedades, listas y segmentación',desc:'Ordenar la información para encontrarla.',file:'session3-trainees.html',steps:26,img:'E'},
+  {id:'s4',track:'intermediate',n:4,title:'Pipelines de ventas',desc:'Del primer contacto al cierre, por etapas.',file:'session4-trainees.html',steps:20,img:'D'},
+  {id:'s5',track:'intermediate',n:5,title:'Formularios y landing pages',desc:'Captar interesados sin fricción.',file:'session5-trainees.html',steps:12,img:'A'},
+  {id:'s6',track:'intermediate',n:6,title:'Workflows y automatización',desc:'Que el sistema haga lo repetitivo.',file:'session6-trainees.html',steps:9,img:'B'},
+  {id:'s7',track:'advanced',n:7,title:'Email marketing',desc:'Comunicar y leer las métricas.',file:'session7-trainees.html',steps:5,img:'C'},
+  {id:'s8',track:'advanced',n:8,title:'Reportes y dashboards',desc:'Medir lo que importa, sin ruido.',file:'session8-trainees.html',steps:7,img:'C'},
+  {id:'s9',track:'advanced',n:9,title:'Integraciones y RevOps',desc:'Conectar el CRM con el resto del stack.',file:'session9-trainees.html',steps:8,img:'D'},
+];
+const EXAMS=[
+  {title:'Fundamentos',desc:'Clases 1 a 3.',file:'examen-fundamentos.html',meta:'10 preguntas · 70%'},
+  {title:'Intermedio',desc:'Clases 4 a 6.',file:'examen-intermedio.html',meta:'10 preguntas · 70%'},
+  {title:'Avanzado',desc:'Clases 7 a 9.',file:'examen-avanzado.html',meta:'10 preguntas · 70%'},
+  {title:'Certificación final',desc:'Todo el programa.',file:'examen-final.html',meta:'15 preguntas · 80%',final:true},
+];
+const RES=[
+  {t:'HubSpot Academy',d:'Cursos y certificaciones oficiales.',u:'https://academy.hubspot.com',src:'HubSpot'},
+  {t:'HubSpot Knowledge Base',d:'Documentación de producto.',u:'https://knowledge.hubspot.com',src:'HubSpot'},
+  {t:'Salesforce Trailhead',d:'Aprendizaje de CRM enterprise.',u:'https://trailhead.salesforce.com',src:'Salesforce'},
+  {t:'Documentación interna',d:'SOPs y proyectos de Refindable.',u:'../',src:'Refindable'},
+];
+
+const LS='refindable_academy_progress_v1';
+let done={};try{done=JSON.parse(localStorage.getItem(LS)||'{}')}catch(e){}
+const real=COURSES.filter(c=>c.file);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mins=c=>`${Math.max(8,Math.round(c.steps*1.5))} min`;
+const lvl={beginner:'Fundamentos',intermediate:'Intermedio',advanced:'Avanzado'};
+const SVG={
+  check:'<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  ext:'<svg viewBox="0 0 24 24"><path d="M14 5h5v5"/><path d="M19 5l-8 8"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>',
+  paper:'<svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>',
+  award:'<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9 14.5L7.5 22l4.5-2.5L16.5 22 15 14.5"/></svg>',
+  doc:'<svg viewBox="0 0 24 24"><path d="M5 4a1 1 0 0 1 1-1h8l5 5v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4z"/><path d="M14 3v5h5"/></svg>',
+};
+
+function renderCurriculum(){
+  const host=document.getElementById('curriculum');host.innerHTML='';
+  TRACKS.forEach(tr=>{
+    const list=COURSES.filter(c=>c.track===tr.key);
+    const sec=document.createElement('div');sec.className='track';
+    sec.innerHTML=`<div class="trackhead reveal"><h3>${esc(tr.label)}</h3><span class="cnt">${list.length} clases</span><span class="rule" aria-hidden="true"></span></div>`;
+    const grid=document.createElement('div');grid.className='cgrid';
+    list.forEach(c=>{
+      const d=!!done[c.id];
+      const a=document.createElement('a');
+      a.className='ccard reveal';a.href=c.file;
+      a.setAttribute('aria-label',`Clase ${c.n}: ${c.title}${d?', completada':''}`);
+      a.innerHTML=`
+        <div class="cthumb">
+          <img src="${thumb(c.img)}" alt="${esc(IMG[c.img].a)}" loading="lazy">
+          <span class="clevel">${esc(lvl[c.track])}</span>
+          ${d?`<span class="cdone">${SVG.check} Completada</span>`:''}
+        </div>
+        <div class="cbody">
+          <div class="cnum">Clase ${String(c.n).padStart(2,'0')}</div>
+          <h3>${esc(c.title)}</h3>
+          <p>${esc(c.desc)}</p>
+          <div class="cfoot">
+            <span class="cdur">${SVG.clock} ${mins(c)}</span>
+            <span class="car" aria-hidden="true">${SVG.arrow}</span>
+          </div>
+        </div>`;
+      a.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',c.id)}catch(_){}});
+      grid.appendChild(a);
+    });
+    sec.appendChild(grid);host.appendChild(sec);
+  });
+}
+
+function renderExams(){
+  const host=document.getElementById('exams');host.innerHTML='';
+  EXAMS.forEach(x=>{
+    const a=document.createElement('a');
+    a.className='excard reveal'+(x.final?' final':'');a.href=x.file;
+    a.innerHTML=`
+      <span class="exicon" aria-hidden="true">${x.final?SVG.award:SVG.paper}</span>
+      <h3>${esc(x.title)}</h3>
+      <p class="exd">${esc(x.desc)}</p>
+      <span class="exm">${esc(x.meta)} ${SVG.arrow}</span>`;
+    host.appendChild(a);
+  });
+}
+
+function renderRes(){
+  const host=document.getElementById('recursos-list');host.innerHTML='';
+  RES.forEach(r=>{
+    const a=document.createElement('a');a.className='rec';a.href=r.u;
+    const ext=!r.u.startsWith('..');
+    if(ext){a.target='_blank';a.rel='noopener';}
+    a.innerHTML=`
+      <span class="rl" aria-hidden="true">${SVG.doc}</span>
+      <span class="rt"><b>${esc(r.t)}</b><span>${esc(r.d)}</span></span>
+      <span class="rsrc">${esc(r.src)}</span>
+      <span class="rext" aria-hidden="true">${ext?SVG.ext:SVG.arrow}</span>`;
+    if(ext)a.setAttribute('aria-label',`${r.t} (se abre en una pestaña nueva)`);
+    host.appendChild(a);
+  });
+}
+
+function renderResume(){
+  const comp=real.filter(c=>done[c.id]).length,pct=Math.round(comp/real.length*100);
+  const last=(()=>{try{return localStorage.getItem('refindable_academy_last')}catch(e){return null}})();
+  const next=real.find(c=>c.id===last&&!done[c.id])||real.find(c=>!done[c.id])||real[0];
+  const verb=comp===0?'Empezar':(comp===real.length?'Repasar':'Continuar');
+  const tag=comp===0?'Tu próxima clase':(comp===real.length?'Programa completo':'Seguí donde dejaste');
+  const box=document.getElementById('resume');
+  box.innerHTML=`
+    <span class="rtag"><span class="dot" aria-hidden="true"></span>${tag}</span>
+    <div class="rtitle">${esc(next?('Clase '+String(next.n).padStart(2,'0')+' · '+next.title):'¡Listo!')}</div>
+    <div class="meter" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso del programa"><i style="width:${pct}%"></i></div>
+    <div class="rmeta">
+      <span>${comp} de ${real.length} completadas</span>
+      <a class="rgo" href="${next?next.file:'#'}">${verb} ${SVG.arrow}</a>
+    </div>`;
+  const go=box.querySelector('.rgo');
+  if(go&&next)go.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}});
+  // wire hero / nav primary buttons
+  [['navGo','Empezar la ruta'],['heroGo','Empezar la ruta']].forEach(([id])=>{
+    const a=document.getElementById(id);if(!a)return;
+    const lab=comp===0?'Empezar la ruta':verb+' la ruta';
+    a.childNodes[0].textContent=lab+' ';
+    a.href=next?next.file:'#programa';
+    if(next)a.addEventListener('click',()=>{try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}});
+  });
+}
+
+renderCurriculum();renderExams();renderRes();renderResume();
+
+// scroll reveal
+const rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(rm){document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));}
+else{
+  const io=new IntersectionObserver((es)=>{
+    es.forEach((en,i)=>{if(en.isIntersecting){
+      const sib=[...en.target.parentElement.children].filter(c=>c.classList.contains('reveal'));
+      const idx=sib.indexOf(en.target);
+      en.target.style.transitionDelay=Math.min(idx,5)*55+'ms';
+      en.target.classList.add('in');io.unobserve(en.target);
+    }});
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+}
+
+// mobile menu: simple anchor jump to programa
+document.getElementById('hamb').addEventListener('click',()=>{
+  document.getElementById('programa').scrollIntoView({behavior:rm?'auto':'smooth'});
+});
+</script>
+</body>
+</html>
