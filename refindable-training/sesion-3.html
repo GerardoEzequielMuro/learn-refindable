@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 3 · Propiedades, listas y segmentación | Refindable Academy</title>
+<meta name="description" content="Qué es una propiedad, cómo crear una útil, la diferencia entre listas activas y estáticas, y cómo segmentar para comunicarle distinto a cada grupo. Con material de HubSpot y un repaso por unidad.">
+<meta name="theme-color" content="#f3f1ea">
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3f1ea;--paper2:#fbfaf6;--card:#fff;
+    --ink:#181712;--ink2:#3a382f;--muted:#6f6c60;--faint:#9d9a8c;--line:#e3e0d6;--line2:#d6d2c5;
+    --acc:#2138e0;--acc-d:#1a2cb4;--acc-soft:#e7e9fd;
+    --ok:#1f7a4d;--ok-s:#e4f3ea;--bad:#c23b32;--bad-s:#fae9e7;
+    --r:14px;--ease:cubic-bezier(.4,0,.2,1);--shadow:0 10px 30px rgba(24,23,18,.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.65;-webkit-tap-highlight-color:transparent}
+  a{color:var(--acc);text-decoration:none}img{display:block;max-width:100%}
+  ::selection{background:var(--acc);color:#fff}
+  :focus-visible{outline:2.5px solid var(--acc);outline-offset:3px;border-radius:3px}
+  .mono{font-family:'Space Grotesk',sans-serif}.serif{font-family:'Fraunces',serif}
+  .ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+  header{position:sticky;top:0;z-index:100;background:rgba(243,241,234,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .hbar{display:flex;align-items:center;gap:14px;height:60px;max-width:1240px;margin:0 auto;padding:0 24px}
+  .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;font-size:14px}
+  .back:hover{color:var(--ink)}.back svg{width:16px;height:16px}
+  .htitle{font-family:'Fraunces',serif;font-weight:500;font-size:16px;padding-left:14px;border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hprog{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .hprog .pb{width:120px;height:6px;background:var(--line);border-radius:4px;overflow:hidden}
+  .hprog .pb i{display:block;height:100%;width:0;background:var(--acc);border-radius:4px;transition:width .5s var(--ease)}
+  .hprog .pl{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:var(--muted)}
+
+  .layout{max-width:1240px;margin:0 auto;padding:26px 24px 70px;display:grid;grid-template-columns:290px 1fr;gap:30px;align-items:start}
+
+  .side{position:sticky;top:80px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .side .sh{padding:18px 20px;border-bottom:1px solid var(--line)}
+  .side .sh .t{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .side .sh .s{font-size:13px;color:var(--ink);margin-top:6px}
+  .side .sh .pb{height:5px;background:var(--line);border-radius:4px;margin-top:10px;overflow:hidden}
+  .side .sh .pb i{display:block;height:100%;width:0;background:var(--acc);border-radius:4px;transition:width .5s var(--ease)}
+  .ulist{padding:8px}
+  .uitem{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;cursor:pointer;transition:background .15s;border:1px solid transparent}
+  .uitem:hover{background:var(--paper2)}.uitem.cur{background:var(--acc-soft);border-color:#cdd3fb}
+  .uitem.lock{opacity:.5;cursor:not-allowed}
+  .uitem .ix{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--faint);flex-shrink:0}
+  .uitem.cur .ix{border-color:var(--acc);color:var(--acc)}
+  .uitem.done .ix{background:var(--acc);border-color:var(--acc);color:#fff}
+  .uitem .ut{font-size:14px;font-weight:600;line-height:1.3}.uitem .ud{font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--faint);margin-top:1px}
+  .uitem .lk{margin-left:auto;color:var(--faint)}.uitem .lk svg{width:15px;height:15px}
+
+  .main{min-width:0}
+  .crumb{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:600;color:var(--acc);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .main h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;line-height:1.1;margin-bottom:8px}
+  .umeta{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--faint);margin-bottom:24px;display:flex;gap:16px;flex-wrap:wrap}
+  .umeta .m{display:flex;align-items:center;gap:6px}.umeta .ic{width:14px;height:14px;stroke:var(--faint)}
+
+  .media{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:26px;aspect-ratio:16/8;background:#e9e7df}
+  .media img{width:100%;height:100%;object-fit:cover}
+
+  .prose p{font-size:16.5px;margin-bottom:15px}
+  .prose h3{font-family:'Fraunces',serif;font-weight:500;font-size:21px;margin:26px 0 10px;letter-spacing:-.01em}
+  .prose ul{list-style:none;margin:4px 0 16px}
+  .prose ul li{position:relative;padding:6px 0 6px 24px;font-size:16px}
+  .prose ul li::before{content:'';position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--acc)}
+  .prose b,.prose strong{font-weight:700}
+  .note{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;font-size:15.5px}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  .compare .col{border-radius:12px;padding:16px 18px;border:1px solid var(--line)}
+  .compare .col.bad{background:var(--bad-s);border-color:#f0cfcb}.compare .col.good{background:var(--ok-s);border-color:#c6e6d2}
+  .compare h5{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}
+  .compare .bad h5{color:var(--bad)}.compare .good h5{color:var(--ok)}
+  .compare p{font-size:14.5px;margin:0}
+
+  .tl{margin:6px 0 4px}
+  .tl .ev{position:relative;padding:0 0 18px 26px;border-left:2px solid var(--line2);margin-left:6px}
+  .tl .ev:last-child{border-left-color:transparent;padding-bottom:0}
+  .tl .ev::before{content:'';position:absolute;left:-8px;top:2px;width:13px;height:13px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+  .tl .ev .yr{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--acc);font-size:14.5px}
+  .tl .ev .ti{font-weight:700;font-size:15.5px;margin:1px 0 2px}
+  .tl .ev p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.5}
+
+  .hs{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:26px 0}
+  .hs .ht{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+  .hs .ht .tag{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--acc);background:var(--acc-soft);padding:3px 9px;border-radius:100px}
+  .hs a.r{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;color:var(--ink);font-weight:600;font-size:14px;transition:border-color .2s,transform .12s}
+  .hs a.r:last-child{margin-bottom:0}.hs a.r:hover{border-color:var(--acc);transform:translateX(3px)}
+  .hs a.r .src{margin-left:auto;font-family:'Space Grotesk',sans-serif;font-size:11.5px;color:var(--faint);display:flex;align-items:center;gap:8px}
+
+  .quiz{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+  .quiz .ql{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:12px}
+  .quiz .q{font-size:18px;font-weight:600;line-height:1.4;margin-bottom:16px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--paper2);border:1.5px solid var(--line2);border-radius:12px;padding:14px 16px;font-family:inherit;font-size:15.5px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s;line-height:1.4}
+  .opt:hover:not(:disabled){border-color:var(--acc);background:var(--acc-soft)}
+  .opt .mk{width:25px;height:25px;border-radius:7px;background:#fff;border:1px solid var(--line2);display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12.5px;color:var(--muted);flex-shrink:0}
+  .opt.correct{border-color:var(--ok);background:var(--ok-s)}.opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-s)}.opt.wrong .mk{background:var(--bad);border-color:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:12px;border-radius:11px;padding:13px 15px;font-size:14.5px;line-height:1.55;display:none}
+  .fb.show{display:block}.fb.ok{background:var(--ok-s);color:#155f3b}.fb.no{background:var(--bad-s);color:#9a2a23}.fb b{font-weight:700}
+
+  .nav-foot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:12px}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:13px 22px;border-radius:11px;cursor:pointer;border:1px solid var(--line2);background:var(--card);color:var(--ink)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}.btn.pri:not(:disabled):hover{background:var(--acc-d)}
+  .btn svg{width:16px;height:16px;fill:currentColor}
+  .lockhint{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:8px}
+  .lockhint svg{width:15px;height:15px;stroke:var(--faint);fill:none;stroke-width:2}
+
+  .done-card{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:44px 30px}
+  .done-card .k{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+  .done-card h1{font-family:'Fraunces',serif;font-weight:400;font-size:34px;margin-bottom:10px}
+  .done-card p{color:var(--muted);max-width:52ch;margin:0 auto 8px;font-size:16px}
+  .done-card .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr;gap:18px}.side{position:static;order:-1}
+    .ulist{display:flex;overflow-x:auto;padding:10px;gap:8px}
+    .uitem{flex-direction:column;min-width:118px;text-align:center;align-items:center}
+    .uitem .lk,.uitem .ud{display:none}.uitem .ut{font-size:12.5px}
+    .compare{grid-template-columns:1fr}.htitle{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <a class="back" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Academia</a>
+    <span class="htitle">Sesión 3 · Propiedades, listas y segmentación</span>
+    <div class="hprog"><div class="pb"><i id="hbar"></i></div><span class="pl" id="hpct">0%</span></div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <div class="sh"><div class="t">Contenido de la sesión</div><div class="s" id="sideSub">0 de 5 unidades</div><div class="pb"><i id="sbar"></i></div></div>
+    <div class="ulist" id="ulist"></div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const SESSION='s3', NEXT='sesion-4.html', EXAM='examen-fundamentos.html';
+const ph=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1100&q=72`;
+const ext=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>`;
+
+const UNITS=[
+  {
+    short:'Qué es una propiedad',dur:'6 min',title:'Qué es una propiedad (y sus tipos)',
+    media:ph('1556761175-5973dc0f32e7'),alt:'Equipo de trabajo revisando los datos de una ficha de cliente.',
+    html:`<div class="prose">
+      <p>Una <b>propiedad</b> es un campo: un casillero donde guardás un dato puntual de un contacto, una empresa o un negocio. El email es una propiedad. La ciudad es otra. La etapa del cliente, otra más.</p>
+      <p>Pensá en la ficha de un cliente como un formulario: cada renglón con su etiqueta (Nombre, Teléfono, Ciudad) es una propiedad. El renglón es el casillero; lo que escribís adentro es el valor.</p>
+      <h3>Los tipos más comunes</h3>
+      <p>Cada propiedad tiene un <b>tipo</b>, que define qué clase de dato acepta y cómo se carga:</p>
+      <ul>
+        <li><b>Texto:</b> para escribir libre, como un nombre o una nota corta.</li>
+        <li><b>Desplegable (lista de opciones):</b> elegís de una lista cerrada. Por ejemplo, "Origen": Web, Referido, Evento. Nadie escribe a mano, así que todos cargan igual.</li>
+        <li><b>Fecha:</b> guarda un día puntual, como la fecha de la primera reunión.</li>
+        <li><b>Número:</b> guarda cantidades, como la cantidad de propiedades que busca o el presupuesto.</li>
+      </ul>
+      <div class="note"><b>Por qué importa el tipo:</b> si "Ciudad" es un desplegable, todos van a cargar "Rosario" igual. Si es texto libre, vas a terminar con "rosario", "Rosario " y "Rsario", y después no podés buscar bien.</div>
+    </div>`,
+    hs:[{t:'Entender los tipos de campo de una propiedad',u:'https://knowledge.hubspot.com/properties/property-field-types-in-hubspot',k:'HubSpot KB'},{t:'Conocer el editor de propiedades',u:'https://knowledge.hubspot.com/properties/understand-the-property-editor',k:'HubSpot KB'}],
+    q:'Querés que todo el equipo cargue siempre el origen de un contacto de la misma manera (Web, Referido o Evento). ¿Qué tipo de propiedad conviene?',
+    opts:[
+      {t:'Texto libre, para que cada uno escriba como quiera.',ok:false,fb:'El texto libre genera variantes ("web", "Web ", "pagina web") que después no podés agrupar ni filtrar bien.'},
+      {t:'Un desplegable con opciones fijas.',ok:true,fb:'Exacto. El desplegable cierra las opciones, así todos cargan igual y los datos quedan prolijos para filtrar.'},
+      {t:'Número, para ponerle un código a cada origen.',ok:false,fb:'Un número no describe el origen y obliga a recordar códigos. Para opciones cerradas, va un desplegable.'},
+      {t:'Fecha, para anotar cuándo llegó.',ok:false,fb:'La fecha sirve para el "cuándo", no para el "de dónde vino". Para el origen va un desplegable.'},
+    ]
+  },
+  {
+    short:'Crear una propiedad útil',dur:'6 min',title:'Crear una propiedad útil',
+    media:ph('1460925895917-afdab827c52f'),alt:'Pantalla con datos y campos de información organizados.',
+    html:`<div class="prose">
+      <p>Antes de crear una propiedad nueva, frená un segundo. La regla de oro es: <b>cada dato va en su casillero</b>, y cada casillero tiene que servir para algo.</p>
+      <h3>Por qué cada dato va en su casillero</h3>
+      <p>Si metés varios datos en un mismo campo (por ejemplo, "Ana Gómez - Palermo - busca 2 ambientes" todo en el nombre), después no podés buscar "gente de Palermo" ni "gente que busca 2 ambientes". Quedan pegoteados. En cambio, si cada dato tiene su propiedad, podés filtrar por cada uno.</p>
+      <h3>Antes de crear, preguntate</h3>
+      <ul>
+        <li><b>¿Ya existe?</b> Capaz HubSpot ya trae una propiedad para eso. No dupliques.</li>
+        <li><b>¿La voy a usar?</b> Si un dato no te va a servir para filtrar, segmentar o decidir, no hace falta guardarlo.</li>
+        <li><b>¿En qué objeto va?</b> El dato de la persona va en el contacto; el de la oficina, en la empresa.</li>
+        <li><b>¿Qué tipo le pongo?</b> Elegí el tipo que mantenga el dato prolijo (desplegable antes que texto libre cuando se pueda).</li>
+      </ul>
+      <div class="note"><b>Regla simple:</b> una propiedad buena es la que un día vas a usar en un filtro. Si no te imaginás filtrando por ella, probablemente no la necesites.</div>
+    </div>`,
+    hs:[{t:'Crear y editar propiedades',u:'https://knowledge.hubspot.com/properties/create-and-edit-properties',k:'HubSpot KB'},{t:'Configurar los campos que se ven al crear un registro',u:'https://knowledge.hubspot.com/object-settings/set-up-fields-seen-when-manually-creating-records',k:'HubSpot KB'}],
+    q:'¿Cuál es la mejor señal de que vale la pena crear una propiedad nueva?',
+    opts:[
+      {t:'Que te imaginás usándola para filtrar, segmentar o tomar una decisión.',ok:true,fb:'Eso es. Una propiedad sirve cuando alimenta un filtro o una decisión. Si no, es solo ruido en la ficha.'},
+      {t:'Que suena interesante guardar ese dato por las dudas.',ok:false,fb:'Guardar "por las dudas" llena las fichas de campos vacíos que nadie usa. Creá solo lo que vas a usar.'},
+      {t:'Que un compañero ya tiene una parecida, así hay dos.',ok:false,fb:'Duplicar propiedades divide los datos en dos lugares y rompe los reportes. Reutilizá la que ya existe.'},
+      {t:'Que entra cualquier texto, así no hay que pensar el tipo.',ok:false,fb:'Al revés: elegir bien el tipo es lo que mantiene el dato prolijo y filtrable.'},
+    ]
+  },
+  {
+    short:'Listas: activas y estáticas',dur:'7 min',title:'Listas: activas vs estáticas',
+    media:ph('1552664730-d307ca884978'),alt:'Personas trabajando en equipo sobre listas de contactos.',
+    html:`<div class="prose">
+      <p>Una <b>lista</b> es un grupo de contactos (o empresas) que comparten algo. Por ejemplo: "todos los de Córdoba" o "los que vinieron a la feria". HubSpot tiene dos tipos, y la diferencia es clave.</p>
+      <div class="compare"><div class="col good"><h5>Lista activa</h5><p>Se actualiza sola según una regla. Si alguien empieza a cumplir la condición, entra; si deja de cumplirla, sale. Siempre está al día.</p></div><div class="col bad"><h5>Lista estática</h5><p>Es una foto fija de un momento. La armás a mano (o por una condición de ese instante) y no se mueve sola: vos agregás o sacás.</p></div></div>
+      <p>No es que una sea mejor que la otra. Sirven para cosas distintas:</p>
+      <ul>
+        <li><b>Activa, cuando el grupo cambia solo:</b> "contactos de Rosario interesados en alquiler". Mañana entra uno nuevo de Rosario y aparece sin que hagas nada.</li>
+        <li><b>Estática, cuando querés una foto que no cambie:</b> "asistentes al evento de marzo". Esa lista no tiene que crecer después; es un registro de quién estuvo ese día.</li>
+      </ul>
+      <div class="note"><b>Truco para decidir:</b> preguntate "¿quiero que este grupo se mantenga solo al día, o quiero congelar quién está hoy?". Si es lo primero, activa; si es lo segundo, estática.</div>
+    </div>`,
+    hs:[{t:'Diferencia entre filtros guardados, listas activas y estáticas',u:'https://knowledge.hubspot.com/segments/what-is-the-difference-between-saved-filters-smart-lists-and-static-lists',k:'HubSpot KB'},{t:'Crear segmentos (listas activas o estáticas)',u:'https://knowledge.hubspot.com/segments/create-active-or-static-lists',k:'HubSpot KB'}],
+    q:'Querés un grupo que siempre tenga a todos tus contactos interesados en alquiler, sin tener que actualizarlo a mano. ¿Qué usás?',
+    opts:[
+      {t:'Una lista estática, y la voy completando cuando me acuerdo.',ok:false,fb:'La estática no se actualiza sola: cada nuevo interesado quedaría afuera hasta que lo agregues a mano.'},
+      {t:'Una lista activa con la regla "interés = alquiler".',ok:true,fb:'Correcto. La lista activa se mantiene sola: entran los nuevos que cumplen y salen los que dejan de cumplir.'},
+      {t:'Una propiedad nueva llamada "interesados".',ok:false,fb:'Una propiedad guarda un dato por contacto, no arma el grupo. Para agrupar usás una lista.'},
+      {t:'Una nota en la ficha de cada uno.',ok:false,fb:'Una nota no se puede filtrar ni reunir en un grupo. Para eso está la lista activa.'},
+    ]
+  },
+  {
+    short:'Segmentar para accionar',dur:'6 min',title:'Segmentar para accionar',
+    media:ph('1551434678-e076c223a692'),alt:'Persona organizando información de contactos en su computadora.',
+    html:`<div class="prose">
+      <p><b>Segmentar</b> es agrupar gente que tiene algo en común para poder comunicarle distinto. No es ordenar por ordenar: es separar para hablarle a cada grupo como corresponde.</p>
+      <p>Pensalo así: no le decís lo mismo a alguien que recién dejó sus datos que a alguien que ya visitó tres propiedades. El primero necesita una bienvenida; el segundo, una propuesta concreta. Mismo CRM, mensajes distintos.</p>
+      <h3>El segmento bueno tiene una acción detrás</h3>
+      <p>Un segmento sirve cuando podés terminar la frase: "Voy a juntar a este grupo <b>para</b>...". Si no hay un "para", es solo una lista que junta polvo.</p>
+      <ul>
+        <li><b>Para</b> mandarles un mensaje pensado para ellos.</li>
+        <li><b>Para</b> que un vendedor los llame primero.</li>
+        <li><b>Para</b> dejar de molestar a quienes ya no corresponde.</li>
+      </ul>
+      <div class="note">La cadena completa es: <b>propiedades</b> (datos prolijos) → <b>listas</b> (los agrupás) → <b>segmentar</b> (los separás por algo en común) → <b>accionar</b> (les comunicás distinto). Todo lo de las unidades anteriores se junta acá.</div>
+    </div>`,
+    hs:[{t:'Entender la segmentación en HubSpot (curso)',u:'https://academy.hubspot.com/lessons/understanding-segmentation-in-hubspot',k:'HubSpot Academy'},{t:'Crear segmentos en HubSpot',u:'https://knowledge.hubspot.com/segments/create-active-or-static-lists',k:'HubSpot KB'}],
+    q:'¿Cuándo un segmento realmente vale la pena?',
+    opts:[
+      {t:'Cuando agrupa muchísima gente, cuanta más mejor.',ok:false,fb:'El tamaño no importa. Un segmento grande sin un objetivo claro no sirve para nada.'},
+      {t:'Cuando tiene una acción detrás: lo armás para comunicarle o hacer algo específico a ese grupo.',ok:true,fb:'Eso. Segmentar tiene sentido cuando podés completar la frase "junto a este grupo para...". Sin acción, es solo una lista que junta polvo.'},
+      {t:'Cuando junta a gente al azar para ver qué sale.',ok:false,fb:'Sin un criterio en común no es un segmento; es un montón. Se agrupa por algo que comparten.'},
+      {t:'Cuando reemplaza a todas las propiedades de la ficha.',ok:false,fb:'No reemplaza nada: el segmento se apoya en las propiedades para poder agrupar bien.'},
+    ]
+  },
+  {
+    short:'Casos prácticos',dur:'7 min',title:'Casos prácticos de segmentación',
+    media:ph('1517245386807-bb43f82c33c4'),alt:'Equipo analizando datos de clientes para planificar la comunicación.',
+    html:`<div class="prose">
+      <p>Vamos a bajar todo a la cancha. Estos son tres cortes que vas a usar todo el tiempo en inmobiliaria, y qué hacés con cada uno.</p>
+      <h3>Por ciudad o zona</h3>
+      <p>Agrupás por la propiedad "Ciudad" (o barrio). <b>Para</b>: avisarle a la gente de Palermo cuando entra una propiedad nueva en Palermo. Nada más relevante que algo cerca de donde busca.</p>
+      <h3>Por interés</h3>
+      <p>Agrupás por lo que busca: alquiler vs compra, departamento vs casa, cantidad de ambientes. <b>Para</b>: mandarle solo lo que le sirve. El que busca alquilar no quiere ver opciones de compra.</p>
+      <h3>Por etapa</h3>
+      <p>Agrupás por en qué momento del recorrido está cada uno: recién llegó, ya visitó, está por decidir. <b>Para</b>: darle a cada uno el empujón justo. Bienvenida al nuevo, seguimiento al que visitó, propuesta al que está por cerrar.</p>
+      <div class="note"><b>Lo que se repite:</b> en los tres casos el segmento se apoya en una propiedad bien cargada y termina en una acción concreta. Datos prolijos hoy, segmentos útiles mañana.</div>
+    </div>`,
+    hs:[{t:'Armar una estrategia de gestión de contactos y segmentación',u:'https://academy.hubspot.com/lessons/contact-management-and-segmentation-lesson',k:'HubSpot Academy'},{t:'Filtrar segmentos y gestionar sus vistas',u:'https://knowledge.hubspot.com/segments/view-and-filter-lists',k:'HubSpot KB'}],
+    q:'Entra una propiedad nueva en alquiler en Rosario y querés avisarle solo a quien le sirve. ¿Cómo armás el segmento?',
+    opts:[
+      {t:'Le aviso a toda la base, total a alguien le va a interesar.',ok:false,fb:'Eso molesta a la mayoría y entrena a la gente a ignorar tus mensajes. La gracia es avisarle solo a quien le sirve.'},
+      {t:'Junto a los contactos de Rosario interesados en alquiler.',ok:true,fb:'Perfecto. Cruzás ciudad e interés, dos propiedades bien cargadas, y el aviso le llega justo a quien lo va a valorar.'},
+      {t:'Junto a todos los de Rosario, busquen lo que busquen.',ok:false,fb:'Le llegaría a gente que quiere comprar, no alquilar. Sumá el interés para afinar el corte.'},
+      {t:'No segmento; lo subo a una nota y veo después.',ok:false,fb:'Una nota no avisa a nadie. Para accionar necesitás el grupo armado con las propiedades correctas.'},
+    ]
+  },
+];
+
+const LS='refindable_sesion_'+SESSION;
+let state={unlocked:0,passed:{}};try{state=Object.assign(state,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
+function markDone(){try{const k='refindable_academy_progress_v1';const p=JSON.parse(localStorage.getItem(k)||'{}');p[SESSION]=true;localStorage.setItem(k,JSON.stringify(p));}catch(e){}}
+let cur=Math.min(state.unlocked,UNITS.length-1), finished=UNITS.every((_,i)=>state.passed[i]);
+const ulist=document.getElementById('ulist'),main=document.getElementById('main');
+const check='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>';
+
+function renderSide(){
+  ulist.innerHTML='';
+  UNITS.forEach((u,i)=>{
+    const locked=i>state.unlocked;
+    const it=document.createElement('div');
+    it.className='uitem'+(i===cur&&!finished?' cur':'')+(state.passed[i]?' done':'')+(locked?' lock':'');
+    it.innerHTML=`<span class="ix">${state.passed[i]?'✓':(i+1)}</span><div><div class="ut">${u.short}</div><div class="ud">${u.dur}</div></div>${locked?'<span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></span>':''}`;
+    if(!locked)it.addEventListener('click',()=>{cur=i;finished=false;renderAll();scrollTo({top:0,behavior:'smooth'});});
+    ulist.appendChild(it);
+  });
+  const p=Object.keys(state.passed).filter(k=>state.passed[k]).length;
+  document.getElementById('sideSub').textContent=`${p} de ${UNITS.length} unidades`;
+  document.getElementById('sbar').style.width=(p/UNITS.length*100)+'%';
+  document.getElementById('hbar').style.width=(p/UNITS.length*100)+'%';
+  document.getElementById('hpct').textContent=Math.round(p/UNITS.length*100)+'%';
+}
+function renderMain(){
+  if(finished){renderFinish();return;}
+  const u=UNITS[cur],solved=!!state.passed[cur];
+  const media=u.timeline?`<div class="hs" style="margin-top:0"><div class="ht"><span class="tag">Historia</span> Del Rolodex a la nube</div><div class="tl">${u.timeline}</div></div>`:`<div class="media"><img src="${u.media}" alt="${u.alt}" loading="lazy"></div>`;
+  const hs=u.hs.map(r=>`<a class="r" href="${r.u}" target="_blank" rel="noopener"><span>${r.t}</span><span class="src">${r.k} ${ext}</span></a>`).join('');
+  const opts=u.opts.map((o,j)=>`<button class="opt" data-j="${j}" data-ok="${o.ok?1:0}"><span class="mk">${String.fromCharCode(65+j)}</span><span>${o.t}</span></button>`).join('');
+  main.innerHTML=`
+    <div class="crumb">Unidad ${cur+1} de ${UNITS.length}</div>
+    <h1>${u.title}</h1>
+    <div class="umeta"><span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>${u.dur} de lectura</span><span class="m">Video próximamente</span></div>
+    ${media}
+    ${u.html}
+    <div class="hs"><div class="ht"><span class="tag">HubSpot</span> Material para esta unidad</div>${hs}</div>
+    <div class="quiz"><div class="ql">Repaso rápido</div><div class="q">${u.q}</div><div class="opts">${opts}</div><div class="fb"></div></div>
+    <div class="nav-foot">
+      <button class="btn" id="prevBtn" ${cur===0?'disabled':''}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 18l-6-6 6-6"/></svg> Anterior</button>
+      ${solved?'':'<span class="lockhint" id="lh"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg> Respondé el repaso para continuar</span>'}
+      <button class="btn pri" id="nextBtn" ${solved?'':'disabled'}>${cur<UNITS.length-1?'Siguiente':'Terminar'} <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>`;
+  const fb=main.querySelector('.fb');
+  main.querySelectorAll('.opt').forEach(opt=>{
+    if(solved){opt.disabled=true;if(opt.dataset.ok==='1')opt.classList.add('correct');}
+    opt.addEventListener('click',()=>{
+      if(state.passed[cur])return;
+      const ok=opt.dataset.ok==='1',o=u.opts[+opt.dataset.j];
+      main.querySelectorAll('.opt').forEach(x=>x.classList.remove('wrong'));
+      if(ok){opt.classList.add('correct');main.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        fb.className='fb ok show';fb.innerHTML='<b>Correcto.</b> '+o.fb;
+        state.passed[cur]=true;if(state.unlocked===cur)state.unlocked=cur+1;save();
+        document.getElementById('nextBtn').disabled=false;const lh=document.getElementById('lh');if(lh)lh.remove();renderSide();
+      }else{opt.classList.add('wrong');fb.className='fb no show';fb.innerHTML='<b>Todavía no.</b> '+o.fb+' Probá de nuevo.';}
+    });
+  });
+  const pb=document.getElementById('prevBtn');if(pb)pb.addEventListener('click',()=>{if(cur>0){cur--;renderAll();scrollTo({top:0,behavior:'smooth'});}});
+  document.getElementById('nextBtn').addEventListener('click',()=>{
+    if(!state.passed[cur])return;
+    if(cur<UNITS.length-1){cur++;renderAll();scrollTo({top:0,behavior:'smooth'});}
+    else{finished=true;markDone();renderAll();scrollTo({top:0,behavior:'smooth'});}
+  });
+}
+function renderFinish(){
+  main.innerHTML=`<div class="done-card">
+    <div class="k">Sesión completa</div>
+    <h1 class="serif">¡Terminaste la Sesión 3!</h1>
+    <p>Ya sabés qué es una propiedad y sus tipos, cómo crear una útil, la diferencia entre listas activas y estáticas, y cómo segmentar para comunicarle distinto a cada grupo.</p>
+    <p style="font-weight:600;color:var(--ink)">Quedate con esto: datos prolijos en cada propiedad te permiten armar listas, segmentar y accionar. Todo arranca en el casillero bien cargado.</p>
+    <div class="actions">
+      <a class="btn pri" href="${NEXT}">Ir a la Sesión 4 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="${EXAM}">Rendir el examen de Fundamentos</a>
+      <a class="btn" href="./">Volver a la academia</a>
+    </div>
+  </div>`;
+}
+function renderAll(){renderSide();renderMain();}
+renderAll();
+</script>
+</body>
+</html>
