@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sesión 1 · ¿Qué es un CRM? + Navegación HubSpot | Refindable Academy</title>
-<meta name="description" content="Aprendé qué es un CRM, el modelo de datos de HubSpot y cómo navegarlo. Camino por camino, con documentación oficial de HubSpot y quizzes de situaciones reales.">
+<title>Sesión 1 · ¿Qué es un CRM? La historia y la idea | Refindable Academy</title>
+<meta name="description" content="De dónde viene el CRM, por qué existe y qué es en realidad — contado como una historia, paso a paso, para que te quede.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,15 +14,15 @@
     --bg:#f4f5f1;--surface:#ffffff;--surface2:#fbfbf8;--tint:#eef3fb;
     --ink:#1c2230;--muted:#5b6474;--faint:#929aa8;--line:#e7e8e3;--line2:#dcdfd9;
     --pri:#2563eb;--pri-d:#1d4ed8;--pri-soft:#e8eefe;
-    --ok:#0d9f6e;--ok-s:#e2f6ee;--bad:#dc2626;--bad-s:#fdeaea;--hs:#ff7a59;--hs-s:#fff0eb;
+    --ok:#0d9f6e;--ok-s:#e2f6ee;--bad:#dc2626;--bad-s:#fdeaea;--hl:#9a6b00;--hl-s:#fdf2dc;--hl-b:#f5e2b8;
     --shadow-sm:0 1px 2px rgba(28,34,48,.05),0 2px 6px rgba(28,34,48,.04);
     --shadow:0 6px 16px rgba(28,34,48,.07),0 2px 6px rgba(28,34,48,.05);
     --shadow-lg:0 18px 40px rgba(28,34,48,.12);
-    --r:18px;--ease:cubic-bezier(.4,0,.2,1);--maxw:880px;
+    --r:18px;--ease:cubic-bezier(.4,0,.2,1);--maxw:840px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.65;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7;-webkit-tap-highlight-color:transparent}
   a{color:var(--pri);text-decoration:none}
   :focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:6px}
   ::selection{background:var(--pri-soft)}
@@ -35,68 +35,67 @@
   .back:hover{color:var(--ink)}.back svg{width:16px;height:16px}
   .hbar .ses{font-weight:700;font-size:14.5px;padding-left:16px;border-left:1px solid var(--line)}
   .hprog{margin-left:auto;display:flex;align-items:center;gap:12px}
-  .hprog .pb{width:160px;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
+  .hprog .pb{width:150px;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
   .hprog .pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),#4f80f5);border-radius:4px;transition:width .6s var(--ease)}
-  .hprog .pl{font-size:13px;font-weight:700;color:var(--muted);min-width:42px;text-align:right}
+  .hprog .pl{font-size:13px;font-weight:700;color:var(--muted);min-width:40px;text-align:right}
 
   .hero{padding:48px 0 26px}
   .eye{display:inline-flex;align-items:center;gap:8px;background:var(--ok-s);color:var(--ok);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:100px;margin-bottom:18px}
   .hero h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin-bottom:16px}
-  .hero .lead{font-size:18px;color:var(--muted);max-width:60ch}
-  .obj{margin-top:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:22px 24px}
-  .obj h4{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);margin-bottom:13px}
-  .obj li{list-style:none;position:relative;padding:5px 0 5px 28px;font-size:15px}
-  .obj li svg{position:absolute;left:0;top:8px;width:18px;height:18px;stroke:var(--ok);fill:none;stroke-width:2.5}
-  .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;font-size:13px;color:var(--faint);font-weight:600}
+  .hero .lead{font-size:18.5px;color:var(--muted);max-width:62ch}
+  .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--faint);font-weight:600}
   .meta .m{display:flex;align-items:center;gap:7px}.meta .ic{width:15px;height:15px;stroke:var(--faint)}
 
-  /* trail */
-  .trail{position:relative;padding-left:54px;margin-top:20px}
+  .trail{position:relative;padding-left:54px;margin-top:24px}
   .trail::before{content:'';position:absolute;left:17px;top:8px;bottom:90px;width:2px;background:var(--line2)}
   .trail .fill{position:absolute;left:17px;top:8px;width:2px;background:linear-gradient(180deg,var(--pri),#4f80f5);height:0;transition:height .6s var(--ease);border-radius:2px}
   .camino{position:relative;margin-bottom:30px;scroll-margin-top:76px}
   .camino .node{position:absolute;left:-54px;top:0;width:36px;height:36px;border-radius:50%;background:var(--surface);border:2px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:15px;color:var(--faint);z-index:2;transition:all .3s var(--ease)}
   .camino.active .node{border-color:var(--pri);color:var(--pri);box-shadow:0 0 0 5px var(--pri-soft)}
   .camino.passed .node{background:var(--ok);border-color:var(--ok);color:#fff}
-  .camino .body{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:28px 30px}
+  .camino .body{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:30px 32px}
   .camino .ck{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);margin-bottom:8px}
-  .camino h2{font-size:clamp(22px,3vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
-  .camino p{font-size:16px;color:var(--ink);margin-bottom:14px;font-weight:400}
+  .camino h2{font-size:clamp(22px,3vw,29px);font-weight:800;letter-spacing:-.02em;margin-bottom:16px;line-height:1.15}
+  .camino p{font-size:16.5px;color:var(--ink);margin-bottom:15px;font-weight:400}
   .camino p.mut{color:var(--muted)}
   .camino strong{font-weight:700}
-  .camino .body>ul{list-style:none;margin:6px 0 16px}
-  .camino .body>ul li{position:relative;padding:7px 0 7px 26px;font-size:15.5px;color:var(--ink)}
-  .camino .body>ul li::before{content:'';position:absolute;left:3px;top:15px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
-  .camino .body>ul li b{font-weight:700}
+  .camino .lede{font-size:18px;color:var(--ink)}
+  .camino .body ul{list-style:none;margin:6px 0 16px}
+  .camino .body ul li{position:relative;padding:7px 0 7px 26px;font-size:16px;color:var(--ink)}
+  .camino .body ul li::before{content:'';position:absolute;left:3px;top:16px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
+  .camino .body ul li b{font-weight:700}
+  .pull{margin:18px 0;padding:18px 22px;border-left:4px solid var(--pri);background:var(--tint);border-radius:0 12px 12px 0;font-size:18px;font-weight:600;line-height:1.5}
+  .pull .q{font-size:30px;line-height:0;color:var(--pri);font-weight:800;margin-right:4px;vertical-align:-8px}
 
-  /* visual blocks */
   .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
   .compare .col{border-radius:14px;padding:16px 18px;border:1px solid}
   .compare .bad{background:var(--bad-s);border-color:#f3c9c9}
   .compare .good{background:var(--ok-s);border-color:#bfe6d4}
-  .compare h5{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .compare h5{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
   .compare .bad h5{color:var(--bad)}.compare .good h5{color:var(--ok)}
-  .compare p{font-size:14px;margin:0;color:var(--ink)}
-  .diagram{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0;padding:18px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;font-size:14px}
-  .chip{background:var(--surface);border:1px solid var(--line2);border-radius:10px;padding:9px 13px;font-weight:600;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:8px}
-  .chip .e{font-size:17px}
-  .diagram .arr{color:var(--faint);font-weight:700}
+  .compare p{font-size:14.5px;margin:0;color:var(--ink)}
 
-  /* hubspot callout */
-  .hsbox{display:flex;gap:14px;background:var(--hs-s);border:1px solid #ffd2c4;border-radius:14px;padding:16px 18px;margin:18px 0}
-  .hsbox .hi{width:38px;height:38px;border-radius:10px;background:var(--hs);display:grid;place-items:center;flex-shrink:0;font-size:18px}
-  .hsbox h5{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--hs);margin-bottom:5px}
-  .hsbox p{font-size:14px;color:var(--ink);margin:0 0 10px}
-  .hsbox a{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13.5px;color:var(--hs);background:#fff;border:1px solid #ffd2c4;border-radius:9px;padding:7px 12px;margin:0 8px 8px 0;transition:background .15s}
-  .hsbox a:hover{background:var(--hs);color:#fff}
-  .hsbox a svg{width:13px;height:13px}
+  /* timeline */
+  .tl{margin:20px 0 8px;padding-left:6px}
+  .tl .ev{position:relative;padding:0 0 20px 28px;border-left:2px solid var(--line2);margin-left:6px}
+  .tl .ev:last-child{border-left-color:transparent;padding-bottom:4px}
+  .tl .ev::before{content:'';position:absolute;left:-8px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--pri);box-shadow:0 0 0 3px var(--pri-soft)}
+  .tl .ev .yr{font-weight:800;color:var(--pri);font-size:15px;letter-spacing:-.01em}
+  .tl .ev .ti{font-weight:700;font-size:16px;margin:1px 0 3px}
+  .tl .ev p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
 
-  /* quiz gate */
-  .gate{margin-top:22px;border-top:1px dashed var(--line2);padding-top:22px}
+  .hsbox{display:flex;gap:14px;background:var(--hl-s);border:1px solid var(--hl-b);border-radius:14px;padding:16px 18px;margin:20px 0}
+  .hsbox .hi{width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid var(--hl-b);display:grid;place-items:center;flex-shrink:0;font-size:20px}
+  .hsbox h5{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--hl);margin-bottom:5px}
+  .hsbox p{font-size:15.5px;color:var(--ink);margin:0 0 8px;line-height:1.55;font-weight:500}
+  .hsbox a{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;color:var(--hl)}
+  .hsbox a svg{width:12px;height:12px}
+
+  .gate{margin-top:24px;border-top:1px dashed var(--line2);padding-top:22px}
   .gate .qlab{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface2);border:1px solid var(--line);padding:6px 12px;border-radius:100px;margin-bottom:14px}
-  .gate .q{font-size:17.5px;font-weight:700;line-height:1.4;margin-bottom:16px}
+  .gate .q{font-size:18px;font-weight:700;line-height:1.45;margin-bottom:16px}
   .opts{display:flex;flex-direction:column;gap:10px}
-  .opt{display:flex;gap:13px;align-items:flex-start;text-align:left;background:var(--surface);border:1.5px solid var(--line2);border-radius:13px;padding:15px 17px;font-family:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s;line-height:1.45}
+  .opt{display:flex;gap:13px;align-items:flex-start;text-align:left;background:var(--surface);border:1.5px solid var(--line2);border-radius:13px;padding:15px 17px;font-family:inherit;font-size:15.5px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s;line-height:1.45}
   .opt:hover:not(:disabled){border-color:var(--pri);background:var(--pri-soft)}
   .opt:active:not(:disabled){transform:scale(.995)}
   .opt .mk{width:26px;height:26px;border-radius:8px;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted);flex-shrink:0;transition:all .15s}
@@ -105,39 +104,32 @@
   .opt.wrong{border-color:var(--bad);background:var(--bad-s)}
   .opt.wrong .mk{background:var(--bad);border-color:var(--bad);color:#fff}
   .opt:disabled{cursor:default}
-  .fb{margin-top:13px;border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:1.55;display:none}
+  .fb{margin-top:13px;border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.6;display:none}
   .fb.show{display:block}
   .fb.ok{background:var(--ok-s);color:#0a7a55;border:1px solid #bfe6d4}
   .fb.no{background:var(--bad-s);color:#a81c1c;border:1px solid #f3c9c9}
   .fb b{font-weight:800}
-  .gate.solved .lockmsg{display:none}
   .lockmsg{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--faint);font-weight:600}
   .lockmsg svg{width:16px;height:16px;stroke:var(--faint)}
+  .gate.solved .lockmsg{display:none}
   .nextbtn{margin-top:16px;display:none;align-items:center;gap:9px;background:var(--pri);color:#fff;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 6px 16px rgba(37,99,235,.28);transition:transform .15s,box-shadow .2s}
   .gate.solved .nextbtn{display:inline-flex}
   .nextbtn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.36)}
   .nextbtn svg{width:16px;height:16px;fill:currentColor}
-
   .camino.locked{display:none}
 
-  /* finish */
   .finish{position:relative;margin-bottom:30px;display:none}
   .finish.show{display:block}
   .finish .node{background:linear-gradient(135deg,#f7b733,#fc4a1a);border-color:transparent;color:#fff}
   .finish .body{text-align:center;background:linear-gradient(180deg,#fff,var(--surface2))}
   .finish .tro{font-size:54px;margin-bottom:8px}
-  .finish h2{margin-bottom:8px}
-  .finish .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .finish .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
   .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;border:1px solid var(--line2);background:var(--surface);color:var(--ink)}
   .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:0 6px 16px rgba(37,99,235,.28)}
   .btn svg{width:16px;height:16px;fill:currentColor}
-  .reslist{display:flex;flex-direction:column;gap:8px;margin-top:16px;text-align:left}
-  .reslist a{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;font-weight:600;color:var(--ink);font-size:14px}
-  .reslist a:hover{border-color:var(--hs)}
-  .reslist a .e{font-size:18px}.reslist a .ar{margin-left:auto;color:var(--faint)}
 
   @media(max-width:620px){
-    .hprog .pb{width:90px}.hbar .ses{display:none}
+    .hprog .pb{width:80px}.hbar .ses{display:none}
     .trail{padding-left:42px}.trail::before,.trail .fill{left:13px}
     .camino .node{left:-42px;width:30px;height:30px;font-size:13px}
     .camino .body{padding:22px 18px}.compare{grid-template-columns:1fr}
@@ -150,143 +142,134 @@
   <div class="wrap hbar">
     <a class="back" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Academia</a>
     <span class="ses">Sesión 1 · Fundamentos</span>
-    <div class="hprog"><div class="pb"><i id="hbar"></i></div><span class="pl mono" id="hpct">0%</span></div>
+    <div class="hprog"><div class="pb"><i id="hbar"></i></div><span class="pl" id="hpct">0%</span></div>
   </div>
 </header>
 
 <main>
   <section class="hero wrap">
-    <span class="eye">📘 Sesión 1 · Fundamentos</span>
-    <h1>¿Qué es un CRM? + Navegación HubSpot</h1>
-    <p class="lead">El punto de partida. Vas a entender qué resuelve un CRM, cómo se modela la información en HubSpot y cómo moverte por la plataforma — recorriendo 5 caminos, uno a la vez. Cada camino se desbloquea cuando resolvés su situación.</p>
-    <div class="obj">
-      <h4>Al terminar vas a poder</h4>
-      <ul>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Explicar qué problema real resuelve un CRM (y cuál no).</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Decidir dónde vive cada dato: objeto, registro, propiedad.</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Usar asociaciones para tener el panorama de una cuenta.</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Navegar HubSpot y crear/leer un contacto sin ensuciar datos.</li>
-      </ul>
-    </div>
+    <span class="eye">📖 Sesión 1 · Fundamentos</span>
+    <h1>¿Qué es un CRM? La historia, la idea y por qué cambió los negocios</h1>
+    <p class="lead">No vamos a empezar por la definición. Vamos a empezar por una historia — la de un problema tan viejo como el comercio, y la de las personas que, a lo largo de 70 años, inventaron la forma de resolverlo. Cuando lleguemos a "qué es un CRM", ya lo vas a tener claro de antes.</p>
     <div class="meta">
       <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg> 5 caminos</span>
-      <span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> ~25 min</span>
-      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-6.2-8.6"/></svg> 5 situaciones reales</span>
-      <span class="m">🟠 con documentación de HubSpot</span>
+      <span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> ~30 min</span>
+      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> con historia real</span>
+      <span class="m">🧠 quedate con las ideas, no con datos sueltos</span>
     </div>
   </section>
 
-  <div class="wrap">
-    <div class="trail" id="trail"><div class="fill" id="trailfill"></div></div>
-  </div>
+  <div class="wrap"><div class="trail" id="trail"><div class="fill" id="trailfill"></div></div></div>
 </main>
 
 <script>
 const SESSION='s1', NEXT='session2-trainees.html', EXAM='examen-fundamentos.html';
 const CAMINOS=[
   {
-    title:'¿Por qué existe un CRM?',
+    title:'El problema más viejo de los negocios',
     body:`
-      <p>Antes de tocar un botón: un <strong>CRM</strong> (Customer Relationship Management) es el lugar único donde vive toda la información de tus contactos, empresas y negocios. No es "un Excel más lindo": es la <strong>fuente de verdad compartida</strong> del equipo.</p>
-      <p class="mut">Sin CRM, la información queda repartida en planillas, mails y la cabeza de cada persona. El día que alguien se va o se enferma, su conocimiento se va con él.</p>
+      <p class="lede">Imaginate el almacén de un barrio, hace 50 años. El dueño conoce a cada cliente por su nombre. Sabe que doña Rosa compra té los martes, que al de la esquina le gusta fiar hasta fin de mes, que la familia del 3.º B tuvo un bebé y ahora lleva pañales. No tiene ningún sistema. Su CRM es <strong>su memoria y un cuaderno</strong>.</p>
+      <p>Y funciona <strong>perfecto</strong>… mientras sean 100 clientes y trabaje él solo.</p>
+      <p>Ahora cambiá la escena: el almacén creció, son 3 locales, 10 empleados y 5.000 clientes. El dueño ya no se acuerda de todos. Los empleados no saben lo que él sabía. Cuando alguien se enferma o renuncia, <strong>su conocimiento se va con él</strong>. Doña Rosa llama para reclamar algo que habló la semana pasada con otro empleado, y nadie tiene ni idea de qué pasó.</p>
+      <p class="mut">Ese es el problema. No es nuevo, no es tecnológico. Es humano: <strong>¿cómo hacés para conocer y atender bien a cada cliente cuando son demasiados para tu cabeza y trabajás con un equipo?</strong></p>
       <div class="compare">
-        <div class="col bad"><h5>❌ Sin CRM</h5><p>Datos en Excel + WhatsApp + memoria. Nadie sabe en qué quedó cada cliente. Se pierden seguimientos.</p></div>
-        <div class="col good"><h5>✅ Con CRM</h5><p>Un historial por cliente, visible para todo el equipo. Cualquiera puede retomar una cuenta con contexto.</p></div>
-      </div>`,
-    hs:{ title:'En HubSpot', text:'El Knowledge Base arranca explicando cómo se organiza tu base de datos del CRM y los primeros pasos de la cuenta.',
-      links:[{t:'Manage your CRM database',u:'https://knowledge.hubspot.com/get-started/manage-your-crm-database'},{t:'Get started con HubSpot',u:'https://knowledge.hubspot.com/get-started'}] },
-    q:'Una inmobiliaria maneja sus clientes en Excel, mails sueltos y la memoria de cada agente. ¿Cuál es el PRIMER problema que resuelve mudarse a un CRM?',
-    opts:[
-      {t:'Bajar el costo de las herramientas que usan hoy.', ok:false, fb:'Un CRM no es principalmente un ahorro de costos — muchas veces suma una licencia. El valor está en otro lado.'},
-      {t:'Tener una única fuente de verdad: todo el equipo ve el historial y el estado de cada cliente, sin depender de una sola persona.', ok:true, fb:'Exacto. La primera victoria de un CRM es centralizar la información y hacerla compartida y trazable. Lo demás (automatizar, reportar) se construye sobre eso.'},
-      {t:'Automatizar las campañas de email marketing.', ok:false, fb:'La automatización es potente, pero llega después. Si los datos están desordenados, automatizar el caos lo empeora.'},
-      {t:'Guardar archivos y fotos en la nube.', ok:false, fb:'Eso lo hace cualquier Drive. El CRM resuelve la relación con el cliente, no el almacenamiento.'},
-    ]
-  },
-  {
-    title:'El modelo de datos: objetos, registros y propiedades',
-    body:`
-      <p>Todo en HubSpot se apoya en tres piezas. Entenderlas es lo que separa a un junior de alguien que no rompe el CRM:</p>
-      <ul>
-        <li><b>Objeto</b> — el <i>tipo</i> de cosa que guardás: Contactos, Empresas (Companies), Negocios (Deals), Tickets.</li>
-        <li><b>Registro</b> — una <i>instancia</i> de un objeto: "Juan Pérez" es un registro del objeto Contacto.</li>
-        <li><b>Propiedad</b> — cada <i>campo</i> del registro: email, teléfono, etapa del ciclo de vida, industria…</li>
-      </ul>
-      <div class="diagram">
-        <span class="chip"><span class="e">📁</span>Objeto: Contacto</span><span class="arr">▸</span>
-        <span class="chip"><span class="e">👤</span>Registro: Juan Pérez</span><span class="arr">▸</span>
-        <span class="chip"><span class="e">🏷️</span>Propiedad: email = juan@acme.com</span>
+        <div class="col bad"><h5>❌ La info en la cabeza</h5><p>Cada persona sabe lo suyo. Si falta, se pierde. Nadie ve el panorama completo.</p></div>
+        <div class="col good"><h5>✅ La info en un lugar común</h5><p>Lo que sabe uno, lo saben todos. La relación con el cliente no depende de una sola persona.</p></div>
       </div>
-      <p class="mut">La regla de oro: cada dato vive en el objeto al que <strong>pertenece</strong>. Si lo ponés en el lugar equivocado, después no podés segmentar ni reportar bien.</p>`,
-    hs:{ title:'En HubSpot', text:'La lección "The Anatomy of Your CRM" de HubSpot Academy recorre objetos, propiedades y datos con ejemplos.',
-      links:[{t:'The Anatomy of Your CRM (Academy)',u:'https://academy.hubspot.com/lessons/anatomy-of-your-crm'},{t:'CRM — Knowledge Base',u:'https://knowledge.hubspot.com/crm'}] },
-    q:'Querés registrar el "tamaño de empresa" (cantidad de empleados) para segmentar cuentas grandes. ¿Dónde corresponde guardar ese dato y por qué?',
+      <div class="pull"><span class="q">“</span>Un CRM es, en el fondo, la memoria del almacenero — pero compartida por todo el equipo y a prueba de olvidos.</div>`,
+    hl:{icon:'🧠', title:'La idea que te llevás', text:'El CRM no resuelve un problema técnico, resuelve uno humano y viejísimo: recordar y atender bien a cada cliente cuando son muchos. Todo lo demás que vas a aprender nace de acá.'},
+    q:'El dueño del almacén con 3 locales se va una semana de vacaciones. ¿Qué es lo que realmente se rompe cuando toda la información de los clientes vive solo en su cabeza?',
     opts:[
-      {t:'Como propiedad del objeto Empresa (Company): el tamaño pertenece a la empresa y queda disponible para todos sus contactos y negocios.', ok:true, fb:'Correcto. Los datos firmográficos van en la Empresa. Así segmentás cuentas y todos los contactos asociados heredan el contexto.'},
-      {t:'Como propiedad del contacto principal de esa empresa.', ok:false, fb:'Si lo ponés en un contacto, el dato se duplica y se vuelve inconsistente cuando hay varios contactos de la misma empresa. Va en la Empresa.'},
-      {t:'En una nota dentro del Negocio (Deal).', ok:false, fb:'Una nota no es segmentable ni filtrable. Necesitás una propiedad, y en el objeto correcto (Empresa).'},
-      {t:'En el nombre de la empresa, entre paréntesis: "Acme (250 empleados)".', ok:false, fb:'Eso ensucia el nombre y rompe reportes y deduplicación. Los datos van en propiedades, no incrustados en el nombre.'},
+      {t:'Nada importante: el negocio puede esperar a que vuelva.', ok:false, fb:'Los clientes no esperan. Si llaman y nadie sabe su historia, la atención se cae justo cuando más se nota.'},
+      {t:'El equipo pierde el contexto de cada cliente y no puede atenderlos como él lo hacía: la relación dependía de una sola persona.', ok:true, fb:'Exacto. El problema no es la ausencia del dueño, es que el conocimiento nunca fue compartido. Eso es lo que un CRM viene a resolver.'},
+      {t:'Se pierden las llaves de los locales.', ok:false, fb:'Eso es un tema de seguridad, no de relación con los clientes. El problema acá es la información que vive en una sola cabeza.'},
+      {t:'Hay que contratar más empleados.', ok:false, fb:'Más gente sin información compartida solo multiplica el problema: ahora son más cabezas con pedacitos sueltos.'},
     ]
   },
   {
-    title:'Asociaciones: el panorama de la cuenta',
+    title:'Del Rolodex a la nube: 70 años de una misma idea',
     body:`
-      <p>Los registros no viven aislados: se <strong>asocian</strong> entre sí. Esa red es lo que te da la "vista 360" de una cuenta.</p>
-      <div class="diagram">
-        <span class="chip"><span class="e">👤</span>Juan (Contacto)</span><span class="arr">↔</span>
-        <span class="chip"><span class="e">🏢</span>Acme (Empresa)</span><span class="arr">↔</span>
-        <span class="chip"><span class="e">💼</span>Negocio: Acme — Plan Pro</span>
+      <p class="lede">Lo lindo de esta historia es que <strong>nadie "inventó" el CRM de un día para el otro</strong>. Fue evolucionando, herramienta tras herramienta, siempre persiguiendo lo mismo: no perder de vista al cliente.</p>
+      <div class="tl">
+        <div class="ev"><div class="yr">1956</div><div class="ti">El Rolodex 🗂️</div><p>Un tarjetero giratorio de escritorio: cada tarjeta, un contacto con su nombre y teléfono. Durante décadas fue <em>el</em> CRM del mundo. Tu "base de datos" giraba sobre tu escritorio.</p></div>
+        <div class="ev"><div class="yr">Años 80</div><div class="ti">El marketing de bases de datos 📊</div><p>Robert y Kate Kestnbaum empiezan a juntar y analizar datos de clientes con computadoras: no solo guardarlos, sino <strong>usarlos para decidir</strong> a quién venderle y cómo.</p></div>
+        <div class="ev"><div class="yr">4 de julio de 1986</div><div class="ti">Dos vendedores y una servilleta 🍽️</div><p>Pat Sullivan y Mike Muhney se sientan en un restaurante con lápiz y papel y se preguntan: "¿qué necesitaríamos <em>nosotros</em> para vender mejor?". Lo dibujan en una servilleta. Un año después lanzan el primer software para gestionar contactos en una PC. Su lema: <strong>"Yes, Everybody Sells"</strong> (sí, todos venden).</p></div>
+        <div class="ev"><div class="yr">1993–1995</div><div class="ti">Nace el nombre "CRM" 🏷️</div><p>Tom Siebel construye el primer sistema grande de gestión de clientes —una apuesta enorme— y por esos años se populariza el término <strong>Customer Relationship Management</strong>: gestión de la relación con el cliente.</p></div>
+        <div class="ev"><div class="yr">1999</div><div class="ti">El CRM se va a la nube ☁️</div><p>El gran salto: el CRM deja de vivir instalado en una computadora y pasa a internet. Ahora se entra desde cualquier lado, sin instalar nada. Eso lo puso al alcance de empresas chicas, no solo gigantes.</p></div>
+        <div class="ev"><div class="yr">Hoy</div><div class="ti">CRM + automatización + IA 🤖</div><p>El mismo concepto de siempre, ahora con tareas que se hacen solas y asistentes que sugieren el próximo paso. Pero el corazón no cambió desde 1956.</p></div>
       </div>
-      <p>Desde la ficha de <strong>Acme</strong> ves todos sus contactos, sus negocios abiertos y toda la actividad. Pero eso solo funciona si los registros están bien asociados. Asociar no es opcional: es lo que convierte datos sueltos en una cuenta entendible.</p>`,
-    hs:{ title:'En HubSpot', text:'Las asociaciones conectan contactos, empresas, negocios y tickets. El KB del CRM cubre cómo se relacionan los registros.',
-      links:[{t:'CRM — Knowledge Base',u:'https://knowledge.hubspot.com/crm'},{t:'Create contacts',u:'https://knowledge.hubspot.com/records/create-contacts'}] },
-    q:'Cargás a Juan, a la empresa Acme y el negocio "Acme — Plan Pro", pero NO asociás a Juan con Acme. Seis meses después, otro rep abre la cuenta de Acme. ¿Qué pasa?',
+      <p>Fijate el hilo: del cartón al Rolodex, del Rolodex a la PC, de la PC a la nube. <strong>Las herramientas cambiaron; la necesidad es siempre la misma.</strong> Por eso entender la idea vale más que aprender botones: los botones cambian cada año.</p>`,
+    hl:{icon:'🍽️', title:'Dato para no olvidar', text:'El primer software de contactos nació de dos vendedores preguntándose "¿qué necesitamos nosotros?" en un restaurante. El CRM no bajó de una torre de ingenieros: salió de gente que vendía y se cansó de olvidarse de sus clientes.', link:'https://en.wikipedia.org/wiki/Customer_relationship_management'},
+    q:'Si las herramientas de CRM cambiaron tantísimo (del Rolodex a la nube), ¿por qué conviene enfocarse en entender la idea y no en memorizar dónde está cada botón?',
     opts:[
-      {t:'Nada: HubSpot asocia todo solo por el dominio del email.', ok:false, fb:'HubSpot puede sugerir asociaciones por dominio, pero no es garantizado ni automático para todo. Confiar en eso te deja huecos.'},
-      {t:'Desde la ficha de Acme el rep no ve a Juan: pierde al interlocutor clave y el contexto de con quién se venía hablando.', ok:true, fb:'Eso es. Sin la asociación, el contacto queda "huérfano" respecto de la cuenta. La info existe pero no aparece donde el equipo la necesita.'},
-      {t:'Se borra automáticamente el negocio por falta de actividad.', ok:false, fb:'Los negocios no se borran solos. El problema no es pérdida de datos, es pérdida de contexto y visibilidad.'},
-      {t:'Juan se duplica automáticamente en la empresa.', ok:false, fb:'No se crea un duplicado; simplemente Juan no figura asociado a Acme. El daño es la falta de visibilidad.'},
+      {t:'Porque los botones son aburridos.', ok:false, fb:'No es cuestión de gustos. Es algo más práctico que eso.'},
+      {t:'Porque la idea de fondo (no perder de vista al cliente) se mantiene, mientras que las pantallas y los botones cambian todo el tiempo.', ok:true, fb:'Tal cual. Si entendés el "para qué", te adaptás a cualquier sistema. Si solo memorizás botones, quedás perdido apenas cambia la herramienta.'},
+      {t:'Porque hoy ya no se usan botones.', ok:false, fb:'Claro que se siguen usando. El punto es otro: lo que perdura es el concepto, no la interfaz.'},
+      {t:'Porque los botones son secretos.', ok:false, fb:'No tienen nada de secreto. Lo que pasa es que cambian seguido; la idea, no.'},
     ]
   },
   {
-    title:'Navegar HubSpot sin perderte',
+    title:'Entonces… ¿qué es un CRM, en una frase?',
     body:`
-      <p>La interfaz es grande, pero el mapa es simple. Desde el menú principal llegás a:</p>
+      <p class="lede">Ahora sí, con todo lo anterior en la cabeza, la definición se cae de madura:</p>
+      <div class="pull">Un <strong>CRM</strong> es un único lugar, compartido por todo el equipo, donde vive la ficha y la <strong>historia completa</strong> de cada cliente y de cada posible cliente.</div>
+      <p>CRM viene de <strong>Customer Relationship Management</strong>: gestión de la relación con el cliente. Pero quedate con la versión simple: <strong>la libreta del almacenero, compartida y que no se olvida.</strong></p>
+      <p>Una buena forma de entenderlo es pensar en la <strong>historia clínica</strong> de un consultorio. No importa qué médico te atienda hoy: todos ven tu historial, tus estudios, qué te recetaron la última vez. No tenés que volver a contar todo desde cero. Un CRM hace eso, pero con clientes en lugar de pacientes.</p>
+      <p style="font-weight:700;margin-top:18px">Y para que no haya confusiones, un CRM <span style="color:var(--bad)">NO</span> es:</p>
       <ul>
-        <li><b>CRM</b> → Contactos, Empresas, Negocios, Tickets (tus registros).</li>
-        <li><b>Marketing / Ventas / Servicio</b> → las herramientas de cada equipo.</li>
-        <li><b>Automatización</b> y <b>Reportes</b> → workflows y dashboards.</li>
-      </ul>
-      <p>Arriba a la derecha: la <strong>búsqueda global</strong> (encontrá cualquier registro al instante), las <strong>notificaciones</strong> y la <strong>configuración</strong> (el engranaje). Y lo más subestimado: las <strong>vistas</strong> y <strong>filtros</strong> dentro de cada objeto, que responden casi cualquier pregunta sin exportar nada.</p>`,
-    hs:{ title:'En HubSpot', text:'La guía de inicio te muestra cómo moverte por la cuenta y dónde está cada cosa.',
-      links:[{t:'Get started / navegar la cuenta',u:'https://knowledge.hubspot.com/get-started'}] },
-    q:'Tu jefe te pide "todos los negocios que cierran este mes por más de $5.000". ¿Cuál es el camino correcto y eficiente en HubSpot?',
+        <li><b>No es un robot que vende solo.</b> Te ayuda a vender mejor; las decisiones y la relación siguen siendo humanas.</li>
+        <li><b>No reemplaza a las personas.</b> Las potencia: les da memoria y orden.</li>
+        <li><b>No es "un Excel más lindo".</b> Un Excel guarda datos; un CRM guarda la <em>relación</em>: quién es cada uno y todo lo que pasó con él.</li>
+      </ul>`,
+    hl:{icon:'🩺', title:'La analogía que conviene recordar', text:'Un CRM es como la historia clínica de un consultorio: cualquiera del equipo que atienda al cliente ve toda su historia y lo puede ayudar sin empezar de cero.'},
+    q:'Un compañero dice: "para mí el CRM es lo mismo que una planilla de Excel con los datos de los clientes". ¿Cuál es la diferencia más importante que le falta ver?',
     opts:[
-      {t:'Buscar negocio por negocio en la barra de búsqueda y anotar los que cumplan.', ok:false, fb:'La búsqueda global sirve para encontrar UN registro, no para listar muchos con condiciones. No escala.'},
-      {t:'Ir a CRM ▸ Negocios (Deals) y crear/guardar una vista filtrada por fecha de cierre = este mes y monto > $5.000.', ok:true, fb:'Perfecto. Las vistas con filtros son la herramienta correcta: precisas, repetibles y siempre actualizadas. Podés guardarla para reusarla.'},
-      {t:'Exportar todos los negocios a Excel y filtrar en la planilla.', ok:false, fb:'Exportar te da una foto vieja y te saca del CRM. Si lo podés resolver con una vista filtrada, no exportes.'},
-      {t:'Pedirle al administrador que te arme un reporte cada vez.', ok:false, fb:'Depender del admin para una consulta básica no escala. Esto lo resolvés vos con una vista filtrada en 30 segundos.'},
+      {t:'Que el CRM tiene colores más lindos.', ok:false, fb:'La estética no es el punto. La diferencia es de fondo, no de forma.'},
+      {t:'Que el CRM no guarda solo datos sueltos: guarda la relación y la historia completa de cada cliente, compartida con todo el equipo.', ok:true, fb:'Eso es. Un Excel es una lista; un CRM es la memoria viva de cada relación, visible para todos. Esa es la diferencia de fondo.'},
+      {t:'Que el Excel es gratis y el CRM no.', ok:false, fb:'El precio puede variar, pero no es lo que define a un CRM. Lo que lo define es guardar la relación, no solo datos.'},
+      {t:'Que el Excel no se puede abrir en la computadora.', ok:false, fb:'El Excel se abre perfecto. La diferencia real es qué guarda cada uno: datos sueltos vs. la historia de la relación.'},
     ]
   },
   {
-    title:'Crear y leer un contacto (sin ensuciar el CRM)',
+    title:'Las tres piezas que vas a reconocer en cualquier CRM',
     body:`
-      <p>Llegó un lead de un evento y lo tenés que cargar. La diferencia entre un CRM sano y uno lleno de basura está en lo que hacés <strong>antes</strong> de apretar "Create contact".</p>
+      <p class="lede">No importa qué sistema te toque usar el día de mañana: por dentro, todos se apoyan en las mismas tres piezas. Si entendés estas tres, entendés cualquier CRM.</p>
       <ul>
-        <li><b>Buscá primero</b> por email o nombre: ¿ya existe? Si existe, actualizalo, no lo dupliques.</li>
-        <li><b>Cargá el email</b>: en HubSpot el email es la "huella" del contacto y la clave para deduplicar.</li>
-        <li><b>Asociá</b> el contacto a su empresa y, si corresponde, a un negocio.</li>
-        <li><b>Registrá la actividad</b> (nota, llamada, reunión) para que el historial empiece a contar la película.</li>
+        <li><b>1. Las personas y las empresas.</b> A quién le vendés o atendés. Una <strong>persona</strong> es un contacto (con su nombre, mail, teléfono); una <strong>empresa</strong> es el lugar donde esa persona trabaja. Una empresa puede tener varias personas.</li>
+        <li><b>2. La información (los datos).</b> Lo que sabés de cada uno: ciudad, interés, cómo llegó a vos, qué compró. Cada dato va en su casillero — eso es lo que después te deja <em>encontrar</em> y <em>agrupar</em> gente.</li>
+        <li><b>3. La historia.</b> La línea de tiempo de todo lo que pasó: llamadas, mails, reuniones, notas. Esto es lo que un Excel no tiene y lo que hace que un CRM sea un CRM.</li>
       </ul>
-      <p class="mut">Un contacto bien creado hoy es un reporte confiable dentro de seis meses.</p>`,
-    hs:{ title:'En HubSpot', text:'El KB "Create contacts" cubre todas las formas de crear contactos (a mano, import, formularios) y las buenas prácticas.',
-      links:[{t:'Create contacts',u:'https://knowledge.hubspot.com/records/create-contacts'}] },
-    q:'Vas a cargar ese lead del evento. ¿Cuál es el primer paso correcto para no ensuciar el CRM?',
+      <p>Pensalo así: si la <strong>persona</strong> es el "quién", la <strong>información</strong> es el "cómo es" y la <strong>historia</strong> es el "qué pasó". Con esas tres cosas, cualquiera del equipo puede tomar la posta de un cliente sin perderse.</p>
+      <p class="mut">En las próximas sesiones vamos a meternos en cada una de estas piezas con calma. Por ahora alcanza con reconocerlas.</p>`,
+    hl:{icon:'🧩', title:'Para que te quede', text:'Personas + información + historia. El "quién", el "cómo es" y el "qué pasó". Esas tres piezas están en todo CRM, se llame como se llame.'},
+    q:'Querés guardar en el CRM que un cliente "llamó el lunes para pedir un presupuesto". ¿A cuál de las tres piezas pertenece ese dato?',
     opts:[
-      {t:'Crearlo directo; si hay duplicados, ya los arreglará alguien después.', ok:false, fb:'"Después lo arreglo" es como nacen las bases sucias. Los duplicados rompen reportes, automatizaciones y la experiencia del cliente.'},
-      {t:'Buscar primero por email/nombre; si ya existe, actualizar ese registro en vez de crear uno nuevo.', ok:true, fb:'Correcto. "Buscar antes de crear" es el hábito que mantiene el CRM limpio. El email es la clave para detectar duplicados.'},
-      {t:'Crear siempre una empresa nueva junto con el contacto, por las dudas.', ok:false, fb:'Crear empresas "por las dudas" genera duplicados de empresas. Asociá a la empresa existente si ya está.'},
-      {t:'Anotarlo en una nota suelta para cargarlo más tarde.', ok:false, fb:'Una nota suelta no es un contacto: no se puede segmentar, automatizar ni reportar. Cargalo como registro, bien, ahora.'},
+      {t:'A la información (un casillero de datos).', ok:false, fb:'Casi. Los casilleros guardan cómo es el cliente (ciudad, interés). Pero "llamó el lunes" es algo que pasó, no una característica fija.'},
+      {t:'A la historia (la línea de tiempo de interacciones).', ok:true, fb:'Correcto. Una llamada es un hecho que ocurrió: va en la historia del cliente. Así, cualquiera que lo atienda después sabe qué se habló.'},
+      {t:'A la empresa.', ok:false, fb:'La empresa es el lugar donde trabaja la persona. Una llamada no es un dato de la empresa, es un evento en la historia del contacto.'},
+      {t:'No se guarda, eso se recuerda de memoria.', ok:false, fb:'¡Justo lo que un CRM viene a evitar! La memoria falla y no se comparte. Por eso registramos cada interacción en la historia.'},
+    ]
+  },
+  {
+    title:'Por qué esto te va a cambiar el día a día',
+    body:`
+      <p class="lede">Hasta acá hablamos de la idea. Ahora, ¿qué cambia para vos, en concreto, cuando trabajás con un CRM? Bastante:</p>
+      <ul>
+        <li><b>Dejás de depender de tu memoria.</b> El sistema se acuerda por vos: a quién tenés que llamar, qué le prometiste, cuándo.</li>
+        <li><b>Nunca empezás de cero.</b> Abrís la ficha de un cliente y ves toda su historia, aunque nunca lo hayas atendido antes.</li>
+        <li><b>El equipo rema para el mismo lado.</b> Marketing, ventas y atención ven la misma información. Nadie pisa a nadie.</li>
+        <li><b>Tomás mejores decisiones.</b> Cuando los datos están ordenados, podés ver qué funciona y qué no — y eso te hace mejor en tu rol.</li>
+      </ul>
+      <p>Y acá está lo importante para vos: <strong>aprender CRM abre puertas</strong>. Es una base que sirve para ventas, para marketing y para atención al cliente. No importa para dónde quieras crecer: entender el CRM te da una herramienta que todos los equipos valoran.</p>
+      <div class="pull"><span class="q">“</span>No estás aprendiendo un programa. Estás aprendiendo una forma de trabajar que ninguna empresa moderna puede ignorar.</div>
+      <p class="mut">Eso es todo por la Sesión 1. No te pedimos que memorices nada: si te quedaste con la idea del almacenero, con la historia del Rolodex a la nube, y con las tres piezas (personas, información, historia), ya estás listo para lo que viene.</p>`,
+    hl:{icon:'🚪', title:'La idea que te llevás', text:'Aprender CRM no es aprender un software: es aprender a no perder de vista al cliente. Esa habilidad sirve en ventas, marketing y atención — y abre puertas en cualquiera de los tres.'},
+    q:'¿Cuál de estas frases resume mejor por qué vale la pena aprender CRM, más allá de manejar un programa?',
+    opts:[
+      {t:'Porque así podés presumir que sabés usar tecnología.', ok:false, fb:'No se trata de presumir. El valor es mucho más concreto y útil que eso.'},
+      {t:'Porque es una forma de trabajar —no perder de vista al cliente— que sirve en ventas, marketing y atención, y abre puertas en cualquiera.', ok:true, fb:'Exacto. Lo que aprendés es una manera de organizar el trabajo y la relación con el cliente. Eso es valioso en cualquier equipo y rol.'},
+      {t:'Porque los CRM son obligatorios por ley.', ok:false, fb:'No son obligatorios por ley. Se usan porque resuelven un problema real, no por obligación.'},
+      {t:'Porque reemplaza tener que hablar con los clientes.', ok:false, fb:'Al revés: te ayuda a hablar mejor con ellos, con más contexto. El CRM no reemplaza la relación, la mejora.'},
     ]
   },
 ];
@@ -297,23 +280,22 @@ let state={unlocked:0,passed:{}}; try{state=Object.assign(state,JSON.parse(local
 const saveS=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
 function markCourseDone(){try{const k='refindable_academy_progress_v1';const p=JSON.parse(localStorage.getItem(k)||'{}');p[SESSION]=true;localStorage.setItem(k,JSON.stringify(p));}catch(e){}}
 const trail=document.getElementById('trail');
-const esc=s=>String(s);
 
 CAMINOS.forEach((c,i)=>{
   const sec=document.createElement('section');
   sec.className='camino'+(i>state.unlocked?' locked':'')+(state.passed[i]?' passed':'')+(i===state.unlocked&&!state.passed[i]?' active':'');
   sec.id='camino-'+i; sec.dataset.i=i;
   const optsHtml=c.opts.map((o,j)=>`<button class="opt" data-j="${j}" data-ok="${o.ok?1:0}"><span class="mk">${String.fromCharCode(65+j)}</span><span>${o.t}</span></button>`).join('');
-  const linksHtml=c.hs.links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`).join('');
+  const hlLink=c.hl.link?`<a href="${c.hl.link}" target="_blank" rel="noopener">Leer más sobre la historia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`:'';
   sec.innerHTML=`
     <div class="node">${state.passed[i]?'✓':(i+1)}</div>
     <div class="body">
       <div class="ck">Camino ${i+1} de ${CAMINOS.length}</div>
       <h2>${c.title}</h2>
       ${c.body}
-      <div class="hsbox"><div class="hi">🟠</div><div><h5>${c.hs.title}</h5><p>${c.hs.text}</p>${linksHtml}</div></div>
+      <div class="hsbox"><div class="hi">${c.hl.icon}</div><div><h5>${c.hl.title}</h5><p>${c.hl.text}</p>${hlLink}</div></div>
       <div class="gate ${state.passed[i]?'solved':''}" data-i="${i}">
-        <span class="qlab">🧠 Situación real · respondé para avanzar</span>
+        <span class="qlab">🧠 Comprobá que te quedó claro</span>
         <div class="q">${c.q}</div>
         <div class="opts">${optsHtml}</div>
         <div class="fb"></div>
@@ -324,17 +306,13 @@ CAMINOS.forEach((c,i)=>{
   trail.appendChild(sec);
 });
 
-/* finish card */
 const fin=document.createElement('section');
 fin.className='camino finish';fin.id='finish';
 fin.innerHTML=`<div class="node">★</div><div class="body">
   <div class="tro">🎉</div>
-  <h2>¡Completaste la Sesión 1!</h2>
-  <p class="mut">Ya entendés qué resuelve un CRM, dónde vive cada dato, cómo asociar una cuenta y cómo navegar HubSpot sin ensuciar la base. Eso es la base de todo lo que viene.</p>
-  <div class="reslist">
-    <a href="https://academy.hubspot.com/lessons/getting-started-with-hubspot-crm" target="_blank" rel="noopener"><span class="e">🎓</span> Reforzar con HubSpot Academy: Getting Started <span class="ar">↗</span></a>
-    <a href="https://academy.hubspot.com/courses/set-up-your-hubspot-crm-for-growth" target="_blank" rel="noopener"><span class="e">📚</span> Curso: Set Up Your HubSpot CRM for Growth <span class="ar">↗</span></a>
-  </div>
+  <h2>¡Terminaste la Sesión 1!</h2>
+  <p class="mut">Ya no necesitás que te expliquen qué es un CRM: lo entendés desde la raíz. Sabés de dónde viene, qué problema resuelve y cuáles son las tres piezas que vas a reconocer en cualquier sistema.</p>
+  <div class="pull" style="text-align:left">Si te quedaste con tres cosas, te quedaste con todo: <strong>la memoria del almacenero</strong>, <strong>del Rolodex a la nube</strong> y <strong>personas + información + historia</strong>.</div>
   <div class="actions">
     <a class="btn pri" href="${NEXT}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg> Ir a la Sesión 2</a>
     <a class="btn" href="${EXAM}">Rendir el examen de Fundamentos</a>
@@ -343,15 +321,12 @@ fin.innerHTML=`<div class="node">★</div><div class="body">
 </div>`;
 trail.appendChild(fin);
 
-/* interactions */
 trail.querySelectorAll('.gate').forEach(gate=>{
-  const i=+gate.dataset.i;
-  const fb=gate.querySelector('.fb');
+  const i=+gate.dataset.i, fb=gate.querySelector('.fb');
   gate.querySelectorAll('.opt').forEach(opt=>{
     opt.addEventListener('click',()=>{
       if(gate.classList.contains('solved'))return;
-      const ok=opt.dataset.ok==='1';
-      const c=CAMINOS[i].opts[+opt.dataset.j];
+      const ok=opt.dataset.ok==='1', c=CAMINOS[i].opts[+opt.dataset.j];
       gate.querySelectorAll('.opt').forEach(o=>o.classList.remove('wrong'));
       if(ok){
         opt.classList.add('correct');
@@ -359,47 +334,29 @@ trail.querySelectorAll('.gate').forEach(gate=>{
         fb.className='fb ok show';fb.innerHTML='<b>✔ Correcto.</b> '+c.fb;
         gate.classList.add('solved');
         state.passed[i]=true; if(state.unlocked===i)state.unlocked=i+1; saveS();
-        const sec=document.getElementById('camino-'+i);sec.classList.add('passed');sec.classList.remove('active');
-        sec.querySelector('.node').textContent='✓';
+        const sec=document.getElementById('camino-'+i);sec.classList.add('passed');sec.classList.remove('active');sec.querySelector('.node').textContent='✓';
         updateProgress();
       }else{
         opt.classList.add('wrong');
-        fb.className='fb no show';fb.innerHTML='<b>✘ No es la mejor opción.</b> '+c.fb+' <br>Probá de nuevo.';
+        fb.className='fb no show';fb.innerHTML='<b>✘ Todavía no.</b> '+c.fb+' <br>Probá de nuevo.';
       }
     });
   });
-  gate.querySelector('.nextbtn').addEventListener('click',()=>{
-    if(i<CAMINOS.length-1){revealNext(i+1);} else {revealFinish();}
-  });
+  gate.querySelector('.nextbtn').addEventListener('click',()=>{ if(i<CAMINOS.length-1){revealNext(i+1);} else {revealFinish();} });
 });
 
-function revealNext(i){
-  const sec=document.getElementById('camino-'+i);if(!sec)return;
-  sec.classList.remove('locked');sec.classList.add('active');
-  sec.scrollIntoView({behavior:'smooth',block:'start'});
-  updateProgress();
-}
-function revealFinish(){
-  markCourseDone();
-  const f=document.getElementById('finish');f.classList.add('show');
-  f.scrollIntoView({behavior:'smooth',block:'start'});
-  updateProgress(true);
-}
+function revealNext(i){const sec=document.getElementById('camino-'+i);if(!sec)return;sec.classList.remove('locked');sec.classList.add('active');sec.scrollIntoView({behavior:'smooth',block:'start'});updateProgress();}
+function revealFinish(){markCourseDone();const f=document.getElementById('finish');f.classList.add('show');f.scrollIntoView({behavior:'smooth',block:'start'});updateProgress(true);}
 function updateProgress(done){
-  const total=CAMINOS.length;
-  const passed=Object.keys(state.passed).filter(k=>state.passed[k]).length;
+  const total=CAMINOS.length, passed=Object.keys(state.passed).filter(k=>state.passed[k]).length;
   const pct=done?100:Math.round(passed/total*100);
-  document.getElementById('hbar').style.width=pct+'%';
-  document.getElementById('hpct').textContent=pct+'%';
+  document.getElementById('hbar').style.width=pct+'%';document.getElementById('hpct').textContent=pct+'%';
   document.getElementById('trailfill').style.height=(passed/total*100)+'%';
 }
-
-/* restore on load: reveal up to unlocked, show finish if all passed */
 (function restore(){
   for(let i=0;i<=state.unlocked&&i<CAMINOS.length;i++){const s=document.getElementById('camino-'+i);if(s)s.classList.remove('locked');}
-  const allPassed=CAMINOS.every((_,i)=>state.passed[i]);
-  if(allPassed){document.getElementById('finish').classList.add('show');}
-  updateProgress(allPassed);
+  if(CAMINOS.every((_,i)=>state.passed[i]))document.getElementById('finish').classList.add('show');
+  updateProgress(CAMINOS.every((_,i)=>state.passed[i]));
 })();
 </script>
 </body>
