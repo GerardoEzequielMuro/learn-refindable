@@ -35,6 +35,10 @@
   :focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:6px}
   ::-webkit-scrollbar{width:12px}::-webkit-scrollbar-thumb{background:#cfd2cb;border-radius:6px;border:3px solid var(--bg)}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  main{position:relative;z-index:1}
+  /* soft glow that trails the cursor — GPU transform only, light & performant */
+  .cglow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity .8s var(--ease);will-change:transform;
+    background:radial-gradient(circle,rgba(37,99,235,.13),rgba(124,58,237,.06) 42%,transparent 68%)}
   .skip{position:fixed;top:12px;left:12px;z-index:300;background:var(--pri);color:#fff;padding:11px 18px;border-radius:10px;font-weight:600;transform:translateY(-160%);transition:transform .2s}
   .skip:focus{transform:none}
   .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:600;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;border:none;transition:transform .15s var(--ease),box-shadow .2s,background .2s}
@@ -218,6 +222,7 @@
 </head>
 <body>
 <a class="skip" href="#cursos">Saltar a los cursos</a>
+<div class="cglow" id="cglow" aria-hidden="true"></div>
 
 <header>
   <nav class="nav wrap">
@@ -328,7 +333,7 @@ const TRACKS=[
   {key:'advanced', label:'Avanzado', color:'violet'},
 ];
 const COURSES=[
-  {id:'s1', track:'beginner', n:1, title:'¿Qué es un CRM? + Navegación HubSpot', desc:'El concepto, por qué importa y un tour completo por la interfaz.', file:'first-training.html', steps:25, emoji:'🧭', color:'blue'},
+  {id:'s1', track:'beginner', n:1, title:'¿Qué es un CRM? + Navegación HubSpot', desc:'El concepto, por qué importa y un tour completo por la interfaz.', file:'sesion-1.html', steps:25, emoji:'🧭', color:'blue'},
   {id:'s2', track:'beginner', n:2, title:'Contactos, Companies y Deals', desc:'Los tres objetos base, cómo se relacionan y cómo cargar bien la info.', file:'session2-trainees.html', steps:23, emoji:'👥', color:'emer'},
   {id:'s3', track:'beginner', n:3, title:'Properties, Listas y Segmentación', desc:'Propiedades, listas activas vs estáticas y segmentación accionable.', file:'session3-trainees.html', steps:26, emoji:'🏷️', color:'violet'},
   {id:'s4', track:'intermediate', n:4, title:'Pipelines de Ventas', desc:'Diseñar un pipeline desde cero: etapas, probabilidades y disciplina.', file:'session4-trainees.html', steps:20, emoji:'📊', color:'amber'},
@@ -495,6 +500,15 @@ document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 document.getElementById('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));b.classList.add('on');filter=b.dataset.f;applyFilter();});
 document.getElementById('search').addEventListener('input',applyFilter);
 document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('cursos').scrollIntoView());
+
+/* cursor-trailing glow (only fine pointers, respects reduced motion) */
+(function(){
+  const cg=document.getElementById('cglow');if(!cg)return;
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  let cx=innerWidth/2,cy=innerHeight*0.32,tx=cx,ty=cy,on=false;
+  addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;if(!on){on=true;cg.style.opacity='1';}},{passive:true});
+  (function loop(){cx+=(tx-cx)*0.085;cy+=(ty-cy)*0.085;cg.style.transform='translate('+cx+'px,'+cy+'px)';requestAnimationFrame(loop);})();
+})();
 </script>
 </body>
 </html>

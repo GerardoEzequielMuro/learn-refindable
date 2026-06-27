@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 1 · ¿Qué es un CRM? + Navegación HubSpot | Refindable Academy</title>
+<meta name="description" content="Aprendé qué es un CRM, el modelo de datos de HubSpot y cómo navegarlo. Camino por camino, con documentación oficial de HubSpot y quizzes de situaciones reales.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f1;--surface:#ffffff;--surface2:#fbfbf8;--tint:#eef3fb;
+    --ink:#1c2230;--muted:#5b6474;--faint:#929aa8;--line:#e7e8e3;--line2:#dcdfd9;
+    --pri:#2563eb;--pri-d:#1d4ed8;--pri-soft:#e8eefe;
+    --ok:#0d9f6e;--ok-s:#e2f6ee;--bad:#dc2626;--bad-s:#fdeaea;--hs:#ff7a59;--hs-s:#fff0eb;
+    --shadow-sm:0 1px 2px rgba(28,34,48,.05),0 2px 6px rgba(28,34,48,.04);
+    --shadow:0 6px 16px rgba(28,34,48,.07),0 2px 6px rgba(28,34,48,.05);
+    --shadow-lg:0 18px 40px rgba(28,34,48,.12);
+    --r:18px;--ease:cubic-bezier(.4,0,.2,1);--maxw:880px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.65;-webkit-tap-highlight-color:transparent}
+  a{color:var(--pri);text-decoration:none}
+  :focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:6px}
+  ::selection{background:var(--pri-soft)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .hbar{display:flex;align-items:center;gap:16px;height:60px}
+  .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;font-size:14px}
+  .back:hover{color:var(--ink)}.back svg{width:16px;height:16px}
+  .hbar .ses{font-weight:700;font-size:14.5px;padding-left:16px;border-left:1px solid var(--line)}
+  .hprog{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .hprog .pb{width:160px;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
+  .hprog .pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),#4f80f5);border-radius:4px;transition:width .6s var(--ease)}
+  .hprog .pl{font-size:13px;font-weight:700;color:var(--muted);min-width:42px;text-align:right}
+
+  .hero{padding:48px 0 26px}
+  .eye{display:inline-flex;align-items:center;gap:8px;background:var(--ok-s);color:var(--ok);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:100px;margin-bottom:18px}
+  .hero h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin-bottom:16px}
+  .hero .lead{font-size:18px;color:var(--muted);max-width:60ch}
+  .obj{margin-top:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:22px 24px}
+  .obj h4{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);margin-bottom:13px}
+  .obj li{list-style:none;position:relative;padding:5px 0 5px 28px;font-size:15px}
+  .obj li svg{position:absolute;left:0;top:8px;width:18px;height:18px;stroke:var(--ok);fill:none;stroke-width:2.5}
+  .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;font-size:13px;color:var(--faint);font-weight:600}
+  .meta .m{display:flex;align-items:center;gap:7px}.meta .ic{width:15px;height:15px;stroke:var(--faint)}
+
+  /* trail */
+  .trail{position:relative;padding-left:54px;margin-top:20px}
+  .trail::before{content:'';position:absolute;left:17px;top:8px;bottom:90px;width:2px;background:var(--line2)}
+  .trail .fill{position:absolute;left:17px;top:8px;width:2px;background:linear-gradient(180deg,var(--pri),#4f80f5);height:0;transition:height .6s var(--ease);border-radius:2px}
+  .camino{position:relative;margin-bottom:30px;scroll-margin-top:76px}
+  .camino .node{position:absolute;left:-54px;top:0;width:36px;height:36px;border-radius:50%;background:var(--surface);border:2px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:15px;color:var(--faint);z-index:2;transition:all .3s var(--ease)}
+  .camino.active .node{border-color:var(--pri);color:var(--pri);box-shadow:0 0 0 5px var(--pri-soft)}
+  .camino.passed .node{background:var(--ok);border-color:var(--ok);color:#fff}
+  .camino .body{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:28px 30px}
+  .camino .ck{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);margin-bottom:8px}
+  .camino h2{font-size:clamp(22px,3vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+  .camino p{font-size:16px;color:var(--ink);margin-bottom:14px;font-weight:400}
+  .camino p.mut{color:var(--muted)}
+  .camino strong{font-weight:700}
+  .camino .body>ul{list-style:none;margin:6px 0 16px}
+  .camino .body>ul li{position:relative;padding:7px 0 7px 26px;font-size:15.5px;color:var(--ink)}
+  .camino .body>ul li::before{content:'';position:absolute;left:3px;top:15px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
+  .camino .body>ul li b{font-weight:700}
+
+  /* visual blocks */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  .compare .col{border-radius:14px;padding:16px 18px;border:1px solid}
+  .compare .bad{background:var(--bad-s);border-color:#f3c9c9}
+  .compare .good{background:var(--ok-s);border-color:#bfe6d4}
+  .compare h5{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .compare .bad h5{color:var(--bad)}.compare .good h5{color:var(--ok)}
+  .compare p{font-size:14px;margin:0;color:var(--ink)}
+  .diagram{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0;padding:18px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;font-size:14px}
+  .chip{background:var(--surface);border:1px solid var(--line2);border-radius:10px;padding:9px 13px;font-weight:600;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:8px}
+  .chip .e{font-size:17px}
+  .diagram .arr{color:var(--faint);font-weight:700}
+
+  /* hubspot callout */
+  .hsbox{display:flex;gap:14px;background:var(--hs-s);border:1px solid #ffd2c4;border-radius:14px;padding:16px 18px;margin:18px 0}
+  .hsbox .hi{width:38px;height:38px;border-radius:10px;background:var(--hs);display:grid;place-items:center;flex-shrink:0;font-size:18px}
+  .hsbox h5{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--hs);margin-bottom:5px}
+  .hsbox p{font-size:14px;color:var(--ink);margin:0 0 10px}
+  .hsbox a{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13.5px;color:var(--hs);background:#fff;border:1px solid #ffd2c4;border-radius:9px;padding:7px 12px;margin:0 8px 8px 0;transition:background .15s}
+  .hsbox a:hover{background:var(--hs);color:#fff}
+  .hsbox a svg{width:13px;height:13px}
+
+  /* quiz gate */
+  .gate{margin-top:22px;border-top:1px dashed var(--line2);padding-top:22px}
+  .gate .qlab{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface2);border:1px solid var(--line);padding:6px 12px;border-radius:100px;margin-bottom:14px}
+  .gate .q{font-size:17.5px;font-weight:700;line-height:1.4;margin-bottom:16px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:13px;align-items:flex-start;text-align:left;background:var(--surface);border:1.5px solid var(--line2);border-radius:13px;padding:15px 17px;font-family:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s;line-height:1.45}
+  .opt:hover:not(:disabled){border-color:var(--pri);background:var(--pri-soft)}
+  .opt:active:not(:disabled){transform:scale(.995)}
+  .opt .mk{width:26px;height:26px;border-radius:8px;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted);flex-shrink:0;transition:all .15s}
+  .opt.correct{border-color:var(--ok);background:var(--ok-s)}
+  .opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-s)}
+  .opt.wrong .mk{background:var(--bad);border-color:var(--bad);color:#fff}
+  .opt:disabled{cursor:default}
+  .fb{margin-top:13px;border-radius:12px;padding:14px 16px;font-size:14.5px;line-height:1.55;display:none}
+  .fb.show{display:block}
+  .fb.ok{background:var(--ok-s);color:#0a7a55;border:1px solid #bfe6d4}
+  .fb.no{background:var(--bad-s);color:#a81c1c;border:1px solid #f3c9c9}
+  .fb b{font-weight:800}
+  .gate.solved .lockmsg{display:none}
+  .lockmsg{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--faint);font-weight:600}
+  .lockmsg svg{width:16px;height:16px;stroke:var(--faint)}
+  .nextbtn{margin-top:16px;display:none;align-items:center;gap:9px;background:var(--pri);color:#fff;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 6px 16px rgba(37,99,235,.28);transition:transform .15s,box-shadow .2s}
+  .gate.solved .nextbtn{display:inline-flex}
+  .nextbtn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.36)}
+  .nextbtn svg{width:16px;height:16px;fill:currentColor}
+
+  .camino.locked{display:none}
+
+  /* finish */
+  .finish{position:relative;margin-bottom:30px;display:none}
+  .finish.show{display:block}
+  .finish .node{background:linear-gradient(135deg,#f7b733,#fc4a1a);border-color:transparent;color:#fff}
+  .finish .body{text-align:center;background:linear-gradient(180deg,#fff,var(--surface2))}
+  .finish .tro{font-size:54px;margin-bottom:8px}
+  .finish h2{margin-bottom:8px}
+  .finish .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;border:1px solid var(--line2);background:var(--surface);color:var(--ink)}
+  .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:0 6px 16px rgba(37,99,235,.28)}
+  .btn svg{width:16px;height:16px;fill:currentColor}
+  .reslist{display:flex;flex-direction:column;gap:8px;margin-top:16px;text-align:left}
+  .reslist a{display:flex;align-items:center;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;font-weight:600;color:var(--ink);font-size:14px}
+  .reslist a:hover{border-color:var(--hs)}
+  .reslist a .e{font-size:18px}.reslist a .ar{margin-left:auto;color:var(--faint)}
+
+  @media(max-width:620px){
+    .hprog .pb{width:90px}.hbar .ses{display:none}
+    .trail{padding-left:42px}.trail::before,.trail .fill{left:13px}
+    .camino .node{left:-42px;width:30px;height:30px;font-size:13px}
+    .camino .body{padding:22px 18px}.compare{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hbar">
+    <a class="back" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Academia</a>
+    <span class="ses">Sesión 1 · Fundamentos</span>
+    <div class="hprog"><div class="pb"><i id="hbar"></i></div><span class="pl mono" id="hpct">0%</span></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <span class="eye">📘 Sesión 1 · Fundamentos</span>
+    <h1>¿Qué es un CRM? + Navegación HubSpot</h1>
+    <p class="lead">El punto de partida. Vas a entender qué resuelve un CRM, cómo se modela la información en HubSpot y cómo moverte por la plataforma — recorriendo 5 caminos, uno a la vez. Cada camino se desbloquea cuando resolvés su situación.</p>
+    <div class="obj">
+      <h4>Al terminar vas a poder</h4>
+      <ul>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Explicar qué problema real resuelve un CRM (y cuál no).</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Decidir dónde vive cada dato: objeto, registro, propiedad.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Usar asociaciones para tener el panorama de una cuenta.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Navegar HubSpot y crear/leer un contacto sin ensuciar datos.</li>
+      </ul>
+    </div>
+    <div class="meta">
+      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg> 5 caminos</span>
+      <span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> ~25 min</span>
+      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12a9 9 0 11-6.2-8.6"/></svg> 5 situaciones reales</span>
+      <span class="m">🟠 con documentación de HubSpot</span>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="trail" id="trail"><div class="fill" id="trailfill"></div></div>
+  </div>
+</main>
+
+<script>
+const SESSION='s1', NEXT='session2-trainees.html', EXAM='examen-fundamentos.html';
+const CAMINOS=[
+  {
+    title:'¿Por qué existe un CRM?',
+    body:`
+      <p>Antes de tocar un botón: un <strong>CRM</strong> (Customer Relationship Management) es el lugar único donde vive toda la información de tus contactos, empresas y negocios. No es "un Excel más lindo": es la <strong>fuente de verdad compartida</strong> del equipo.</p>
+      <p class="mut">Sin CRM, la información queda repartida en planillas, mails y la cabeza de cada persona. El día que alguien se va o se enferma, su conocimiento se va con él.</p>
+      <div class="compare">
+        <div class="col bad"><h5>❌ Sin CRM</h5><p>Datos en Excel + WhatsApp + memoria. Nadie sabe en qué quedó cada cliente. Se pierden seguimientos.</p></div>
+        <div class="col good"><h5>✅ Con CRM</h5><p>Un historial por cliente, visible para todo el equipo. Cualquiera puede retomar una cuenta con contexto.</p></div>
+      </div>`,
+    hs:{ title:'En HubSpot', text:'El Knowledge Base arranca explicando cómo se organiza tu base de datos del CRM y los primeros pasos de la cuenta.',
+      links:[{t:'Manage your CRM database',u:'https://knowledge.hubspot.com/get-started/manage-your-crm-database'},{t:'Get started con HubSpot',u:'https://knowledge.hubspot.com/get-started'}] },
+    q:'Una inmobiliaria maneja sus clientes en Excel, mails sueltos y la memoria de cada agente. ¿Cuál es el PRIMER problema que resuelve mudarse a un CRM?',
+    opts:[
+      {t:'Bajar el costo de las herramientas que usan hoy.', ok:false, fb:'Un CRM no es principalmente un ahorro de costos — muchas veces suma una licencia. El valor está en otro lado.'},
+      {t:'Tener una única fuente de verdad: todo el equipo ve el historial y el estado de cada cliente, sin depender de una sola persona.', ok:true, fb:'Exacto. La primera victoria de un CRM es centralizar la información y hacerla compartida y trazable. Lo demás (automatizar, reportar) se construye sobre eso.'},
+      {t:'Automatizar las campañas de email marketing.', ok:false, fb:'La automatización es potente, pero llega después. Si los datos están desordenados, automatizar el caos lo empeora.'},
+      {t:'Guardar archivos y fotos en la nube.', ok:false, fb:'Eso lo hace cualquier Drive. El CRM resuelve la relación con el cliente, no el almacenamiento.'},
+    ]
+  },
+  {
+    title:'El modelo de datos: objetos, registros y propiedades',
+    body:`
+      <p>Todo en HubSpot se apoya en tres piezas. Entenderlas es lo que separa a un junior de alguien que no rompe el CRM:</p>
+      <ul>
+        <li><b>Objeto</b> — el <i>tipo</i> de cosa que guardás: Contactos, Empresas (Companies), Negocios (Deals), Tickets.</li>
+        <li><b>Registro</b> — una <i>instancia</i> de un objeto: "Juan Pérez" es un registro del objeto Contacto.</li>
+        <li><b>Propiedad</b> — cada <i>campo</i> del registro: email, teléfono, etapa del ciclo de vida, industria…</li>
+      </ul>
+      <div class="diagram">
+        <span class="chip"><span class="e">📁</span>Objeto: Contacto</span><span class="arr">▸</span>
+        <span class="chip"><span class="e">👤</span>Registro: Juan Pérez</span><span class="arr">▸</span>
+        <span class="chip"><span class="e">🏷️</span>Propiedad: email = juan@acme.com</span>
+      </div>
+      <p class="mut">La regla de oro: cada dato vive en el objeto al que <strong>pertenece</strong>. Si lo ponés en el lugar equivocado, después no podés segmentar ni reportar bien.</p>`,
+    hs:{ title:'En HubSpot', text:'La lección "The Anatomy of Your CRM" de HubSpot Academy recorre objetos, propiedades y datos con ejemplos.',
+      links:[{t:'The Anatomy of Your CRM (Academy)',u:'https://academy.hubspot.com/lessons/anatomy-of-your-crm'},{t:'CRM — Knowledge Base',u:'https://knowledge.hubspot.com/crm'}] },
+    q:'Querés registrar el "tamaño de empresa" (cantidad de empleados) para segmentar cuentas grandes. ¿Dónde corresponde guardar ese dato y por qué?',
+    opts:[
+      {t:'Como propiedad del objeto Empresa (Company): el tamaño pertenece a la empresa y queda disponible para todos sus contactos y negocios.', ok:true, fb:'Correcto. Los datos firmográficos van en la Empresa. Así segmentás cuentas y todos los contactos asociados heredan el contexto.'},
+      {t:'Como propiedad del contacto principal de esa empresa.', ok:false, fb:'Si lo ponés en un contacto, el dato se duplica y se vuelve inconsistente cuando hay varios contactos de la misma empresa. Va en la Empresa.'},
+      {t:'En una nota dentro del Negocio (Deal).', ok:false, fb:'Una nota no es segmentable ni filtrable. Necesitás una propiedad, y en el objeto correcto (Empresa).'},
+      {t:'En el nombre de la empresa, entre paréntesis: "Acme (250 empleados)".', ok:false, fb:'Eso ensucia el nombre y rompe reportes y deduplicación. Los datos van en propiedades, no incrustados en el nombre.'},
+    ]
+  },
+  {
+    title:'Asociaciones: el panorama de la cuenta',
+    body:`
+      <p>Los registros no viven aislados: se <strong>asocian</strong> entre sí. Esa red es lo que te da la "vista 360" de una cuenta.</p>
+      <div class="diagram">
+        <span class="chip"><span class="e">👤</span>Juan (Contacto)</span><span class="arr">↔</span>
+        <span class="chip"><span class="e">🏢</span>Acme (Empresa)</span><span class="arr">↔</span>
+        <span class="chip"><span class="e">💼</span>Negocio: Acme — Plan Pro</span>
+      </div>
+      <p>Desde la ficha de <strong>Acme</strong> ves todos sus contactos, sus negocios abiertos y toda la actividad. Pero eso solo funciona si los registros están bien asociados. Asociar no es opcional: es lo que convierte datos sueltos en una cuenta entendible.</p>`,
+    hs:{ title:'En HubSpot', text:'Las asociaciones conectan contactos, empresas, negocios y tickets. El KB del CRM cubre cómo se relacionan los registros.',
+      links:[{t:'CRM — Knowledge Base',u:'https://knowledge.hubspot.com/crm'},{t:'Create contacts',u:'https://knowledge.hubspot.com/records/create-contacts'}] },
+    q:'Cargás a Juan, a la empresa Acme y el negocio "Acme — Plan Pro", pero NO asociás a Juan con Acme. Seis meses después, otro rep abre la cuenta de Acme. ¿Qué pasa?',
+    opts:[
+      {t:'Nada: HubSpot asocia todo solo por el dominio del email.', ok:false, fb:'HubSpot puede sugerir asociaciones por dominio, pero no es garantizado ni automático para todo. Confiar en eso te deja huecos.'},
+      {t:'Desde la ficha de Acme el rep no ve a Juan: pierde al interlocutor clave y el contexto de con quién se venía hablando.', ok:true, fb:'Eso es. Sin la asociación, el contacto queda "huérfano" respecto de la cuenta. La info existe pero no aparece donde el equipo la necesita.'},
+      {t:'Se borra automáticamente el negocio por falta de actividad.', ok:false, fb:'Los negocios no se borran solos. El problema no es pérdida de datos, es pérdida de contexto y visibilidad.'},
+      {t:'Juan se duplica automáticamente en la empresa.', ok:false, fb:'No se crea un duplicado; simplemente Juan no figura asociado a Acme. El daño es la falta de visibilidad.'},
+    ]
+  },
+  {
+    title:'Navegar HubSpot sin perderte',
+    body:`
+      <p>La interfaz es grande, pero el mapa es simple. Desde el menú principal llegás a:</p>
+      <ul>
+        <li><b>CRM</b> → Contactos, Empresas, Negocios, Tickets (tus registros).</li>
+        <li><b>Marketing / Ventas / Servicio</b> → las herramientas de cada equipo.</li>
+        <li><b>Automatización</b> y <b>Reportes</b> → workflows y dashboards.</li>
+      </ul>
+      <p>Arriba a la derecha: la <strong>búsqueda global</strong> (encontrá cualquier registro al instante), las <strong>notificaciones</strong> y la <strong>configuración</strong> (el engranaje). Y lo más subestimado: las <strong>vistas</strong> y <strong>filtros</strong> dentro de cada objeto, que responden casi cualquier pregunta sin exportar nada.</p>`,
+    hs:{ title:'En HubSpot', text:'La guía de inicio te muestra cómo moverte por la cuenta y dónde está cada cosa.',
+      links:[{t:'Get started / navegar la cuenta',u:'https://knowledge.hubspot.com/get-started'}] },
+    q:'Tu jefe te pide "todos los negocios que cierran este mes por más de $5.000". ¿Cuál es el camino correcto y eficiente en HubSpot?',
+    opts:[
+      {t:'Buscar negocio por negocio en la barra de búsqueda y anotar los que cumplan.', ok:false, fb:'La búsqueda global sirve para encontrar UN registro, no para listar muchos con condiciones. No escala.'},
+      {t:'Ir a CRM ▸ Negocios (Deals) y crear/guardar una vista filtrada por fecha de cierre = este mes y monto > $5.000.', ok:true, fb:'Perfecto. Las vistas con filtros son la herramienta correcta: precisas, repetibles y siempre actualizadas. Podés guardarla para reusarla.'},
+      {t:'Exportar todos los negocios a Excel y filtrar en la planilla.', ok:false, fb:'Exportar te da una foto vieja y te saca del CRM. Si lo podés resolver con una vista filtrada, no exportes.'},
+      {t:'Pedirle al administrador que te arme un reporte cada vez.', ok:false, fb:'Depender del admin para una consulta básica no escala. Esto lo resolvés vos con una vista filtrada en 30 segundos.'},
+    ]
+  },
+  {
+    title:'Crear y leer un contacto (sin ensuciar el CRM)',
+    body:`
+      <p>Llegó un lead de un evento y lo tenés que cargar. La diferencia entre un CRM sano y uno lleno de basura está en lo que hacés <strong>antes</strong> de apretar "Create contact".</p>
+      <ul>
+        <li><b>Buscá primero</b> por email o nombre: ¿ya existe? Si existe, actualizalo, no lo dupliques.</li>
+        <li><b>Cargá el email</b>: en HubSpot el email es la "huella" del contacto y la clave para deduplicar.</li>
+        <li><b>Asociá</b> el contacto a su empresa y, si corresponde, a un negocio.</li>
+        <li><b>Registrá la actividad</b> (nota, llamada, reunión) para que el historial empiece a contar la película.</li>
+      </ul>
+      <p class="mut">Un contacto bien creado hoy es un reporte confiable dentro de seis meses.</p>`,
+    hs:{ title:'En HubSpot', text:'El KB "Create contacts" cubre todas las formas de crear contactos (a mano, import, formularios) y las buenas prácticas.',
+      links:[{t:'Create contacts',u:'https://knowledge.hubspot.com/records/create-contacts'}] },
+    q:'Vas a cargar ese lead del evento. ¿Cuál es el primer paso correcto para no ensuciar el CRM?',
+    opts:[
+      {t:'Crearlo directo; si hay duplicados, ya los arreglará alguien después.', ok:false, fb:'"Después lo arreglo" es como nacen las bases sucias. Los duplicados rompen reportes, automatizaciones y la experiencia del cliente.'},
+      {t:'Buscar primero por email/nombre; si ya existe, actualizar ese registro en vez de crear uno nuevo.', ok:true, fb:'Correcto. "Buscar antes de crear" es el hábito que mantiene el CRM limpio. El email es la clave para detectar duplicados.'},
+      {t:'Crear siempre una empresa nueva junto con el contacto, por las dudas.', ok:false, fb:'Crear empresas "por las dudas" genera duplicados de empresas. Asociá a la empresa existente si ya está.'},
+      {t:'Anotarlo en una nota suelta para cargarlo más tarde.', ok:false, fb:'Una nota suelta no es un contacto: no se puede segmentar, automatizar ni reportar. Cargalo como registro, bien, ahora.'},
+    ]
+  },
+];
+
+/* ---------- engine ---------- */
+const LS='refindable_sesion_'+SESSION;
+let state={unlocked:0,passed:{}}; try{state=Object.assign(state,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
+const saveS=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
+function markCourseDone(){try{const k='refindable_academy_progress_v1';const p=JSON.parse(localStorage.getItem(k)||'{}');p[SESSION]=true;localStorage.setItem(k,JSON.stringify(p));}catch(e){}}
+const trail=document.getElementById('trail');
+const esc=s=>String(s);
+
+CAMINOS.forEach((c,i)=>{
+  const sec=document.createElement('section');
+  sec.className='camino'+(i>state.unlocked?' locked':'')+(state.passed[i]?' passed':'')+(i===state.unlocked&&!state.passed[i]?' active':'');
+  sec.id='camino-'+i; sec.dataset.i=i;
+  const optsHtml=c.opts.map((o,j)=>`<button class="opt" data-j="${j}" data-ok="${o.ok?1:0}"><span class="mk">${String.fromCharCode(65+j)}</span><span>${o.t}</span></button>`).join('');
+  const linksHtml=c.hs.links.map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`).join('');
+  sec.innerHTML=`
+    <div class="node">${state.passed[i]?'✓':(i+1)}</div>
+    <div class="body">
+      <div class="ck">Camino ${i+1} de ${CAMINOS.length}</div>
+      <h2>${c.title}</h2>
+      ${c.body}
+      <div class="hsbox"><div class="hi">🟠</div><div><h5>${c.hs.title}</h5><p>${c.hs.text}</p>${linksHtml}</div></div>
+      <div class="gate ${state.passed[i]?'solved':''}" data-i="${i}">
+        <span class="qlab">🧠 Situación real · respondé para avanzar</span>
+        <div class="q">${c.q}</div>
+        <div class="opts">${optsHtml}</div>
+        <div class="fb"></div>
+        <div class="lockmsg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg> El próximo camino se desbloquea cuando elegís la opción correcta.</div>
+        <button class="nextbtn" type="button">${i<CAMINOS.length-1?'Continuar al Camino '+(i+2):'Terminar la sesión'} <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>`;
+  trail.appendChild(sec);
+});
+
+/* finish card */
+const fin=document.createElement('section');
+fin.className='camino finish';fin.id='finish';
+fin.innerHTML=`<div class="node">★</div><div class="body">
+  <div class="tro">🎉</div>
+  <h2>¡Completaste la Sesión 1!</h2>
+  <p class="mut">Ya entendés qué resuelve un CRM, dónde vive cada dato, cómo asociar una cuenta y cómo navegar HubSpot sin ensuciar la base. Eso es la base de todo lo que viene.</p>
+  <div class="reslist">
+    <a href="https://academy.hubspot.com/lessons/getting-started-with-hubspot-crm" target="_blank" rel="noopener"><span class="e">🎓</span> Reforzar con HubSpot Academy: Getting Started <span class="ar">↗</span></a>
+    <a href="https://academy.hubspot.com/courses/set-up-your-hubspot-crm-for-growth" target="_blank" rel="noopener"><span class="e">📚</span> Curso: Set Up Your HubSpot CRM for Growth <span class="ar">↗</span></a>
+  </div>
+  <div class="actions">
+    <a class="btn pri" href="${NEXT}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg> Ir a la Sesión 2</a>
+    <a class="btn" href="${EXAM}">Rendir el examen de Fundamentos</a>
+    <a class="btn" href="./">Volver a la academia</a>
+  </div>
+</div>`;
+trail.appendChild(fin);
+
+/* interactions */
+trail.querySelectorAll('.gate').forEach(gate=>{
+  const i=+gate.dataset.i;
+  const fb=gate.querySelector('.fb');
+  gate.querySelectorAll('.opt').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      if(gate.classList.contains('solved'))return;
+      const ok=opt.dataset.ok==='1';
+      const c=CAMINOS[i].opts[+opt.dataset.j];
+      gate.querySelectorAll('.opt').forEach(o=>o.classList.remove('wrong'));
+      if(ok){
+        opt.classList.add('correct');
+        gate.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+        fb.className='fb ok show';fb.innerHTML='<b>✔ Correcto.</b> '+c.fb;
+        gate.classList.add('solved');
+        state.passed[i]=true; if(state.unlocked===i)state.unlocked=i+1; saveS();
+        const sec=document.getElementById('camino-'+i);sec.classList.add('passed');sec.classList.remove('active');
+        sec.querySelector('.node').textContent='✓';
+        updateProgress();
+      }else{
+        opt.classList.add('wrong');
+        fb.className='fb no show';fb.innerHTML='<b>✘ No es la mejor opción.</b> '+c.fb+' <br>Probá de nuevo.';
+      }
+    });
+  });
+  gate.querySelector('.nextbtn').addEventListener('click',()=>{
+    if(i<CAMINOS.length-1){revealNext(i+1);} else {revealFinish();}
+  });
+});
+
+function revealNext(i){
+  const sec=document.getElementById('camino-'+i);if(!sec)return;
+  sec.classList.remove('locked');sec.classList.add('active');
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+function revealFinish(){
+  markCourseDone();
+  const f=document.getElementById('finish');f.classList.add('show');
+  f.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress(true);
+}
+function updateProgress(done){
+  const total=CAMINOS.length;
+  const passed=Object.keys(state.passed).filter(k=>state.passed[k]).length;
+  const pct=done?100:Math.round(passed/total*100);
+  document.getElementById('hbar').style.width=pct+'%';
+  document.getElementById('hpct').textContent=pct+'%';
+  document.getElementById('trailfill').style.height=(passed/total*100)+'%';
+}
+
+/* restore on load: reveal up to unlocked, show finish if all passed */
+(function restore(){
+  for(let i=0;i<=state.unlocked&&i<CAMINOS.length;i++){const s=document.getElementById('camino-'+i);if(s)s.classList.remove('locked');}
+  const allPassed=CAMINOS.every((_,i)=>state.passed[i]);
+  if(allPassed){document.getElementById('finish').classList.add('show');}
+  updateProgress(allPassed);
+})();
+</script>
+</body>
+</html>
