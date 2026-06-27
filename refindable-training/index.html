@@ -18,7 +18,7 @@
     /* one warm ink family, one accent */
     --ink:#0b0b0e; --ink2:#111116; --ink3:#16161d; --ink4:#1c1c25;
     --line:#23232c; --line2:#2c2c37;
-    --text:#edece6; --muted:#9b988f; --faint:#605d55;
+    --text:#edece6; --muted:#9b988f; --faint:#8a877e;
     --am:#e3a85a; --am2:#f0bd7a; --am-d:#c98c3e;
     --am-soft:rgba(227,168,90,.10); --am-line:rgba(227,168,90,.30); --am-glow:rgba(227,168,90,.45);
     --maxw:1080px; --rail:40px;
@@ -28,9 +28,13 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Outfit',sans-serif;background:var(--ink);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;font-weight:300}
+  body{font-family:'Outfit',sans-serif;background:var(--ink);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;font-weight:300;color-scheme:dark;-webkit-tap-highlight-color:transparent}
   a{color:inherit;text-decoration:none}
   ::selection{background:var(--am);color:#1a1205}
+  :focus-visible{outline:2px solid var(--am);outline-offset:3px;border-radius:6px}
+  a,button,[role=link],[role=button]{touch-action:manipulation}
+  .skip{position:fixed;top:12px;left:12px;z-index:300;background:var(--am);color:#1a1205;padding:11px 18px;border-radius:11px;font-weight:600;font-size:14px;transform:translateY(-160%);transition:transform .25s var(--ease)}
+  .skip:focus{transform:none}
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-track{background:var(--ink)}
   ::-webkit-scrollbar-thumb{background:var(--ink4);border-radius:6px;border:3px solid var(--ink)}
@@ -87,7 +91,7 @@
   .hero{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 90px}
   .eyebrow{font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--am);display:flex;align-items:center;gap:12px;margin-bottom:30px}
   .eyebrow::before{content:'';width:26px;height:1px;background:var(--am)}
-  .hero h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(46px,8.2vw,108px);line-height:.96;letter-spacing:-.02em;margin-bottom:30px;max-width:14ch}
+  .hero h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(46px,8.2vw,108px);line-height:.96;letter-spacing:-.02em;margin-bottom:30px;max-width:14ch;text-wrap:balance}
   .hero h1 em{font-style:italic;color:var(--am);font-weight:500}
   .hero .lead{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:54ch;line-height:1.6;font-weight:300}
   .hero .lead b{color:var(--text);font-weight:500}
@@ -103,7 +107,7 @@
   .hero-meta i{color:var(--am-d);font-style:normal;margin-right:7px}
 
   /* ── chapters / stations ── */
-  .chapter{position:relative;padding:64px 0 84px}
+  .chapter{position:relative;padding:64px 0 84px;scroll-margin-top:96px}
   .station{position:absolute;left:calc(-1*(var(--rail)+34px) + var(--rail) - 17px);top:70px;
     width:34px;height:34px;border-radius:50%;background:var(--ink);border:1px solid var(--line2);
     display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);
@@ -116,7 +120,7 @@
   .ch-head{max-width:60ch;margin-bottom:34px}
   .ch-kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--am);text-transform:uppercase;margin-bottom:14px}
   .ch-kicker .sep{color:var(--faint);margin:0 8px}
-  .ch-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,4.4vw,46px);line-height:1.04;letter-spacing:-.015em;margin-bottom:14px}
+  .ch-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,4.4vw,46px);line-height:1.04;letter-spacing:-.015em;margin-bottom:14px;text-wrap:balance}
   .ch-head p{font-size:clamp(15.5px,1.8vw,18px);color:var(--muted);line-height:1.6;font-weight:300}
   .ch-meter{display:flex;align-items:center;gap:14px;margin-top:24px}
   .ch-meter .bar{flex:0 0 160px;max-width:38%;height:3px;background:var(--line2);border-radius:2px;overflow:hidden}
@@ -134,7 +138,7 @@
   .shell.soon{opacity:.5}.chapter.in .shell.soon{opacity:.55}
 
   .lz{flex-shrink:0;width:52px;height:52px;border-radius:13px;background:var(--ink);border:1px solid var(--line2);
-    display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--am);transition:all .35s var(--ease)}
+    display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--am);transition:background .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease)}
   .shell.done .lz{background:var(--am);border-color:var(--am);color:#1a1205}
   .lb{flex:1;min-width:0}
   .lb .top{display:flex;align-items:center;gap:11px;margin-bottom:4px}
@@ -152,7 +156,8 @@
   .badge.soon{background:rgba(155,152,143,.12);color:var(--muted)}
   .arrow{flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:var(--muted);transition:transform .5s var(--ease),border-color .35s,color .35s}
   .arrow svg{width:14px;height:14px;fill:currentColor}
-  .check{flex-shrink:0;width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line2);background:transparent;cursor:pointer;display:grid;place-items:center;transition:all .2s var(--ease)}
+  .check{flex-shrink:0;width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line2);background:transparent;cursor:pointer;display:grid;place-items:center;transition:background .2s var(--ease),border-color .2s var(--ease)}
+  button.rec{font:inherit;background:none;border:none;padding:0;display:inline-flex;align-items:center;gap:6px}
   .check svg{width:14px;height:14px;fill:none;stroke:#1a1205;stroke-width:3;opacity:0}
   .check.on{background:var(--am);border-color:var(--am)}
   .check.on svg{opacity:1}
@@ -170,7 +175,7 @@
   .foot-bot{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint)}
 
   /* modal */
-  .modal{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(6,6,8,.86);backdrop-filter:blur(8px)}
+  .modal{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(6,6,8,.86);backdrop-filter:blur(8px);overscroll-behavior:contain}
   .modal.show{display:flex}
   .modal .box{width:min(960px,100%);background:var(--ink2);border:1px solid var(--line2);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);
     opacity:1;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
@@ -231,17 +236,18 @@
 </head>
 <body>
 
-<div class="ambient"></div>
-<div class="grain"></div>
+<a class="skip" href="#top">Saltar al contenido</a>
+<div class="ambient" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 <div class="rp"><i id="rpFill"></i></div>
 
 <a class="float brand rise" href="#top">
-  <span class="mk"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+  <span class="mk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
   <b>Refindable <span>Academy</span></b>
 </a>
 <a class="float actions rise" href="#" id="resume">
   <span class="resume"><span class="lab" id="resumeLbl">Comenzar</span>
-  <span class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>
+  <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
 </a>
 
 <main id="top">
@@ -254,8 +260,8 @@
       <h1 class="serif rise">Tu ruta de CRM,<br>de junior a <em>senior</em>.</h1>
       <p class="lead rise">Una sola ruta, con paradas claras: de los <b>fundamentos</b> a la <b>implementación avanzada</b> en HubSpot. Bajá y el camino se va trazando solo — lecciones, recordings, práctica real y exámenes.</p>
       <div class="hero-cta rise">
-        <a class="btn" href="#" id="heroResume"><span class="ring"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><span class="lab" id="heroResumeLbl">Empezar la ruta</span></a>
-        <a class="btn ghost" href="#recursos"><span class="ring"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="lab">Ver recursos</span></a>
+        <a class="btn" href="#" id="heroResume"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="lab" id="heroResumeLbl">Empezar la ruta</span></a>
+        <a class="btn ghost" href="#recursos"><span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="lab">Ver recursos</span></a>
       </div>
       <div class="hero-meta mono rise" id="heroMeta"></div>
     </div>
@@ -270,7 +276,7 @@
       <div class="foot">
         <div class="l">
           <a class="brand" href="#top" style="display:inline-flex;align-items:center;gap:10px">
-            <span class="mk"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+            <span class="mk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
             <b>Refindable <span>Academy</span></b>
           </a>
           <p>La guía de CRM más completa para equipos que quieren pasar de junior a senior. De los fundamentos al dominio de HubSpot.</p>
@@ -299,11 +305,11 @@
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Reproductor">
   <div class="box">
     <div class="hd"><h4 id="mTitle">Recording</h4><a id="mExt" href="#" target="_blank" rel="noopener" class="mono">Drive ↗</a><button class="x" id="mClose" aria-label="Cerrar">×</button></div>
-    <div class="vid"><iframe id="mFrame" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+    <div class="vid"><iframe id="mFrame" title="Reproductor de grabación" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
   </div>
 </div>
 
-<div class="toast" id="toast"><span class="i">✓</span><span id="toastMsg"></span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="i" aria-hidden="true">✓</span><span id="toastMsg"></span></div>
 
 <script>
 const CHAPTERS=[
@@ -385,6 +391,7 @@ CHAPTERS.forEach(ch=>{
   n++;
   const sec=el('section','chapter');
   sec.dataset.kind=ch.kind;
+  if(ch.kind==='resources')sec.id='recursos';
   sec.appendChild(el('div','station mono',String(n).padStart(2,'0')));
   const inner=el('div','lane');
   const head=el('div','ch-head');
@@ -407,12 +414,12 @@ CHAPTERS.forEach(ch=>{
           <h3>${esc(l.title)}</h3><p>${esc(l.desc)}</p>
           <div class="foot">
             <span class="m">${l.steps?l.steps+' pasos':'—'}</span>
-            <span class="m"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${mins}</span>
-            <span class="rec ${embed?'':'off'}" data-embed="${embed||''}" data-open="${embed?esc(driveOpen(l.video)):''}" data-title="${esc(l.n+' · '+l.title)}"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${embed?'grabación':'sin grabar'}</span>
+            <span class="m"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${mins}</span>
+            <button type="button" class="rec ${embed?'':'off'}"${embed?'':' disabled'} data-embed="${embed||''}" data-open="${embed?esc(driveOpen(l.video)):''}" data-title="${esc(l.n+' · '+l.title)}" aria-label="${embed?'Ver grabación de':'Sin grabación de'} ${esc(l.n)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>${embed?'grabación':'sin grabar'}</button>
           </div>
         </div>
-        ${soon?'':`<button class="check ${done[l.id]?'on':''}" aria-label="Marcar completada"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></button>`}
-        ${l.file?'<span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></span>':''}
+        ${soon?'':`<button class="check ${done[l.id]?'on':''}" aria-label="Marcar completada"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></button>`}
+        ${l.file?'<span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span>':''}
       </div>`;
       if(l.file){
         shell.addEventListener('click',e=>{if(e.target.closest('.check')||e.target.closest('.rec'))return;try{localStorage.setItem('refindable_academy_last',l.id)}catch(_){}location.href=l.file;});
@@ -431,7 +438,7 @@ CHAPTERS.forEach(ch=>{
       shell.innerHTML=`<div class="core">
         <div class="lz mono">${esc(r.z)}</div>
         <div class="lb"><div class="top"><span class="badge done">${esc(r.badge)}</span></div><h3>${esc(r.title)}</h3><p>${esc(r.desc)}</p></div>
-        <span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></span></div>`;
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></div>`;
       shell.addEventListener('click',()=>location.href=r.file);
       stack.appendChild(shell);
     });
@@ -446,7 +453,7 @@ CHAPTERS.forEach(ch=>{
         shell.innerHTML=`<div class="core">
           <div class="lz mono" style="font-size:18px">↗</div>
           <div class="lb"><h3>${esc(it.title)}</h3><p>${esc(it.desc)}</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></span></div>`;
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></div>`;
         shell.addEventListener('click',()=>window.open(it.url,it.internal?'_self':'_blank'));
         stack.appendChild(shell);
       });
@@ -456,6 +463,14 @@ CHAPTERS.forEach(ch=>{
   const wrap=el('div','wrap');wrap.appendChild(inner);
   sec.appendChild(wrap);
   host.appendChild(sec);
+});
+
+/* keyboard access for clickable cards (they carry nested controls, so they stay divs) */
+document.querySelectorAll('.shell.link').forEach(s=>{
+  s.tabIndex=0; s.setAttribute('role','link');
+  s.addEventListener('keydown',e=>{
+    if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.check')&&!e.target.closest('.rec')){e.preventDefault();s.click();}
+  });
 });
 
 /* hero meta (understated, not the centerpiece) */
@@ -481,17 +496,27 @@ function refresh(){
   const lab=comp===0?'Empezar la ruta':(comp===lessonsAll.length?'Repasar':`Continuar · ${next.n}`);
   document.getElementById('heroResumeLbl').textContent=lab;
   document.getElementById('resumeLbl').textContent=comp===0?'Comenzar':(comp===lessonsAll.length?'Repasar':'Continuar');
+  const href=next&&next.file?next.file:'#';
   const go=e=>{e.preventDefault();if(next&&next.file){try{localStorage.setItem('refindable_academy_last',next.id)}catch(_){}location.href=next.file;}};
-  document.getElementById('heroResume').onclick=go;document.getElementById('resume').onclick=go;
+  ['heroResume','resume'].forEach(id=>{const b=document.getElementById(id);b.setAttribute('href',href);b.onclick=go;});
 }
 refresh();
 
-const modal=document.getElementById('modal');
-function openVideo(t,embed,ext){document.getElementById('mTitle').textContent=t;document.getElementById('mFrame').src=embed;document.getElementById('mExt').href=ext||embed;modal.classList.add('show');document.body.style.overflow='hidden';}
-function closeVideo(){modal.classList.remove('show');document.getElementById('mFrame').src='';document.body.style.overflow='';}
+const modal=document.getElementById('modal');let lastFocus=null;
+function openVideo(t,embed,ext){lastFocus=document.activeElement;document.getElementById('mTitle').textContent=t;document.getElementById('mFrame').src=embed;document.getElementById('mExt').href=ext||embed;modal.classList.add('show');document.body.style.overflow='hidden';document.getElementById('mClose').focus();}
+function closeVideo(){modal.classList.remove('show');document.getElementById('mFrame').src='';document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
 document.getElementById('mClose').addEventListener('click',closeVideo);
 modal.addEventListener('click',e=>{if(e.target===modal)closeVideo();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('show'))closeVideo();});
+document.addEventListener('keydown',e=>{
+  if(!modal.classList.contains('show'))return;
+  if(e.key==='Escape'){closeVideo();return;}
+  if(e.key==='Tab'){ // trap within the dialog
+    const f=modal.querySelectorAll('a[href],button:not([disabled]),iframe');
+    if(!f.length)return;const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
 
 let tT;function toast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2200);}
 
