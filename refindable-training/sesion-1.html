@@ -3,273 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sesión 1 · ¿Qué es un CRM? La historia y la idea | Refindable Academy</title>
-<meta name="description" content="De dónde viene el CRM, por qué existe y qué es en realidad — contado como una historia, paso a paso, para que te quede.">
+<title>Sesión 1 · ¿Qué es un CRM? + Navegación HubSpot | Refindable Academy</title>
+<meta name="description" content="Aprendé qué es un CRM, de dónde viene, cómo guarda la información y cómo moverte. Formato lección: contenido visual, recursos de HubSpot y un repaso por unidad.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" type="image/png" href="https://refindable.com/wp-content/uploads/2022/05/cropped-Favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f4f5f1;--surface:#ffffff;--surface2:#fbfbf8;--tint:#eef3fb;
-    --ink:#1c2230;--muted:#5b6474;--faint:#929aa8;--line:#e7e8e3;--line2:#dcdfd9;
+    --bg:#f4f5f1;--surface:#fff;--surface2:#f8f9f6;--tint:#eef3fb;
+    --ink:#1c2230;--muted:#576070;--faint:#8b93a1;--line:#e7e8e3;--line2:#dadbd5;
     --pri:#2563eb;--pri-d:#1d4ed8;--pri-soft:#e8eefe;
-    --ok:#0d9f6e;--ok-s:#e2f6ee;--bad:#dc2626;--bad-s:#fdeaea;--hl:#9a6b00;--hl-s:#fdf2dc;--hl-b:#f5e2b8;
+    --ok:#0d9f6e;--ok-s:#e6f6ef;--bad:#dc2626;--bad-s:#fdeaea;--hs:#ff7a59;--hs-s:#fff2ee;--hs-b:#ffd9cd;
     --shadow-sm:0 1px 2px rgba(28,34,48,.05),0 2px 6px rgba(28,34,48,.04);
-    --shadow:0 6px 16px rgba(28,34,48,.07),0 2px 6px rgba(28,34,48,.05);
-    --shadow-lg:0 18px 40px rgba(28,34,48,.12);
-    --r:18px;--ease:cubic-bezier(.4,0,.2,1);--maxw:840px;
+    --shadow:0 8px 22px rgba(28,34,48,.09);--shadow-lg:0 18px 40px rgba(28,34,48,.13);
+    --r:16px;--ease:cubic-bezier(.4,0,.2,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.65;-webkit-tap-highlight-color:transparent}
   a{color:var(--pri);text-decoration:none}
+  img{display:block;max-width:100%}
   :focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:6px}
-  ::selection{background:var(--pri-soft)}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .hbar{display:flex;align-items:center;gap:16px;height:60px}
+  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .hbar{display:flex;align-items:center;gap:14px;height:58px;max-width:1240px;margin:0 auto;padding:0 22px}
   .back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-weight:600;font-size:14px}
   .back:hover{color:var(--ink)}.back svg{width:16px;height:16px}
-  .hbar .ses{font-weight:700;font-size:14.5px;padding-left:16px;border-left:1px solid var(--line)}
-  .hprog{margin-left:auto;display:flex;align-items:center;gap:12px}
-  .hprog .pb{width:150px;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
-  .hprog .pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pri),#4f80f5);border-radius:4px;transition:width .6s var(--ease)}
-  .hprog .pl{font-size:13px;font-weight:700;color:var(--muted);min-width:40px;text-align:right}
+  .htitle{font-weight:700;font-size:14.5px;padding-left:14px;border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hprog{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .hprog .pb{width:120px;height:7px;background:var(--line);border-radius:4px;overflow:hidden}
+  .hprog .pb i{display:block;height:100%;width:0;background:var(--ok);border-radius:4px;transition:width .5s var(--ease)}
+  .hprog .pl{font-size:13px;font-weight:700;color:var(--muted)}
 
-  .hero{padding:48px 0 26px}
-  .eye{display:inline-flex;align-items:center;gap:8px;background:var(--ok-s);color:var(--ok);font-weight:700;font-size:12.5px;padding:6px 13px;border-radius:100px;margin-bottom:18px}
-  .hero h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin-bottom:16px}
-  .hero .lead{font-size:18.5px;color:var(--muted);max-width:62ch}
-  .meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--faint);font-weight:600}
-  .meta .m{display:flex;align-items:center;gap:7px}.meta .ic{width:15px;height:15px;stroke:var(--faint)}
+  .layout{max-width:1240px;margin:0 auto;padding:26px 22px 70px;display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start}
 
-  .trail{position:relative;padding-left:54px;margin-top:24px}
-  .trail::before{content:'';position:absolute;left:17px;top:8px;bottom:90px;width:2px;background:var(--line2)}
-  .trail .fill{position:absolute;left:17px;top:8px;width:2px;background:linear-gradient(180deg,var(--pri),#4f80f5);height:0;transition:height .6s var(--ease);border-radius:2px}
-  .camino{position:relative;margin-bottom:30px;scroll-margin-top:76px}
-  .camino .node{position:absolute;left:-54px;top:0;width:36px;height:36px;border-radius:50%;background:var(--surface);border:2px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:15px;color:var(--faint);z-index:2;transition:all .3s var(--ease)}
-  .camino.active .node{border-color:var(--pri);color:var(--pri);box-shadow:0 0 0 5px var(--pri-soft)}
-  .camino.passed .node{background:var(--ok);border-color:var(--ok);color:#fff}
-  .camino .body{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:30px 32px}
-  .camino .ck{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pri);margin-bottom:8px}
-  .camino h2{font-size:clamp(22px,3vw,29px);font-weight:800;letter-spacing:-.02em;margin-bottom:16px;line-height:1.15}
-  .camino p{font-size:16.5px;color:var(--ink);margin-bottom:15px;font-weight:400}
-  .camino p.mut{color:var(--muted)}
-  .camino strong{font-weight:700}
-  .camino .lede{font-size:18px;color:var(--ink)}
-  .camino .body ul{list-style:none;margin:6px 0 16px}
-  .camino .body ul li{position:relative;padding:7px 0 7px 26px;font-size:16px;color:var(--ink)}
-  .camino .body ul li::before{content:'';position:absolute;left:3px;top:16px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
-  .camino .body ul li b{font-weight:700}
-  .pull{margin:18px 0;padding:18px 22px;border-left:4px solid var(--pri);background:var(--tint);border-radius:0 12px 12px 0;font-size:18px;font-weight:600;line-height:1.5}
-  .pull .q{font-size:30px;line-height:0;color:var(--pri);font-weight:800;margin-right:4px;vertical-align:-8px}
+  /* sidebar: course outline */
+  .side{position:sticky;top:80px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);overflow:hidden}
+  .side .sh{padding:18px 20px;border-bottom:1px solid var(--line)}
+  .side .sh .t{font-weight:800;font-size:15px}
+  .side .sh .s{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .side .sh .pb{height:6px;background:var(--line);border-radius:4px;margin-top:12px;overflow:hidden}
+  .side .sh .pb i{display:block;height:100%;width:0;background:var(--ok);border-radius:4px;transition:width .5s var(--ease)}
+  .ulist{padding:8px}
+  .uitem{display:flex;align-items:center;gap:12px;padding:12px 12px;border-radius:11px;cursor:pointer;transition:background .15s;border:1px solid transparent}
+  .uitem:hover{background:var(--surface2)}
+  .uitem.cur{background:var(--pri-soft);border-color:#cdddfd}
+  .uitem.lock{opacity:.55;cursor:not-allowed}
+  .uitem .ix{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--faint);flex-shrink:0}
+  .uitem.cur .ix{border-color:var(--pri);color:var(--pri)}
+  .uitem.done .ix{background:var(--ok);border-color:var(--ok);color:#fff}
+  .uitem .ut{font-size:14px;font-weight:600;line-height:1.3}
+  .uitem .ud{font-size:11.5px;color:var(--faint);font-weight:500;margin-top:1px}
+  .uitem .lk{margin-left:auto;color:var(--faint)}.uitem .lk svg{width:15px;height:15px}
 
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
-  .compare .col{border-radius:14px;padding:16px 18px;border:1px solid}
-  .compare .bad{background:var(--bad-s);border-color:#f3c9c9}
-  .compare .good{background:var(--ok-s);border-color:#bfe6d4}
-  .compare h5{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-  .compare .bad h5{color:var(--bad)}.compare .good h5{color:var(--ok)}
-  .compare p{font-size:14.5px;margin:0;color:var(--ink)}
+  /* main content */
+  .main{min-width:0}
+  .crumb{font-size:12.5px;font-weight:700;color:var(--pri);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+  .main h1{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin-bottom:8px}
+  .umeta{font-size:13px;color:var(--faint);font-weight:600;margin-bottom:22px;display:flex;gap:16px;flex-wrap:wrap}
+  .umeta .m{display:flex;align-items:center;gap:6px}.umeta .ic{width:14px;height:14px;stroke:var(--faint)}
+
+  /* media area (Coursera-style) */
+  .media{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:24px;background:var(--surface)}
+  .media.photo{aspect-ratio:16/8;position:relative}
+  .media.photo img{width:100%;height:100%;object-fit:cover}
+  .media.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 22px 14px;background:linear-gradient(transparent,rgba(10,14,25,.8));color:#fff;font-weight:600;font-size:14px}
+
+  /* fake product window (mockups = "capturas") */
+  .win{background:var(--surface)}
+  .win .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--surface2);border-bottom:1px solid var(--line)}
+  .win .bar .d{width:11px;height:11px;border-radius:50%}
+  .win .bar .d1{background:#ff5f57}.win .bar .d2{background:#febc2e}.win .bar .d3{background:#28c840}
+  .win .bar .url{margin-left:10px;font-size:12px;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 10px}
+  .win .scr{padding:20px}
+
+  /* mock: contact record */
+  .mc{display:grid;grid-template-columns:1fr 1.2fr;gap:18px}
+  .mc .lft{text-align:center;border-right:1px solid var(--line);padding-right:18px}
+  .mc .av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;margin:0 auto 10px}
+  .mc .nm{font-weight:800;font-size:17px}.mc .rl{font-size:13px;color:var(--muted)}
+  .mc .pillrow{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .mc .pill{font-size:11px;font-weight:700;padding:4px 9px;border-radius:100px;background:var(--ok-s);color:var(--ok)}
+  .mc .props .pr{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .mc .props .pr .k{color:var(--faint);font-weight:600}.mc .props .pr .v{font-weight:600}
+  .mc .props .lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);margin-bottom:4px}
+
+  /* mock: nav */
+  .mn{display:flex;gap:16px}
+  .mn .menu{width:180px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px;flex-shrink:0}
+  .mn .menu .mi{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--muted)}
+  .mn .menu .mi.on{background:#fff;color:var(--pri);box-shadow:var(--shadow-sm)}
+  .mn .menu .mi .e{font-size:15px}
+  .mn .canvas{flex:1;border:1px dashed var(--line2);border-radius:10px;display:grid;place-items:center;color:var(--faint);font-size:13px;min-height:150px;text-align:center;padding:16px}
+  .mn .search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--faint);font-size:13px;margin-bottom:12px}
+  .mn .search svg{width:15px;height:15px;stroke:var(--faint);fill:none;stroke-width:2}
+
+  /* mock: form */
+  .mf{max-width:420px;margin:0 auto}
+  .mf .fld{margin-bottom:12px}
+  .mf label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:5px}
+  .mf .inp{height:38px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;padding:0 12px;font-size:13.5px;color:var(--ink)}
+  .mf .inp.ph{color:var(--faint)}
+  .mf .save{margin-top:6px;background:var(--pri);color:#fff;text-align:center;padding:11px;border-radius:9px;font-weight:700;font-size:14px}
+  .mf .hint{font-size:12px;color:var(--faint);margin-top:8px;display:flex;gap:7px;align-items:flex-start}
 
   /* timeline */
-  .tl{margin:20px 0 8px;padding-left:6px}
-  .tl .ev{position:relative;padding:0 0 20px 28px;border-left:2px solid var(--line2);margin-left:6px}
-  .tl .ev:last-child{border-left-color:transparent;padding-bottom:4px}
+  .tl{margin:4px 0}
+  .tl .ev{position:relative;padding:0 0 18px 26px;border-left:2px solid var(--line2);margin-left:6px}
+  .tl .ev:last-child{border-left-color:transparent;padding-bottom:0}
   .tl .ev::before{content:'';position:absolute;left:-8px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--pri);box-shadow:0 0 0 3px var(--pri-soft)}
-  .tl .ev .yr{font-weight:800;color:var(--pri);font-size:15px;letter-spacing:-.01em}
-  .tl .ev .ti{font-weight:700;font-size:16px;margin:1px 0 3px}
-  .tl .ev p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
+  .tl .ev .yr{font-weight:800;color:var(--pri);font-size:14.5px}
+  .tl .ev .ti{font-weight:700;font-size:15px;margin:1px 0 2px}
+  .tl .ev p{margin:0;font-size:14px;color:var(--muted);line-height:1.5}
 
-  .hsbox{display:flex;gap:14px;background:var(--hl-s);border:1px solid var(--hl-b);border-radius:14px;padding:16px 18px;margin:20px 0}
-  .hsbox .hi{width:40px;height:40px;border-radius:11px;background:#fff;border:1px solid var(--hl-b);display:grid;place-items:center;flex-shrink:0;font-size:20px}
-  .hsbox h5{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--hl);margin-bottom:5px}
-  .hsbox p{font-size:15.5px;color:var(--ink);margin:0 0 8px;line-height:1.55;font-weight:500}
-  .hsbox a{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;color:var(--hl)}
-  .hsbox a svg{width:12px;height:12px}
+  /* prose */
+  .prose p{font-size:16.5px;margin-bottom:15px}
+  .prose h3{font-size:19px;font-weight:800;margin:24px 0 10px;letter-spacing:-.01em}
+  .prose ul{list-style:none;margin:4px 0 16px}
+  .prose ul li{position:relative;padding:6px 0 6px 26px;font-size:16px}
+  .prose ul li::before{content:'';position:absolute;left:3px;top:15px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
+  .prose b,.prose strong{font-weight:700}
+  .note{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--pri);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0;font-size:15.5px}
+  .note b{font-weight:700}
 
-  .gate{margin-top:24px;border-top:1px dashed var(--line2);padding-top:22px}
-  .gate .qlab{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--surface2);border:1px solid var(--line);padding:6px 12px;border-radius:100px;margin-bottom:14px}
-  .gate .q{font-size:18px;font-weight:700;line-height:1.45;margin-bottom:16px}
+  /* hubspot resources */
+  .hsbox{background:var(--hs-s);border:1px solid var(--hs-b);border-radius:14px;padding:18px 20px;margin:24px 0}
+  .hsbox .ht{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px;color:#c0492c;margin-bottom:12px}
+  .hsbox .ht .lg{width:24px;height:24px;border-radius:6px;background:var(--hs);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+  .hsbox a.res{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--hs-b);border-radius:10px;padding:12px 14px;margin-bottom:8px;color:var(--ink);font-weight:600;font-size:14px;transition:transform .12s,box-shadow .15s}
+  .hsbox a.res:last-child{margin-bottom:0}
+  .hsbox a.res:hover{transform:translateX(3px);box-shadow:var(--shadow-sm)}
+  .hsbox a.res .e{font-size:18px}
+  .hsbox a.res .meta{margin-left:auto;font-size:11.5px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:8px}
+  .hsbox a.res .kind{background:var(--hs-s);color:#c0492c;padding:2px 8px;border-radius:100px;font-size:10.5px}
+
+  /* quiz */
+  .quiz{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:24px}
+  .quiz .ql{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:12px}
+  .quiz .q{font-size:17.5px;font-weight:700;line-height:1.4;margin-bottom:16px}
   .opts{display:flex;flex-direction:column;gap:10px}
-  .opt{display:flex;gap:13px;align-items:flex-start;text-align:left;background:var(--surface);border:1.5px solid var(--line2);border-radius:13px;padding:15px 17px;font-family:inherit;font-size:15.5px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s,transform .1s;line-height:1.45}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--surface);border:1.5px solid var(--line2);border-radius:12px;padding:14px 16px;font-family:inherit;font-size:15.5px;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s;line-height:1.4}
   .opt:hover:not(:disabled){border-color:var(--pri);background:var(--pri-soft)}
-  .opt:active:not(:disabled){transform:scale(.995)}
-  .opt .mk{width:26px;height:26px;border-radius:8px;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted);flex-shrink:0;transition:all .15s}
-  .opt.correct{border-color:var(--ok);background:var(--ok-s)}
-  .opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#fff}
-  .opt.wrong{border-color:var(--bad);background:var(--bad-s)}
-  .opt.wrong .mk{background:var(--bad);border-color:var(--bad);color:#fff}
+  .opt .mk{width:25px;height:25px;border-radius:7px;background:var(--surface2);border:1px solid var(--line2);display:grid;place-items:center;font-weight:800;font-size:12.5px;color:var(--muted);flex-shrink:0}
+  .opt.correct{border-color:var(--ok);background:var(--ok-s)}.opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#fff}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-s)}.opt.wrong .mk{background:var(--bad);border-color:var(--bad);color:#fff}
   .opt:disabled{cursor:default}
-  .fb{margin-top:13px;border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.6;display:none}
-  .fb.show{display:block}
-  .fb.ok{background:var(--ok-s);color:#0a7a55;border:1px solid #bfe6d4}
-  .fb.no{background:var(--bad-s);color:#a81c1c;border:1px solid #f3c9c9}
-  .fb b{font-weight:800}
-  .lockmsg{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--faint);font-weight:600}
-  .lockmsg svg{width:16px;height:16px;stroke:var(--faint)}
-  .gate.solved .lockmsg{display:none}
-  .nextbtn{margin-top:16px;display:none;align-items:center;gap:9px;background:var(--pri);color:#fff;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 6px 16px rgba(37,99,235,.28);transition:transform .15s,box-shadow .2s}
-  .gate.solved .nextbtn{display:inline-flex}
-  .nextbtn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(37,99,235,.36)}
-  .nextbtn svg{width:16px;height:16px;fill:currentColor}
-  .camino.locked{display:none}
+  .fb{margin-top:12px;border-radius:11px;padding:13px 15px;font-size:14.5px;line-height:1.55;display:none}
+  .fb.show{display:block}.fb.ok{background:var(--ok-s);color:#0a7a55}.fb.no{background:var(--bad-s);color:#a81c1c}.fb b{font-weight:800}
 
-  .finish{position:relative;margin-bottom:30px;display:none}
-  .finish.show{display:block}
-  .finish .node{background:linear-gradient(135deg,#f7b733,#fc4a1a);border-color:transparent;color:#fff}
-  .finish .body{text-align:center;background:linear-gradient(180deg,#fff,var(--surface2))}
-  .finish .tro{font-size:54px;margin-bottom:8px}
-  .finish .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .nav-foot{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:12px}
   .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-weight:700;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;border:1px solid var(--line2);background:var(--surface);color:var(--ink)}
-  .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:0 6px 16px rgba(37,99,235,.28)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.pri{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:0 6px 16px rgba(37,99,235,.26)}
+  .btn.pri:not(:disabled):hover{background:var(--pri-d)}
   .btn svg{width:16px;height:16px;fill:currentColor}
+  .lockhint{font-size:13px;color:var(--faint);font-weight:600;display:flex;align-items:center;gap:8px}
+  .lockhint svg{width:15px;height:15px;stroke:var(--faint);fill:none;stroke-width:2}
 
-  @media(max-width:620px){
-    .hprog .pb{width:80px}.hbar .ses{display:none}
-    .trail{padding-left:42px}.trail::before,.trail .fill{left:13px}
-    .camino .node{left:-42px;width:30px;height:30px;font-size:13px}
-    .camino .body{padding:22px 18px}.compare{grid-template-columns:1fr}
+  .done-card{text-align:center;background:linear-gradient(180deg,#fff,var(--surface2));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:40px 30px}
+  .done-card .tro{font-size:52px;margin-bottom:6px}
+  .done-card h1{margin-bottom:8px}.done-card p{color:var(--muted);max-width:52ch;margin:0 auto 8px;font-size:16px}
+  .done-card .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr;gap:18px}
+    .side{position:static;order:-1}
+    .ulist{display:flex;overflow-x:auto;padding:10px;gap:8px}
+    .uitem{flex-direction:column;min-width:120px;text-align:center;align-items:center}
+    .uitem .lk,.uitem .ud{display:none}.uitem .ut{font-size:12.5px}
+    .mc{grid-template-columns:1fr}.mc .lft{border-right:none;border-bottom:1px solid var(--line);padding:0 0 16px}
+    .mn{flex-direction:column}.mn .menu{width:100%}
+    .htitle{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 <header>
-  <div class="wrap hbar">
+  <div class="hbar">
     <a class="back" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Academia</a>
-    <span class="ses">Sesión 1 · Fundamentos</span>
+    <span class="htitle">Sesión 1 · ¿Qué es un CRM?</span>
     <div class="hprog"><div class="pb"><i id="hbar"></i></div><span class="pl" id="hpct">0%</span></div>
   </div>
 </header>
 
-<main>
-  <section class="hero wrap">
-    <span class="eye">📖 Sesión 1 · Fundamentos</span>
-    <h1>¿Qué es un CRM? La historia, la idea y por qué cambió los negocios</h1>
-    <p class="lead">No vamos a empezar por la definición. Vamos a empezar por una historia — la de un problema tan viejo como el comercio, y la de las personas que, a lo largo de 70 años, inventaron la forma de resolverlo. Cuando lleguemos a "qué es un CRM", ya lo vas a tener claro de antes.</p>
-    <div class="meta">
-      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg> 5 caminos</span>
-      <span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> ~30 min</span>
-      <span class="m"><svg class="ic" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> con historia real</span>
-      <span class="m">🧠 quedate con las ideas, no con datos sueltos</span>
+<div class="layout">
+  <aside class="side">
+    <div class="sh">
+      <div class="t">Contenido de la sesión</div>
+      <div class="s" id="sideSub">0 de 5 unidades</div>
+      <div class="pb"><i id="sbar"></i></div>
     </div>
-  </section>
-
-  <div class="wrap"><div class="trail" id="trail"><div class="fill" id="trailfill"></div></div></div>
-</main>
+    <div class="ulist" id="ulist"></div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
 
 <script>
 const SESSION='s1', NEXT='session2-trainees.html', EXAM='examen-fundamentos.html';
-const CAMINOS=[
-  {
-    title:'El problema más viejo de los negocios',
-    body:`
-      <p class="lede">Imaginate el almacén de un barrio, hace 50 años. El dueño conoce a cada cliente por su nombre. Sabe que doña Rosa compra té los martes, que al de la esquina le gusta fiar hasta fin de mes, que la familia del 3.º B tuvo un bebé y ahora lleva pañales. No tiene ningún sistema. Su CRM es <strong>su memoria y un cuaderno</strong>.</p>
-      <p>Y funciona <strong>perfecto</strong>… mientras sean 100 clientes y trabaje él solo.</p>
-      <p>Ahora cambiá la escena: el almacén creció, son 3 locales, 10 empleados y 5.000 clientes. El dueño ya no se acuerda de todos. Los empleados no saben lo que él sabía. Cuando alguien se enferma o renuncia, <strong>su conocimiento se va con él</strong>. Doña Rosa llama para reclamar algo que habló la semana pasada con otro empleado, y nadie tiene ni idea de qué pasó.</p>
-      <p class="mut">Ese es el problema. No es nuevo, no es tecnológico. Es humano: <strong>¿cómo hacés para conocer y atender bien a cada cliente cuando son demasiados para tu cabeza y trabajás con un equipo?</strong></p>
-      <div class="compare">
-        <div class="col bad"><h5>❌ La info en la cabeza</h5><p>Cada persona sabe lo suyo. Si falta, se pierde. Nadie ve el panorama completo.</p></div>
-        <div class="col good"><h5>✅ La info en un lugar común</h5><p>Lo que sabe uno, lo saben todos. La relación con el cliente no depende de una sola persona.</p></div>
+
+/* media renderers */
+const MEDIA={
+  photo:(src,cap)=>`<div class="media photo"><img src="${src}" alt="${cap}" loading="lazy">${cap?`<div class="cap">${cap}</div>`:''}</div>`,
+  contact:()=>`<div class="media win"><div class="bar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="url">CRM ▸ Contactos ▸ Ana Gómez</span></div><div class="scr"><div class="mc">
+      <div class="lft"><div class="av">AG</div><div class="nm">Ana Gómez</div><div class="rl">Gerente de Compras</div><div class="pillrow"><span class="pill">Cliente</span></div></div>
+      <div class="rgt"><div class="props"><div class="lbl">Información (propiedades)</div>
+        <div class="pr"><span class="k">Email</span><span class="v">ana@empresa.com</span></div>
+        <div class="pr"><span class="k">Teléfono</span><span class="v">+54 11 5555-1234</span></div>
+        <div class="pr"><span class="k">Empresa</span><span class="v">Distribuidora Sur</span></div>
+        <div class="pr"><span class="k">Ciudad</span><span class="v">Rosario</span></div>
+        <div class="pr" style="border:none"><span class="k">Origen</span><span class="v">Formulario web</span></div>
+      </div></div></div></div></div>`,
+  nav:()=>`<div class="media win"><div class="bar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="url">app.tu-crm.com</span></div><div class="scr"><div class="mn">
+      <div class="menu">
+        <div class="mi on"><span class="e">📇</span> Contactos</div>
+        <div class="mi"><span class="e">🏢</span> Empresas</div>
+        <div class="mi"><span class="e">💼</span> Negocios</div>
+        <div class="mi"><span class="e">🎫</span> Tickets</div>
+        <div class="mi"><span class="e">📣</span> Marketing</div>
+        <div class="mi"><span class="e">📊</span> Reportes</div>
       </div>
-      <div class="pull"><span class="q">“</span>Un CRM es, en el fondo, la memoria del almacenero — pero compartida por todo el equipo y a prueba de olvidos.</div>`,
-    hl:{icon:'🧠', title:'La idea que te llevás', text:'El CRM no resuelve un problema técnico, resuelve uno humano y viejísimo: recordar y atender bien a cada cliente cuando son muchos. Todo lo demás que vas a aprender nace de acá.'},
-    q:'El dueño del almacén con 3 locales se va una semana de vacaciones. ¿Qué es lo que realmente se rompe cuando toda la información de los clientes vive solo en su cabeza?',
-    opts:[
-      {t:'Nada importante: el negocio puede esperar a que vuelva.', ok:false, fb:'Los clientes no esperan. Si llaman y nadie sabe su historia, la atención se cae justo cuando más se nota.'},
-      {t:'El equipo pierde el contexto de cada cliente y no puede atenderlos como él lo hacía: la relación dependía de una sola persona.', ok:true, fb:'Exacto. El problema no es la ausencia del dueño, es que el conocimiento nunca fue compartido. Eso es lo que un CRM viene a resolver.'},
-      {t:'Se pierden las llaves de los locales.', ok:false, fb:'Eso es un tema de seguridad, no de relación con los clientes. El problema acá es la información que vive en una sola cabeza.'},
-      {t:'Hay que contratar más empleados.', ok:false, fb:'Más gente sin información compartida solo multiplica el problema: ahora son más cabezas con pedacitos sueltos.'},
-    ]
-  },
+      <div class="cv" style="flex:1">
+        <div class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg> Buscar cualquier contacto, empresa o negocio…</div>
+        <div class="canvas">Acá aparece tu lista de contactos.<br>Desde el menú de la izquierda llegás a todo en 1 clic.</div>
+      </div></div></div></div>`,
+  form:()=>`<div class="media win"><div class="bar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="url">Crear contacto</span></div><div class="scr"><div class="mf">
+      <div class="fld"><label>Nombre</label><div class="inp">Ana</div></div>
+      <div class="fld"><label>Apellido</label><div class="inp">Gómez</div></div>
+      <div class="fld"><label>Email <span style="color:var(--pri)">(la clave para no duplicar)</span></label><div class="inp">ana@empresa.com</div></div>
+      <div class="fld"><label>Empresa</label><div class="inp ph">Buscá y asociá una empresa…</div></div>
+      <div class="save">Guardar contacto</div>
+      <div class="hint">💡 Antes de guardar, el CRM revisa si ese email ya existe para no crear un duplicado.</div>
+  </div></div></div>`,
+  timeline:(html)=>`<div class="media win"><div class="bar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="url">La historia del CRM</span></div><div class="scr"><div class="tl">${html}</div></div></div>`
+};
+
+const TL=`
+  <div class="ev"><div class="yr">1956</div><div class="ti">El Rolodex 🗂️</div><p>Un tarjetero giratorio de escritorio. Cada tarjeta, un contacto. Durante décadas fue el "CRM" del mundo entero.</p></div>
+  <div class="ev"><div class="yr">Años 80</div><div class="ti">Datos en la computadora 💾</div><p>Las empresas empiezan a guardar y analizar datos de clientes con software. Ya no alcanza con anotar: ahora se usa la info para decidir.</p></div>
+  <div class="ev"><div class="yr">1986</div><div class="ti">Dos vendedores y una servilleta 🍽️</div><p>Pat Sullivan y Mike Muhney se preguntan en un restaurante qué necesitarían ellos para vender mejor, y lo dibujan ahí mismo. Nace el primer software para gestionar contactos en una PC.</p></div>
+  <div class="ev"><div class="yr">Años 90</div><div class="ti">Aparece el nombre "CRM" 🏷️</div><p>Se populariza el término Customer Relationship Management (gestión de la relación con el cliente) y los sistemas se vuelven más completos.</p></div>
+  <div class="ev"><div class="yr">1999</div><div class="ti">El CRM se va a la nube ☁️</div><p>Deja de vivir instalado en tu computadora y pasa a internet. Entrás desde cualquier lado, sin instalar nada. Eso lo puso al alcance de empresas chicas.</p></div>
+  <div class="ev"><div class="yr">Hoy</div><div class="ti">CRM con automatización e IA 🤖</div><p>La misma idea de 1956, pero ahora con tareas que se hacen solas y asistentes que sugieren el próximo paso.</p></div>`;
+
+const UNITS=[
   {
-    title:'Del Rolodex a la nube: 70 años de una misma idea',
-    body:`
-      <p class="lede">Lo lindo de esta historia es que <strong>nadie "inventó" el CRM de un día para el otro</strong>. Fue evolucionando, herramienta tras herramienta, siempre persiguiendo lo mismo: no perder de vista al cliente.</p>
-      <div class="tl">
-        <div class="ev"><div class="yr">1956</div><div class="ti">El Rolodex 🗂️</div><p>Un tarjetero giratorio de escritorio: cada tarjeta, un contacto con su nombre y teléfono. Durante décadas fue <em>el</em> CRM del mundo. Tu "base de datos" giraba sobre tu escritorio.</p></div>
-        <div class="ev"><div class="yr">Años 80</div><div class="ti">El marketing de bases de datos 📊</div><p>Robert y Kate Kestnbaum empiezan a juntar y analizar datos de clientes con computadoras: no solo guardarlos, sino <strong>usarlos para decidir</strong> a quién venderle y cómo.</p></div>
-        <div class="ev"><div class="yr">4 de julio de 1986</div><div class="ti">Dos vendedores y una servilleta 🍽️</div><p>Pat Sullivan y Mike Muhney se sientan en un restaurante con lápiz y papel y se preguntan: "¿qué necesitaríamos <em>nosotros</em> para vender mejor?". Lo dibujan en una servilleta. Un año después lanzan el primer software para gestionar contactos en una PC. Su lema: <strong>"Yes, Everybody Sells"</strong> (sí, todos venden).</p></div>
-        <div class="ev"><div class="yr">1993–1995</div><div class="ti">Nace el nombre "CRM" 🏷️</div><p>Tom Siebel construye el primer sistema grande de gestión de clientes —una apuesta enorme— y por esos años se populariza el término <strong>Customer Relationship Management</strong>: gestión de la relación con el cliente.</p></div>
-        <div class="ev"><div class="yr">1999</div><div class="ti">El CRM se va a la nube ☁️</div><p>El gran salto: el CRM deja de vivir instalado en una computadora y pasa a internet. Ahora se entra desde cualquier lado, sin instalar nada. Eso lo puso al alcance de empresas chicas, no solo gigantes.</p></div>
-        <div class="ev"><div class="yr">Hoy</div><div class="ti">CRM + automatización + IA 🤖</div><p>El mismo concepto de siempre, ahora con tareas que se hacen solas y asistentes que sugieren el próximo paso. Pero el corazón no cambió desde 1956.</p></div>
-      </div>
-      <p>Fijate el hilo: del cartón al Rolodex, del Rolodex a la PC, de la PC a la nube. <strong>Las herramientas cambiaron; la necesidad es siempre la misma.</strong> Por eso entender la idea vale más que aprender botones: los botones cambian cada año.</p>`,
-    hl:{icon:'🍽️', title:'Dato para no olvidar', text:'El primer software de contactos nació de dos vendedores preguntándose "¿qué necesitamos nosotros?" en un restaurante. El CRM no bajó de una torre de ingenieros: salió de gente que vendía y se cansó de olvidarse de sus clientes.', link:'https://en.wikipedia.org/wiki/Customer_relationship_management'},
-    q:'Si las herramientas de CRM cambiaron tantísimo (del Rolodex a la nube), ¿por qué conviene enfocarse en entender la idea y no en memorizar dónde está cada botón?',
-    opts:[
-      {t:'Porque los botones son aburridos.', ok:false, fb:'No es cuestión de gustos. Es algo más práctico que eso.'},
-      {t:'Porque la idea de fondo (no perder de vista al cliente) se mantiene, mientras que las pantallas y los botones cambian todo el tiempo.', ok:true, fb:'Tal cual. Si entendés el "para qué", te adaptás a cualquier sistema. Si solo memorizás botones, quedás perdido apenas cambia la herramienta.'},
-      {t:'Porque hoy ya no se usan botones.', ok:false, fb:'Claro que se siguen usando. El punto es otro: lo que perdura es el concepto, no la interfaz.'},
-      {t:'Porque los botones son secretos.', ok:false, fb:'No tienen nada de secreto. Lo que pasa es que cambian seguido; la idea, no.'},
-    ]
-  },
-  {
-    title:'Entonces… ¿qué es un CRM, en una frase?',
-    body:`
-      <p class="lede">Ahora sí, con todo lo anterior en la cabeza, la definición se cae de madura:</p>
-      <div class="pull">Un <strong>CRM</strong> es un único lugar, compartido por todo el equipo, donde vive la ficha y la <strong>historia completa</strong> de cada cliente y de cada posible cliente.</div>
-      <p>CRM viene de <strong>Customer Relationship Management</strong>: gestión de la relación con el cliente. Pero quedate con la versión simple: <strong>la libreta del almacenero, compartida y que no se olvida.</strong></p>
-      <p>Una buena forma de entenderlo es pensar en la <strong>historia clínica</strong> de un consultorio. No importa qué médico te atienda hoy: todos ven tu historial, tus estudios, qué te recetaron la última vez. No tenés que volver a contar todo desde cero. Un CRM hace eso, pero con clientes en lugar de pacientes.</p>
-      <p style="font-weight:700;margin-top:18px">Y para que no haya confusiones, un CRM <span style="color:var(--bad)">NO</span> es:</p>
+    short:'¿Qué es un CRM?', dur:'6 min',
+    title:'¿Qué es un CRM?',
+    media:MEDIA.photo('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=70','Un equipo trabajando sobre la misma información de clientes.'),
+    html:`<div class="prose">
+      <p>Vamos directo al grano. <b>CRM</b> quiere decir <i>Customer Relationship Management</i>, o sea: gestión de la relación con los clientes. Pero te lo digo más fácil.</p>
+      <p>Pensá en el almacenero del barrio. Conoce a cada cliente por su nombre, sabe qué compra y a quién le puede fiar. Todo eso lo tiene en la cabeza, y funciona bárbaro… hasta que el negocio crece, se suma gente al equipo y ya nadie se acuerda de todo.</p>
+      <p>Un CRM es justamente eso, pero para un equipo entero y sin depender de la memoria de nadie: <b>un solo lugar donde tu empresa guarda todo sobre cada cliente, y donde todos lo pueden ver.</b></p>
+      <h3>¿Qué guarda adentro?</h3>
       <ul>
-        <li><b>No es un robot que vende solo.</b> Te ayuda a vender mejor; las decisiones y la relación siguen siendo humanas.</li>
-        <li><b>No reemplaza a las personas.</b> Las potencia: les da memoria y orden.</li>
-        <li><b>No es "un Excel más lindo".</b> Un Excel guarda datos; un CRM guarda la <em>relación</em>: quién es cada uno y todo lo que pasó con él.</li>
-      </ul>`,
-    hl:{icon:'🩺', title:'La analogía que conviene recordar', text:'Un CRM es como la historia clínica de un consultorio: cualquiera del equipo que atienda al cliente ve toda su historia y lo puede ayudar sin empezar de cero.'},
-    q:'Un compañero dice: "para mí el CRM es lo mismo que una planilla de Excel con los datos de los clientes". ¿Cuál es la diferencia más importante que le falta ver?',
-    opts:[
-      {t:'Que el CRM tiene colores más lindos.', ok:false, fb:'La estética no es el punto. La diferencia es de fondo, no de forma.'},
-      {t:'Que el CRM no guarda solo datos sueltos: guarda la relación y la historia completa de cada cliente, compartida con todo el equipo.', ok:true, fb:'Eso es. Un Excel es una lista; un CRM es la memoria viva de cada relación, visible para todos. Esa es la diferencia de fondo.'},
-      {t:'Que el Excel es gratis y el CRM no.', ok:false, fb:'El precio puede variar, pero no es lo que define a un CRM. Lo que lo define es guardar la relación, no solo datos.'},
-      {t:'Que el Excel no se puede abrir en la computadora.', ok:false, fb:'El Excel se abre perfecto. La diferencia real es qué guarda cada uno: datos sueltos vs. la historia de la relación.'},
-    ]
-  },
-  {
-    title:'Las tres piezas que vas a reconocer en cualquier CRM',
-    body:`
-      <p class="lede">No importa qué sistema te toque usar el día de mañana: por dentro, todos se apoyan en las mismas tres piezas. Si entendés estas tres, entendés cualquier CRM.</p>
-      <ul>
-        <li><b>1. Las personas y las empresas.</b> A quién le vendés o atendés. Una <strong>persona</strong> es un contacto (con su nombre, mail, teléfono); una <strong>empresa</strong> es el lugar donde esa persona trabaja. Una empresa puede tener varias personas.</li>
-        <li><b>2. La información (los datos).</b> Lo que sabés de cada uno: ciudad, interés, cómo llegó a vos, qué compró. Cada dato va en su casillero — eso es lo que después te deja <em>encontrar</em> y <em>agrupar</em> gente.</li>
-        <li><b>3. La historia.</b> La línea de tiempo de todo lo que pasó: llamadas, mails, reuniones, notas. Esto es lo que un Excel no tiene y lo que hace que un CRM sea un CRM.</li>
+        <li>Quién es cada cliente y cómo contactarlo.</li>
+        <li>Qué se habló con él y cuándo (llamadas, mails, reuniones).</li>
+        <li>En qué anda: si está por comprar, si ya es cliente, si tuvo un problema.</li>
       </ul>
-      <p>Pensalo así: si la <strong>persona</strong> es el "quién", la <strong>información</strong> es el "cómo es" y la <strong>historia</strong> es el "qué pasó". Con esas tres cosas, cualquiera del equipo puede tomar la posta de un cliente sin perderse.</p>
-      <p class="mut">En las próximas sesiones vamos a meternos en cada una de estas piezas con calma. Por ahora alcanza con reconocerlas.</p>`,
-    hl:{icon:'🧩', title:'Para que te quede', text:'Personas + información + historia. El "quién", el "cómo es" y el "qué pasó". Esas tres piezas están en todo CRM, se llame como se llame.'},
-    q:'Querés guardar en el CRM que un cliente "llamó el lunes para pedir un presupuesto". ¿A cuál de las tres piezas pertenece ese dato?',
+      <div class="note"><b>Ojo con esto:</b> un CRM no vende solo ni reemplaza a las personas. Las ayuda a trabajar mejor, dándoles memoria y orden.</div>
+    </div>`,
+    hs:[
+      {e:'📘',t:'Cómo se organiza tu base de datos en el CRM',u:'https://knowledge.hubspot.com/get-started/manage-your-crm-database',k:'HubSpot KB'},
+      {e:'🚀',t:'Primeros pasos en HubSpot',u:'https://knowledge.hubspot.com/get-started',k:'HubSpot KB'},
+    ],
+    q:'¿Cuál es la mejor forma de explicar qué es un CRM?',
     opts:[
-      {t:'A la información (un casillero de datos).', ok:false, fb:'Casi. Los casilleros guardan cómo es el cliente (ciudad, interés). Pero "llamó el lunes" es algo que pasó, no una característica fija.'},
-      {t:'A la historia (la línea de tiempo de interacciones).', ok:true, fb:'Correcto. Una llamada es un hecho que ocurrió: va en la historia del cliente. Así, cualquiera que lo atienda después sabe qué se habló.'},
-      {t:'A la empresa.', ok:false, fb:'La empresa es el lugar donde trabaja la persona. Una llamada no es un dato de la empresa, es un evento en la historia del contacto.'},
-      {t:'No se guarda, eso se recuerda de memoria.', ok:false, fb:'¡Justo lo que un CRM viene a evitar! La memoria falla y no se comparte. Por eso registramos cada interacción en la historia.'},
+      {t:'Una planilla de Excel un poco más linda con los datos de los clientes.', ok:false, fb:'Un Excel guarda datos sueltos. Un CRM guarda la relación completa con cada cliente y la comparte con todo el equipo. No es lo mismo.'},
+      {t:'Un único lugar, compartido por el equipo, donde vive toda la información y la historia de cada cliente.', ok:true, fb:'Eso es. La clave está en "compartido" y en "la historia": cualquiera del equipo puede atender a un cliente sin empezar de cero.'},
+      {t:'Un programa que vende solo, sin que intervenga ninguna persona.', ok:false, fb:'No. El CRM ayuda a las personas a vender mejor, pero la relación y las decisiones siguen siendo humanas.'},
+      {t:'Una red social para empresas.', ok:false, fb:'No es una red social. Es la base de datos central de tus clientes y de todo lo que pasó con ellos.'},
     ]
   },
   {
-    title:'Por qué esto te va a cambiar el día a día',
-    body:`
-      <p class="lede">Hasta acá hablamos de la idea. Ahora, ¿qué cambia para vos, en concreto, cuando trabajás con un CRM? Bastante:</p>
-      <ul>
-        <li><b>Dejás de depender de tu memoria.</b> El sistema se acuerda por vos: a quién tenés que llamar, qué le prometiste, cuándo.</li>
-        <li><b>Nunca empezás de cero.</b> Abrís la ficha de un cliente y ves toda su historia, aunque nunca lo hayas atendido antes.</li>
-        <li><b>El equipo rema para el mismo lado.</b> Marketing, ventas y atención ven la misma información. Nadie pisa a nadie.</li>
-        <li><b>Tomás mejores decisiones.</b> Cuando los datos están ordenados, podés ver qué funciona y qué no — y eso te hace mejor en tu rol.</li>
-      </ul>
-      <p>Y acá está lo importante para vos: <strong>aprender CRM abre puertas</strong>. Es una base que sirve para ventas, para marketing y para atención al cliente. No importa para dónde quieras crecer: entender el CRM te da una herramienta que todos los equipos valoran.</p>
-      <div class="pull"><span class="q">“</span>No estás aprendiendo un programa. Estás aprendiendo una forma de trabajar que ninguna empresa moderna puede ignorar.</div>
-      <p class="mut">Eso es todo por la Sesión 1. No te pedimos que memorices nada: si te quedaste con la idea del almacenero, con la historia del Rolodex a la nube, y con las tres piezas (personas, información, historia), ya estás listo para lo que viene.</p>`,
-    hl:{icon:'🚪', title:'La idea que te llevás', text:'Aprender CRM no es aprender un software: es aprender a no perder de vista al cliente. Esa habilidad sirve en ventas, marketing y atención — y abre puertas en cualquiera de los tres.'},
-    q:'¿Cuál de estas frases resume mejor por qué vale la pena aprender CRM, más allá de manejar un programa?',
+    short:'De dónde viene', dur:'5 min',
+    title:'De dónde salió el CRM (y por qué te conviene saberlo)',
+    media:MEDIA.timeline(TL),
+    html:`<div class="prose">
+      <p>Esto no lo inventó una empresa de un día para el otro. Es una idea que viene evolucionando hace más de 70 años, siempre detrás de lo mismo: no perder de vista al cliente.</p>
+      <p>Mirá la línea de tiempo de arriba. Lo importante no son las fechas, es el <b>hilo</b>: del cartón al Rolodex, del Rolodex a la computadora, y de ahí a la nube. La herramienta cambió un montón; la necesidad es siempre la misma.</p>
+      <div class="note">Por eso en este curso te enseñamos a <b>entender la idea</b> antes que los botones. Los botones cambian cada año; la idea, no. Si entendés el "para qué", te adaptás a cualquier sistema.</div>
+      <p>Y hay un detalle lindo: el primer software de contactos nació de dos vendedores cansados de olvidarse de sus clientes. No bajó de una torre de ingenieros. Salió de gente que estaba en la calle vendiendo.</p>
+    </div>`,
+    hs:[
+      {e:'📖',t:'Historia del CRM (referencia general)',u:'https://en.wikipedia.org/wiki/Customer_relationship_management',k:'Wikipedia'},
+      {e:'🎓',t:'Getting Started with HubSpot CRM',u:'https://academy.hubspot.com/lessons/getting-started-with-hubspot-crm',k:'HubSpot Academy'},
+    ],
+    q:'Si las herramientas cambiaron tanto (del Rolodex a la nube), ¿por qué conviene enfocarse en entender la idea del CRM?',
     opts:[
-      {t:'Porque así podés presumir que sabés usar tecnología.', ok:false, fb:'No se trata de presumir. El valor es mucho más concreto y útil que eso.'},
-      {t:'Porque es una forma de trabajar —no perder de vista al cliente— que sirve en ventas, marketing y atención, y abre puertas en cualquiera.', ok:true, fb:'Exacto. Lo que aprendés es una manera de organizar el trabajo y la relación con el cliente. Eso es valioso en cualquier equipo y rol.'},
-      {t:'Porque los CRM son obligatorios por ley.', ok:false, fb:'No son obligatorios por ley. Se usan porque resuelven un problema real, no por obligación.'},
-      {t:'Porque reemplaza tener que hablar con los clientes.', ok:false, fb:'Al revés: te ayuda a hablar mejor con ellos, con más contexto. El CRM no reemplaza la relación, la mejora.'},
+      {t:'Porque la idea de fondo (no perder de vista al cliente) sigue igual, mientras las pantallas y los botones cambian todo el tiempo.', ok:true, fb:'Exacto. Si entendés el para qué, manejás cualquier CRM aunque cambie la herramienta.'},
+      {t:'Porque los botones son aburridos.', ok:false, fb:'No es por gusto. Es algo más práctico: la idea perdura y los botones cambian.'},
+      {t:'Porque hoy los CRM ya no tienen botones.', ok:false, fb:'Claro que tienen. El punto es que la interfaz cambia seguido y la idea de fondo no.'},
+      {t:'Porque la historia no sirve para nada.', ok:false, fb:'Al contrario: entender de dónde viene te ayuda a entender por qué funciona como funciona.'},
+    ]
+  },
+  {
+    short:'Cómo guarda los datos', dur:'7 min',
+    title:'Cómo guarda la información: contactos, empresas y datos',
+    media:MEDIA.contact(),
+    html:`<div class="prose">
+      <p>Arriba tenés una ficha de contacto, parecida a la que vas a ver en cualquier CRM. Usémosla para entender tres palabras que vas a escuchar todo el tiempo.</p>
+      <ul>
+        <li><b>Contacto:</b> una persona. En el ejemplo, Ana Gómez.</li>
+        <li><b>Empresa:</b> el lugar donde trabaja esa persona. Acá, Distribuidora Sur. Una empresa puede tener varios contactos.</li>
+        <li><b>Propiedad:</b> cada dato de la ficha (email, teléfono, ciudad, origen). Cada dato en su casillero.</li>
+      </ul>
+      <p>¿Por qué importa poner cada dato en su casillero? Porque después vas a querer buscar cosas como "todos mis clientes de Rosario" o "los que llegaron por un formulario". Si los datos están ordenados, eso lo resolvés en segundos. Si están sueltos en una nota, no.</p>
+      <div class="note"><b>Regla simple:</b> el dato va donde pertenece. El email es de la persona; la dirección de la oficina es de la empresa.</div>
+    </div>`,
+    hs:[
+      {e:'🎓',t:'The Anatomy of Your CRM (objetos y propiedades)',u:'https://academy.hubspot.com/lessons/anatomy-of-your-crm',k:'HubSpot Academy'},
+      {e:'📘',t:'Centro de ayuda del CRM',u:'https://knowledge.hubspot.com/crm',k:'HubSpot KB'},
+    ],
+    q:'Querés guardar la ciudad de la oficina central de una empresa. ¿Dónde corresponde ese dato?',
+    opts:[
+      {t:'En una propiedad de la empresa.', ok:true, fb:'Bien. La dirección de la oficina describe a la empresa, así que va en la empresa. Todos sus contactos quedan asociados a ese dato.'},
+      {t:'En el nombre del contacto.', ok:false, fb:'No. Mezclar datos en el nombre ensucia todo y después no podés buscar ni ordenar bien.'},
+      {t:'En una nota suelta.', ok:false, fb:'Una nota no se puede filtrar ni buscar. Para eso están las propiedades, en el objeto correcto (la empresa).'},
+      {t:'En el teléfono de la persona.', ok:false, fb:'El teléfono es para el teléfono. Cada dato tiene su casillero; la ciudad de la oficina va en la empresa.'},
+    ]
+  },
+  {
+    short:'Cómo moverte', dur:'5 min',
+    title:'Cómo moverte por el CRM sin perderte',
+    media:MEDIA.nav(),
+    html:`<div class="prose">
+      <p>La pantalla puede parecer grande al principio, pero el mapa es simple. Fijate la captura de arriba.</p>
+      <ul>
+        <li>Desde el <b>menú de la izquierda</b> llegás a todo: Contactos, Empresas, Negocios, y las herramientas de marketing, ventas y reportes.</li>
+        <li>La <b>barra de búsqueda</b> te encuentra cualquier registro al instante. Si buscás a una persona, empezá por ahí.</li>
+        <li>Las <b>vistas y filtros</b> dentro de cada sección responden casi cualquier pregunta sin que tengas que exportar nada a Excel.</li>
+      </ul>
+      <p>No hace falta que te aprendas dónde está cada cosa de memoria. Con la búsqueda y el menú de la izquierda ya te movés por el 90% del CRM.</p>
+    </div>`,
+    hs:[
+      {e:'📘',t:'Recorrido inicial por tu cuenta',u:'https://knowledge.hubspot.com/get-started',k:'HubSpot KB'},
+    ],
+    q:'Tu jefe te pide "la lista de todos los negocios que cierran este mes". ¿Cuál es la forma más eficiente de obtenerla?',
+    opts:[
+      {t:'Buscar negocio por negocio en la barra de búsqueda.', ok:false, fb:'La búsqueda sirve para encontrar UN registro, no para armar listas con condiciones. No es el camino.'},
+      {t:'Ir a la sección de Negocios y aplicar un filtro por fecha de cierre.', ok:true, fb:'Eso. Las vistas con filtros son la herramienta justa: rápidas, precisas y siempre actualizadas.'},
+      {t:'Exportar todo a Excel y filtrar ahí.', ok:false, fb:'Te da una foto vieja y te saca del CRM. Si lo podés resolver con un filtro adentro, mejor.'},
+      {t:'Pedirle a otra persona que lo haga.', ok:false, fb:'Es algo que resolvés vos en segundos con un filtro. No hace falta delegarlo.'},
+    ]
+  },
+  {
+    short:'Tu primer contacto', dur:'6 min',
+    title:'Tu primera tarea: cargar un contacto bien',
+    media:MEDIA.form(),
+    html:`<div class="prose">
+      <p>Llegó un interesado y lo tenés que cargar. Parece simple, y lo es, pero hay un detalle que separa un CRM ordenado de uno lleno de basura.</p>
+      <h3>El paso que casi todos se saltean</h3>
+      <p>Antes de crear el contacto, <b>buscalo primero</b> por email o nombre. Capaz ya está cargado. Si existe, lo actualizás; no creás uno nuevo. Así evitás los duplicados, que son el problema número uno de cualquier base de datos.</p>
+      <h3>Después, cargá bien</h3>
+      <ul>
+        <li>Completá el <b>email</b>: es la huella que usa el CRM para no duplicar.</li>
+        <li><b>Asociá</b> el contacto a su empresa.</li>
+        <li>Dejá registrada la <b>primera actividad</b> (una nota de cómo llegó, por ejemplo).</li>
+      </ul>
+      <div class="note">Un contacto bien cargado hoy es un reporte confiable dentro de seis meses. Vale la pena el minuto extra.</div>
+    </div>`,
+    hs:[
+      {e:'📘',t:'Cómo crear contactos (a mano, importando o por formularios)',u:'https://knowledge.hubspot.com/records/create-contacts',k:'HubSpot KB'},
+    ],
+    q:'Vas a cargar un nuevo interesado. ¿Cuál es el primer paso para no ensuciar el CRM?',
+    opts:[
+      {t:'Crearlo directo; si hay un duplicado, ya lo arreglará alguien después.', ok:false, fb:'Así nacen las bases sucias. "Después lo arreglo" casi nunca pasa, y los duplicados rompen reportes y automatizaciones.'},
+      {t:'Buscarlo primero por email o nombre; si ya existe, actualizar ese registro en vez de crear otro.', ok:true, fb:'Correcto. Buscar antes de crear es el hábito que mantiene el CRM limpio.'},
+      {t:'Crear siempre una empresa nueva por las dudas.', ok:false, fb:'Eso genera empresas duplicadas. Si la empresa ya existe, asociá el contacto a esa.'},
+      {t:'Anotarlo en un papel para cargarlo más tarde.', ok:false, fb:'Si no entra al CRM, no se puede seguir ni reportar. Cargalo bien, ahora.'},
     ]
   },
 ];
@@ -277,87 +381,96 @@ const CAMINOS=[
 /* ---------- engine ---------- */
 const LS='refindable_sesion_'+SESSION;
 let state={unlocked:0,passed:{}}; try{state=Object.assign(state,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
-const saveS=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
-function markCourseDone(){try{const k='refindable_academy_progress_v1';const p=JSON.parse(localStorage.getItem(k)||'{}');p[SESSION]=true;localStorage.setItem(k,JSON.stringify(p));}catch(e){}}
-const trail=document.getElementById('trail');
+const save=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
+function markDone(){try{const k='refindable_academy_progress_v1';const p=JSON.parse(localStorage.getItem(k)||'{}');p[SESSION]=true;localStorage.setItem(k,JSON.stringify(p));}catch(e){}}
+let cur=Math.min(state.unlocked,UNITS.length-1);
+let finished=UNITS.every((_,i)=>state.passed[i]);
 
-CAMINOS.forEach((c,i)=>{
-  const sec=document.createElement('section');
-  sec.className='camino'+(i>state.unlocked?' locked':'')+(state.passed[i]?' passed':'')+(i===state.unlocked&&!state.passed[i]?' active':'');
-  sec.id='camino-'+i; sec.dataset.i=i;
-  const optsHtml=c.opts.map((o,j)=>`<button class="opt" data-j="${j}" data-ok="${o.ok?1:0}"><span class="mk">${String.fromCharCode(65+j)}</span><span>${o.t}</span></button>`).join('');
-  const hlLink=c.hl.link?`<a href="${c.hl.link}" target="_blank" rel="noopener">Leer más sobre la historia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`:'';
-  sec.innerHTML=`
-    <div class="node">${state.passed[i]?'✓':(i+1)}</div>
-    <div class="body">
-      <div class="ck">Camino ${i+1} de ${CAMINOS.length}</div>
-      <h2>${c.title}</h2>
-      ${c.body}
-      <div class="hsbox"><div class="hi">${c.hl.icon}</div><div><h5>${c.hl.title}</h5><p>${c.hl.text}</p>${hlLink}</div></div>
-      <div class="gate ${state.passed[i]?'solved':''}" data-i="${i}">
-        <span class="qlab">🧠 Comprobá que te quedó claro</span>
-        <div class="q">${c.q}</div>
-        <div class="opts">${optsHtml}</div>
-        <div class="fb"></div>
-        <div class="lockmsg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg> El próximo camino se desbloquea cuando elegís la opción correcta.</div>
-        <button class="nextbtn" type="button">${i<CAMINOS.length-1?'Continuar al Camino '+(i+2):'Terminar la sesión'} <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></button>
-      </div>
+const ulist=document.getElementById('ulist'), main=document.getElementById('main');
+
+function renderSide(){
+  ulist.innerHTML='';
+  UNITS.forEach((u,i)=>{
+    const locked=i>state.unlocked;
+    const it=document.createElement('div');
+    it.className='uitem'+(i===cur&&!finished?' cur':'')+(state.passed[i]?' done':'')+(locked?' lock':'');
+    it.innerHTML=`<span class="ix">${state.passed[i]?'✓':(i+1)}</span><div><div class="ut">${u.short}</div><div class="ud">${u.dur}</div></div>${locked?'<span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></span>':''}`;
+    if(!locked) it.addEventListener('click',()=>{cur=i;finished=false;renderAll();window.scrollTo({top:0,behavior:'smooth'});});
+    ulist.appendChild(it);
+  });
+  const passed=Object.keys(state.passed).filter(k=>state.passed[k]).length;
+  document.getElementById('sideSub').textContent=`${passed} de ${UNITS.length} unidades`;
+  document.getElementById('sbar').style.width=(passed/UNITS.length*100)+'%';
+  document.getElementById('hbar').style.width=(passed/UNITS.length*100)+'%';
+  document.getElementById('hpct').textContent=Math.round(passed/UNITS.length*100)+'%';
+}
+
+function renderMain(){
+  if(finished){renderFinish();return;}
+  const u=UNITS[cur], solved=!!state.passed[cur];
+  const hs=u.hs.map(r=>`<a class="res" href="${r.u}" target="_blank" rel="noopener"><span class="e">${r.e}</span><span>${r.t}</span><span class="meta"><span class="kind">${r.k}</span> ↗</span></a>`).join('');
+  const opts=u.opts.map((o,j)=>`<button class="opt" data-j="${j}" data-ok="${o.ok?1:0}"><span class="mk">${String.fromCharCode(65+j)}</span><span>${o.t}</span></button>`).join('');
+  main.innerHTML=`
+    <div class="crumb">Unidad ${cur+1} de ${UNITS.length}</div>
+    <h1>${u.title}</h1>
+    <div class="umeta"><span class="m"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>${u.dur} de lectura</span><span class="m">📺 video próximamente</span></div>
+    ${u.media}
+    ${u.html}
+    <div class="hsbox"><div class="ht"><span class="lg">H</span> Material de HubSpot para esta unidad</div>${hs}</div>
+    <div class="quiz">
+      <div class="ql">📝 Repaso rápido</div>
+      <div class="q">${u.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="fb"></div>
+    </div>
+    <div class="nav-foot">
+      <button class="btn" id="prevBtn" ${cur===0?'disabled':''}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 18l-6-6 6-6"/></svg> Anterior</button>
+      ${solved?'':'<span class="lockhint" id="lh"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg> Respondé el repaso para continuar</span>'}
+      <button class="btn pri" id="nextBtn" ${solved?'':'disabled'}>${cur<UNITS.length-1?'Siguiente unidad':'Terminar la sesión'} <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg></button>
     </div>`;
-  trail.appendChild(sec);
-});
-
-const fin=document.createElement('section');
-fin.className='camino finish';fin.id='finish';
-fin.innerHTML=`<div class="node">★</div><div class="body">
-  <div class="tro">🎉</div>
-  <h2>¡Terminaste la Sesión 1!</h2>
-  <p class="mut">Ya no necesitás que te expliquen qué es un CRM: lo entendés desde la raíz. Sabés de dónde viene, qué problema resuelve y cuáles son las tres piezas que vas a reconocer en cualquier sistema.</p>
-  <div class="pull" style="text-align:left">Si te quedaste con tres cosas, te quedaste con todo: <strong>la memoria del almacenero</strong>, <strong>del Rolodex a la nube</strong> y <strong>personas + información + historia</strong>.</div>
-  <div class="actions">
-    <a class="btn pri" href="${NEXT}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg> Ir a la Sesión 2</a>
-    <a class="btn" href="${EXAM}">Rendir el examen de Fundamentos</a>
-    <a class="btn" href="./">Volver a la academia</a>
-  </div>
-</div>`;
-trail.appendChild(fin);
-
-trail.querySelectorAll('.gate').forEach(gate=>{
-  const i=+gate.dataset.i, fb=gate.querySelector('.fb');
-  gate.querySelectorAll('.opt').forEach(opt=>{
+  // quiz
+  const fb=main.querySelector('.fb');
+  main.querySelectorAll('.opt').forEach(opt=>{
+    if(solved){opt.disabled=true;if(opt.dataset.ok==='1')opt.classList.add('correct');}
     opt.addEventListener('click',()=>{
-      if(gate.classList.contains('solved'))return;
-      const ok=opt.dataset.ok==='1', c=CAMINOS[i].opts[+opt.dataset.j];
-      gate.querySelectorAll('.opt').forEach(o=>o.classList.remove('wrong'));
+      if(state.passed[cur])return;
+      const ok=opt.dataset.ok==='1', o=u.opts[+opt.dataset.j];
+      main.querySelectorAll('.opt').forEach(x=>x.classList.remove('wrong'));
       if(ok){
-        opt.classList.add('correct');
-        gate.querySelectorAll('.opt').forEach(o=>o.disabled=true);
-        fb.className='fb ok show';fb.innerHTML='<b>✔ Correcto.</b> '+c.fb;
-        gate.classList.add('solved');
-        state.passed[i]=true; if(state.unlocked===i)state.unlocked=i+1; saveS();
-        const sec=document.getElementById('camino-'+i);sec.classList.add('passed');sec.classList.remove('active');sec.querySelector('.node').textContent='✓';
-        updateProgress();
+        opt.classList.add('correct');main.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        fb.className='fb ok show';fb.innerHTML='<b>✔ Correcto.</b> '+o.fb;
+        state.passed[cur]=true;if(state.unlocked===cur)state.unlocked=cur+1;save();
+        const nb=document.getElementById('nextBtn');nb.disabled=false;const lh=document.getElementById('lh');if(lh)lh.remove();
+        renderSide();
       }else{
-        opt.classList.add('wrong');
-        fb.className='fb no show';fb.innerHTML='<b>✘ Todavía no.</b> '+c.fb+' <br>Probá de nuevo.';
+        opt.classList.add('wrong');fb.className='fb no show';fb.innerHTML='<b>✘ Todavía no.</b> '+o.fb+' Probá de nuevo.';
       }
     });
   });
-  gate.querySelector('.nextbtn').addEventListener('click',()=>{ if(i<CAMINOS.length-1){revealNext(i+1);} else {revealFinish();} });
-});
-
-function revealNext(i){const sec=document.getElementById('camino-'+i);if(!sec)return;sec.classList.remove('locked');sec.classList.add('active');sec.scrollIntoView({behavior:'smooth',block:'start'});updateProgress();}
-function revealFinish(){markCourseDone();const f=document.getElementById('finish');f.classList.add('show');f.scrollIntoView({behavior:'smooth',block:'start'});updateProgress(true);}
-function updateProgress(done){
-  const total=CAMINOS.length, passed=Object.keys(state.passed).filter(k=>state.passed[k]).length;
-  const pct=done?100:Math.round(passed/total*100);
-  document.getElementById('hbar').style.width=pct+'%';document.getElementById('hpct').textContent=pct+'%';
-  document.getElementById('trailfill').style.height=(passed/total*100)+'%';
+  const pb=document.getElementById('prevBtn');if(pb)pb.addEventListener('click',()=>{if(cur>0){cur--;renderAll();window.scrollTo({top:0,behavior:'smooth'});}});
+  const nb=document.getElementById('nextBtn');nb.addEventListener('click',()=>{
+    if(!state.passed[cur])return;
+    if(cur<UNITS.length-1){cur++;renderAll();window.scrollTo({top:0,behavior:'smooth'});}
+    else{finished=true;markDone();renderAll();window.scrollTo({top:0,behavior:'smooth'});}
+  });
 }
-(function restore(){
-  for(let i=0;i<=state.unlocked&&i<CAMINOS.length;i++){const s=document.getElementById('camino-'+i);if(s)s.classList.remove('locked');}
-  if(CAMINOS.every((_,i)=>state.passed[i]))document.getElementById('finish').classList.add('show');
-  updateProgress(CAMINOS.every((_,i)=>state.passed[i]));
-})();
+
+function renderFinish(){
+  main.innerHTML=`<div class="done-card">
+    <div class="tro">🎉</div>
+    <h1>¡Terminaste la Sesión 1!</h1>
+    <p>Ya sabés qué es un CRM, de dónde viene, cómo guarda la información y cómo dar tus primeros pasos. Eso es la base de todo lo que sigue.</p>
+    <p style="font-weight:700;color:var(--ink)">Quedate con esto: un CRM es la memoria del equipo sobre cada cliente, ordenada y compartida.</p>
+    <div class="actions">
+      <a class="btn pri" href="${NEXT}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l6 6-6 6"/></svg> Ir a la Sesión 2</a>
+      <a class="btn" href="${EXAM}">Rendir el examen de Fundamentos</a>
+      <a class="btn" href="./">Volver a la academia</a>
+    </div>
+  </div>`;
+}
+
+function renderAll(){renderSide();renderMain();}
+renderAll();
 </script>
 </body>
 </html>
