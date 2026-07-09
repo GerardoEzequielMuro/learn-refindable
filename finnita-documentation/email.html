@@ -160,6 +160,9 @@
 .tk li{border-top:none!important;background:#fff;border:1px solid var(--rule2);border-radius:12px;padding:18px 22px!important;gap:18px!important;align-items:flex-start;box-shadow:0 1px 2px rgba(20,30,60,.03)}
 .tk li .n{font-size:22px!important;color:var(--orange)!important}
 .tk li p{font-size:15px!important;line-height:1.72!important}
+.csel{font:600 12.5px 'Inter',system-ui,sans-serif;color:#354171;background:#fff;border:1px solid #dbe1ec;border-radius:8px;padding:7px 11px;cursor:pointer;margin-left:14px}
+.csel:hover{border-color:#9aa0b2}
+.shead .desc{margin-left:auto}
 </style>
 </head>
 <body>
@@ -294,7 +297,7 @@ c3 -24 9 -59 12 -76 l5 -33 100 0 101 0 -8 33 c-4 17 -10 228 -14 467 -7 431
   </section>
 
   <section>
-    <div class="shead"><span class="num">02</span><h2>Funnel by campaign type</h2>
+    <div class="shead"><span class="num">02</span><h2>Funnel by campaign type</h2><select id="campSel" class="csel" aria-label="Filter by campaign"></select>
       <div class="desc">Sent → opened → clicked per group. Bars show the count and step-over-step conversion.</div></div>
     <div class="cols"><div class="feat" id="feat"></div><div class="side" id="side"></div></div>
     <div class="fn" id="coverageNote"></div>
@@ -355,12 +358,16 @@ document.getElementById("pulled").textContent = new Date(DATA.pulledAt).toLocale
 const groups = DATA.groups;
 const tot = {sent:0,delivered:0,open:0,click:0,unsubscribed:0,spamreport:0};
 for(const g in groups) for(const k in tot) tot[k]+=groups[g][k];
-[["Total sent",fmt(tot.sent)],["Open rate",pct(tot.open,tot.delivered).toFixed(1)+"%"],
- ["Click rate",pct(tot.click,tot.open).toFixed(1)+"%"],["App funnel entries",fmt(DATA.contacts.appEntry)],
- ["Active customers",fmt(DATA.extra.activeCustomerContacts)]].forEach(k=>{
-  const d=document.createElement("div");d.className="cell";
-  d.innerHTML='<div class="v">'+k[1]+'</div><div class="l">'+k[0]+'</div>';
-  document.getElementById("band").appendChild(d);});
+function renderBand(g){
+  const s=(g&&g!=="all")?groups[g]:tot;
+  const rows=[["Total sent",fmt(s.sent)],["Open rate",pct(s.open,s.delivered).toFixed(1)+"%"],
+   ["Click rate",pct(s.click,s.open).toFixed(1)+"%"],["App funnel entries",fmt(DATA.contacts.appEntry)],
+   ["Active customers",fmt(DATA.extra.activeCustomerContacts)]];
+  const band=document.getElementById("band");band.innerHTML="";
+  rows.forEach(k=>{const d=document.createElement("div");d.className="cell";
+    d.innerHTML='<div class="v">'+k[1]+'</div><div class="l">'+k[0]+'</div>';band.appendChild(d);});
+}
+renderBand("all");
 
 // key takeaways (numbers pulled from DATA so they stay in sync)
 const X=DATA.extra, C=DATA.contacts;
@@ -382,7 +389,7 @@ const YAX={grid:{display:false},border:{color:"#dbe1ec"},ticks:{color:"#232a3d",
 
 function funnel(host, group, {tall=false}={}){
   const s=groups[group], c=HUE[group];
-  const el=document.createElement("div");el.className="block";el.style.setProperty("--c",c);
+  const el=document.createElement("div");el.className="block";el.dataset.camp=group;el.style.setProperty("--c",c);
   el.innerHTML=
     '<div class="hd"><span class="tick"></span><span class="name">'+group+'</span><span class="sub">'+fmt(s.sent)+' sent</span></div>'+
     '<div class="chartbox'+(tall?' tall':'')+'"><canvas></canvas></div>'+
@@ -405,6 +412,19 @@ funnel(document.getElementById("feat"),"Newsletters",{tall:true});
 funnel(document.getElementById("side"),"Winback");
 funnel(document.getElementById("side"),"App Drop-off");
 ["Employer","Missed Call"].forEach(g=>{const h=document.createElement("div");h.className="half";document.getElementById("other").appendChild(h);funnel(h,g);});
+
+// campaign filter: re-scope the KPI band + show only the picked campaign's funnel
+(function(){
+  const sel=document.getElementById("campSel");if(!sel)return;
+  sel.innerHTML='<option value="all">All campaigns</option>'+Object.keys(groups).map(g=>'<option value="'+g+'">'+g+'</option>').join("");
+  const sec3=document.getElementById("other").closest("section");
+  sel.addEventListener("change",()=>{
+    const v=sel.value;
+    renderBand(v);
+    document.querySelectorAll('[data-camp]').forEach(b=>{b.style.display=(v==="all"||b.dataset.camp===v)?"":"none";});
+    if(sec3){const anyVisible=[...sec3.querySelectorAll('[data-camp]')].some(b=>b.style.display!=="none");sec3.style.display=anyVisible?"":"none";}
+  });
+})();
 
 const cv=DATA.coverage;
 document.getElementById("coverageNote").style.setProperty("--c","var(--drop)");
