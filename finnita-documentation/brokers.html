@@ -208,6 +208,14 @@ function eSeries(id){return D.months.map(m=>{const mm=D.monthly[m];return (mm&&m
 function monTot(mkey){const mm=D.monthly[mkey]||{};const s=o=>Object.values(o||{}).reduce((a,b)=>a+b,0);return{L:s(mm.L),P:s(mm.P),E:s(mm.E)};}
 function spark(vals,w,h,col){const mx=Math.max(1,...vals),n=vals.length;if(n<2)return '';const p=vals.map((v,i)=>[(i/(n-1))*(w-2)+1,h-1-(v/mx)*(h-2)]);const d=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');return '<svg class="spark" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="'+p[n-1][0].toFixed(1)+'" cy="'+p[n-1][1].toFixed(1)+'" r="2" fill="'+col+'"/></svg>';}
 function init(){
+  // show only brokers that exist in HubSpot (registered in the Broker object)
+  const _reg=new Set(D.rows.filter(r=>!r.unreg).map(r=>r.id.trim().toUpperCase()));
+  D.rows=D.rows.filter(r=>!r.unreg);
+  D.totals.atL=D.rows.reduce((s,r)=>s+r.atL,0);
+  D.totals.atP=D.rows.reduce((s,r)=>s+r.atP,0);
+  D.totals.atE=D.rows.reduce((s,r)=>s+r.atE,0);
+  D.totals.brokers=D.rows.length;
+  for(const m in D.monthly)for(const k of ['L','P','E']){const o=D.monthly[m][k]||{},n={};for(const id in o)if(_reg.has(id.trim().toUpperCase()))n[id]=o[id];D.monthly[m][k]=n;}
   idx={};D.rows.forEach(r=>idx[r.id.trim().toUpperCase()]=r);
   mk=D.months[D.months.length-1];
   sel.innerHTML='';D.months.slice().reverse().forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=mlabel(m);sel.appendChild(o);});
@@ -285,7 +293,7 @@ document.getElementById('body').addEventListener('click',e=>{const tr=e.target.c
 document.getElementById('q').addEventListener('input',e=>{filter=e.target.value.toLowerCase().trim();render();});
 sel.addEventListener('change',e=>{mk=e.target.value;exec();render();});
 document.getElementById('momSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;momMetric=b.dataset.m;document.querySelectorAll('#momSeg button').forEach(x=>x.classList.toggle('on',x===b));exec();});
-document.getElementById('foot').innerHTML='<b>Lead</b> = contact tagged with a Broker ID (by create date) · <b>Paid</b> = first payment or Stripe payment that month · <b>Enrolled</b> = enrolled = Yes (by enrolled date). Leads in Mar–Apr 2026 reflect a one-time data migration, not organic flow, so the lead→enrolled rate understates true channel quality. Broker IDs with no profile in the Broker object are shown as <b>Unregistered ID</b> rows, so nothing is hidden. Live, read-only from HubSpot.';
+document.getElementById('foot').innerHTML='<b>Lead</b> = contact tagged with a Broker ID (by create date) · <b>Paid</b> = first payment or Stripe payment that month · <b>Enrolled</b> = enrolled = Yes (by enrolled date). Leads in Mar–Apr 2026 reflect a one-time data migration, not organic flow, so the lead→enrolled rate understates true channel quality. Only brokers registered in the HubSpot Broker object are shown; loose broker IDs with no broker profile are excluded. Live, read-only from HubSpot.';
 init();
 function refreshData(){var b=document.getElementById('rfz');if(b){b.disabled=true;b.textContent='↻ Refreshing…';}fetch('/api/broker-data?refresh=1&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){if(d&&d.rows){D=d;init();}}).catch(function(){}).finally(function(){if(b){b.disabled=false;b.textContent='↻ Refresh';}});}
 fetch('/api/broker-data').then(r=>r.json()).then(d=>{if(d&&d.rows){D=d;init();}}).catch(()=>{});
