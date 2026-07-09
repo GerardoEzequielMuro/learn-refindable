@@ -150,6 +150,17 @@
 .fnav .fr a.hub{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16)}
 @media(max-width:768px){.fnav{padding:0 14px;height:44px}.fnav .fcrumb{display:none}.fnav .fr a.dash{display:none}}
 </style>
+<style>
+/* email report tweaks: bigger journey funnel, roomier insights */
+.cols .feat{grid-column:span 12!important}
+.cols .side{grid-column:span 12!important}
+.feat .chartbox.tall{height:440px!important}
+.side .chartbox.tall{height:320px!important}
+.tk ol{display:grid;gap:14px}
+.tk li{border-top:none!important;background:#fff;border:1px solid var(--rule2);border-radius:12px;padding:18px 22px!important;gap:18px!important;align-items:flex-start;box-shadow:0 1px 2px rgba(20,30,60,.03)}
+.tk li .n{font-size:22px!important;color:var(--orange)!important}
+.tk li p{font-size:15px!important;line-height:1.72!important}
+</style>
 </head>
 <body>
 <div class="fnav">
@@ -160,7 +171,7 @@
   <div class="fr" role="navigation" aria-label="Finnita dashboards">
     <a class="dash" href="funnel.html">Enrollment Funnel</a>
     <a class="dash" href="brokers.html">Broker Channel</a>
-    <a class="rhub" href="index.html" aria-label="Back to hub">&#8962; Hub</a>
+    <button class="rhub" type="button" onclick="location.reload()" style="cursor:pointer" aria-label="Refresh">&#8635; Refresh</button><a class="rhub" href="index.html" aria-label="Back to hub">&#8962; Hub</a>
   </div>
 </div>
 <div class="topbar"></div>
