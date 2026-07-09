@@ -284,10 +284,10 @@ c3 -24 9 -59 12 -76 l5 -33 100 0 101 0 -8 33 c-4 17 -10 228 -14 467 -7 431
       <div class="desc">The intended journey: emailed → entered the app → deal created → deal active. Same cohort flowing through each step.</div></div>
     <div class="cols">
       <div class="feat"><div class="block" style="--c:var(--navy)">
-        <div class="hd"><span class="tick"></span><span class="name">Email → app → deal → active deal</span><span class="sub">emailed contacts · log scale</span></div>
+        <div class="hd"><span class="tick"></span><span class="name">Email → app → deal → active deal</span><span class="sub">emailed contacts · log scale · click a bar to open in HubSpot ↗</span></div>
         <div class="chartbox tall"><canvas id="journey"></canvas></div></div></div>
       <div class="side"><div class="block" style="--c:var(--drop)">
-        <div class="hd"><span class="tick"></span><span class="name">Where the app users are</span><span class="sub">last_onboarding_step · all 708</span></div>
+        <div class="hd"><span class="tick"></span><span class="name">Where the app users are</span><span class="sub">last_onboarding_step · all 708 · click a bar to open in HubSpot ↗</span></div>
         <div class="chartbox tall"><canvas id="appsteps"></canvas></div></div></div>
     </div>
     <div class="fn" id="combinedNote"></div>
@@ -365,6 +365,8 @@ for(const g in groups) for(const k in tot) tot[k]+=groups[g][k];
 // key takeaways (numbers pulled from DATA so they stay in sync)
 const X=DATA.extra, C=DATA.contacts;
 const big=n=>'<span class="big">'+fmt(n)+'</span>';
+const PORTAL=DATA.portal||"50517123";
+const HUBL=(filters)=>'https://app.hubspot.com/contacts/'+PORTAL+'/objects/0-1/views/all/list?filters='+encodeURIComponent(JSON.stringify(filters));
 const takeaways=[
   "<b>Email marketing barely feeds the app.</b> Of "+big(X.emailed)+" contacts emailed, only "+fmt(X.emailedApp)+" entered the app ("+pct(X.emailedApp,X.emailed).toFixed(1)+"%) and just "+big(X.emailedAppActive)+" reached an active deal. Email and the app are near-separate audiences — worth treating as distinct channels, not one funnel.",
   "<b>App deals rarely flip to active.</b> Of "+big(C.appEntry)+" app users, "+fmt(X.appUsersWithDeal)+" create a deal ("+pct(X.appUsersWithDeal,C.appEntry).toFixed(0)+"%) but only "+big(X.appUserActiveCustomer)+" become an active deal — the leak is deal → active, consistent with app deals not being auto-promoted to Active Customer (the <code>program_active</code> gap).",
@@ -413,10 +415,12 @@ document.getElementById("coverageNote").innerHTML=
   "</b>, Winback <b>"+cv.Winback.withSends+"/"+cv.Winback.emails+"</b>, Employer <b>"+cv.Employer.withSends+"/"+cv.Employer.emails+"</b>.";
 
 // funnel with step-over-step conversion labels, log x-axis
-function convFunnel(canvasId, labels, vals, ramp, rightPad){
+function convFunnel(canvasId, labels, vals, ramp, rightPad, urls){
   new Chart(document.getElementById(canvasId),{type:"bar",
     data:{labels,datasets:[{data:vals,backgroundColor:ramp.map(c=>tint(c,.88)),borderColor:ramp,barPercentage:.62,categoryPercentage:.82}]},
     options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,layout:{padding:{right:rightPad,left:16,top:2}},animation:{duration:700},
+      onClick:(e,els)=>{if(els.length&&urls&&urls[els[0].index])window.open(urls[els[0].index],'_blank','noopener');},
+      onHover:(e,els)=>{if(e.native&&e.native.target)e.native.target.style.cursor=(els.length&&urls)?'pointer':'default';},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>fmt(x.raw)}},
         datalabels:{anchor:"end",align:"right",color:"#232a3d",font:NUMF,textAlign:"left",
           formatter:(v,ctx)=>{const i=ctx.dataIndex;if(i===0)return fmt(v);
@@ -425,8 +429,13 @@ function convFunnel(canvasId, labels, vals, ramp, rightPad){
 }
 // Acquisition journey — strict cohort: emailed → +entered app → +deal → +active deal
 const jVals=[DATA.extra.emailed, DATA.extra.emailedApp, DATA.extra.emailedAppDeal, DATA.extra.emailedAppActive];
+const _em=[{property:'hs_email_delivered',operator:'GT',value:'0'}];
+const _app=_em.concat([{property:'last_onboarding_step',operator:'HAS_PROPERTY'}]);
+const _deal=_app.concat([{property:'num_associated_deals',operator:'GT',value:'0'}]);
+const _active=_deal.concat([{property:'contact_stage',operator:'EQ',value:'Active Customer'}]);
+const jUrls=[HUBL(_em),HUBL(_app),HUBL(_deal),HUBL(_active)];
 convFunnel("journey",["Emailed","Entered app","Deal created","Active deal"],jVals,
-  ["#354171","#4a5786","#6a6488","#8a5a72"],126);
+  ["#354171","#4a5786","#6a6488","#8a5a72"],126,jUrls);
 
 const j = jVals;
 document.getElementById("combinedNote").innerHTML=
@@ -437,10 +446,13 @@ document.getElementById("combinedNote").innerHTML=
   "Emailed = <code>hs_email_delivered &gt; 0</code>; app entry = <code>last_onboarding_step</code> set; deal = <code>num_associated_deals &gt; 0</code>; active deal = <code>contact_stage = Active Customer</code>.";
 
 const sc=DATA.contacts.stepCounts;
+const scUrls=Object.keys(sc).map(k=>HUBL([{property:'last_onboarding_step',operator:'EQ',value:k}]));
 new Chart(document.getElementById("appsteps"),{type:"bar",
   data:{labels:Object.keys(sc),datasets:[{data:Object.values(sc),
     backgroundColor:Object.keys(sc).map((_,i)=>tint("#5a6b96",.9-i*.055)),borderColor:"#5a6b96",barPercentage:.72,categoryPercentage:.86}]},
   options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,layout:{padding:{right:52,left:16,top:2}},animation:{duration:700},
+    onClick:(e,els)=>{if(els.length&&scUrls[els[0].index])window.open(scUrls[els[0].index],'_blank','noopener');},
+    onHover:(e,els)=>{if(e.native&&e.native.target)e.native.target.style.cursor=els.length?'pointer':'default';},
     plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>fmt(x.raw)+" contacts"}},
       datalabels:{anchor:"end",align:"right",color:"#232a3d",font:{...NUMF,size:11},formatter:v=>fmt(v)}},
     scales:{x:AX,y:{...YAX,ticks:{color:"#232a3d",font:{size:11.5}}}}}});
