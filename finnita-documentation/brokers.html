@@ -100,6 +100,8 @@ tbody tr.sel{background:#FDF0EC}
 .rk{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;font:700 12px var(--pj);color:var(--slate);background:#EFF0F7}
 tr:nth-child(1) .rk{background:var(--coral);color:#fff} tr:nth-child(2) .rk{background:#C8CCE0;color:var(--navy)} tr:nth-child(3) .rk{background:#F4A991;color:#fff}
 .bn{font-weight:600;color:var(--ink);max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blink{color:var(--ink);text-decoration:none} .blink:hover{color:var(--coral);text-decoration:underline}
+tbody tr:hover .blink{color:var(--coral)}
 .bn.un{color:var(--slate)}
 .utag{font:600 9px var(--in);letter-spacing:.02em;text-transform:uppercase;color:var(--coral2);background:#FDF0EC;padding:2px 7px;border-radius:20px;display:inline-block} .bc{font:500 12px var(--in);color:var(--slate);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .ti{font:500 10.5px var(--in);color:var(--slate2)} td.l{max-width:210px}
 .m{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums} .at{color:var(--slate);font-variant-numeric:tabular-nums}
@@ -200,6 +202,9 @@ const f=n=>(n==null?'—':Number(n).toLocaleString('en-US'));
 const z=n=>n===0?'<span class="z">0</span>':f(n);
 const pc=(a,b)=>b>0?(100*a/b):0;
 const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const PORTAL="50517123";
+const HUBL=(f)=>'https://app.hubspot.com/contacts/'+PORTAL+'/objects/0-1/views/all/list?filters='+encodeURIComponent(JSON.stringify(f));
+const brokerUrl=(id)=>HUBL([{property:'broker_id',operator:'EQ',value:String(id)}]);
 const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const mlabel=mk=>MN[+mk.slice(5)-1]+" '"+mk.slice(2,4);
 let idx={},sortKey='atE',sortDir=-1,filter='',selId=null,mk=null,momMetric='E';
@@ -209,8 +214,9 @@ function monTot(mkey){const mm=D.monthly[mkey]||{};const s=o=>Object.values(o||{
 function spark(vals,w,h,col){const mx=Math.max(1,...vals),n=vals.length;if(n<2)return '';const p=vals.map((v,i)=>[(i/(n-1))*(w-2)+1,h-1-(v/mx)*(h-2)]);const d=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');return '<svg class="spark" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="'+p[n-1][0].toFixed(1)+'" cy="'+p[n-1][1].toFixed(1)+'" r="2" fill="'+col+'"/></svg>';}
 function init(){
   // show only brokers that exist in HubSpot (registered in the Broker object)
-  const _reg=new Set(D.rows.filter(r=>!r.unreg).map(r=>r.id.trim().toUpperCase()));
-  D.rows=D.rows.filter(r=>!r.unreg);
+  const _deny=new Set(['99002','50001']); // test/internal brokers (Test 3232, Gerar Muro)
+  D.rows=D.rows.filter(r=>!r.unreg && !_deny.has(r.id.trim().toUpperCase()));
+  const _reg=new Set(D.rows.map(r=>r.id.trim().toUpperCase()));
   D.totals.atL=D.rows.reduce((s,r)=>s+r.atL,0);
   D.totals.atP=D.rows.reduce((s,r)=>s+r.atP,0);
   D.totals.atE=D.rows.reduce((s,r)=>s+r.atE,0);
@@ -281,7 +287,7 @@ function render(){
   let r=D.rows.map(x=>({...x,mL:mv(x.id.toUpperCase(),'L'),mP:mv(x.id.toUpperCase(),'P'),mE:mv(x.id.toUpperCase(),'E')}));
   if(filter)r=r.filter(x=>((x.name||'')+' '+(x.company||'')+' '+x.id).toLowerCase().includes(filter));
   r.sort((x,y)=>{if(sortKey==='rk')return 0;let a=x[sortKey],b=y[sortKey];if(typeof a==='string'){a=a.toLowerCase();b=(b||'').toLowerCase();return a<b?-sortDir:a>b?sortDir:0;}return ((a||0)-(b||0))*sortDir;});
-  document.getElementById('body').innerHTML=r.map((x,i)=>{const id=x.id.toUpperCase();const row='<tr data-id="'+id+'" class="'+(selId===id?'sel':'')+'"><td class="l"><span class="rk">'+(i+1)+'</span></td><td class="l"><div class="bn'+(x.unreg?' un':'')+'">'+esc(x.name)+'</div><div class="ti">'+(x.unreg?'<span class="utag">Unregistered ID</span>':esc(x.tier))+'</div></td><td class="l bc">'+(esc(x.company)||'<span class=z>—</span>')+'</td><td class="m">'+z(x.mL)+'</td><td class="m">'+z(x.mP)+'</td><td class="m">'+z(x.mE)+'</td><td>'+spark(eSeries(id),60,20,'#2A9D8F')+'</td><td class="at athide">'+z(x.atL)+'</td><td class="at athide">'+z(x.atP)+'</td><td class="at athide">'+z(x.atE)+'</td><td class="at athide">'+(x.comm?x.comm+'%':'<span class=z>\u2014</span>')+'</td></tr>';return selId===id?row+detailRow(id):row;}).join('');
+  document.getElementById('body').innerHTML=r.map((x,i)=>{const id=x.id.toUpperCase();const row='<tr data-id="'+id+'" class="'+(selId===id?'sel':'')+'"><td class="l"><span class="rk">'+(i+1)+'</span></td><td class="l"><div class="bn'+(x.unreg?' un':'')+'"><a class="blink" href="'+brokerUrl(x.id)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this broker’s contacts in HubSpot">'+esc(x.name)+' ↗</a></div><div class="ti">'+(x.unreg?'<span class="utag">Unregistered ID</span>':esc(x.tier))+'</div></td><td class="l bc">'+(esc(x.company)||'<span class=z>—</span>')+'</td><td class="m">'+z(x.mL)+'</td><td class="m">'+z(x.mP)+'</td><td class="m">'+z(x.mE)+'</td><td>'+spark(eSeries(id),60,20,'#2A9D8F')+'</td><td class="at athide">'+z(x.atL)+'</td><td class="at athide">'+z(x.atP)+'</td><td class="at athide">'+z(x.atE)+'</td><td class="at athide">'+(x.comm?x.comm+'%':'<span class=z>\u2014</span>')+'</td></tr>';return selId===id?row+detailRow(id):row;}).join('');
 }
 function detailRow(id){const x=idx[id];if(!x)return '';
   const vals=eSeries(id),mxb=Math.max(1,...vals);
