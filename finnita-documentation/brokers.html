@@ -216,7 +216,7 @@ const bPaidAll=(id)=>HUBL([_bid(id),{property:'first_payment',operator:'HAS_PROP
 const bPaidMo=(id,mk)=>{const[a,b]=_mR(mk);return HUBL([_bid(id),{property:'first_payment',operator:'GTE',value:String(a)},{property:'first_payment',operator:'LT',value:String(b)}]);};
 const bEnrAll=(id)=>HUBL([_bid(id),{property:'enrolled',operator:'EQ',value:'true'}]);
 const bEnrMo=(id,mk)=>{const[a,b]=_mR(mk);return HUBL([_bid(id),{property:'enrolled_date',operator:'GTE',value:String(a)},{property:'enrolled_date',operator:'LT',value:String(b)}]);};
-const recordUrl=(rid)=>'https://app.hubspot.com/contacts/'+PORTAL+'/record/2-61932085/'+rid;
+const recordUrl=(rid)=>'https://app.hubspot.com/contacts/'+PORTAL+'/objects/0-1/views/all/list?filters='+encodeURIComponent(JSON.stringify([{property:"associations.2-61932085",operator:"EQ",value:String(rid)}]));
 const nlink=(val,rid)=>(val>0&&rid)?'<a class="nlink" href="'+recordUrl(rid)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this broker in HubSpot (associated contacts + deals)">'+f(val)+'</a>':z(val);
 const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const mlabel=mk=>MN[+mk.slice(5)-1]+" '"+mk.slice(2,4);
