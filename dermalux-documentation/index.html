@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dermalux - HubSpot Learning Hub | Refindable</title>
+<link rel="icon" type="image/png" href="img/refindable-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--o:#FF5C35;--o2:#FF8C42;--ol:rgba(255,92,53,.08);--ob:rgba(255,92,53,.2);--d:#1a1a2e;--d2:#16213e;--d3:#0f3460;--w:#fff;--bg:#f8f9fa;--t:#2d3436;--tl:#636e72;--bd:#e9ecef;--g:#27AE60;--b:#3498DB;--y:#F39C12;--r:#E74C3C}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:'DM Sans',sans-serif;line-height:1.7}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--o);z-index:1000;transition:width .1s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 32px;display:flex;justify-content:space-between;align-items:center;background:rgba(26,26,46,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,92,53,.15)}
+nav .lw{display:flex;align-items:center;gap:12px;text-decoration:none}nav .lw img{height:28px}
+nav .ll{font-family:'Bebas Neue',sans-serif;font-size:.85em;color:var(--o);letter-spacing:2px;text-transform:uppercase;border-left:1px solid rgba(255,255,255,.2);padding-left:12px}
+nav .nav-search{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px 14px;transition:border-color .2s;min-width:240px}
+nav .nav-search:focus-within{border-color:var(--o)}
+nav .nav-search svg{width:16px;height:16px;color:rgba(255,255,255,.4);flex-shrink:0}
+nav .nav-search input{border:none;background:transparent;outline:none;font-family:'DM Sans',sans-serif;font-size:.8em;color:#fff;width:100%}
+nav .nav-search input::placeholder{color:rgba(255,255,255,.35)}
+.search-highlight{background:rgba(255,92,53,.3);border-radius:2px;padding:0 2px}
+.nl{display:flex;gap:18px;list-style:none;flex-wrap:wrap}.nl a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.72em;letter-spacing:1px;text-transform:uppercase;transition:color .2s}.nl a:hover{color:var(--o)}
+.hero{min-height:42vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;padding:110px 24px 50px;background:linear-gradient(135deg,var(--d) 0%,var(--d2) 50%,var(--d3) 100%);color:#fff}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(255,92,53,.18) 0%,transparent 65%);animation:pb 4s ease-in-out infinite}
+@keyframes pb{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,92,53,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,92,53,.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-tag{display:inline-block;background:rgba(255,92,53,.15);border:1px solid rgba(255,92,53,.4);color:var(--o);font-size:.7em;letter-spacing:3px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;position:relative}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8em,9vw,5.5em);line-height:.95;letter-spacing:-1px;position:relative}.hero h1 span{color:var(--o)}
+.hero-sub{font-size:clamp(.9em,2vw,1.05em);color:rgba(255,255,255,.6);margin-top:16px;max-width:520px;position:relative}
+.toc{max-width:900px;margin:-36px auto 50px;position:relative;z-index:10;background:#fff;border-radius:16px;padding:28px 32px;box-shadow:0 4px 24px rgba(0,0,0,.08);border:1px solid var(--bd)}
+.toc-t{font-size:.7em;letter-spacing:4px;text-transform:uppercase;color:var(--o);font-weight:700;margin-bottom:14px}
+.toc-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.toc-i{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:8px;text-decoration:none;color:var(--t);transition:all .2s;border:1px solid transparent;font-size:.85em}.toc-i:hover{background:var(--ol);border-color:var(--ob)}
+.toc-n{width:26px;height:26px;border-radius:50%;background:var(--o);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.75em;flex-shrink:0}.toc-l{font-weight:600}
+.toc-icon{font-size:1.1em;line-height:1;display:flex;align-items:center;color:var(--o)}
+.ct{max-width:860px;margin:0 auto;padding:0 24px 80px}
+.sh{display:flex;align-items:center;gap:14px;margin:70px 0 10px;padding-top:36px}
+.sh .nm{width:42px;height:42px;border-radius:50%;background:var(--o);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.15em;flex-shrink:0}
+.sh h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4em,4vw,1.9em);letter-spacing:1px;line-height:1.1}
+.sl{height:3px;background:linear-gradient(90deg,var(--o),transparent);border-radius:2px;margin-bottom:24px}
+.ss{margin:32px 0 14px}.ss h3{font-family:'Bebas Neue',sans-serif;font-size:1.25em;letter-spacing:1px;margin-bottom:8px;color:var(--d)}.desc{color:var(--tl);font-size:.9em;margin-bottom:12px}
+.st{background:#fff;border-radius:10px;padding:18px 22px;margin-bottom:14px;border:1px solid var(--bd);border-left:3px solid transparent;transition:border-color .2s}.st:hover{border-left-color:var(--o)}
+.st-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.st-n{width:26px;height:26px;border-radius:50%;background:var(--o);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78em;flex-shrink:0}
+.st-t{font-weight:700;font-size:.95em}.st-b{color:var(--tl);font-size:.88em;padding-left:36px}.st-b strong{color:var(--t)}.st-b code{background:var(--ol);color:var(--o);padding:1px 5px;border-radius:3px;font-size:.85em}.st-b ul{margin:6px 0 0 16px;list-style:disc}.st-b li{margin-bottom:3px}
+.st-b img{margin:10px 0;max-width:100%;border-radius:6px;border:1px solid var(--bd)}
+.st-b a{color:var(--o);font-weight:600;text-decoration:none}.st-b a:hover{text-decoration:underline}
+.co{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.85em;line-height:1.6}.co .tg{font-weight:700;font-size:.7em;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.co-d{background:rgba(39,174,96,.07);border-left:4px solid var(--g)}.co-d .tg{color:var(--g)}
+.co-p{background:rgba(243,156,18,.07);border-left:4px solid var(--y)}.co-p .tg{color:var(--y)}
+.co-i{background:rgba(52,152,219,.07);border-left:4px solid var(--b)}.co-i .tg{color:var(--b)}
+.co-w{background:var(--ol);border-left:4px solid var(--o)}.co-w .tg{color:var(--o)}
+.co-r{background:rgba(231,76,60,.07);border-left:4px solid var(--r)}.co-r .tg{color:var(--r)}
+.video-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.08);background:var(--d);margin:14px 0}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+footer{text-align:center;padding:32px 24px 24px;color:var(--tl);font-size:.72em;border-top:1px solid var(--bd);max-width:860px;margin:0 auto}footer span{color:var(--o);font-weight:700}
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.field-item{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;border:1px solid var(--bd);border-radius:8px;font-size:.82em}
+.field-item strong{color:var(--t);font-weight:700}
+.field-note{color:var(--tl);font-size:.85em}
+.back-to-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;border-radius:50%;background:var(--o);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(255,92,53,.35);opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s;z-index:99}
+.back-to-top.visible{opacity:1;transform:translateY(0)}
+.back-to-top:hover{background:var(--o2)}
+@media(max-width:768px){nav{padding:12px 16px}.nl{display:none}.hero{padding:96px 18px 40px;min-height:34vh}.toc{margin:-24px 12px 30px;padding:18px 16px}.toc-g{grid-template-columns:1fr}.ct{padding:0 12px 50px}.sh{margin:40px 0 8px}.st-b{padding-left:0}.fields-grid{grid-template-columns:1fr}.timeline{padding-left:16px}}
+.timeline{position:relative;padding-left:28px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--o),var(--ob),transparent)}
+.tl-step{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-24px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--o);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--o)}
+.tl-card{background:#fff;border:1px solid var(--bd);border-left:3px solid var(--o);border-radius:8px;padding:14px 18px;transition:border-color .2s}
+.tl-card:hover{border-left-color:var(--o2)}
+.tl-num{font-family:'Bebas Neue',sans-serif;font-size:.8em;letter-spacing:1.5px;color:var(--o);margin-bottom:2px}
+.tl-text{font-size:.88em;color:var(--tl);line-height:1.6}.tl-text strong{color:var(--t)}
+.tl-label{font-size:.78em;color:var(--tl);font-style:italic;margin-top:4px}
+.note-box{background:rgba(52,152,219,.07);border-left:4px solid var(--b);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.85em;line-height:1.6;color:var(--t)}
+.warning-box{background:rgba(231,76,60,.07);border-left:4px solid var(--r);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:.85em;line-height:1.6;color:var(--t)}
+.section-divider{border:none;border-top:2px solid var(--bd);margin:32px 0}
+.tbl-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--bd);border-radius:10px;background:#fff}
+.tbl{width:100%;border-collapse:collapse;font-size:.85em;font-variant-numeric:tabular-nums}
+.tbl th{text-align:left;font-family:'Bebas Neue',sans-serif;letter-spacing:1.5px;font-size:1.05em;color:var(--o);padding:12px 16px;border-bottom:2px solid var(--bd);white-space:nowrap}
+.tbl th.num,.tbl td.num{text-align:right;white-space:nowrap}
+.tbl td{padding:11px 16px;border-bottom:1px solid var(--bd);color:var(--tl);vertical-align:top;line-height:1.5}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr{transition:background .15s}.tbl tbody tr:hover{background:var(--ol)}
+.tbl td strong{color:var(--t);font-weight:600}
+.tbl td.pts{font-weight:700;color:var(--t)}.tbl td.pts-n{color:var(--r)}
+.tbl caption{caption-side:top;text-align:left;padding:12px 16px 0;font-size:.9em;color:var(--tl)}
+.shot{margin:14px 0}.shot img{display:block;width:100%;border-radius:6px;border:1px solid var(--bd)}
+.shot figcaption{font-size:.8em;color:var(--tl);margin-top:7px;line-height:1.5}
+
+nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em;letter-spacing:.3px}
+.flow-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.78em;color:var(--tl);margin:6px 0 12px}.flow-legend span{display:flex;align-items:center;gap:6px}.flow-legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.lg-auto{background:var(--ol);border:1.5px solid var(--o)}.lg-you{background:#fff;border:1.5px solid var(--bd)}.lg-soon{background:#fff;border:1.5px dashed var(--tl)}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;counter-reset:f;margin-bottom:10px}
+.fb{counter-increment:f;border-radius:10px;padding:12px 14px;background:#fff;border:1.5px solid var(--bd);position:relative}
+.fb::before{content:counter(f);position:absolute;top:8px;right:10px;font-size:.7em;color:var(--tl);font-weight:700}
+.fb b{display:block;font-size:.88em}.fb small{color:var(--tl);font-size:.76em}
+.fb.auto{background:var(--ol);border-color:var(--o)}.fb.soon{border-style:dashed;border-color:var(--tl)}
+@media(max-width:768px){nav .nav-search{display:none}nav .ll{display:none}nav .lw img{height:22px}.hero-tag{letter-spacing:1.5px;font-size:.62em;max-width:100%}.flow{grid-template-columns:1fr 1fr}.tbl-wrap{overflow-x:auto}body{overflow-x:hidden}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<nav>
+<a href="#" class="lw"><img src="img/refindable-logo.png" alt="Refindable"><span style="color:rgba(255,255,255,.25);font-size:1.2em;margin:0 6px">|</span><span class="brand">Dermalux</span><span class="ll">Learning Hub</span></a>
+<div class="nav-search">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+<input type="text" id="searchInput" placeholder="Search sections..." oninput="searchPage(this.value)">
+</div>
+<ul class="nl"><li><a href="#start">Start here</a></li><li><a href="#leads">Your leads</a></li><li><a href="#working">Working a lead</a></li><li><a href="#qualifying">Qualifying</a></li><li><a href="#deal">Your deal</a></li><li><a href="#logging">Logging</a></li><li><a href="#numbers">Your numbers</a></li><li><a href="#help">Help</a></li></ul>
+</nav>
+
+<div class="hero"><div class="hero-bg"></div><div class="hero-grid"></div>
+<div class="hero-tag">Dermalux x Refindable &middot; HubSpot Learning Hub &middot; Sales team</div>
+<h1>HubSpot<br><span>Learning Hub</span></h1>
+<p class="hero-sub">Your guide to HubSpot, from the moment a lead is assigned to you until the deal closes.</p>
+</div>
+
+<div class="toc"><div class="toc-t">Table of Contents</div><div class="toc-g">
+<a href="#new" class="toc-i"><span class="toc-n">&#9733;</span><span class="toc-l">What's new</span></a>
+<a href="#start" class="toc-i"><span class="toc-n">I</span><span class="toc-l">Start here</span></a>
+<a href="#reach" class="toc-i"><span class="toc-n">II</span><span class="toc-l">How leads reach you</span></a>
+<a href="#leads" class="toc-i"><span class="toc-n">III</span><span class="toc-l">Your lead views</span></a>
+<a href="#working" class="toc-i"><span class="toc-n">IV</span><span class="toc-l">Working a new lead</span></a>
+<a href="#qualifying" class="toc-i"><span class="toc-n">V</span><span class="toc-l">Qualifying or closing a lead</span></a>
+<a href="#deal" class="toc-i"><span class="toc-n">VI</span><span class="toc-l">Your new deal</span></a>
+<a href="#closing" class="toc-i"><span class="toc-n">VII</span><span class="toc-l">Moving the deal to close</span></a>
+<a href="#logging" class="toc-i"><span class="toc-n">VIII</span><span class="toc-l">Logging your activity</span></a>
+<a href="#numbers" class="toc-i"><span class="toc-n">IX</span><span class="toc-l">Your numbers</span></a>
+<a href="#help" class="toc-i"><span class="toc-n">X</span><span class="toc-l">Help</span></a>
+</div></div>
+
+<div class="ct">
+
+<!-- WHAT'S NEW -->
+<div class="sh" id="new"><div class="nm">&#9733;</div><h2>What's new</h2></div><div class="sl"></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Date</th><th>What changed</th></tr>
+<tr><td>Nov 2026</td><td>First version of the Learning Hub: <a href="#leads">your lead views</a>, <a href="#working">working a new lead</a> and <a href="#qualifying">disqualifying a lead</a>, with videos.</td></tr>
+</table></div>
+
+<!-- I START HERE -->
+<div class="sh" id="start"><div class="nm">I</div><h2>Start here</h2></div><div class="sl"></div>
+
+<div class="ss"><h3>The lead flow in one picture</h3>
+<p class="desc">From enquiry to deal: what HubSpot does for you and what you do.</p></div>
+<div class="flow-legend"><span><i class="lg-auto"></i>HubSpot does it</span><span><i class="lg-you"></i>You do it</span><span><i class="lg-soon"></i>Coming soon</span></div>
+<div class="flow">
+<div class="fb auto"><b>Enquiry arrives</b><small>form or Meta lead ad</small></div>
+<div class="fb auto"><b>Assigned to you</b><small>matched by postcode</small></div>
+<div class="fb auto"><b>You get an email</b><small>with a link to the lead</small></div>
+<div class="fb you"><b>Open New leads</b><small>Sales workspace</small></div>
+<div class="fb you"><b>Review the lead</b><small>form, source, history</small></div>
+<div class="fb you"><b>First contact</b><small>within 24h, logged</small></div>
+<div class="fb auto"><b>Attempting</b><small>moves automatically</small></div>
+<div class="fb you"><b>Connected</b><small>you move it</small></div>
+<div class="fb you fork"><b>Real buyer?</b><small>yes &rarr; Qualified &middot; no &rarr; Disqualified</small></div>
+<div class="fb you"><b>Qualified</b><small>you move it</small></div>
+<div class="fb auto"><b>Deal created</b><small>with the lead source</small></div>
+<div class="fb soon"><b>Deal stages</b><small>to Closed won or lost</small></div>
+</div>
+
+<div class="ss"><h3>Your daily routine</h3></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Check New leads</span></div><div class="st-b">Every new lead needs a first contact <strong>within 24 hours</strong>.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Check In-progress leads</span></div><div class="st-b">Work the follow-ups due today.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Check your deals</span></div><div class="st-b">Make sure each open deal has a next step.</div></div>
+
+<div class="ss"><h3>Three rules</h3></div>
+<div class="co co-w"><div class="tg">Always</div>Every lead has one owner. Nothing waits without a rep. Every lead is closed with a reason.</div>
+
+<!-- II HOW LEADS REACH YOU -->
+<div class="sh" id="reach"><div class="nm">II</div><h2>How leads reach you</h2></div><div class="sl"></div>
+
+<div class="ss"><h3>How a lead is assigned to you</h3>
+<p class="desc">HubSpot reads the postcode on the enquiry and assigns the rep for that territory. If the postcode doesn't match a territory, the lead goes to Kelly, who passes it on.</p></div>
+
+<div class="ss"><h3>The new lead email</h3>
+<p class="desc">When a lead is assigned to you, you get an email with its details and an "Open in HubSpot" link. Kelly receives a copy.</p></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/13b5c1fae4cc44b2b1d5eb971d2e3677" allowfullscreen loading="lazy" title="Open a lead from the email"></iframe></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Open the email</span></div><div class="st-b">It shows who the lead is and what they enquired about.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Click "Open in HubSpot"</span></div><div class="st-b">It takes you straight to the lead record.</div></div>
+
+<div class="ss"><h3>Returning contacts ("Re-attempting" leads)</h3>
+<p class="desc">When someone already in HubSpot enquires again, you get a new lead for them. Before you call, check their history on the contact record: earlier enquiries, calls and deals.</p></div>
+
+<div class="ss"><h3>When a colleague has left</h3>
+<p class="desc">Their contacts are re-routed by postcode when they enquire again, so they reach the rep who covers that territory now.</p></div>
+
+<div class="ss"><h3>Enquiries that are not yours</h3>
+<p class="desc">Home users, International enquiries and Partner Programme sign-ups don't go to field reps. If one reaches you by mistake, let Kelly know.</p></div>
+
+<!-- III LEAD VIEWS -->
+<div class="sh" id="leads"><div class="nm">III</div><h2>Your lead views</h2></div><div class="sl"></div>
+<div class="ss"><h3>Open your Sales workspace</h3>
+<p class="desc">Your leads live in the Sales workspace, in four views made for you.</p></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/2d4ad9747aa741fea91a8fcf83b063cb" allowfullscreen loading="lazy" title="Open your Sales workspace"></iframe></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>View</th><th>What it shows</th></tr>
+<tr><td><strong>New leads</strong></td><td>Leads assigned to you that nobody has contacted yet.</td></tr>
+<tr><td><strong>In-progress leads</strong></td><td>Leads you're working: Attempting or Connected.</td></tr>
+<tr><td><strong>Qualified</strong></td><td>Leads you've qualified, which now have a deal.</td></tr>
+<tr><td><strong>My Lead Funnel</strong></td><td>A board with one column per stage.</td></tr>
+</table></div>
+
+<div class="ss"><h3>Find your new leads</h3></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/5bee55d78d39497f9609417592aef4e3" allowfullscreen loading="lazy" title="Find your new leads"></iframe></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Go to the Sales workspace &rsaquo; Leads</span></div><div class="st-b">Open the <strong>New leads</strong> view.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">If a view is missing, add it</span></div><div class="st-b">Click the view selector and add it from the list of saved views.</div></div>
+
+<!-- IV WORKING A LEAD -->
+<div class="sh" id="working"><div class="nm">IV</div><h2>Working a new lead</h2></div><div class="sl"></div>
+
+<div class="ss"><h3>Review a lead before you call</h3>
+<p class="desc">On the lead record you'll find the enquiry form, the device they're interested in, the source, the lead type and the company. Check previous activity too, so you know if you're talking to someone new.</p></div>
+
+<div class="ss"><h3>Make first contact within 24 hours</h3>
+<p class="desc">Call, email or WhatsApp from the lead record. Log it so it counts: see <a href="#logging">Logging your activity</a>.</p></div>
+
+<div class="ss"><h3>Lead stages explained</h3></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/a98f5a9ec6a343c494060b84fd906d1a" allowfullscreen loading="lazy" title="How your lead moves stage"></iframe></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Stage</th><th>What it means</th><th>Who moves it</th></tr>
+<tr><td><strong>New</strong></td><td>Assigned to you, not contacted yet</td><td>HubSpot</td></tr>
+<tr><td><strong>Attempting</strong></td><td>You've logged a call, email or message</td><td>HubSpot, when you log activity</td></tr>
+<tr><td><strong>Connected</strong></td><td>You've spoken to them</td><td>You</td></tr>
+<tr><td><strong>Qualified</strong></td><td>A real buyer: a deal is created</td><td>You</td></tr>
+<tr><td><strong>Disqualified</strong></td><td>Not a buyer, closed with a reason</td><td>You</td></tr>
+</table></div>
+
+<div class="ss"><h3>Following up</h3>
+<p class="desc">Every lead in progress should have a next step. Create a task from the In-progress leads view, for example "Call again tomorrow".</p></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/3c1c6a99d7da4b7ea4a7185ad541ea0e" allowfullscreen loading="lazy" title="Plan your follow-up"></iframe></div>
+<div class="co co-p"><div class="tg">Coming soon</div>A reminder task when a lead stays at New for too long.</div>
+
+<!-- V QUALIFYING -->
+<div class="sh" id="qualifying"><div class="nm">V</div><h2>Qualifying or closing a lead</h2></div><div class="sl"></div>
+
+<div class="ss"><h3>Is this a real buyer?</h3></div>
+<div class="co co-p"><div class="tg">Coming soon</div>The qualification checklist, agreed with Kelly.</div>
+
+<div class="ss"><h3>Qualify a lead</h3>
+<p class="desc">Move the lead to <strong>Qualified</strong>. The contact becomes a Sales Qualified Lead and HubSpot creates the deal for you.</p></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/668e4f1fd3f545ffab4ebb8a2cfe0601" allowfullscreen loading="lazy" title="Qualify a lead"></iframe></div>
+
+<div class="ss"><h3>Disqualify a lead with a reason</h3>
+<p class="desc">Move the lead to <strong>Disqualified</strong>, pick the reason and add a note. Reasons include no interest, bad timing, home user, distributor territory and Academy access.</p></div>
+<div class="video-embed"><iframe src="https://www.loom.com/embed/ffa6eacdbccf4fed8e4fbf8ababa2949" allowfullscreen loading="lazy" title="Disqualify a lead with a reason"></iframe></div>
+<div class="co co-p"><div class="tg">Coming soon</div>Leads with no movement for a set number of days will be disqualified automatically as "no response".</div>
+
+<!-- VI DEAL -->
+<div class="sh" id="deal"><div class="nm">VI</div><h2>Your new deal</h2></div><div class="sl"></div>
+<div class="ss"><h3>The new deal email</h3>
+<p class="desc">When the deal is created you get an email. HubSpot has already filled in the contact, company, owner and lead source.</p></div>
+<div class="ss"><h3>Check your deal</h3>
+<p class="desc">Check the deal type, owner, amount, close date and products.</p></div>
+<div class="co co-p"><div class="tg">Coming soon</div>The information to capture on every new deal (clinic type, reason for buying, devices they use today, size), and a video walkthrough.</div>
+
+<!-- VII CLOSING -->
+<div class="sh" id="closing"><div class="nm">VII</div><h2>Moving the deal to close</h2></div><div class="sl"></div>
+<div class="co co-p"><div class="tg">Coming soon</div>Deal stages, quotes and follow-ups, and how to close a deal won or lost. This section is added once the new sales pipeline is live.</div>
+
+<!-- VIII LOGGING -->
+<div class="sh" id="logging"><div class="nm">VIII</div><h2>Logging your activity</h2></div><div class="sl"></div>
+<p class="desc">Logging every call, email, meeting and message matters: it moves your leads from New to Attempting and it feeds your numbers.</p>
+<div class="co co-p"><div class="tg">Coming soon</div>Videos on calling and emailing from HubSpot, logging WhatsApp and Instagram messages, and connecting your inbox and calendar.</div>
+
+<!-- IX NUMBERS -->
+<div class="sh" id="numbers"><div class="nm">IX</div><h2>Your numbers</h2></div><div class="sl"></div>
+<div class="ss"><h3>What we track each week</h3></div>
+<div class="fields-grid">
+<div class="field-item"><strong>Uncontacted leads</strong></div>
+<div class="field-item"><strong>Leads waiting more than 7 days</strong></div>
+<div class="field-item"><strong>Leads contacted within 2 days</strong></div>
+<div class="field-item"><strong>Deals stalled in a stage</strong></div>
+</div>
+
+<!-- X HELP -->
+<div class="sh" id="help"><div class="nm">X</div><h2>Help</h2></div><div class="sl"></div>
+<div class="st"><div class="st-h"><span class="st-n">?</span><span class="st-t">I didn't get the email</span></div><div class="st-b">Open the <strong>New leads</strong> view: the lead is there even if the email didn't arrive. Tell Kelly so it can be checked.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">?</span><span class="st-t">The lead isn't in my view</span></div><div class="st-b">Check that you're the lead owner and that the view's filters haven't been changed.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">?</span><span class="st-t">This lead belongs to another territory</span></div><div class="st-b">Don't work it. Let Kelly know so it's reassigned.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">?</span><span class="st-t">The contact is owned by someone else</span></div><div class="st-b">Work your lead as normal and ask Kelly before changing the contact owner.</div></div>
+
+</div>
+
+<footer>Dermalux x <span>Refindable</span> &middot; HubSpot Learning Hub &middot; Last updated November 2026</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button>
+
+<script>
+window.addEventListener('scroll',function(){var p=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;document.getElementById('progress').style.width=p+'%';var btn=document.getElementById('backToTop');if(window.scrollY>400){btn.classList.add('visible')}else{btn.classList.remove('visible')}});
+function searchPage(q){document.querySelectorAll('.search-highlight').forEach(function(el){var p=el.parentNode;p.replaceChild(document.createTextNode(el.textContent),el);p.normalize()});if(!q||q.length<2)return;var ct=document.querySelector('.ct'),w=document.createTreeWalker(ct,NodeFilter.SHOW_TEXT,null,false),matches=[],re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');while(w.nextNode()){var n=w.currentNode;if(n.parentElement.tagName==='SCRIPT'||n.parentElement.tagName==='STYLE')continue;if(re.test(n.textContent))matches.push(n)}var first=null;matches.forEach(function(n){var s=document.createElement('span');s.innerHTML=n.textContent.replace(re,'<mark class="search-highlight">$1</mark>');n.parentNode.replaceChild(s,n);if(!first)first=s.querySelector('.search-highlight')});if(first)first.scrollIntoView({behavior:'smooth',block:'center'});}
+</script>
+
+</body>
+</html>
