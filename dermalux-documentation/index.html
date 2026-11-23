@@ -100,6 +100,22 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 .fb b{display:block;font-size:.88em}.fb small{color:var(--tl);font-size:.76em}
 .fb.auto{background:var(--ol);border-color:var(--o)}.fb.soon{border-style:dashed;border-color:var(--tl)}
 @media(max-width:768px){nav .nav-search{display:none}nav .ll{display:none}nav .lw img{height:22px}.hero-tag{letter-spacing:1.5px;font-size:.62em;max-width:100%}.flow{grid-template-columns:1fr 1fr}.tbl-wrap{overflow-x:auto}body{overflow-x:hidden}}
+.flowchart{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0 10px;overflow-x:auto}
+.flowchart svg{display:block;width:100%;min-width:720px;height:auto;font-family:'DM Sans',sans-serif}
+.flowchart .lane{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;fill:#636e72}
+.flowchart .n rect,.flowchart .n path{fill:#fff;stroke:#dfe3e6;stroke-width:1.5}
+.flowchart .n.auto rect{fill:#FFE6DD;stroke:#FF5C35}
+.flowchart .n.soon rect{stroke-dasharray:5 4;stroke:#b2bec3}
+.flowchart .n.dia path{fill:#fff;stroke:#2d3436}
+.flowchart .t{font-size:13.5px;font-weight:700;fill:#2d3436}
+.flowchart .s{font-size:11.5px;fill:#636e72}
+.flowchart .a{fill:none;stroke:#9aa0a6;stroke-width:1.5;marker-end:url(#ah)}
+.flowchart .a.d{stroke-dasharray:4 4;stroke:#c0c4c8;marker-end:url(#ahd)}
+.flowchart .note rect{fill:#fff;stroke:#dfe3e6;stroke-dasharray:4 3}
+.flowchart .note text{font-size:11.5px;fill:#636e72}
+.flowchart .lbl{font-size:11px;font-weight:700;fill:#636e72}
+.flow-legend .lg-auto{background:#FFE6DD;border-color:#FF5C35}
+.flow-hint{display:none}@media(max-width:768px){.flow-hint{display:inline}}
 </style>
 </head>
 <body>
@@ -148,27 +164,53 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="sh" id="start"><div class="nm">I</div><h2>Start here</h2></div><div class="sl"></div>
 
 <div class="ss"><h3>The lead flow in one picture</h3>
-<p class="desc">From enquiry to deal: what HubSpot does for you and what you do.</p></div>
-<div class="flow-legend"><span><i class="lg-auto"></i>HubSpot does it</span><span><i class="lg-you"></i>You do it</span><span><i class="lg-soon"></i>Coming soon</span></div>
-<div class="flow">
-<div class="fb auto"><b>Enquiry arrives</b><small>form or Meta lead ad</small></div>
-<div class="fb auto"><b>Assigned to you</b><small>matched by postcode</small></div>
-<div class="fb auto"><b>You get an email</b><small>with a link to the lead</small></div>
-<div class="fb you"><b>Open New leads</b><small>Sales workspace</small></div>
-<div class="fb you"><b>Review the lead</b><small>form, source, history</small></div>
-<div class="fb you"><b>First contact</b><small>within 24h, logged</small></div>
-<div class="fb auto"><b>Attempting</b><small>moves automatically</small></div>
-<div class="fb you"><b>Connected</b><small>you move it</small></div>
-<div class="fb you fork"><b>Real buyer?</b><small>yes &rarr; Qualified &middot; no &rarr; Disqualified</small></div>
-<div class="fb you"><b>Qualified</b><small>you move it</small></div>
-<div class="fb auto"><b>Deal created</b><small>with the lead source</small></div>
-<div class="fb soon"><b>Deal stages</b><small>to Closed won or lost</small></div>
+<p class="desc">What HubSpot does for you and what you do, from the moment someone enquires.</p></div>
+<div class="flowchart">
+<svg viewBox="0 0 844 568" role="img" aria-label="Lead flow from enquiry to deal">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9aa0a6"/></marker>
+<marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c0c4c8"/></marker>
+</defs>
+<rect x="0" y="0" width="844" height="192" rx="12" fill="#FFF4EF"/>
+<rect x="0" y="200" width="844" height="368" rx="12" fill="#F8F9FA"/>
+<text class="lane" x="20" y="26">HubSpot does it</text>
+<text class="lane" x="20" y="222">You do it</text>
+
+<g class="n auto"><rect x="24" y="40" width="160" height="64" rx="10"/><text x="40" y="66"><tspan class="t">Enquiry arrives</tspan><tspan class="s" x="40" dy="18">Form or Meta lead ad</tspan></text></g>
+<g class="n auto"><rect x="236" y="40" width="160" height="64" rx="10"/><text x="252" y="66"><tspan class="t">Territory set</tspan><tspan class="s" x="252" dy="18">Read from the postcode</tspan></text></g>
+<g class="n auto"><rect x="448" y="40" width="160" height="64" rx="10"/><text x="464" y="66"><tspan class="t">Lead assigned to you</tspan><tspan class="s" x="464" dy="18">Stage New, label HOT</tspan></text></g>
+<g class="n auto"><rect x="660" y="40" width="160" height="64" rx="10"/><text x="676" y="66"><tspan class="t">Email to you</tspan><tspan class="s" x="676" dy="18">Kelly gets a copy</tspan></text></g>
+<path class="a" d="M184 72H232"/><path class="a" d="M396 72H444"/><path class="a" d="M608 72H656"/>
+
+<g class="note"><rect x="236" y="132" width="372" height="40" rx="8"/><text x="252" y="157">No territory match: Kelly · International: Jane · Home user: Internal Sales</text></g>
+<path class="a d" d="M316 104V128"/>
+
+<path class="a" d="M740 104V244"/>
+<g class="n"><rect x="660" y="248" width="160" height="64" rx="10"/><text x="676" y="274"><tspan class="t">Open the lead</tspan><tspan class="s" x="676" dy="18">Email link or New leads</tspan></text></g>
+<g class="n"><rect x="448" y="248" width="160" height="64" rx="10"/><text x="464" y="274"><tspan class="t">First contact</tspan><tspan class="s" x="464" dy="18">Within 24 hours, logged</tspan></text></g>
+<g class="n auto"><rect x="236" y="248" width="160" height="64" rx="10"/><text x="252" y="274"><tspan class="t">Attempting</tspan><tspan class="s" x="252" dy="18">Moves when you log it</tspan></text></g>
+<g class="n"><rect x="24" y="248" width="160" height="64" rx="10"/><text x="40" y="274"><tspan class="t">Connected</tspan><tspan class="s" x="40" dy="18">You move it</tspan></text></g>
+<path class="a" d="M660 280H612"/><path class="a" d="M448 280H400"/><path class="a" d="M236 280H188"/>
+
+<path class="a" d="M104 312V356"/>
+<g class="n dia"><path d="M104 360L176 404L104 448L32 404Z"/><text x="104" y="409" text-anchor="middle"><tspan class="t">Real buyer?</tspan></text></g>
+<path class="a" d="M176 404H232"/><text class="lbl" x="190" y="396">Yes</text>
+<path class="a" d="M104 448V484"/><text class="lbl" x="112" y="470">No</text>
+
+<g class="n"><rect x="236" y="372" width="160" height="64" rx="10"/><text x="252" y="398"><tspan class="t">Create the deal</tspan><tspan class="s" x="252" dy="18">From the lead record</tspan></text></g>
+<g class="n auto"><rect x="448" y="372" width="160" height="64" rx="10"/><text x="464" y="398"><tspan class="t">Lead is Qualified</tspan><tspan class="s" x="464" dy="18">Contact becomes SQL</tspan></text></g>
+<g class="n soon"><rect x="660" y="372" width="160" height="64" rx="10"/><text x="676" y="398"><tspan class="t">Work the deal</tspan><tspan class="s" x="676" dy="18">To closed won or lost</tspan></text></g>
+<path class="a" d="M396 404H444"/><path class="a" d="M608 404H656"/>
+
+<g class="n"><rect x="24" y="488" width="160" height="64" rx="10"/><text x="40" y="514"><tspan class="t">Disqualified</tspan><tspan class="s" x="40" dy="18">Always with a reason</tspan></text></g>
+</svg>
 </div>
+<div class="flow-legend"><span><i class="lg-auto"></i>HubSpot does it</span><span><i class="lg-you"></i>You do it</span><span><i class="lg-soon"></i>Guide coming soon</span><span class="flow-hint">Swipe the diagram sideways to see all of it</span></div>
 
 <div class="ss"><h3>Your daily routine</h3></div>
 <div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Check New leads</span></div><div class="st-b">Every new lead needs a first contact <strong>within 24 hours</strong>.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Check In-progress leads</span></div><div class="st-b">Work the follow-ups due today.</div></div>
-<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Check your deals</span></div><div class="st-b">Make sure each open deal has a next step.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Check your deals</span></div><div class="st-b">Make sure each open deal has a next step. HubSpot emails you when a deal goes 7 days without activity.</div></div>
 
 <div class="ss"><h3>Three rules</h3></div>
 <div class="co co-w"><div class="tg">Always</div>Every lead has one owner. Nothing waits without a rep. Every lead is closed with a reason.</div>
@@ -177,22 +219,39 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="sh" id="reach"><div class="nm">II</div><h2>How leads reach you</h2></div><div class="sl"></div>
 
 <div class="ss"><h3>How a lead is assigned to you</h3>
-<p class="desc">HubSpot reads the postcode on the enquiry and assigns the rep for that territory. If the postcode doesn't match a territory, the lead goes to Kelly, who passes it on.</p></div>
+<p class="desc">When a professional enquires, HubSpot reads the postcode, sets the territory and assigns the contact to the rep for that territory. It then creates a lead for you at the <strong>New</strong> stage, labelled HOT.</p></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Territory</th><th>Rep</th></tr>
+<tr><td>Midlands &amp; North</td><td>Dyan Williams. Liverpool, Manchester, Warrington, Oldham and Chester postcodes go to Katie Greenwood.</td></tr>
+<tr><td>North &amp; Scotland</td><td>Katie Greenwood</td></tr>
+<tr><td>South West</td><td>Joanne Briggs</td></tr>
+<tr><td>South East</td><td>Stacey King</td></tr>
+<tr><td>London</td><td>Andrea Dunne</td></tr>
+<tr><td>Ireland</td><td>Kelly Wiseman</td></tr>
+<tr><td>No postcode match</td><td>Kelly Wiseman, who passes it on. The lead name ends in "(Review Postcode)".</td></tr>
+</table></div>
 
 <div class="ss"><h3>The new lead email</h3>
-<p class="desc">When a lead is assigned to you, you get an email with its details and an "Open in HubSpot" link. Kelly receives a copy.</p></div>
+<p class="desc">You get an email titled "New lead assigned" with the lead's name, the dates, the lead type and the label. Kelly gets a copy.</p></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/13b5c1fae4cc44b2b1d5eb971d2e3677" allowfullscreen loading="lazy" title="Open a lead from the email"></iframe></div>
-<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Open the email</span></div><div class="st-b">It shows who the lead is and what they enquired about.</div></div>
-<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Click "Open in HubSpot"</span></div><div class="st-b">It takes you straight to the lead record.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Open the email</span></div><div class="st-b">It shows who the lead is and when it was assigned.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Open the lead in HubSpot</span></div><div class="st-b">Use the link in the email, or find it in your <a href="#leads">New leads</a> view.</div></div>
 
-<div class="ss"><h3>Returning contacts ("Re-attempting" leads)</h3>
-<p class="desc">When someone already in HubSpot enquires again, you get a new lead for them. Before you call, check their history on the contact record: earlier enquiries, calls and deals.</p></div>
+<div class="ss"><h3>Returning contacts</h3>
+<p class="desc">When someone already in HubSpot enquires again, you get a new lead for them. Its name tells you which kind it is:</p></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Lead name ends in</th><th>What it means</th></tr>
+<tr><td>"- Re-attempting"</td><td>A contact who enquired before. Check their earlier enquiries and calls first.</td></tr>
+<tr><td>"- Upsell"</td><td>An existing customer. Check which devices they already have.</td></tr>
+<tr><td>Just the name</td><td>New business from a contact already in HubSpot.</td></tr>
+</table></div>
+<div class="co co-i"><div class="tg">Note</div>If the contact already has an open lead or deal, HubSpot doesn't create a second lead.</div>
 
 <div class="ss"><h3>When a colleague has left</h3>
-<p class="desc">Their contacts are re-routed by postcode when they enquire again, so they reach the rep who covers that territory now.</p></div>
+<p class="desc">If a contact owned by someone who has left enquires again, HubSpot re-assigns them by postcode, so they reach the rep who covers that territory now.</p></div>
 
 <div class="ss"><h3>Enquiries that are not yours</h3>
-<p class="desc">Home users, International enquiries and Partner Programme sign-ups don't go to field reps. If one reaches you by mistake, let Kelly know.</p></div>
+<p class="desc">Home users go to Internal Sales and international enquiries go to Jane Annable. If a home user later says they're buying for a clinic or salon, HubSpot re-routes them to the field rep for their territory. If one reaches you by mistake, let Kelly know.</p></div>
 
 <!-- III LEAD VIEWS -->
 <div class="sh" id="leads"><div class="nm">III</div><h2>Your lead views</h2></div><div class="sl"></div>
@@ -203,7 +262,7 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <tr><th>View</th><th>What it shows</th></tr>
 <tr><td><strong>New leads</strong></td><td>Leads assigned to you that nobody has contacted yet.</td></tr>
 <tr><td><strong>In-progress leads</strong></td><td>Leads you're working: Attempting or Connected.</td></tr>
-<tr><td><strong>Qualified</strong></td><td>Leads you've qualified, which now have a deal.</td></tr>
+<tr><td><strong>Qualified</strong></td><td>Leads that have a deal.</td></tr>
 <tr><td><strong>My Lead Funnel</strong></td><td>A board with one column per stage.</td></tr>
 </table></div>
 
@@ -228,7 +287,7 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <tr><td><strong>New</strong></td><td>Assigned to you, not contacted yet</td><td>HubSpot</td></tr>
 <tr><td><strong>Attempting</strong></td><td>You've logged a call, email or message</td><td>HubSpot, when you log activity</td></tr>
 <tr><td><strong>Connected</strong></td><td>You've spoken to them</td><td>You</td></tr>
-<tr><td><strong>Qualified</strong></td><td>A real buyer: a deal is created</td><td>You</td></tr>
+<tr><td><strong>Qualified</strong></td><td>A real buyer, with a deal</td><td>HubSpot, when you create the deal</td></tr>
 <tr><td><strong>Disqualified</strong></td><td>Not a buyer, closed with a reason</td><td>You</td></tr>
 </table></div>
 
@@ -244,25 +303,30 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="co co-p"><div class="tg">Coming soon</div>The qualification checklist, agreed with Kelly.</div>
 
 <div class="ss"><h3>Qualify a lead</h3>
-<p class="desc">Move the lead to <strong>Qualified</strong>. The contact becomes a Sales Qualified Lead and HubSpot creates the deal for you.</p></div>
-<div class="video-embed"><iframe src="https://www.loom.com/embed/668e4f1fd3f545ffab4ebb8a2cfe0601" allowfullscreen loading="lazy" title="Qualify a lead"></iframe></div>
+<p class="desc">When it's a real buyer, create a deal from the lead record. HubSpot then moves the lead to <strong>Qualified</strong> and the contact becomes a sales qualified lead.</p></div>
+<div class="co co-p"><div class="tg">Coming soon</div>HubSpot will create the deal for you when you move a lead to Qualified. Until then, create the deal yourself.</div>
 
 <div class="ss"><h3>Disqualify a lead with a reason</h3>
-<p class="desc">Move the lead to <strong>Disqualified</strong>, pick the reason and add a note. Reasons include no interest, bad timing, home user, distributor territory and Academy access.</p></div>
+<p class="desc">Move the lead to <strong>Disqualified</strong>, pick the reason and add a note. Reasons include no interest, bad timing, home user, distributor territory, Academy access and no response in nurture.</p></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/ffa6eacdbccf4fed8e4fbf8ababa2949" allowfullscreen loading="lazy" title="Disqualify a lead with a reason"></iframe></div>
 <div class="co co-p"><div class="tg">Coming soon</div>Leads with no movement for a set number of days will be disqualified automatically as "no response".</div>
 
 <!-- VI DEAL -->
 <div class="sh" id="deal"><div class="nm">VI</div><h2>Your new deal</h2></div><div class="sl"></div>
-<div class="ss"><h3>The new deal email</h3>
-<p class="desc">When the deal is created you get an email. HubSpot has already filled in the contact, company, owner and lead source.</p></div>
 <div class="ss"><h3>Check your deal</h3>
-<p class="desc">Check the deal type, owner, amount, close date and products.</p></div>
-<div class="co co-p"><div class="tg">Coming soon</div>The information to capture on every new deal (clinic type, reason for buying, devices they use today, size), and a video walkthrough.</div>
+<p class="desc">After you create the deal, check the deal type, owner, amount, close date and products, and that the contact and company are associated.</p></div>
+<div class="co co-p"><div class="tg">Coming soon</div>What to capture on every new deal (clinic type, reason for buying, devices they use today, size), with a video.</div>
 
 <!-- VII CLOSING -->
 <div class="sh" id="closing"><div class="nm">VII</div><h2>Moving the deal to close</h2></div><div class="sl"></div>
-<div class="co co-p"><div class="tg">Coming soon</div>Deal stages, quotes and follow-ups, and how to close a deal won or lost. This section is added once the new sales pipeline is live.</div>
+<div class="ss"><h3>Reminders HubSpot sends you</h3></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>When</th><th>What happens</th></tr>
+<tr><td>A deal has no logged activity for 7 days</td><td>You get an email asking you to log the next step, update the stage or close the deal.</td></tr>
+<tr><td>A quote has been out for signature for 48 hours</td><td>You get an email to follow up with the customer.</td></tr>
+<tr><td>The quote is still unsigned 7 days later</td><td>You get a second email, and Kelly gets a copy.</td></tr>
+</table></div>
+<div class="co co-p"><div class="tg">Coming soon</div>Deal stages and how to close a deal won or lost. Added once the new sales pipeline is approved.</div>
 
 <!-- VIII LOGGING -->
 <div class="sh" id="logging"><div class="nm">VIII</div><h2>Logging your activity</h2></div><div class="sl"></div>
