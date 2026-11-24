@@ -116,6 +116,9 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 .flowchart .lbl{font-size:11px;font-weight:700;fill:#636e72}
 .flow-legend .lg-auto{background:#FFE6DD;border-color:#FF5C35}
 .flow-hint{display:none}@media(max-width:768px){.flow-hint{display:inline}}
+.shot{margin:14px 0}.shot img{display:block;width:100%;border-radius:6px;border:1px solid var(--bd)}.shot figcaption{font-size:.8em;color:var(--tl);margin-top:7px;line-height:1.5}
+.shot-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px}
+.pipe{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 18px}.pipe span{padding:6px 12px;border-radius:8px;background:#fff;border:1px solid var(--bd);font-size:.85em;font-weight:600}.pipe i{font-style:normal;color:var(--tl)}.pipe .pipe-ok{border-color:var(--g)}.pipe .pipe-no{border-color:var(--r)}
 </style>
 </head>
 <body>
@@ -128,7 +131,7 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
 <input type="text" id="searchInput" placeholder="Search sections..." oninput="searchPage(this.value)">
 </div>
-<ul class="nl"><li><a href="#start">Start here</a></li><li><a href="#leads">Your leads</a></li><li><a href="#working">Working a lead</a></li><li><a href="#qualifying">Qualifying</a></li><li><a href="#deal">Your deal</a></li><li><a href="#logging">Logging</a></li><li><a href="#numbers">Your numbers</a></li><li><a href="#help">Help</a></li></ul>
+<ul class="nl"><li><a href="#start">Start here</a></li><li><a href="#basics">Basics</a></li><li><a href="#leads">Your leads</a></li><li><a href="#working">Working a lead</a></li><li><a href="#qualifying">Qualifying</a></li><li><a href="#deal">Your deal</a></li><li><a href="#logging">Logging</a></li><li><a href="#numbers">Your numbers</a></li><li><a href="#help">Help</a></li><li><a href="#reference">Reference</a></li></ul>
 </nav>
 
 <div class="hero"><div class="hero-bg"></div><div class="hero-grid"></div>
@@ -139,26 +142,26 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 
 <div class="toc"><div class="toc-t">Table of Contents</div><div class="toc-g">
 <a href="#start" class="toc-i"><span class="toc-n">I</span><span class="toc-l">Start here</span></a>
-<a href="#reach" class="toc-i"><span class="toc-n">II</span><span class="toc-l">How leads reach you</span></a>
-<a href="#leads" class="toc-i"><span class="toc-n">III</span><span class="toc-l">Your lead views</span></a>
-<a href="#working" class="toc-i"><span class="toc-n">IV</span><span class="toc-l">Working a new lead</span></a>
-<a href="#qualifying" class="toc-i"><span class="toc-n">V</span><span class="toc-l">Qualifying or closing a lead</span></a>
-<a href="#deal" class="toc-i"><span class="toc-n">VI</span><span class="toc-l">Your new deal</span></a>
-<a href="#closing" class="toc-i"><span class="toc-n">VII</span><span class="toc-l">Moving the deal to close</span></a>
-<a href="#logging" class="toc-i"><span class="toc-n">VIII</span><span class="toc-l">Logging your activity</span></a>
-<a href="#numbers" class="toc-i"><span class="toc-n">IX</span><span class="toc-l">Your numbers</span></a>
-<a href="#help" class="toc-i"><span class="toc-n">X</span><span class="toc-l">Help</span></a>
+<a href="#basics" class="toc-i"><span class="toc-n">II</span><span class="toc-l">HubSpot basics</span></a>
+<a href="#reach" class="toc-i"><span class="toc-n">III</span><span class="toc-l">How leads reach you</span></a>
+<a href="#leads" class="toc-i"><span class="toc-n">IV</span><span class="toc-l">Your lead views</span></a>
+<a href="#working" class="toc-i"><span class="toc-n">V</span><span class="toc-l">Working a new lead</span></a>
+<a href="#qualifying" class="toc-i"><span class="toc-n">VI</span><span class="toc-l">Qualifying or closing a lead</span></a>
+<a href="#deal" class="toc-i"><span class="toc-n">VII</span><span class="toc-l">Your new deal</span></a>
+<a href="#closing" class="toc-i"><span class="toc-n">VIII</span><span class="toc-l">Moving the deal to close</span></a>
+<a href="#logging" class="toc-i"><span class="toc-n">IX</span><span class="toc-l">Logging your activity</span></a>
+<a href="#numbers" class="toc-i"><span class="toc-n">X</span><span class="toc-l">Your numbers</span></a>
+<a href="#help" class="toc-i"><span class="toc-n">XI</span><span class="toc-l">Help</span></a>
+<a href="#reference" class="toc-i"><span class="toc-n">XII</span><span class="toc-l">Reference</span></a>
 </div></div>
 
 <div class="ct">
 
-<!-- ABOUT -->
 <div class="ss" id="about"><h3>About this guide</h3>
-<p class="desc">This guide shows how leads and deals work in Dermalux's HubSpot, from the moment someone enquires until you create the deal and work it to close. Each section has the steps and, where there is one, a short video. Sections marked "Not live yet" are still being set up and will be filled in as they go live. If something here doesn't match what you see in HubSpot, let Kelly know.</p></div>
+<p class="desc">This guide shows how leads and deals work in Dermalux's HubSpot, from the moment someone enquires until you create the deal and work it to close. Each section has the steps and, where there is one, a short video. Sections marked "Not live yet" are still being set up and will be filled in as they go live. If you're new to HubSpot, start with section II. If something here doesn't match what you see in HubSpot, let Kelly know.</p></div>
 
-<!-- I START HERE -->
 <div class="sh" id="start"><div class="nm">I</div><h2>Start here</h2></div><div class="sl"></div>
-
+<p class="desc">The whole process on one page. The rest of the guide goes into each step.</p>
 <div class="ss"><h3>How a lead moves</h3>
 <p class="desc">Orange boxes happen on their own. White boxes are yours.</p></div>
 <div class="flowchart">
@@ -203,17 +206,38 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 </div>
 <div class="flow-legend"><span><i class="lg-auto"></i>HubSpot does it</span><span><i class="lg-you"></i>You do it</span><span><i class="lg-soon"></i>Not covered yet</span><span class="flow-hint">Scroll sideways to see the whole diagram</span></div>
 
+<div class="co co-w"><div class="tg">Your day at a glance</div>Open New leads and contact each one within 24 hours. Log every call, email or message so the lead moves forward. Work the follow-ups due today in In-progress leads. When someone is a real buyer, create the deal. When they aren't, disqualify the lead with a reason. Finish by checking that every open deal has a next step.</div>
 <div class="ss"><h3>Your daily routine</h3></div>
 <div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Check New leads</span></div><div class="st-b">Contact every new lead <strong>within 24 hours</strong>.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Check In-progress leads</span></div><div class="st-b">Work the follow-ups due today.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Check your deals</span></div><div class="st-b">Make sure each open deal has a next step. HubSpot emails you when a deal goes 7 days without activity.</div></div>
 
-<div class="ss"><h3>The basics</h3>
-<p class="desc">Every lead has one owner, and when you close a lead you always pick a reason. If a lead isn't yours, tell Kelly instead of leaving it.</p></div>
+<!-- II BASICS -->
+<div class="sh" id="basics"><div class="nm">II</div><h2>HubSpot basics</h2></div><div class="sl"></div>
+<p class="desc">If you already use HubSpot every day, skip to section III.</p>
+<div class="ss"><h3>The four records you'll use</h3>
+<p class="desc">Everything in HubSpot is a record. You'll work with four kinds.</p></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Record</th><th>What it is</th><th>Example</th></tr>
+<tr><td><strong>Contact</strong></td><td>A person</td><td>The clinic owner who filled in the form</td></tr>
+<tr><td><strong>Company</strong></td><td>The business they work for</td><td>Their clinic or salon</td></tr>
+<tr><td><strong>Lead</strong></td><td>One enquiry you need to work. It belongs to a contact and has an owner: you</td><td>"Jane Smith - Re-attempting"</td></tr>
+<tr><td><strong>Deal</strong></td><td>A sale in progress, with products, amount and close date</td><td>Created when the lead turns out to be a real buyer</td></tr>
+</table></div>
+<p class="desc">One contact can have many leads over time, one per enquiry. A lead ends in one of two ways: it becomes a deal (Qualified) or it's closed with a reason (Disqualified).</p>
 
-<!-- II HOW LEADS REACH YOU -->
-<div class="sh" id="reach"><div class="nm">II</div><h2>How leads reach you</h2></div><div class="sl"></div>
+<div class="ss"><h3>How a record is laid out</h3>
+<p class="desc">Contacts, companies, leads and deals all look alike when you open them.</p></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Left side: the details</span></div><div class="st-b">Name, email, phone, postcode, territory, owner and the rest of the properties. Click a value to edit it.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Middle: the activity</span></div><div class="st-b">Every call, email, meeting, note and task, newest first. Read it before you call so you don't ask what someone already told a colleague.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Right side: what it's linked to</span></div><div class="st-b">The contact, company, leads and deals connected to this record. This is where you jump from a lead to its contact or deal.</div></div>
 
+<div class="ss"><h3>Where you'll spend your day</h3>
+<p class="desc">Most of your work happens in the <strong>Sales workspace</strong> (Sales &rsaquo; Sales Workspace). Your leads are there, split into views, and you can open, call and log from the same screen. Section IV shows the views.</p></div>
+
+<!-- III REACH -->
+<div class="sh" id="reach"><div class="nm">III</div><h2>How leads reach you</h2></div><div class="sl"></div>
+<p class="desc">Where your leads come from and how HubSpot decides they're yours.</p>
 <div class="ss"><h3>How a lead is assigned to you</h3>
 <p class="desc">When a professional enquires, HubSpot uses the postcode to pick the territory and gives the contact to that territory's rep. You get a lead at the <strong>New</strong> stage with the label HOT.</p></div>
 <div class="tbl-wrap"><table class="tbl">
@@ -249,8 +273,10 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="ss"><h3>Enquiries that are not yours</h3>
 <p class="desc">Home users go to Internal Sales and international enquiries go to Jane Annable. If a home user later says they're buying for a clinic or salon, HubSpot re-routes them to the field rep for their territory. If one reaches you by mistake, let Kelly know.</p></div>
 
-<!-- III LEAD VIEWS -->
-<div class="sh" id="leads"><div class="nm">III</div><h2>Your lead views</h2></div><div class="sl"></div>
+
+<!-- IV LEAD VIEWS -->
+<div class="sh" id="leads"><div class="nm">IV</div><h2>Your lead views</h2></div><div class="sl"></div>
+<p class="desc">Where to find your leads and what each view is for.</p>
 <div class="ss"><h3>Open your Sales workspace</h3>
 <p class="desc">Your leads are in the Sales workspace, split into four views.</p></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/2d4ad9747aa741fea91a8fcf83b063cb" allowfullscreen loading="lazy" title="Open your Sales workspace"></iframe></div>
@@ -261,21 +287,21 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <tr><td><strong>Qualified</strong></td><td>Leads that have a deal.</td></tr>
 <tr><td><strong>My Lead Funnel</strong></td><td>A board with one column per stage.</td></tr>
 </table></div>
-
+<figure class="shot"><img src="img/leads-table.png" alt="The Leads list in the Sales workspace, with the stage, label and company of each lead. Example from HubSpot's help centre; your views have the names above." loading="lazy"><figcaption>The Leads list in the Sales workspace, with the stage, label and company of each lead. Example from HubSpot's help centre; your views have the names above.</figcaption></figure>
 <div class="ss"><h3>Find your new leads</h3></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/5bee55d78d39497f9609417592aef4e3" allowfullscreen loading="lazy" title="Find your new leads"></iframe></div>
 <div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Go to the Sales workspace &rsaquo; Leads</span></div><div class="st-b">Open the <strong>New leads</strong> view.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">If a view is missing, add it</span></div><div class="st-b">Click the view selector and add it from the list of saved views.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Want to see everything by stage?</span></div><div class="st-b">Open <strong>My Lead Funnel</strong>. You can drag a lead from one column to the next.</div></div>
+<figure class="shot"><img src="img/leads-board.png" alt="The board view: one column per lead stage. Example from HubSpot's help centre." loading="lazy"><figcaption>The board view: one column per lead stage. Example from HubSpot's help centre.</figcaption></figure>
 
-<!-- IV WORKING A LEAD -->
-<div class="sh" id="working"><div class="nm">IV</div><h2>Working a new lead</h2></div><div class="sl"></div>
-
-<div class="ss"><h3>Review a lead before you call</h3>
-<p class="desc">On the lead record you'll find the enquiry form, the device they're interested in, the source, the lead type and the company. Check past activity too.</p></div>
-
-<div class="ss"><h3>Make first contact within 24 hours</h3>
-<p class="desc">Call, email or WhatsApp from the lead record. Log it, or the lead won't move to Attempting (see <a href="#logging">Logging your activity</a>).</p></div>
-
+<!-- V WORKING -->
+<div class="sh" id="working"><div class="nm">V</div><h2>Working a new lead</h2></div><div class="sl"></div>
+<p class="desc">From the first look at a lead to the first conversation.</p>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Review the lead before you call</span></div><div class="st-b">On the lead record you'll find the enquiry form, the device they're interested in, the source, the lead type and the company. Check the activity in the middle too.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Make first contact within 24 hours</span></div><div class="st-b">Call, email or WhatsApp from the lead record.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Log it</span></div><div class="st-b">If you don't log it, the lead stays at New and counts as uncontacted. See <a href="#logging">Logging your activity</a>.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">Move it to Connected when you've spoken to them</span></div><div class="st-b">HubSpot doesn't know a call went well. Change the stage yourself.</div></div>
 <div class="ss"><h3>Lead stages</h3></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/a98f5a9ec6a343c494060b84fd906d1a" allowfullscreen loading="lazy" title="How your lead moves stage"></iframe></div>
 <div class="tbl-wrap"><table class="tbl">
@@ -288,13 +314,15 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 </table></div>
 
 <div class="ss"><h3>Following up</h3>
-<p class="desc">Give every lead in progress a next step. Create a task from the In-progress leads view, for example "Call again tomorrow".</p></div>
+<p class="desc">Give every lead in progress a next step. Create a task from the In-progress leads view, for example "Call again tomorrow", with a due date.</p></div>
 <div class="video-embed"><iframe src="https://www.loom.com/embed/3c1c6a99d7da4b7ea4a7185ad541ea0e" allowfullscreen loading="lazy" title="Plan your follow-up"></iframe></div>
+<figure class="shot"><img src="img/lead-schedule-task.png" alt="Scheduling the next step on a lead. Example from HubSpot's help centre." loading="lazy"><figcaption>Scheduling the next step on a lead. Example from HubSpot's help centre.</figcaption></figure>
 <div class="co co-p"><div class="tg">Not live yet</div>A reminder task when a lead stays at New for too long.</div>
+<div class="co co-r"><div class="tg">Common mistakes</div><strong>Calling without logging.</strong> The lead stays at New and shows up as uncontacted in the weekly numbers.<br><strong>Leaving a lead without a next step.</strong> It drops out of sight in In-progress leads.<br><strong>Working a lead from another territory.</strong> Tell Kelly instead, so it goes to the right rep.</div>
 
-<!-- V QUALIFYING -->
-<div class="sh" id="qualifying"><div class="nm">V</div><h2>Qualifying or closing a lead</h2></div><div class="sl"></div>
-
+<!-- VI QUALIFYING -->
+<div class="sh" id="qualifying"><div class="nm">VI</div><h2>Qualifying or closing a lead</h2></div><div class="sl"></div>
+<p class="desc">Every lead ends one of two ways: it becomes a deal, or it's closed with a reason.</p>
 <div class="ss"><h3>Is this a real buyer?</h3></div>
 <div class="co co-p"><div class="tg">Not live yet</div>The qualification checklist, agreed with Kelly.</div>
 
@@ -307,14 +335,18 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="video-embed"><iframe src="https://www.loom.com/embed/ffa6eacdbccf4fed8e4fbf8ababa2949" allowfullscreen loading="lazy" title="Disqualify a lead with a reason"></iframe></div>
 <div class="co co-p"><div class="tg">Not live yet</div>Leads with no movement for a set number of days will be disqualified automatically as "no response".</div>
 
-<!-- VI DEAL -->
-<div class="sh" id="deal"><div class="nm">VI</div><h2>Your new deal</h2></div><div class="sl"></div>
+
+<!-- VII DEAL -->
+<div class="sh" id="deal"><div class="nm">VII</div><h2>Your new deal</h2></div><div class="sl"></div>
+<p class="desc">What to check once the deal exists.</p>
 <div class="ss"><h3>Check your deal</h3>
 <p class="desc">After you create the deal, check the deal type, owner, amount, close date and products, and that the contact and company are associated.</p></div>
 <div class="co co-p"><div class="tg">Not live yet</div>What to capture on every new deal (clinic type, reason for buying, devices they use today, size), with a video.</div>
 
-<!-- VII CLOSING -->
-<div class="sh" id="closing"><div class="nm">VII</div><h2>Moving the deal to close</h2></div><div class="sl"></div>
+
+<!-- VIII CLOSING -->
+<div class="sh" id="closing"><div class="nm">VIII</div><h2>Moving the deal to close</h2></div><div class="sl"></div>
+<p class="desc">What HubSpot reminds you about while a deal is open.</p>
 <div class="ss"><h3>Reminders HubSpot sends you</h3></div>
 <div class="tbl-wrap"><table class="tbl">
 <tr><th>When</th><th>What happens</th></tr>
@@ -324,13 +356,24 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 </table></div>
 <div class="co co-p"><div class="tg">Not live yet</div>Deal stages and how to close a deal won or lost. Added once the new sales pipeline is approved.</div>
 
-<!-- VIII LOGGING -->
-<div class="sh" id="logging"><div class="nm">VIII</div><h2>Logging your activity</h2></div><div class="sl"></div>
+
+<!-- IX LOGGING -->
+<div class="sh" id="logging"><div class="nm">IX</div><h2>Logging your activity</h2></div><div class="sl"></div>
 <p class="desc">When you log a call, email, meeting or message, the lead moves from New to Attempting and the activity counts in your numbers.</p>
+<div class="ss"><h3>Log from the computer</h3></div>
+<div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">Open the lead</span></div><div class="st-b">From any of your lead views.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">Pick what you did</span></div><div class="st-b">Use the buttons at the top of the record: Call, Email, Meeting, or Log for something that happened outside HubSpot, like a WhatsApp chat.</div></div>
+<div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">Add the outcome and a short note</span></div><div class="st-b">Who you spoke to, what they need, what happens next. Other people will read it, so keep it short.</div></div>
+<div class="ss"><h3>Log from your phone</h3>
+<p class="desc">On the road, use the HubSpot mobile app. Open the contact, tap Call or More &rsaquo; Log, choose the outcome and save.</p></div>
+<div class="shot-row"><figure class="shot"><img src="img/mobile-record.png" alt="A contact in the mobile app" loading="lazy"><figcaption>A contact in the mobile app</figcaption></figure>
+<figure class="shot"><img src="img/mobile-log-call.png" alt="Logging a call with its outcome" loading="lazy"><figcaption>Logging a call with its outcome</figcaption></figure>
+</div>
 <div class="co co-p"><div class="tg">Not live yet</div>Videos on calling and emailing from HubSpot, logging WhatsApp and Instagram messages, and connecting your inbox and calendar.</div>
 
-<!-- IX NUMBERS -->
-<div class="sh" id="numbers"><div class="nm">IX</div><h2>Your numbers</h2></div><div class="sl"></div>
+<!-- X NUMBERS -->
+<div class="sh" id="numbers"><div class="nm">X</div><h2>Your numbers</h2></div><div class="sl"></div>
+<p class="desc">What gets reviewed every week. All of it comes from what you log.</p>
 <div class="ss"><h3>What we track each week</h3></div>
 <div class="fields-grid">
 <div class="field-item"><strong>Uncontacted leads</strong></div>
@@ -339,12 +382,43 @@ nav .brand{font-family:Georgia,serif;font-weight:700;color:#fff;font-size:1.05em
 <div class="field-item"><strong>Deals stalled in a stage</strong></div>
 </div>
 
-<!-- X HELP -->
-<div class="sh" id="help"><div class="nm">X</div><h2>Help</h2></div><div class="sl"></div>
+
+<!-- XI HELP -->
+<div class="sh" id="help"><div class="nm">XI</div><h2>Help</h2></div><div class="sl"></div>
+<p class="desc">The questions that come up most.</p>
 <div class="st"><div class="st-h"><span class="st-n">1</span><span class="st-t">I didn't get the email</span></div><div class="st-b">Open the <strong>New leads</strong> view: the lead is there even if the email didn't arrive. Let Kelly know.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">2</span><span class="st-t">The lead isn't in my view</span></div><div class="st-b">Check that you're the lead owner and that the view's filters haven't been changed.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">3</span><span class="st-t">This lead belongs to another territory</span></div><div class="st-b">Don't work it. Let Kelly know so it's reassigned.</div></div>
 <div class="st"><div class="st-h"><span class="st-n">4</span><span class="st-t">The contact is owned by someone else</span></div><div class="st-b">Work your lead as normal and ask Kelly before changing the contact owner.</div></div>
+
+
+<!-- XII REFERENCE -->
+<div class="sh" id="reference"><div class="nm">XII</div><h2>Reference</h2></div><div class="sl"></div>
+<p class="desc">Stages, words and people, in one place.</p>
+<div class="ss"><h3>Lead stages</h3></div>
+<div class="pipe"><span>New</span><i>&rarr;</i><span>Attempting</span><i>&rarr;</i><span>Connected</span><i>&rarr;</i><span class="pipe-ok">Qualified</span><span class="pipe-no">Disqualified</span></div>
+
+<div class="ss"><h3>Glossary</h3></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>Term</th><th>What it means</th></tr>
+<tr><td>Owner</td><td>The person a record belongs to. Every lead has one.</td></tr>
+<tr><td>Territory</td><td>The area a rep covers, set from the postcode.</td></tr>
+<tr><td>HOT</td><td>The label on a new lead from an enquiry.</td></tr>
+<tr><td>Re-attempting</td><td>A lead for someone who enquired before.</td></tr>
+<tr><td>Upsell</td><td>A lead for an existing customer.</td></tr>
+<tr><td>SQL</td><td>Sales qualified lead. What a contact becomes when their lead turns into a deal.</td></tr>
+<tr><td>Internal Sales</td><td>The team that handles home users.</td></tr>
+<tr><td>Sales workspace</td><td>The screen in HubSpot where your leads and tasks are.</td></tr>
+</table></div>
+
+<div class="ss"><h3>Who to ask</h3></div>
+<div class="tbl-wrap"><table class="tbl">
+<tr><th>For</th><th>Ask</th></tr>
+<tr><td>A lead in the wrong territory, a missing email, or changing a contact owner</td><td>Kelly Wiseman</td></tr>
+<tr><td>International enquiries</td><td>Jane Annable</td></tr>
+<tr><td>Home users</td><td>Internal Sales</td></tr>
+<tr><td>Something in HubSpot not working as this guide says</td><td>Kelly Wiseman</td></tr>
+</table></div>
 
 </div>
 
